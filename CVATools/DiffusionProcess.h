@@ -1,0 +1,48 @@
+//
+//  DiffusionProcess.h
+//  FinanceTools
+//
+//  Created by Alexandre HUMEAU on 28/01/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
+
+#ifndef FinanceTools_DiffusionProcess_h
+#define FinanceTools_DiffusionProcess_h
+
+#include <vector>
+
+class DiffusionProcess 
+{
+public:
+    DiffusionProcess();
+    DiffusionProcess(double x0);
+    
+    double Getx0() const;
+    
+    // returns the drift part of the equation, i.e. mu(t, x_t)
+    virtual double drift(double dt, double dx) const = 0;
+    
+    // returns the diffusion part of the equation, i.e. sigma(t,x_t)
+    virtual double diffusion(double dt, double dx) const = 0;
+    
+    // returns the expectation of the process after a time interval
+    // returns E(x_{t_0 + delta t} | x_{t_0} = x_0) since it is Markov.
+    // By default, it returns the Euler approximation defined by
+    // x_0 + mu(t_0, x_0) delta t.
+    
+    // no term-structure
+    virtual double expectation(double t0, double x0, double dt) const;
+    
+    // returns the variance of the process after a time interval
+    // returns Var(x_{t_0 + Delta t} | x_{t_0} = x_0).
+    // By default, it returns the Euler approximation defined by
+    // sigma(t_0, x_0)^2 \Delta t .
+    
+    // no term-structure
+    virtual double variance(double t0, double x0, double dt) const;
+     
+protected:
+    double dX0_;
+};
+
+#endif

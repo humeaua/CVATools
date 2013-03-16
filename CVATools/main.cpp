@@ -8,6 +8,8 @@
 
 #include <pthread.h>
 #include <iostream>
+#include "OrnsteinUhlenbeck.h"
+#include "Print.h"
 
 #define NUM_THREADS 5
 
@@ -19,7 +21,7 @@
     return 0;
 }*/
 
-void *PrintHello(void *threadid);
+/*void *PrintHello(void *threadid);
 void *PrintHello(void *threadid)
 {
     long tid;
@@ -47,5 +49,28 @@ int main ()
         //pthread_join(threads[i], NULL);
     }
     pthread_exit(NULL);
+}*/
+
+int main()
+{
+    std::cout << "Choose the test : " << std::endl;
+    std::cout << "1- Ornstein Ulhenbeck Process" << std::endl;
+    std::size_t iTest = 1;
+    std::cin >> iTest;
+    
+    if (iTest == 1)
+    {
+        OrnsteinUhlenbeck sOU(0.05, 0.2, 0.1, 0.2);
+        std::size_t iNDates = 100, iNPaths = 10;
+        long long lSeed = 0;
+        std::vector<double> dDates;
+        for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
+        {
+            dDates.push_back(1. * iDate / iNDates);
+        }
+        SimulationData sResult = sOU.simulate(dDates, iNPaths, lSeed);
+        Print sPrint("/Users/alexhum49/Desktop/OrnsteinUlhenbeck.csv", false, 10);
+        sPrint.PrintInFile(sResult.GetData());
+    }
 }
 

@@ -9,7 +9,9 @@
 #ifndef FinanceTools_DiffusionProcess_h
 #define FinanceTools_DiffusionProcess_h
 
+#include <map>
 #include <vector>
+#include "SimulationData.h"
 
 class DiffusionProcess 
 {
@@ -17,7 +19,7 @@ public:
     DiffusionProcess();
     DiffusionProcess(double x0);
     
-    double Getx0() const;
+    double getx0() const;
     
     // returns the drift part of the equation, i.e. mu(t, x_t)
     virtual double drift(double dt, double dx) const = 0;
@@ -40,6 +42,14 @@ public:
     
     // no term-structure
     virtual double variance(double t0, double x0, double dt) const;
+    
+    // return the standard deviation of the process after a time interval 
+    // returns stdev(x_{t_0 + Delta t} | x_{t_0} = x_0).
+    // By default, it returns the Euler approximation defined by
+    // sigma(t_0, x_0) sqrt(\Delta t) .
+    virtual double stdev(double t0, double x0, double dt) const;
+    
+    virtual SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
      
 protected:
     double dX0_;

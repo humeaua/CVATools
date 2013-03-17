@@ -56,7 +56,7 @@ double DiffusionProcess::variance(double t0, double x0, double dt) const
 
 double DiffusionProcess::stdev(double t0, double x0, double dt) const
 {
-    return diffusion(t0, x0) * sqrt(dt);
+    return sqrt(variance(t0, x0, dt));
 }
 
 //  return a simulation data of the simulated path for the diffusion process

@@ -81,6 +81,7 @@ SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size
             if (bFloorSimulationAtZero_ && dOldValue < 0.0)
             {
                 sResult.Put(dDates[iDate], iPath, 0.0);
+                dOldValue = 0.0;
             }
             else
             {

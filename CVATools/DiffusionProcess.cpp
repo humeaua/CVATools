@@ -18,7 +18,7 @@
 DiffusionProcess::DiffusionProcess() : dX0_(0.0)
 {}
 
-DiffusionProcess::DiffusionProcess(double dX0)
+DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulationAtZero) : bFloorSimulationAtZero_(bFloorSimulationAtZero)
 {
     dX0_ = dX0;
 }
@@ -78,7 +78,14 @@ SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size
         {
             double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
             dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
-            sResult.Put(dDates[iDate], iPath, dOldValue);
+            if (bFloorSimulationAtZero_ && dOldValue < 0.0)
+            {
+                sResult.Put(dDates[iDate], iPath, 0.0);
+            }
+            else
+            {
+                sResult.Put(dDates[iDate], iPath, dOldValue);
+            }
         }
     }
     return sResult;

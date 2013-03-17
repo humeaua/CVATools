@@ -13,7 +13,7 @@
 OrnsteinUhlenbeck::OrnsteinUhlenbeck() : dA_(0.0), dB_(0.0), dSigma_(0.0)
 {}
 
-OrnsteinUhlenbeck::OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0) : dA_(dA), dB_(dB), dSigma_(dSigma), DiffusionProcess(dX0)
+OrnsteinUhlenbeck::OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0) : dA_(dA), dB_(dB), dSigma_(dSigma), DiffusionProcess(dX0, false)
 {}
 
 OrnsteinUhlenbeck::~OrnsteinUhlenbeck()

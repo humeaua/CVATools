@@ -14,6 +14,7 @@
 		4F909B1016ECE3F500C94591 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F909B0F16ECE3F500C94591 /* main.cpp */; };
 		4F909B1216ECE3F500C94591 /* CVATools.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F909B1116ECE3F500C94591 /* CVATools.1 */; };
 		4F9C174116F34D62006E37CB /* DiffusionProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */; };
+		4FB6DDBD16FDB8C10068590A /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB6DDBC16FDB8C10068590A /* Matrix.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,8 @@
 		4F909B1116ECE3F500C94591 /* CVATools.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CVATools.1; sourceTree = "<group>"; };
 		4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffusionProcess.cpp; sourceTree = "<group>"; };
 		4F9C174016F34D62006E37CB /* DiffusionProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffusionProcess.h; sourceTree = "<group>"; };
+		4FB6DDBB16FDB8990068590A /* Matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		4FB6DDBC16FDB8C10068590A /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,8 @@
 				4F9C174016F34D62006E37CB /* DiffusionProcess.h */,
 				4F817FC616F39EBC00C4A8EB /* SimulationData.h */,
 				4F817FC816F3A02F00C4A8EB /* SimulationData.cpp */,
+				4FB6DDBB16FDB8990068590A /* Matrix.h */,
+				4FB6DDBC16FDB8C10068590A /* Matrix.cpp */,
 				4F909B1116ECE3F500C94591 /* CVATools.1 */,
 			);
 			path = CVATools;
@@ -147,6 +152,7 @@
 				4F05886316F4750E003D1406 /* OrnsteinUhlenbeck.cpp in Sources */,
 				4F05886616F47761003D1406 /* Print.cpp in Sources */,
 				4F0D007F16F62F74003299D9 /* SquareRoot.cpp in Sources */,
+				4FB6DDBD16FDB8C10068590A /* Matrix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

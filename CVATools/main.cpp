@@ -11,6 +11,7 @@
 #include "OrnsteinUhlenbeck.h"
 #include "Print.h"
 #include "SquareRoot.h"
+#include "BlackScholes.h"
 
 #define NUM_THREADS 5
 
@@ -57,6 +58,7 @@ int main()
     std::cout << "Choose the test : " << std::endl;
     std::cout << "1- Ornstein Ulhenbeck Process" << std::endl;
     std::cout << "2- Square root process" << std::endl;
+    std::cout << "3- Black Scholes process" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -88,6 +90,21 @@ int main()
         }
         SimulationData sResult = sSquareRoot.simulate(dDates, iNPaths, lSeed);
         Print sPrint("/Users/alexhum49/Desktop/SquareRoot.csv", false, 10);
+        sPrint.PrintInFile(sResult.GetData());
+    }
+    else if (iTest == 3)
+    {
+        BlackScholes sBS(0.08, 0.4, 10);
+        std::size_t iNDates = 1000, iNPaths = 10;
+        long long lSeed = 1;
+        std::vector<double> dDates;
+        double dT = 10;
+        for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
+        {
+            dDates.push_back(dT * iDate / iNDates);
+        }
+        SimulationData sResult = sBS.simulate(dDates, iNPaths, lSeed);
+        Print sPrint("/Users/alexhum49/Desktop/BlackScholes.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
 }

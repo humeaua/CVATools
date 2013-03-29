@@ -10,6 +10,8 @@
 		4F05886316F4750E003D1406 /* OrnsteinUhlenbeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F05886216F4750E003D1406 /* OrnsteinUhlenbeck.cpp */; };
 		4F05886616F47761003D1406 /* Print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F05886516F47761003D1406 /* Print.cpp */; };
 		4F0D007F16F62F74003299D9 /* SquareRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D007E16F62F74003299D9 /* SquareRoot.cpp */; };
+		4F808F211704D2520079649B /* DiffusionProcessMultiDim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F808F201704D2520079649B /* DiffusionProcessMultiDim.cpp */; };
+		4F808F251704D7680079649B /* SimulationDataMultiDim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F808F241704D7680079649B /* SimulationDataMultiDim.cpp */; };
 		4F817FC916F3A02F00C4A8EB /* SimulationData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F817FC816F3A02F00C4A8EB /* SimulationData.cpp */; };
 		4F909B1016ECE3F500C94591 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F909B0F16ECE3F500C94591 /* main.cpp */; };
 		4F909B1216ECE3F500C94591 /* CVATools.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F909B1116ECE3F500C94591 /* CVATools.1 */; };
@@ -38,6 +40,11 @@
 		4F05886516F47761003D1406 /* Print.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Print.cpp; sourceTree = "<group>"; };
 		4F0D007C16F62E01003299D9 /* SquareRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareRoot.h; sourceTree = "<group>"; };
 		4F0D007E16F62F74003299D9 /* SquareRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SquareRoot.cpp; sourceTree = "<group>"; };
+		4F808F1F1704D1C40079649B /* DiffusionProcessMultiDim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiffusionProcessMultiDim.h; sourceTree = "<group>"; };
+		4F808F201704D2520079649B /* DiffusionProcessMultiDim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffusionProcessMultiDim.cpp; sourceTree = "<group>"; };
+		4F808F221704D2EF0079649B /* Type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Type.h; sourceTree = "<group>"; };
+		4F808F231704D57E0079649B /* SimulationDataMultiDim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimulationDataMultiDim.h; sourceTree = "<group>"; };
+		4F808F241704D7680079649B /* SimulationDataMultiDim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulationDataMultiDim.cpp; sourceTree = "<group>"; };
 		4F817FC616F39EBC00C4A8EB /* SimulationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulationData.h; sourceTree = "<group>"; };
 		4F817FC816F3A02F00C4A8EB /* SimulationData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimulationData.cpp; sourceTree = "<group>"; };
 		4F909B0B16ECE3F500C94591 /* CVATools */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CVATools; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,7 +97,12 @@
 				4F0D007C16F62E01003299D9 /* SquareRoot.h */,
 				4F0D007E16F62F74003299D9 /* SquareRoot.cpp */,
 				4F9C174016F34D62006E37CB /* DiffusionProcess.h */,
+				4F808F1F1704D1C40079649B /* DiffusionProcessMultiDim.h */,
+				4F808F201704D2520079649B /* DiffusionProcessMultiDim.cpp */,
+				4F808F221704D2EF0079649B /* Type.h */,
 				4F817FC616F39EBC00C4A8EB /* SimulationData.h */,
+				4F808F231704D57E0079649B /* SimulationDataMultiDim.h */,
+				4F808F241704D7680079649B /* SimulationDataMultiDim.cpp */,
 				4F817FC816F3A02F00C4A8EB /* SimulationData.cpp */,
 				4FB6DDBB16FDB8990068590A /* Matrix.h */,
 				4FB6DDBC16FDB8C10068590A /* Matrix.cpp */,
@@ -159,6 +171,8 @@
 				4F0D007F16F62F74003299D9 /* SquareRoot.cpp in Sources */,
 				4FB6DDBD16FDB8C10068590A /* Matrix.cpp in Sources */,
 				4FCA83F11703866D00D6F8DD /* BlackScholes.cpp in Sources */,
+				4F808F211704D2520079649B /* DiffusionProcessMultiDim.cpp in Sources */,
+				4F808F251704D7680079649B /* SimulationDataMultiDim.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

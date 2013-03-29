@@ -15,6 +15,14 @@ Matrix::Matrix(int N, int M)
     colsize = M;
     data=new double[rowsize*colsize];
 }
+
+Matrix::Matrix(std::size_t N, std::size_t M)
+{
+    rowsize = static_cast<int>(N);
+    colsize = static_cast<int>(M);
+    data=new double[rowsize*colsize];
+}
+
 Matrix::Matrix(const Matrix& m)
 {
     rowsize = m.rowsize;
@@ -22,6 +30,7 @@ Matrix::Matrix(const Matrix& m)
     data = new double[rowsize*colsize];
     memcpy(m.data, data, rowsize*colsize*sizeof(double));
 }
+
 Matrix::~Matrix()
 {
     
@@ -29,11 +38,24 @@ Matrix::~Matrix()
 }
 
 double& Matrix::operator ()(int i, int j)
-{return data[i + rowsize*j];}
+{
+    return data[i + rowsize*j];
+}
 
 double& Matrix::operator ()(int i, int j) const
-{return data[i + rowsize*j];}
+{
+    return data[i + rowsize*j];
+}
 
+double& Matrix::operator ()(std::size_t i, std::size_t j)
+{
+    return data[i + rowsize*j];
+}
+
+double& Matrix::operator ()(std::size_t i, std::size_t j) const
+{
+    return data[i + rowsize*j];
+}
 
 int Matrix::getrows() const
 {
@@ -46,16 +68,16 @@ int Matrix::getcols() const
 
 void Matrix::print()
 {
-    for (int i=0; i<rowsize; i++) {
-        for (int j=0; j<colsize; j++) {
+    for (int i=0; i<rowsize; i++)
+    {
+        for (int j=0; j<colsize; j++)
+        {
             std::cout << data[i+rowsize*j] << '\t';
         }
         std::cout << std::endl;
     }
     std::cout << "rows: " << rowsize << "  cols: " << colsize << "  data: " << data << std::endl;
 }
-
-
 
 void addmatrix(Matrix& New, const Matrix& One, const Matrix& Two)
 {

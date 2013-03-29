@@ -9,16 +9,21 @@
 #ifndef CVATools_Matrix_h
 #define CVATools_Matrix_h
 
+#include <iostream>
+
 class Matrix
 {
 public:
 	Matrix(int N, int M);
+    Matrix(std::size_t N, std::size_t M);
 	Matrix(const Matrix& m);
 	~Matrix();
     
 	double& operator ()(int i, int j);
-    
 	double& operator ()(int i, int j) const;
+    
+    double& operator ()(std::size_t i, std::size_t j);
+	double& operator ()(std::size_t i, std::size_t j) const;
     
 	int getrows() const;
 	int getcols() const;

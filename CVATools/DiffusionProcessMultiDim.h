@@ -13,12 +13,12 @@
 #include "Matrix.h"
 #include <list>
 #include "Type.h"
+#include "SimulationDataMultiDim.h"
 
 class DiffusionProcessMultiDim
 {
 protected:
     std::size_t iNDimensions_;
-    std::vector<DiffusionProcess> sListofDiffusionProcess_;
     Matrix sCorrelationMatrix_;
 public:
     DiffusionProcessMultiDim(std::size_t iNDimension, const Matrix & sCorrelationMatrix);
@@ -35,6 +35,9 @@ public:
     
     //  MultiDimensional Variance
     virtual Matrix MultiVariance(double t0, DVector dx, double dt) const;
+    
+    //  Simulation method
+    virtual SimulationDataMultiDim simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
 };
 
 #endif

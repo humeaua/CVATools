@@ -8,7 +8,7 @@
 
 #include "DiffusionProcessMultiDim.h"
 #include <assert.h>
-#include <ranlib.h>
+#include <tr1/random>
 
 DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Matrix & sCorrelationMatrix) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix)
 {
@@ -18,7 +18,6 @@ DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, con
 
 DiffusionProcessMultiDim::~DiffusionProcessMultiDim()
 {
-    sListofDiffusionProcess_.clear();
     sCorrelationMatrix_.~Matrix();
 }
 
@@ -43,11 +42,20 @@ Matrix DiffusionProcessMultiDim::MultiVariance(double t0, DVector dx, double dt)
     for (std::size_t iRow = 0 ; iRow < iNDimensions_ ; ++iRow)
     {
         double dSigmai = dMultiVol[iRow];
-        for (std::size_t iCol = 0 ; iCol < iNDimensions_ ; ++iCol)
+        for (std::size_t iCol = iRow + 1 ; iCol < iNDimensions_ ; ++iCol)
         {
             double dSigmaj = dMultiVol[iCol];
             dResult(iRow, iCol) = dSigmai * dSigmaj * sCorrelationMatrix_(iRow,iCol) * dt;
+            dResult(iCol, iRow) = dResult(iRow,iCol);
         }
     }
     return dResult;
+}
+
+//  Simulation method
+SimulationDataMultiDim DiffusionProcessMultiDim::simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const
+{
+    SimulationDataMultiDim sResult;
+    
+    return sResult;
 }

@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>CVAToolsLib.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>4F909B0A16ECE3F500C94591</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4F967C1A1709B86D0044F19B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

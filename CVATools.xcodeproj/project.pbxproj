@@ -50,6 +50,7 @@
 		4F909B0B16ECE3F500C94591 /* CVATools */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CVATools; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F909B0F16ECE3F500C94591 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4F909B1116ECE3F500C94591 /* CVATools.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CVATools.1; sourceTree = "<group>"; };
+		4F967C1B1709B86D0044F19B /* libCVAToolsLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libCVAToolsLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffusionProcess.cpp; sourceTree = "<group>"; };
 		4F9C174016F34D62006E37CB /* DiffusionProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffusionProcess.h; sourceTree = "<group>"; };
 		4FB6DDBB16FDB8990068590A /* Matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
@@ -60,6 +61,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		4F909B0816ECE3F500C94591 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F967C181709B86D0044F19B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -81,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				4F909B0B16ECE3F500C94591 /* CVATools */,
+				4F967C1B1709B86D0044F19B /* libCVAToolsLib.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,6 +124,16 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		4F967C191709B86D0044F19B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		4F909B0A16ECE3F500C94591 /* CVATools */ = {
 			isa = PBXNativeTarget;
@@ -133,13 +152,30 @@
 			productReference = 4F909B0B16ECE3F500C94591 /* CVATools */;
 			productType = "com.apple.product-type.tool";
 		};
+		4F967C1A1709B86D0044F19B /* CVAToolsLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F967C1C1709B86D0044F19B /* Build configuration list for PBXNativeTarget "CVAToolsLib" */;
+			buildPhases = (
+				4F967C171709B86D0044F19B /* Sources */,
+				4F967C181709B86D0044F19B /* Frameworks */,
+				4F967C191709B86D0044F19B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CVAToolsLib;
+			productName = CVAToolsLib;
+			productReference = 4F967C1B1709B86D0044F19B /* libCVAToolsLib.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		4F909B0216ECE3F500C94591 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 4F909B0516ECE3F500C94591 /* Build configuration list for PBXProject "CVATools" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -154,6 +190,7 @@
 			projectRoot = "";
 			targets = (
 				4F909B0A16ECE3F500C94591 /* CVATools */,
+				4F967C1A1709B86D0044F19B /* CVAToolsLib */,
 			);
 		};
 /* End PBXProject section */
@@ -176,6 +213,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4F967C171709B86D0044F19B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -185,6 +229,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -199,6 +247,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -212,6 +261,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -220,6 +273,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
@@ -236,6 +290,28 @@
 		4F909B1716ECE3F500C94591 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		4F967C1D1709B86D0044F19B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4F967C1E1709B86D0044F19B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -260,6 +336,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		4F967C1C1709B86D0044F19B /* Build configuration list for PBXNativeTarget "CVAToolsLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F967C1D1709B86D0044F19B /* Debug */,
+				4F967C1E1709B86D0044F19B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

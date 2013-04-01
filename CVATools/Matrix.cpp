@@ -8,6 +8,8 @@
 
 #include "Matrix.h"
 #include <iostream>
+#include <cmath>
+#include <assert.h>
 
 Matrix::Matrix(int N, int M)
 {
@@ -33,8 +35,15 @@ Matrix::Matrix(const Matrix& m)
 
 Matrix::~Matrix()
 {
-    
     delete [] data; data=0;
+}
+
+void Matrix::Reallocate(int N, int M)
+{
+    free(data);
+    rowsize = N;
+    colsize = M;
+    data = new double[rowsize * colsize];
 }
 
 double& Matrix::operator ()(int i, int j)
@@ -104,6 +113,21 @@ void multmatrix(Matrix& New1, const Matrix& one, const Matrix& two)
             {
                 New1(i,j) += one(i,k)*two(k,j);
             }
+        }
+    }
+}
+
+void mult(DVector & New, const Matrix & matrix, const DVector & Old)
+{
+    assert(matrix.getcols() == Old.size());
+    New.resize(matrix.getrows());
+    
+    for (int i = 0 ; i < matrix.getrows() ; ++i)
+    {
+        New[i] = 0.;
+        for (int j = 0 ; j < matrix.getcols() ; ++j)
+        {
+            New[i] += matrix(i,j) * Old[j];
         }
     }
 }
@@ -261,6 +285,80 @@ void matrixLU(Matrix& L, Matrix& U, const Matrix& mat)
         for (int j=0;j<mat.getcols();j++)
         {
             L(i,j) = LL[i][j];
+        }
+    }
+}
+
+std::vector<std::vector<double> > CholeskiDecomposition(//  Input
+                                                        const std::vector<std::vector<double> > & dMatrix)
+{
+    std::size_t iNRows = dMatrix.size();
+    std::vector<std::vector<double> > L(iNRows, std::vector<double>(iNRows, 0.0));
+    
+    L[0][0] = sqrt(dMatrix[0][0]);
+    for (std::size_t j = 1 ; j < iNRows ; ++j)
+    {
+        L[j][0] = dMatrix[j][0] / L[0][0];
+    }
+    for (std::size_t j = 1 ; j < iNRows ; ++j)
+    {
+        double dSum1 = 0;
+        for (std::size_t k = 0 ; k < j ; ++k)
+        {
+            dSum1 += L[j][k] * L[j][k];
+        }
+        L[j][j] = sqrt(dMatrix[j][j] - dSum1);
+        for (std::size_t i = j + 1 ; i < iNRows ; ++i)
+        {
+            double dSum2 = 0;
+            for (std::size_t k = 0 ; k < j ; ++k)
+            {
+                dSum2 += L[i][k] * L[j][k];
+            }
+            L[i][j] = (dMatrix[i][j] - dSum2) / L[j][j];
+        }
+    }
+    return L;
+}
+
+void CholeskiDecomposition(//   Input
+                           const Matrix & dMatrix,
+                           //   Output
+                           Matrix & dSquareRoot)
+{
+    int iNRows = dMatrix.getrows();
+    dSquareRoot.Reallocate(iNRows, iNRows);
+    
+    std::vector<std::vector<double> > L(iNRows, std::vector<double>(iNRows, 0.0));
+    
+    L[0][0] = sqrt(dMatrix(0,0));
+    for (int j = 1 ; j < iNRows ; ++j)
+    {
+        L[j][0] = dMatrix(j,0) / L[0][0];
+    }
+    for (std::size_t j = 1 ; j < iNRows ; ++j)
+    {
+        double dSum1 = 0;
+        for (std::size_t k = 0 ; k < j ; ++k)
+        {
+            dSum1 += L[j][k] * L[j][k];
+        }
+        L[j][j] = sqrt(dMatrix(j,j) - dSum1);
+        for (std::size_t i = j + 1 ; i < iNRows ; ++i)
+        {
+            double dSum2 = 0;
+            for (std::size_t k = 0 ; k < j ; ++k)
+            {
+                dSum2 += L[i][k] * L[j][k];
+            }
+            L[i][j] = (dMatrix(i,j) - dSum2) / L[j][j];
+        }
+    }
+    for (int i=0;i<iNRows;i++)
+    {
+        for (int j=0;j<iNRows;j++)
+        {
+            dSquareRoot(i,j) = L[i][j];
         }
     }
 }

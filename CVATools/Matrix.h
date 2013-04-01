@@ -10,6 +10,8 @@
 #define CVATools_Matrix_h
 
 #include <iostream>
+#include <vector>
+#include "Type.h"
 
 class Matrix
 {
@@ -18,6 +20,8 @@ public:
     Matrix(std::size_t N, std::size_t M);
 	Matrix(const Matrix& m);
 	~Matrix();
+    
+    void Reallocate(int N, int M);
     
 	double& operator ()(int i, int j);
 	double& operator ()(int i, int j) const;
@@ -40,7 +44,15 @@ protected:
 void addmatrix(Matrix& New, const Matrix& One, const Matrix& Two);
 void transpose(Matrix& T, const Matrix& mat);
 void multmatrix(Matrix& New1, const Matrix& one, const Matrix& two);
+void mult(DVector & New, const Matrix & matrix, const DVector & Old);
 void matrixinverse(Matrix& hi, const Matrix& mat);
 void matrixLU(Matrix& L, Matrix& U, const Matrix& mat);
+
+std::vector<std::vector<double> > CholeskiDecomposition(//  Input
+                                                        const std::vector<std::vector<double> > & dMatrix);
+void CholeskiDecomposition(//   Input
+                           const Matrix & dMatrix,
+                           //   Output
+                           Matrix & dSquareRoot);
 
 #endif

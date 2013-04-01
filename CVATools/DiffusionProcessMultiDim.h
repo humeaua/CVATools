@@ -20,8 +20,9 @@ class DiffusionProcessMultiDim
 protected:
     std::size_t iNDimensions_;
     Matrix sCorrelationMatrix_;
+    DVector dX0_;
 public:
-    DiffusionProcessMultiDim(std::size_t iNDimension, const Matrix & sCorrelationMatrix);
+    DiffusionProcessMultiDim(std::size_t iNDimension, const Matrix & sCorrelationMatrix, const DVector & dX0);
     virtual ~DiffusionProcessMultiDim();
     
     //  MultiDimensional Drift drift
@@ -38,6 +39,8 @@ public:
     
     //  Simulation method
     virtual SimulationDataMultiDim simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
+    
+    //  Add a simulation method for homogeneous processes
 };
 
 #endif

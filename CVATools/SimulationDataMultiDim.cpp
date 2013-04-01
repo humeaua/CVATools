@@ -68,3 +68,23 @@ std::map<double, std::map<std::size_t, DVector> > SimulationDataMultiDim::GetDat
 {
     return dData_;
 }
+
+DVector SimulationDataMultiDim::GetData(double dDate, std::size_t iPath) const
+{
+    if (dData_.count(dDate) != 0)
+    {
+        std::map<std::size_t, DVector> dLoc = dData_.find(dDate)->second;
+        if (dLoc.count(iPath) != 0)
+        {
+            return dLoc.find(iPath)->second;
+        }
+        else
+        {
+            throw "Error in SimulationDataMultiDim::GetData : Could not find Path";
+        }
+    }
+    else
+    {
+        throw "Error in SimulationDataMultiDim::GetData : Could not find Date";
+    }
+}

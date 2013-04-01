@@ -44,5 +44,6 @@ double SquareRoot::expectation(double t0, double x0, double dt) const
 // no term-structure
 double SquareRoot::variance(double t0, double x0, double dt) const
 {
-    return dSigma_ * dSigma_ * x0 * dt;
+    //return dSigma_ * dSigma_ * (dB_ * 0.5 / dA_ + (x0 - dB_) / dA_ * exp(-dA_ * dt) + (dB_ - 2. * dX0_) * 0.5 / dA_ * exp(-2. * dA_ * dt));
+    return dSigma_ * dSigma_ * exp(-dA_ * dt) * x0 *dt;
 }

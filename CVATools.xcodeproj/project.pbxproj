@@ -10,6 +10,7 @@
 		4F05886316F4750E003D1406 /* OrnsteinUhlenbeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F05886216F4750E003D1406 /* OrnsteinUhlenbeck.cpp */; };
 		4F05886616F47761003D1406 /* Print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F05886516F47761003D1406 /* Print.cpp */; };
 		4F0D007F16F62F74003299D9 /* SquareRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D007E16F62F74003299D9 /* SquareRoot.cpp */; };
+		4F7A71E01711D5F800712C34 /* Payoff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71DF1711D5F800712C34 /* Payoff.cpp */; };
 		4F808F211704D2520079649B /* DiffusionProcessMultiDim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F808F201704D2520079649B /* DiffusionProcessMultiDim.cpp */; };
 		4F808F251704D7680079649B /* SimulationDataMultiDim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F808F241704D7680079649B /* SimulationDataMultiDim.cpp */; };
 		4F817FC916F3A02F00C4A8EB /* SimulationData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F817FC816F3A02F00C4A8EB /* SimulationData.cpp */; };
@@ -40,6 +41,8 @@
 		4F05886516F47761003D1406 /* Print.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Print.cpp; sourceTree = "<group>"; };
 		4F0D007C16F62E01003299D9 /* SquareRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareRoot.h; sourceTree = "<group>"; };
 		4F0D007E16F62F74003299D9 /* SquareRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SquareRoot.cpp; sourceTree = "<group>"; };
+		4F7A71DE1711D58A00712C34 /* Payoff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Payoff.h; sourceTree = "<group>"; };
+		4F7A71DF1711D5F800712C34 /* Payoff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Payoff.cpp; sourceTree = "<group>"; };
 		4F808F1F1704D1C40079649B /* DiffusionProcessMultiDim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiffusionProcessMultiDim.h; sourceTree = "<group>"; };
 		4F808F201704D2520079649B /* DiffusionProcessMultiDim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffusionProcessMultiDim.cpp; sourceTree = "<group>"; };
 		4F808F221704D2EF0079649B /* Type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Type.h; sourceTree = "<group>"; };
@@ -98,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				4F909B0F16ECE3F500C94591 /* main.cpp */,
+				4F7A71DE1711D58A00712C34 /* Payoff.h */,
+				4F7A71DF1711D5F800712C34 /* Payoff.cpp */,
 				4F05886416F47758003D1406 /* Print.h */,
 				4F05886516F47761003D1406 /* Print.cpp */,
 				4F05886016F472FC003D1406 /* OrnsteinUhlenbeck.h */,
@@ -210,6 +215,7 @@
 				4FCA83F11703866D00D6F8DD /* BlackScholes.cpp in Sources */,
 				4F808F211704D2520079649B /* DiffusionProcessMultiDim.cpp in Sources */,
 				4F808F251704D7680079649B /* SimulationDataMultiDim.cpp in Sources */,
+				4F7A71E01711D5F800712C34 /* Payoff.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +350,7 @@
 				4F967C1E1709B86D0044F19B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

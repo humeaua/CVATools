@@ -18,7 +18,7 @@ protected:
     
 public:
     PayoffMargrabe(double dK);
-    ~PayoffMargrabe();
+    virtual ~PayoffMargrabe();
     
     virtual double pay(double s1, double s2) const;
 };

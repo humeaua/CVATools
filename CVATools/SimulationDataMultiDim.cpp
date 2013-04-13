@@ -12,6 +12,19 @@
 SimulationDataMultiDim::SimulationDataMultiDim()
 {}
 
+//  Overloading constructor
+SimulationDataMultiDim::SimulationDataMultiDim(const std::vector<double> & dDates, std::size_t iNPaths, std::size_t iNDimensions)
+{
+    DVector sEmptyVector(iNDimensions, 0.0);
+    for (std::size_t iDate = 0 ; iDate < dDates.size() ; ++iDate)
+    {
+        for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
+        {
+            dData_[dDates[iDate]][iPath] = sEmptyVector;
+        }
+    }
+}
+
 //  Destructor
 SimulationDataMultiDim::~SimulationDataMultiDim()
 {}

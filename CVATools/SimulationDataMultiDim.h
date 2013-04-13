@@ -22,6 +22,9 @@ public:
     //Default constructor
     SimulationDataMultiDim();
     
+    //Overloading constructor
+    SimulationDataMultiDim(const std::vector<double> & dDates, std::size_t iNPaths, std::size_t iDimension);
+    
     //  Destructor
     virtual ~SimulationDataMultiDim();
     

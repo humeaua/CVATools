@@ -12,6 +12,7 @@
 		4F0D007F16F62F74003299D9 /* SquareRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D007E16F62F74003299D9 /* SquareRoot.cpp */; };
 		4F7A71E01711D5F800712C34 /* Payoff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71DF1711D5F800712C34 /* Payoff.cpp */; };
 		4F7A71E31711D7E500712C34 /* PayoffVanillaOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71E21711D7E500712C34 /* PayoffVanillaOption.cpp */; };
+		4F7A71E61711DB7100712C34 /* Payoff2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71E51711DB7100712C34 /* Payoff2D.cpp */; };
 		4F808F211704D2520079649B /* DiffusionProcessMultiDim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F808F201704D2520079649B /* DiffusionProcessMultiDim.cpp */; };
 		4F808F251704D7680079649B /* SimulationDataMultiDim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F808F241704D7680079649B /* SimulationDataMultiDim.cpp */; };
 		4F817FC916F3A02F00C4A8EB /* SimulationData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F817FC816F3A02F00C4A8EB /* SimulationData.cpp */; };
@@ -19,6 +20,7 @@
 		4F909B1216ECE3F500C94591 /* CVATools.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F909B1116ECE3F500C94591 /* CVATools.1 */; };
 		4F9C174116F34D62006E37CB /* DiffusionProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */; };
 		4FB6DDBD16FDB8C10068590A /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB6DDBC16FDB8C10068590A /* Matrix.cpp */; };
+		4FB76C9A17197B450025FBC7 /* PayoffMargrabe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */; };
 		4FCA83F11703866D00D6F8DD /* BlackScholes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +48,9 @@
 		4F7A71DF1711D5F800712C34 /* Payoff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Payoff.cpp; sourceTree = "<group>"; };
 		4F7A71E11711D75100712C34 /* PayoffVanillaOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayoffVanillaOption.h; sourceTree = "<group>"; };
 		4F7A71E21711D7E500712C34 /* PayoffVanillaOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PayoffVanillaOption.cpp; sourceTree = "<group>"; };
+		4F7A71E41711DB5A00712C34 /* Payoff2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Payoff2D.h; sourceTree = "<group>"; };
+		4F7A71E51711DB7100712C34 /* Payoff2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Payoff2D.cpp; sourceTree = "<group>"; };
+		4F7A71E71711DC1400712C34 /* PayoffMargrabe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayoffMargrabe.h; sourceTree = "<group>"; };
 		4F808F1F1704D1C40079649B /* DiffusionProcessMultiDim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiffusionProcessMultiDim.h; sourceTree = "<group>"; };
 		4F808F201704D2520079649B /* DiffusionProcessMultiDim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffusionProcessMultiDim.cpp; sourceTree = "<group>"; };
 		4F808F221704D2EF0079649B /* Type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Type.h; sourceTree = "<group>"; };
@@ -61,6 +66,7 @@
 		4F9C174016F34D62006E37CB /* DiffusionProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffusionProcess.h; sourceTree = "<group>"; };
 		4FB6DDBB16FDB8990068590A /* Matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		4FB6DDBC16FDB8C10068590A /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PayoffMargrabe.cpp; sourceTree = "<group>"; };
 		4FCA83EF170385FA00D6F8DD /* BlackScholes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackScholes.h; sourceTree = "<group>"; };
 		4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlackScholes.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +114,10 @@
 				4F7A71DF1711D5F800712C34 /* Payoff.cpp */,
 				4F7A71E11711D75100712C34 /* PayoffVanillaOption.h */,
 				4F7A71E21711D7E500712C34 /* PayoffVanillaOption.cpp */,
+				4F7A71E41711DB5A00712C34 /* Payoff2D.h */,
+				4F7A71E51711DB7100712C34 /* Payoff2D.cpp */,
+				4F7A71E71711DC1400712C34 /* PayoffMargrabe.h */,
+				4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */,
 				4F05886416F47758003D1406 /* Print.h */,
 				4F05886516F47761003D1406 /* Print.cpp */,
 				4F05886016F472FC003D1406 /* OrnsteinUhlenbeck.h */,
@@ -222,6 +232,8 @@
 				4F808F251704D7680079649B /* SimulationDataMultiDim.cpp in Sources */,
 				4F7A71E01711D5F800712C34 /* Payoff.cpp in Sources */,
 				4F7A71E31711D7E500712C34 /* PayoffVanillaOption.cpp in Sources */,
+				4F7A71E61711DB7100712C34 /* Payoff2D.cpp in Sources */,
+				4FB76C9A17197B450025FBC7 /* PayoffMargrabe.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

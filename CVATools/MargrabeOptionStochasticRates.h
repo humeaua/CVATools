@@ -1,13 +1,13 @@
 //
-//  MargrabeOption.h
+//  MargrabeOptionStochasticRates.h
 //  CVATools
 //
 //  Created by Alexandre HUMEAU on 13/04/13.
 //
 //
 
-#ifndef CVATools_MargrabeOption_h
-#define CVATools_MargrabeOption_h
+#ifndef CVATools_MargrabeOptionStochasticRates_h
+#define CVATools_MargrabeOptionStochasticRates_h
 
 #include "PayoffMargrabe.h"
 #include "DiffusionProcessMultiDim.h"

@@ -21,7 +21,7 @@
 		4F9C174116F34D62006E37CB /* DiffusionProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */; };
 		4FB6DDBD16FDB8C10068590A /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB6DDBC16FDB8C10068590A /* Matrix.cpp */; };
 		4FB76C9A17197B450025FBC7 /* PayoffMargrabe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */; };
-		4FB76C9D17197CCE0025FBC7 /* MargrabeOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9C17197CCE0025FBC7 /* MargrabeOption.cpp */; };
+		4FB76C9D17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */; };
 		4FCA83F11703866D00D6F8DD /* BlackScholes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +68,8 @@
 		4FB6DDBB16FDB8990068590A /* Matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		4FB6DDBC16FDB8C10068590A /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 		4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PayoffMargrabe.cpp; sourceTree = "<group>"; };
-		4FB76C9B17197C620025FBC7 /* MargrabeOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MargrabeOption.h; sourceTree = "<group>"; };
-		4FB76C9C17197CCE0025FBC7 /* MargrabeOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MargrabeOption.cpp; sourceTree = "<group>"; };
+		4FB76C9B17197C620025FBC7 /* MargrabeOptionStochasticRates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MargrabeOptionStochasticRates.h; sourceTree = "<group>"; };
+		4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MargrabeOptionStochasticRates.cpp; sourceTree = "<group>"; };
 		4FCA83EF170385FA00D6F8DD /* BlackScholes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackScholes.h; sourceTree = "<group>"; };
 		4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlackScholes.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,8 +121,8 @@
 				4F7A71E51711DB7100712C34 /* Payoff2D.cpp */,
 				4F7A71E71711DC1400712C34 /* PayoffMargrabe.h */,
 				4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */,
-				4FB76C9B17197C620025FBC7 /* MargrabeOption.h */,
-				4FB76C9C17197CCE0025FBC7 /* MargrabeOption.cpp */,
+				4FB76C9B17197C620025FBC7 /* MargrabeOptionStochasticRates.h */,
+				4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */,
 				4F05886416F47758003D1406 /* Print.h */,
 				4F05886516F47761003D1406 /* Print.cpp */,
 				4F05886016F472FC003D1406 /* OrnsteinUhlenbeck.h */,
@@ -239,7 +239,7 @@
 				4F7A71E31711D7E500712C34 /* PayoffVanillaOption.cpp in Sources */,
 				4F7A71E61711DB7100712C34 /* Payoff2D.cpp in Sources */,
 				4FB76C9A17197B450025FBC7 /* PayoffMargrabe.cpp in Sources */,
-				4FB76C9D17197CCE0025FBC7 /* MargrabeOption.cpp in Sources */,
+				4FB76C9D17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

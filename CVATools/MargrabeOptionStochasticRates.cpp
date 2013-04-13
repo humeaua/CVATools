@@ -1,12 +1,13 @@
+
 //
-//  MargrabeOption.cpp
+//  MargrabeOptionStochasticRates
 //  CVATools
 //
 //  Created by Alexandre HUMEAU on 13/04/13.
 //
 //
 
-#include "MargrabeOption.h"
+#include "MargrabeOptionStochasticRates.h"
 
 MargrabeOptionStochasticRates::MargrabeOptionStochasticRates(double dT,
                                                              double dK,

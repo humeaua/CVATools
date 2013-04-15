@@ -23,13 +23,16 @@
  the goal of the class is to price a Margrabe option of payoff at time T (S_1 - K S_2)_+
  */
 
-class MargrabeOptionStochasticRates : public PayoffMargrabe, DiffusionProcessMultiDim
+class MargrabeOptionStochasticRates : public PayoffMargrabe, public DiffusionProcessMultiDim
 {
 protected:
     double dT_;
     double dS1_, dS2_;
+    double dR0_;
+    
+    double dSigma1_, dSigma2_;
 public:
-    MargrabeOptionStochasticRates(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues);
+    MargrabeOptionStochasticRates(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSimga2);
     
     virtual ~MargrabeOptionStochasticRates();
     

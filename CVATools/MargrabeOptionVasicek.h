@@ -30,12 +30,15 @@ public:
     
     virtual ~MargrabeOptionVasicek();
 
-    //  MultiDimensional Expectation
-    virtual DVector MultiExpectation(double t0, DVector dx, double dt) const;
-
-    //  MultiDimensional Variance
-    virtual Matrix MultiVariance(double t0, DVector dx, double dt) const;
-
+    //  MultiDimensional Drift drift
+    virtual DVector MultiDrift(double dt, DVector dx) const ;
+    
+    //  MultiDimensional volatility vector
+    virtual DVector MultiVol(double dt, DVector dx) const;
+    
+    virtual double alpha(double t, double r_t) const;
+    virtual double beta(double t, double r_t) const;
+    
     //  Simulation method
     virtual SimulationDataMultiDim simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
 

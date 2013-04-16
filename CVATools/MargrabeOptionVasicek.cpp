@@ -15,18 +15,27 @@ MargrabeOptionVasicek::MargrabeOptionVasicek(double dT, double dK, const Matrix 
 MargrabeOptionVasicek::~MargrabeOptionVasicek()
 {}
 
-//  MultiDimensional Expectation --> not used but must be declared
-DVector MargrabeOptionVasicek::MultiExpectation(double t0, DVector dx, double dt) const
+DVector MargrabeOptionVasicek::MultiDrift(double dt, DVector dx) const
 {
     DVector dResult(3);
     return dResult;
 }
 
 //  MultiDimensional Variance --> not used but must be declared
-Matrix MargrabeOptionVasicek::MultiVariance(double t0, DVector dx, double dt) const
+DVector MargrabeOptionVasicek::MultiVol(double dt, DVector dx) const
 {
-    Matrix sResult(3,3);
+    DVector sResult(3);
     return sResult;
+}
+
+double MargrabeOptionVasicek::alpha(double t, double r_t) const
+{
+    return dA_ * (dB_ - r_t);
+}
+
+double MargrabeOptionVasicek::beta(double t, double r_t) const
+{
+    return dSigma_;
 }
 
 //  Simulation method

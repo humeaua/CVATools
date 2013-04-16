@@ -26,6 +26,7 @@ public:
     virtual void PrintInFile(const std::vector<std::vector<double> > & dData);
     virtual void PrintInFile(const std::map<double, std::map<double, double> > & mData);
     virtual void PrintInFile(const std::map<double, std::map<std::size_t, double> > & mData);
+    virtual void PrintInFile(const std::map<double, std::map<std::size_t, std::vector<double> > > & mData, std::size_t iDim);
 protected:
     std::string cFileName_;
     bool bAppend_;

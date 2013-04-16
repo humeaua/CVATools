@@ -154,3 +154,41 @@ void Print::PrintInFile(const std::map<double, std::map<std::size_t, double> > &
         fclose(sFile);
     }
 }
+
+void Print::PrintInFile(const std::map<double, std::map<std::size_t, std::vector<double> > > & mData, std::size_t iDim)
+{
+    FILE * sFile;
+    sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
+    int iErr = 0;
+    //  Check if the file is well opened
+    if (sFile)
+    {
+        fprintf(sFile,",");
+        std::map<double, std::map<std::size_t, std::vector<double> > >::const_iterator iter = mData.begin();
+        for (std::map<std::size_t, std::vector<double> >::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
+        {
+            fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->first);
+        }
+        fprintf(sFile, "\n");
+        for ( ; iter != mData.end() ; ++iter)
+        {
+            fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), iter->first);
+            for (std::map<std::size_t, std::vector<double> >::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
+            {
+                if (iDim >= it->second.size())
+                {
+                    iErr = 1;
+                    std::cout << "Print::PrintInFile : Index out of bounds" << std::endl;
+                    break;
+                }
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->second[iDim]);
+            }
+            if (iErr)
+            {
+                break;
+            }
+            fprintf(sFile, "\n");
+        }
+        fclose(sFile);
+    }
+}

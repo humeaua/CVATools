@@ -23,11 +23,14 @@ public:
     
     void Reallocate(int N, int M);
     
-	double& operator ()(int i, int j);
-	double& operator ()(int i, int j) const;
+	double operator ()(int i, int j);
+	double operator ()(int i, int j) const;
     
-    double& operator ()(std::size_t i, std::size_t j);
-	double& operator ()(std::size_t i, std::size_t j) const;
+    double operator ()(std::size_t i, std::size_t j);
+	double operator ()(std::size_t i, std::size_t j) const;
+    
+    void set(int i, int j, double value);
+    void set(std::size_t i, std::size_t j, double value);
     
 	int getrows() const;
 	int getcols() const;
@@ -37,7 +40,8 @@ public:
 protected:
 	int rowsize;
 	int colsize;
-	double* data;
+	//double* data;
+    std::vector<double> data;
     
 };
 

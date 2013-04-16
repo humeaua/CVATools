@@ -42,12 +42,15 @@ Matrix DiffusionProcessMultiDim::MultiVariance(double t0, DVector dx, double dt)
     for (std::size_t iRow = 0 ; iRow < iNDimensions_ ; ++iRow)
     {
         double dSigmai = dMultiVol[iRow];
-        dResult(iRow, iRow) = dSigmai * dSigmai * dt;
+        //dResult(iRow, iRow) = dSigmai * dSigmai * dt;
+        dResult.set(iRow, iRow, dSigmai * dSigmai * dt);
         for (std::size_t iCol = iRow + 1 ; iCol < iNDimensions_ ; ++iCol)
         {
             double dSigmaj = dMultiVol[iCol];
-            dResult(iRow, iCol) = dSigmai * dSigmaj * sCorrelationMatrix_(iRow,iCol) * dt;
-            dResult(iCol, iRow) = dResult(iRow,iCol);
+            //dResult(iRow, iCol) = dSigmai * dSigmaj * sCorrelationMatrix_(iRow,iCol) * dt;
+            dResult.set(iRow, iCol, dSigmai * dSigmaj * sCorrelationMatrix_(iRow,iCol) * dt);
+            //dResult(iCol, iRow) = dResult(iRow,iCol);
+            dResult.set(iCol, iRow, dResult(iRow,iCol));
         }
     }
     return dResult;

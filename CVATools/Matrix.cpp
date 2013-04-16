@@ -15,55 +15,72 @@ Matrix::Matrix(int N, int M)
 {
     rowsize = N;
     colsize = M;
-    data=new double[rowsize*colsize];
+    data.resize(rowsize*colsize);
 }
 
 Matrix::Matrix(std::size_t N, std::size_t M)
 {
     rowsize = static_cast<int>(N);
     colsize = static_cast<int>(M);
-    data=new double[rowsize*colsize];
+    data.resize(rowsize*colsize);
 }
 
 Matrix::Matrix(const Matrix& m)
 {
     rowsize = m.rowsize;
     colsize = m.colsize;
-    data = new double[rowsize*colsize];
-    memcpy(m.data, data, rowsize*colsize*sizeof(double));
+    data.resize(rowsize*colsize);
+    for (std::size_t i = 0 ; i < rowsize ; ++i)
+    {
+        for (std::size_t j = 0 ; j < colsize ; ++j)
+        {
+            //(*this)(i,j) = m(i,j);
+            set(i,j,m(i,j));
+        }
+    }
 }
 
 Matrix::~Matrix()
 {
-    delete [] data; data=0;
+    data.clear();
 }
 
 void Matrix::Reallocate(int N, int M)
 {
-    free(data);
+    data.clear();
     rowsize = N;
     colsize = M;
-    data = new double[rowsize * colsize];
+    data.resize(rowsize * colsize);
 }
 
-double& Matrix::operator ()(int i, int j)
+double Matrix::operator ()(int i, int j)
 {
     return data[i + rowsize*j];
 }
 
-double& Matrix::operator ()(int i, int j) const
+double Matrix::operator ()(int i, int j) const
 {
     return data[i + rowsize*j];
 }
 
-double& Matrix::operator ()(std::size_t i, std::size_t j)
+double Matrix::operator ()(std::size_t i, std::size_t j)
 {
     return data[i + rowsize*j];
 }
 
-double& Matrix::operator ()(std::size_t i, std::size_t j) const
+double Matrix::operator ()(std::size_t i, std::size_t j) const
 {
     return data[i + rowsize*j];
+}
+
+void Matrix::set(int i, int j, double value)
+{
+    data[i + rowsize*j] = value;
+}
+
+void Matrix::set(std::size_t i, std::size_t j, double value)
+{
+    data[i + rowsize*j] = value;
 }
 
 int Matrix::getrows() const
@@ -85,21 +102,23 @@ void Matrix::print()
         }
         std::cout << std::endl;
     }
-    std::cout << "rows: " << rowsize << "  cols: " << colsize << "  data: " << data << std::endl;
+    //std::cout << "rows: " << rowsize << "  cols: " << colsize << "  data: " << data << std::endl;
 }
 
 void addmatrix(Matrix& New, const Matrix& One, const Matrix& Two)
 {
     for (int i=0;i<One.getrows();i++)
         for (int j=0;j<One.getcols();j++)
-            New(i,j) = One(i,j) + Two(i,j);
+            //New(i,j) = One(i,j) + Two(i,j);
+            New.set(i, j, One(i,j) + Two(i,j));
 }
 
 void transpose(Matrix& T, const Matrix& mat)
 {
     for (int i=0; i<mat.getcols(); i++)
         for (int j=0; j<mat.getrows(); j++)
-            T(i,j) = mat(j,i);
+            //T(i,j) = mat(j,i);
+            T.set(i,j, mat(j,i));
 }
 
 void multmatrix(Matrix& New1, const Matrix& one, const Matrix& two)
@@ -108,11 +127,12 @@ void multmatrix(Matrix& New1, const Matrix& one, const Matrix& two)
     {
         for (int j=0; j<two.getcols();j++)
         {
-            New1(i,j)=0;
+            double dValue = 0;
             for (int k=0; k<one.getcols();k++)
             {
-                New1(i,j) += one(i,k)*two(k,j);
+                dValue += one(i,k)*two(k,j);
             }
+            New1.set(i,j,dValue);
         }
     }
 }
@@ -210,7 +230,8 @@ void matrixinverse(Matrix& hi, const Matrix& mat)
     {
         for (int j=0;j<mat.getcols();j++)
         {
-            hi(i,j) = J[i][mat.getcols()+ j];
+            //hi(i,j) = J[i][mat.getcols()+ j];
+            hi.set(i, j, J[i][mat.getcols()+ j]);
         }
     }
 }
@@ -276,7 +297,8 @@ void matrixLU(Matrix& L, Matrix& U, const Matrix& mat)
     {
         for (int j=0;j<mat.getcols();j++)
         {
-            U(i,j) = J[i][j];
+            //U(i,j) = J[i][j];
+            U.set(i, j, J[i][j]);
         }
     }
     
@@ -284,7 +306,8 @@ void matrixLU(Matrix& L, Matrix& U, const Matrix& mat)
     {
         for (int j=0;j<mat.getcols();j++)
         {
-            L(i,j) = LL[i][j];
+            //L(i,j) = LL[i][j];
+            L.set(i, j, LL[i][j]);
         }
     }
 }
@@ -358,7 +381,8 @@ void CholeskiDecomposition(//   Input
     {
         for (int j=0;j<iNRows;j++)
         {
-            dSquareRoot(i,j) = L[i][j];
+            //dSquareRoot(i,j) = L[i][j];
+            dSquareRoot.set(i, j, L[i][j]);
         }
     }
 }

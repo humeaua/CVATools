@@ -17,9 +17,7 @@ DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, con
 }
 
 DiffusionProcessMultiDim::~DiffusionProcessMultiDim()
-{
-    sCorrelationMatrix_.~Matrix();
-}
+{}
 
 //  MultiDimensional Expectation
 DVector DiffusionProcessMultiDim::MultiExpectation(double t0, DVector dx, double dt) const

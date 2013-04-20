@@ -16,8 +16,6 @@
 #include <cmath>
 #include <sstream>
 
-#include "MyArray.h"
-
 #define NUM_THREADS 5
 
 /*int main (int argc, const char * argv[])
@@ -162,11 +160,6 @@ int main()
             Print sPrint("/Users/alexhum49/Desktop/Margrabe_" + out.str() + ".csv", false, 10);
             sPrint.PrintInFile(sDatamap,i);
         }
-        
-        //  Test of valarray
-        std::vector<double> sVector = sDatamap.find(0)->second.find(0)->second;
-        MyArray<double> sArray(sVector);
-        std::cout << "Sum of Array : " << sArray.sum() << std::endl;
     }
 }
 

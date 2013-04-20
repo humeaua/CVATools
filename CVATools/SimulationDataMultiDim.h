@@ -35,6 +35,9 @@ public:
     // Getter
     virtual std::map<double, std::map<std::size_t, DVector> > GetData() const;
     virtual DVector GetData(double dDate, std::size_t iPath) const;
+    
+    //  Apply functions
+    virtual void Apply(double (*func)(double));
 };
 
 #endif

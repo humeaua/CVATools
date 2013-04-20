@@ -160,6 +160,15 @@ int main()
             Print sPrint("/Users/alexhum49/Desktop/Margrabe_" + out.str() + ".csv", false, 10);
             sPrint.PrintInFile(sDatamap,i);
         }
+        
+        //  Test for apply function
+        /*sData.Apply(exp);
+        sDatamap = sData.GetData();
+        DVector firstvect = sDatamap.find(0)->second.find(0)->second;
+        for (std::size_t i = 0 ; i < firstvect.size() ; ++i)
+        {
+            std::cout << i << " " << firstvect[i] << std::endl;
+        }*/
     }
 }
 

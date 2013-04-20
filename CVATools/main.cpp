@@ -166,7 +166,7 @@ int main()
         //  Test of valarray
         std::vector<double> sVector = sDatamap.find(0)->second.find(0)->second;
         MyArray<double> sArray(sVector);
-        
+        std::cout << "Sum of Array : " << sArray.sum() << std::endl;
     }
 }
 

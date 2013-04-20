@@ -44,3 +44,16 @@ std::map<double, std::map<std::size_t, double> > SimulationData::GetData() const
 {
     return dData_;
 }
+
+void SimulationData::Apply(double (*func)(double))
+{
+    std::map<double, std::map<std::size_t, double> >::iterator itDates = dData_.begin();
+    for ( ; itDates != dData_.end() ; ++itDates)
+    {
+        std::map<std::size_t, double>::iterator itPaths = itDates->second.begin();
+        for ( ; itPaths != itDates->second.end() ; ++itPaths)
+        {
+            itPaths->second = func(itPaths->second);
+        }
+    }
+}

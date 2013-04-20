@@ -75,6 +75,7 @@
 		4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MargrabeOptionStochasticRates.cpp; sourceTree = "<group>"; };
 		4FCA83EF170385FA00D6F8DD /* BlackScholes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackScholes.h; sourceTree = "<group>"; };
 		4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlackScholes.cpp; sourceTree = "<group>"; };
+		4FDB682617227A77003B18AC /* MyArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyArray.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				4F909B0F16ECE3F500C94591 /* main.cpp */,
+				4FDB682617227A77003B18AC /* MyArray.h */,
 				4F7A71DE1711D58A00712C34 /* Payoff.h */,
 				4F7A71DF1711D5F800712C34 /* Payoff.cpp */,
 				4F7A71E11711D75100712C34 /* PayoffVanillaOption.h */,

@@ -24,6 +24,7 @@
 		4FB76C9A17197B450025FBC7 /* PayoffMargrabe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */; };
 		4FB76C9D17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */; };
 		4FCA83F11703866D00D6F8DD /* BlackScholes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */; };
+		4FDB682917228D57003B18AC /* KernelFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682817228D57003B18AC /* KernelFunction.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,6 +76,8 @@
 		4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MargrabeOptionStochasticRates.cpp; sourceTree = "<group>"; };
 		4FCA83EF170385FA00D6F8DD /* BlackScholes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackScholes.h; sourceTree = "<group>"; };
 		4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlackScholes.cpp; sourceTree = "<group>"; };
+		4FDB682717228CD6003B18AC /* KernelFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KernelFunction.h; sourceTree = "<group>"; };
+		4FDB682817228D57003B18AC /* KernelFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KernelFunction.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				4F909B0F16ECE3F500C94591 /* main.cpp */,
+				4FDB682717228CD6003B18AC /* KernelFunction.h */,
+				4FDB682817228D57003B18AC /* KernelFunction.cpp */,
 				4F7A71DE1711D58A00712C34 /* Payoff.h */,
 				4F7A71DF1711D5F800712C34 /* Payoff.cpp */,
 				4F7A71E11711D75100712C34 /* PayoffVanillaOption.h */,
@@ -246,6 +251,7 @@
 				4FB76C9A17197B450025FBC7 /* PayoffMargrabe.cpp in Sources */,
 				4FB76C9D17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp in Sources */,
 				4F855E5417199F9000F22474 /* MargrabeOptionVasicek.cpp in Sources */,
+				4FDB682917228D57003B18AC /* KernelFunction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

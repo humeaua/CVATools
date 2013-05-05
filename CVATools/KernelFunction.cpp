@@ -10,3 +10,8 @@
 
 KernelFunction::KernelFunction(double dh) : dh_(dh)
 {}
+
+void KernelFunction::SetBandwidth(double dh)
+{
+    dh_ = dh;
+}

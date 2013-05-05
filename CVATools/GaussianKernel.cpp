@@ -17,3 +17,9 @@ double GaussianKernel::k(double u) const
     // I dropped the \frac{1}{\sqrt{2\pi}} because it will simplify itself when doing the ratio
     return exp(-0.5 * u * u / (dh_ * dh_));
 }
+
+void GaussianKernel::SetOptimalBandwidth(std::size_t iNObervations, std::size_t iDimension)
+{
+    //  Compute the correct constant for the minimization of the MISE criterion
+    dh_ = 1.0 / pow(iNObervations, 1.0 / (4.0 + iDimension));
+}

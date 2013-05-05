@@ -15,7 +15,7 @@ GaussianKernel::GaussianKernel(double dh) : KernelFunction(dh)
 double GaussianKernel::k(double u) const
 {
     // I dropped the \frac{1}{\sqrt{2\pi}} because it will simplify itself when doing the ratio
-    return exp(-0.5 * u * u / (dh_ * dh_));
+    return exp(-0.5 * u * u);
 }
 
 void GaussianKernel::SetOptimalBandwidth(std::size_t iNObervations, std::size_t iDimension)

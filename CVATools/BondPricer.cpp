@@ -10,7 +10,7 @@
 #include "Require.h"
 #include "DiscountFactor.h"
 
-BondPricer::BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::YieldCurve & sYieldCurve, Finance::MyBasis eBasis, Finance::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate) : Finance::Schedule(sStart, sEnd, sYieldCurve, eBasis, eFrequency), dCoupons_(dCoupons), dNotional_(dNotional), bIsFixedRate_(bIsFixedRate), sStart_(sStart)
+BondPricer::BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::YieldCurve & sYieldCurve, Finance::MyBasis eBasis, Finance::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate) : Finance::Schedule(sStart, sEnd, sYieldCurve, eBasis, eFrequency), dCoupons_(dCoupons), dNotional_(dNotional), bIsFixedRate_(bIsFixedRate), sStart_(sStart), sYieldCurve_(sYieldCurve)
 {
     Utilities::require(dCoupons_.size() == sSchedule_.size(), "Coupon and Schedule do not have the same size");
 }

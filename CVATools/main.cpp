@@ -16,6 +16,8 @@
 #include <cmath>
 #include <sstream>
 
+#include "BondPricer.h"
+
 #define NUM_THREADS 5
 
 /*int main (int argc, const char * argv[])
@@ -63,6 +65,7 @@ int main()
     std::cout << "2- Square root process" << std::endl;
     std::cout << "3- Black Scholes process" << std::endl;
     std::cout << "4- Two Asset simulation" << std::endl;
+    std::cout << "5- Bond Pricer" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -169,6 +172,39 @@ int main()
         {
             std::cout << i << " " << firstvect[i] << std::endl;
         }*/
+    }
+    else if (iTest == 5)
+    {
+        // Yield curve as of 10th May, 2013
+        //          1 Mo	3 Mo	6 Mo	1 Yr	2 Yr	3 Yr	5 Yr	7 Yr	10 Yr	20 Yr	30 Yr
+        // 05/10/13	0.02	0.04	0.08	0.11	0.26	0.38	0.82	1.28	1.90	2.70	3.10
+        std::vector<std::pair<double, double> > dYC;
+        dYC.push_back(std::make_pair(1.0 / 12, 0.0002));
+        dYC.push_back(std::make_pair(3.0 / 12, 0.0004));
+        dYC.push_back(std::make_pair(6.0 / 12, 0.0008));
+        dYC.push_back(std::make_pair(1.0, 0.0011));
+        dYC.push_back(std::make_pair(2.0, 0.0026));
+        dYC.push_back(std::make_pair(3.0, 0.0038));
+        dYC.push_back(std::make_pair(5.0, 0.0082));
+        dYC.push_back(std::make_pair(7.0, 0.0128));
+        dYC.push_back(std::make_pair(10.0, 0.0190));
+        dYC.push_back(std::make_pair(20.0, 0.0270));
+        dYC.push_back(std::make_pair(30.0, 0.0310));
+
+        Finance::YieldCurve sYieldCurve("USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::LIN);
+        Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034);
+        Finance::MyBasis eBasis = Finance::BONDBASIS;
+        Finance::MyFrequency eFrequency = Finance::MyFrequencyAnnual;
+        double dNotional = 1.;
+        
+        std::vector<double> dCoupons(20, 0.0);
+        bool bIsFixedRate = false;
+        
+        BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
+        std::cout << "Bond Pricer : " << sBondPricer.Price() << std::endl;
+        
+        std::cout << "Good Bye !" << std::endl;
+        
     }
 }
 

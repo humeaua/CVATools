@@ -9,6 +9,8 @@
 #ifndef CVATools_Type_h
 #define CVATools_Type_h
 
+#include <vector>
+
 typedef std::vector<double> DVector;
 
 #endif

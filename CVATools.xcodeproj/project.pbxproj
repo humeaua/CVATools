@@ -10,6 +10,17 @@
 		4F05886316F4750E003D1406 /* OrnsteinUhlenbeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F05886216F4750E003D1406 /* OrnsteinUhlenbeck.cpp */; };
 		4F05886616F47761003D1406 /* Print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F05886516F47761003D1406 /* Print.cpp */; };
 		4F0D007F16F62F74003299D9 /* SquareRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D007E16F62F74003299D9 /* SquareRoot.cpp */; };
+		4F2F461F173E857C00DA873B /* Coverage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4611173E857C00DA873B /* Coverage.cpp */; };
+		4F2F4620173E857C00DA873B /* DiscountFactor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4613173E857C00DA873B /* DiscountFactor.cpp */; };
+		4F2F4621173E857C00DA873B /* EventOfSchedule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4615173E857C00DA873B /* EventOfSchedule.cpp */; };
+		4F2F4622173E857C00DA873B /* ForwardRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4617173E857C00DA873B /* ForwardRate.cpp */; };
+		4F2F4623173E857C00DA873B /* Frequency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4619173E857C00DA873B /* Frequency.cpp */; };
+		4F2F4624173E857C00DA873B /* Schedule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F461B173E857C00DA873B /* Schedule.cpp */; };
+		4F2F4625173E857C00DA873B /* YieldCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F461D173E857C00DA873B /* YieldCurve.cpp */; };
+		4F2F462B173E85FF00DA873B /* Date.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4627173E85FF00DA873B /* Date.cpp */; };
+		4F2F462C173E85FF00DA873B /* InterExtrapolation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4629173E85FF00DA873B /* InterExtrapolation.cpp */; };
+		4F2F462F173E862800DA873B /* VectorUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F462D173E862700DA873B /* VectorUtilities.cpp */; };
+		4F2F4633173E87AF00DA873B /* BondPricer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4631173E87AF00DA873B /* BondPricer.cpp */; };
 		4F7A71E01711D5F800712C34 /* Payoff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71DF1711D5F800712C34 /* Payoff.cpp */; };
 		4F7A71E31711D7E500712C34 /* PayoffVanillaOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71E21711D7E500712C34 /* PayoffVanillaOption.cpp */; };
 		4F7A71E61711DB7100712C34 /* Payoff2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71E51711DB7100712C34 /* Payoff2D.cpp */; };
@@ -48,6 +59,30 @@
 		4F05886516F47761003D1406 /* Print.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Print.cpp; sourceTree = "<group>"; };
 		4F0D007C16F62E01003299D9 /* SquareRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareRoot.h; sourceTree = "<group>"; };
 		4F0D007E16F62F74003299D9 /* SquareRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SquareRoot.cpp; sourceTree = "<group>"; };
+		4F2F4610173E857C00DA873B /* Basis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Basis.h; path = BondPricer/Basis.h; sourceTree = "<group>"; };
+		4F2F4611173E857C00DA873B /* Coverage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Coverage.cpp; path = BondPricer/Coverage.cpp; sourceTree = "<group>"; };
+		4F2F4612173E857C00DA873B /* Coverage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Coverage.h; path = BondPricer/Coverage.h; sourceTree = "<group>"; };
+		4F2F4613173E857C00DA873B /* DiscountFactor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DiscountFactor.cpp; path = BondPricer/DiscountFactor.cpp; sourceTree = "<group>"; };
+		4F2F4614173E857C00DA873B /* DiscountFactor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscountFactor.h; path = BondPricer/DiscountFactor.h; sourceTree = "<group>"; };
+		4F2F4615173E857C00DA873B /* EventOfSchedule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventOfSchedule.cpp; path = BondPricer/EventOfSchedule.cpp; sourceTree = "<group>"; };
+		4F2F4616173E857C00DA873B /* EventOfSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventOfSchedule.h; path = BondPricer/EventOfSchedule.h; sourceTree = "<group>"; };
+		4F2F4617173E857C00DA873B /* ForwardRate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ForwardRate.cpp; path = BondPricer/ForwardRate.cpp; sourceTree = "<group>"; };
+		4F2F4618173E857C00DA873B /* ForwardRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForwardRate.h; path = BondPricer/ForwardRate.h; sourceTree = "<group>"; };
+		4F2F4619173E857C00DA873B /* Frequency.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Frequency.cpp; path = BondPricer/Frequency.cpp; sourceTree = "<group>"; };
+		4F2F461A173E857C00DA873B /* Frequency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Frequency.h; path = BondPricer/Frequency.h; sourceTree = "<group>"; };
+		4F2F461B173E857C00DA873B /* Schedule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Schedule.cpp; path = BondPricer/Schedule.cpp; sourceTree = "<group>"; };
+		4F2F461C173E857C00DA873B /* Schedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Schedule.h; path = BondPricer/Schedule.h; sourceTree = "<group>"; };
+		4F2F461D173E857C00DA873B /* YieldCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YieldCurve.cpp; path = BondPricer/YieldCurve.cpp; sourceTree = "<group>"; };
+		4F2F461E173E857C00DA873B /* YieldCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YieldCurve.h; path = BondPricer/YieldCurve.h; sourceTree = "<group>"; };
+		4F2F4626173E85F500DA873B /* Require.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Require.h; sourceTree = "<group>"; };
+		4F2F4627173E85FF00DA873B /* Date.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Date.cpp; path = BondPricer/Date.cpp; sourceTree = "<group>"; };
+		4F2F4628173E85FF00DA873B /* Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Date.h; path = BondPricer/Date.h; sourceTree = "<group>"; };
+		4F2F4629173E85FF00DA873B /* InterExtrapolation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InterExtrapolation.cpp; path = BondPricer/InterExtrapolation.cpp; sourceTree = "<group>"; };
+		4F2F462A173E85FF00DA873B /* InterExtrapolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InterExtrapolation.h; path = BondPricer/InterExtrapolation.h; sourceTree = "<group>"; };
+		4F2F462D173E862700DA873B /* VectorUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VectorUtilities.cpp; sourceTree = "<group>"; };
+		4F2F462E173E862800DA873B /* VectorUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorUtilities.h; sourceTree = "<group>"; };
+		4F2F4630173E867300DA873B /* BondPricer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BondPricer.h; path = BondPricer/BondPricer.h; sourceTree = "<group>"; };
+		4F2F4631173E87AF00DA873B /* BondPricer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BondPricer.cpp; sourceTree = "<group>"; };
 		4F7A71DE1711D58A00712C34 /* Payoff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Payoff.h; sourceTree = "<group>"; };
 		4F7A71DF1711D5F800712C34 /* Payoff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Payoff.cpp; sourceTree = "<group>"; };
 		4F7A71E11711D75100712C34 /* PayoffVanillaOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayoffVanillaOption.h; sourceTree = "<group>"; };
@@ -102,6 +137,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F2F460F173E856A00DA873B /* Bond_Pricer */ = {
+			isa = PBXGroup;
+			children = (
+				4F2F4630173E867300DA873B /* BondPricer.h */,
+				4F2F4631173E87AF00DA873B /* BondPricer.cpp */,
+				4F2F4627173E85FF00DA873B /* Date.cpp */,
+				4F2F4628173E85FF00DA873B /* Date.h */,
+				4F2F4629173E85FF00DA873B /* InterExtrapolation.cpp */,
+				4F2F462A173E85FF00DA873B /* InterExtrapolation.h */,
+				4F2F4610173E857C00DA873B /* Basis.h */,
+				4F2F4611173E857C00DA873B /* Coverage.cpp */,
+				4F2F4612173E857C00DA873B /* Coverage.h */,
+				4F2F4613173E857C00DA873B /* DiscountFactor.cpp */,
+				4F2F4614173E857C00DA873B /* DiscountFactor.h */,
+				4F2F4615173E857C00DA873B /* EventOfSchedule.cpp */,
+				4F2F4616173E857C00DA873B /* EventOfSchedule.h */,
+				4F2F4617173E857C00DA873B /* ForwardRate.cpp */,
+				4F2F4618173E857C00DA873B /* ForwardRate.h */,
+				4F2F4619173E857C00DA873B /* Frequency.cpp */,
+				4F2F461A173E857C00DA873B /* Frequency.h */,
+				4F2F461B173E857C00DA873B /* Schedule.cpp */,
+				4F2F461C173E857C00DA873B /* Schedule.h */,
+				4F2F461D173E857C00DA873B /* YieldCurve.cpp */,
+				4F2F461E173E857C00DA873B /* YieldCurve.h */,
+			);
+			name = Bond_Pricer;
+			sourceTree = "<group>";
+		};
 		4F909B0016ECE3F500C94591 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +186,10 @@
 			isa = PBXGroup;
 			children = (
 				4F909B0F16ECE3F500C94591 /* main.cpp */,
+				4F2F4626173E85F500DA873B /* Require.h */,
+				4F2F462D173E862700DA873B /* VectorUtilities.cpp */,
+				4F2F462E173E862800DA873B /* VectorUtilities.h */,
+				4F2F460F173E856A00DA873B /* Bond_Pricer */,
 				4FDB682717228CD6003B18AC /* KernelFunction.h */,
 				4FDB682817228D57003B18AC /* KernelFunction.cpp */,
 				4FDB682A17228D8F003B18AC /* GaussianKernel.h */,
@@ -260,6 +327,17 @@
 				4F855E5417199F9000F22474 /* MargrabeOptionVasicek.cpp in Sources */,
 				4FDB682917228D57003B18AC /* KernelFunction.cpp in Sources */,
 				4FDB682C17228DD8003B18AC /* GaussianKernel.cpp in Sources */,
+				4F2F461F173E857C00DA873B /* Coverage.cpp in Sources */,
+				4F2F4620173E857C00DA873B /* DiscountFactor.cpp in Sources */,
+				4F2F4621173E857C00DA873B /* EventOfSchedule.cpp in Sources */,
+				4F2F4622173E857C00DA873B /* ForwardRate.cpp in Sources */,
+				4F2F4623173E857C00DA873B /* Frequency.cpp in Sources */,
+				4F2F4624173E857C00DA873B /* Schedule.cpp in Sources */,
+				4F2F4625173E857C00DA873B /* YieldCurve.cpp in Sources */,
+				4F2F462B173E85FF00DA873B /* Date.cpp in Sources */,
+				4F2F462C173E85FF00DA873B /* InterExtrapolation.cpp in Sources */,
+				4F2F462F173E862800DA873B /* VectorUtilities.cpp in Sources */,
+				4F2F4633173E87AF00DA873B /* BondPricer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

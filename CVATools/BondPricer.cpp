@@ -23,12 +23,23 @@ BondPricer::~BondPricer()
 
 double BondPricer::Price() const
 {
+    //  Initialization of Today Date
+    std::time_t lToday;
+    std::tm *stm;
+    time(&lToday);
+    
+    stm = localtime(&lToday);
+    Utilities::Date::MyDate sTodayDate(*stm);
+    
     double dPrice = 0.;
     if (bIsFixedRate_)
     {
         for (std::size_t iDate = 0 ; iDate < dCoupons_.size() ; ++iDate)
         {
-            dPrice += dCoupons_[iDate] * sSchedule_[iDate].GetPayingDateDF() * sSchedule_[iDate].GetCoverage();
+            if (sSchedule_[iDate].GetEndDate() > sTodayDate)
+            {
+                dPrice += dCoupons_[iDate] * sSchedule_[iDate].GetPayingDateDF() * sSchedule_[iDate].GetCoverage();
+            }
         }
         dPrice += dNotional_ * sSchedule_.back().GetPayingDateDF();
     }
@@ -39,9 +50,25 @@ double BondPricer::Price() const
         dPrice += dCoupons_[0] * (sDF.DiscountFactor(sStart_) - sSchedule_[0].GetPayingDateDF());
         for (std::size_t iDate = 1 ; iDate < dCoupons_.size() ; ++iDate)
         {
-            dPrice += dCoupons_[iDate] * (sSchedule_[iDate - 1].GetPayingDateDF() - sSchedule_[iDate].GetPayingDateDF());
+            if (sSchedule_[iDate].GetEndDate() > sTodayDate)
+            {
+                dPrice += dCoupons_[iDate] * (sSchedule_[iDate - 1].GetPayingDateDF() - sSchedule_[iDate].GetPayingDateDF());
+            }
         }
         dPrice += dNotional_ * sSchedule_.back().GetPayingDateDF();
     }
     return dPrice;
+}
+
+bool BondPricer::HasAlreadyBegun() const
+{
+    //  Initialization of Today Date
+    std::time_t lToday;
+    std::tm *stm;
+    time(&lToday);
+    
+    stm = localtime(&lToday);
+    static Utilities::Date::MyDate sTodayDate(*stm);
+    
+    return sStart_ < sTodayDate;
 }

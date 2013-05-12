@@ -26,6 +26,8 @@ public:
     virtual ~BondPricer();
     
     virtual double Price() const;
+    
+    virtual bool HasAlreadyBegun() const;
 };
 
 #endif

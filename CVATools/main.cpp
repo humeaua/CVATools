@@ -197,11 +197,13 @@ int main()
         Finance::MyFrequency eFrequency = Finance::MyFrequencyAnnual;
         double dNotional = 1.;
         
-        std::vector<double> dCoupons(20, 0.0);
+        std::vector<double> dCoupons(20, 0.01);
         bool bIsFixedRate = false;
         
         BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
-        std::cout << "Bond Pricer : " << sBondPricer.Price() << std::endl;
+        double dBondPrice = sBondPricer.Price();
+        std::cout << "Bond Pricer : " << dBondPrice << std::endl;
+        std::cout << "Yield : " << sBondPricer.PriceToYield(dBondPrice) << std::endl;
         
         std::cout << "Good Bye !" << std::endl;
         

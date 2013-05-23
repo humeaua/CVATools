@@ -36,6 +36,7 @@ namespace Finance
         virtual double GetCoverage() const;
         virtual double GetPayingDateDF() const;
         virtual Utilities::Date::MyDate GetEndDate() const;
+        virtual MyBasis GetBasis() const;
     };
 }
 

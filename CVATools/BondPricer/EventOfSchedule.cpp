@@ -49,4 +49,9 @@ namespace Finance {
     {
         return sEnd_;
     }
+    
+    MyBasis EventOfSchedule::GetBasis() const
+    {
+        return eBasis_;
+    }
 }

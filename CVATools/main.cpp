@@ -204,6 +204,7 @@ int main()
         double dBondPrice = sBondPricer.Price();
         std::cout << "Bond Pricer : " << dBondPrice << std::endl;
         std::cout << "Yield : " << sBondPricer.PriceToYield(dBondPrice) << std::endl;
+        std::cout << "I-Spread : " << sBondPricer.I_Spread(dBondPrice) << std::endl;
         
         std::cout << "Good Bye !" << std::endl;
         

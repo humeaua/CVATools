@@ -469,7 +469,9 @@ namespace Utilities {
             time(&lToday);
             
             stm = localtime(&lToday);
-            return Utilities::Date::MyDate(*stm);
+            Utilities::Date::MyDate sToday(*stm);
+            sToday.Add(1900, YEAR);
+            return sToday;
         }
         
     }

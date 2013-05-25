@@ -11,14 +11,10 @@
 
 #include "Type.h"
 #include "Schedule.h"
+#include "Bond.h"
 
-class BondPricer : public Finance::Schedule {
+class BondPricer : public Bond{
 protected:
-    DVector dCoupons_;
-    double dNotional_;
-    bool bIsFixedRate_;
-    
-    Utilities::Date::MyDate sStart_;
     Finance::YieldCurve sYieldCurve_;
     
     //  Newton parameters

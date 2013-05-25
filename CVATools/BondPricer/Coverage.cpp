@@ -34,27 +34,33 @@ namespace Finance {
     
     double Coverage::ComputeCoverage()
     {
+        return GetCoverage(sStart_, sEnd_, eBasis_);
+    }
+    
+    double GetCoverage(const Utilities::Date::MyDate & sStart0, const Utilities::Date::MyDate & sEnd0, MyBasis eBasis)
+    {
         double dCoverage = 0.0;
-        long lStart = Utilities::Date::GetDate(sStart_), lEnd = Utilities::Date::GetDate(sEnd_);
+        Utilities::Date::MyDate sStart(sStart0), sEnd(sEnd0);
+        long lStart = Utilities::Date::GetDate(sStart), lEnd = Utilities::Date::GetDate(sEnd);
         
-        switch (eBasis_) 
+        switch (eBasis)
         {
             case BONDBASIS:
             case THIRTY360:
             {
-                dCoverage += (sEnd_.GetYear() - sStart_.GetYear());
-                dCoverage += (sEnd_.GetMonth() - sStart_.GetMonth()) / 12.0;
-                if (sEnd_.GetDay()== 31 || (sEnd_.GetMonth() == 2 && sEnd_.GetDay() == 29))
+                dCoverage += (sEnd.GetYear() - sStart.GetYear());
+                dCoverage += (sEnd.GetMonth() - sStart.GetMonth()) / 12.0;
+                if (sEnd.GetDay()== 31 || (sEnd.GetMonth() == 2 && sEnd.GetDay() == 29))
                 {
-                    sEnd_.SetDay(30);
+                    sEnd.SetDay(30);
                 }
-                if (sStart_.GetDay() == 31|| (sStart_.GetMonth() == 2 && sStart_.GetDay() == 29))
+                if (sStart.GetDay() == 31|| (sStart.GetMonth() == 2 && sStart.GetDay() == 29))
                 {
-                    sStart_.SetDay(30);
+                    sStart.SetDay(30);
                 }
-                dCoverage += (sEnd_.GetDay() - sStart_.GetDay()) / 360.0;
+                dCoverage += (sEnd.GetDay() - sStart.GetDay()) / 360.0;
                 break;
-            }    
+            }
             case MONEYMARKET:
             case ACT360:
             {
@@ -68,7 +74,7 @@ namespace Finance {
             }
             case ACT365:
             {
-                dCoverage = (lEnd - lStart) / (Utilities::Date::IsLeapYear(sStart_.GetYear()) ? 366.0 : 365.0);
+                dCoverage = (lEnd - lStart) / (Utilities::Date::IsLeapYear(sStart.GetYear()) ? 366.0 : 365.0);
                 break;
             }
             case ACT364:
@@ -86,5 +92,6 @@ namespace Finance {
         }
         return dCoverage;
     }
+
     
 }

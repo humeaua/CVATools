@@ -198,13 +198,20 @@ int main()
         double dNotional = 1.;
         
         std::vector<double> dCoupons(20, 0.01);
-        bool bIsFixedRate = false;
+        bool bIsFixedRate = true;
         
         BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
         double dBondPrice = sBondPricer.Price();
         std::cout << "Bond Pricer : " << dBondPrice << std::endl;
         std::cout << "Yield : " << sBondPricer.PriceToYield(dBondPrice) << std::endl;
         std::cout << "I-Spread : " << sBondPricer.I_Spread(dBondPrice) << std::endl;
+        
+        /*
+         Regression test
+         Bond Pricer : 0.732557
+         Yield : 0.0260326
+         I-Spread : -0.00121407
+         */
         
         std::cout << "Good Bye !" << std::endl;
         

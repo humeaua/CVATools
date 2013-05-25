@@ -13,41 +13,40 @@
 
 namespace Finance {
     
-    EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const YieldCurve & sYieldCurve, MyBasis eBasis) : 
+    EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis) : 
     
     sStart_(sStart),
     sEnd_(sEnd),
     eBasis_(eBasis)
     
-    {
-        Coverage sCoverage(eBasis_,  sStart_, sEnd);
-        dCoverage_ = sCoverage.ComputeCoverage();
-        
-        //  Assuming that the end date is the pay date
-        DF sDiscountFactor(sYieldCurve);
-        dPayingDateDF_ = sDiscountFactor.DiscountFactor(sEnd);
-    }
+    {}
     
     EventOfSchedule::~EventOfSchedule()
     {
-        sYieldCurve_.~YieldCurve();
         sStart_.~MyDate();
         sEnd_.~MyDate();
     }
     
     double EventOfSchedule::GetCoverage() const
     {
-        return dCoverage_;
+        class Coverage sCoverage(eBasis_,  sStart_, sEnd_);
+        return sCoverage.ComputeCoverage();
     }
     
-    double EventOfSchedule::GetPayingDateDF() const
+    double EventOfSchedule::GetPayingDateDF(const YieldCurve & sYieldCurve) const
     {
-        return dPayingDateDF_;
+        DF sDF(sYieldCurve);
+        return sDF.DiscountFactor(sEnd_);
     }
     
     Utilities::Date::MyDate EventOfSchedule::GetEndDate() const
     {
         return sEnd_;
+    }
+    
+    Utilities::Date::MyDate EventOfSchedule::GetStartDate() const
+    {
+        return sStart_;
     }
     
     MyBasis EventOfSchedule::GetBasis() const

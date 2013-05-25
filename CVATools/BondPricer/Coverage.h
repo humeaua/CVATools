@@ -32,6 +32,7 @@ namespace Finance {
         
     };
     
+    double GetCoverage(const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, MyBasis eBasis);
 }
 
 #endif

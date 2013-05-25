@@ -21,6 +21,8 @@
 		4F2F462C173E85FF00DA873B /* InterExtrapolation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4629173E85FF00DA873B /* InterExtrapolation.cpp */; };
 		4F2F462F173E862800DA873B /* VectorUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F462D173E862700DA873B /* VectorUtilities.cpp */; };
 		4F2F4633173E87AF00DA873B /* BondPricer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F4631173E87AF00DA873B /* BondPricer.cpp */; };
+		4F3BBB7517510E060071A08E /* Coupon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BBB7317510E060071A08E /* Coupon.cpp */; };
+		4F3BBB78175110680071A08E /* Bond.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BBB76175110670071A08E /* Bond.cpp */; };
 		4F7A71E01711D5F800712C34 /* Payoff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71DF1711D5F800712C34 /* Payoff.cpp */; };
 		4F7A71E31711D7E500712C34 /* PayoffVanillaOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71E21711D7E500712C34 /* PayoffVanillaOption.cpp */; };
 		4F7A71E61711DB7100712C34 /* Payoff2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A71E51711DB7100712C34 /* Payoff2D.cpp */; };
@@ -83,6 +85,10 @@
 		4F2F462E173E862800DA873B /* VectorUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorUtilities.h; sourceTree = "<group>"; };
 		4F2F4630173E867300DA873B /* BondPricer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BondPricer.h; path = BondPricer/BondPricer.h; sourceTree = "<group>"; };
 		4F2F4631173E87AF00DA873B /* BondPricer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BondPricer.cpp; sourceTree = "<group>"; };
+		4F3BBB7317510E060071A08E /* Coupon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Coupon.cpp; path = BondPricer/Coupon.cpp; sourceTree = "<group>"; };
+		4F3BBB7417510E060071A08E /* Coupon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Coupon.h; path = BondPricer/Coupon.h; sourceTree = "<group>"; };
+		4F3BBB76175110670071A08E /* Bond.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bond.cpp; path = BondPricer/Bond.cpp; sourceTree = "<group>"; };
+		4F3BBB77175110670071A08E /* Bond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bond.h; path = BondPricer/Bond.h; sourceTree = "<group>"; };
 		4F7A71DE1711D58A00712C34 /* Payoff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Payoff.h; sourceTree = "<group>"; };
 		4F7A71DF1711D5F800712C34 /* Payoff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Payoff.cpp; sourceTree = "<group>"; };
 		4F7A71E11711D75100712C34 /* PayoffVanillaOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayoffVanillaOption.h; sourceTree = "<group>"; };
@@ -144,6 +150,10 @@
 				4F2F4631173E87AF00DA873B /* BondPricer.cpp */,
 				4F2F4627173E85FF00DA873B /* Date.cpp */,
 				4F2F4628173E85FF00DA873B /* Date.h */,
+				4F3BBB7317510E060071A08E /* Coupon.cpp */,
+				4F3BBB7417510E060071A08E /* Coupon.h */,
+				4F3BBB76175110670071A08E /* Bond.cpp */,
+				4F3BBB77175110670071A08E /* Bond.h */,
 				4F2F4629173E85FF00DA873B /* InterExtrapolation.cpp */,
 				4F2F462A173E85FF00DA873B /* InterExtrapolation.h */,
 				4F2F4610173E857C00DA873B /* Basis.h */,
@@ -338,6 +348,8 @@
 				4F2F462C173E85FF00DA873B /* InterExtrapolation.cpp in Sources */,
 				4F2F462F173E862800DA873B /* VectorUtilities.cpp in Sources */,
 				4F2F4633173E87AF00DA873B /* BondPricer.cpp in Sources */,
+				4F3BBB7517510E060071A08E /* Coupon.cpp in Sources */,
+				4F3BBB78175110680071A08E /* Bond.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

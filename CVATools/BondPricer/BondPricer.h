@@ -40,6 +40,7 @@ public:
     
     //  Only for fixed coupon Bond
     virtual double PriceToYield(double dPrice) const;
+    virtual double I_Spread(double dPrice) const;
 };
 
 #endif

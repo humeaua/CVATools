@@ -81,8 +81,7 @@ namespace Utilities {
         MyDate next_date(const MyDate& d);
         
         long GetDate(const MyDate & sDate);
-        
-        
+        MyDate InitializeTodayDate();
     }
 }
 #endif

@@ -25,12 +25,7 @@ BondPricer::~BondPricer()
 double BondPricer::Price() const
 {
     //  Initialization of Today Date
-    std::time_t lToday;
-    std::tm *stm;
-    time(&lToday);
-    
-    stm = localtime(&lToday);
-    Utilities::Date::MyDate sTodayDate(*stm);
+    Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
     
     double dPrice = 0.;
     if (bIsFixedRate_)
@@ -64,12 +59,7 @@ double BondPricer::Price() const
 bool BondPricer::HasAlreadyBegun() const
 {
     //  Initialization of Today Date
-    std::time_t lToday;
-    std::tm *stm;
-    time(&lToday);
-    
-    stm = localtime(&lToday);
-    static Utilities::Date::MyDate sTodayDate(*stm);
+    Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
     
     return sStart_ < sTodayDate;
 }
@@ -126,4 +116,10 @@ double BondPricer::PriceToYield(double dPrice) const
     }
     
     return dYield;
+}
+
+double BondPricer::I_Spread(double dPrice) const
+{
+    Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
+    return PriceToYield(dPrice) - sYieldCurve_.Interp1D(sSchedule_.back().GetEndDate().Diff(sTodayDate));
 }

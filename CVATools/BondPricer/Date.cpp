@@ -461,5 +461,16 @@ namespace Utilities {
             
             return sDateToBeReturned;
         }
+        
+        MyDate InitializeTodayDate()
+        {
+            std::time_t lToday;
+            std::tm *stm;
+            time(&lToday);
+            
+            stm = localtime(&lToday);
+            return Utilities::Date::MyDate(*stm);
+        }
+        
     }
 }

@@ -17,6 +17,7 @@
 #include <sstream>
 
 #include "BondPricer.h"
+#include "RegressionTests.h"
 
 #define NUM_THREADS 5
 
@@ -61,6 +62,7 @@ int main ()
 int main()
 {
     std::cout << "Choose the test : " << std::endl;
+    std::cout << "0- Regression Tests" << std::endl;
     std::cout << "1- Ornstein Ulhenbeck Process" << std::endl;
     std::cout << "2- Square root process" << std::endl;
     std::cout << "3- Black Scholes process" << std::endl;
@@ -69,6 +71,10 @@ int main()
     std::size_t iTest = 1;
     std::cin >> iTest;
     
+    if (iTest == 0)
+    {
+        RegressionTest_BondPricing();
+    }
     if (iTest == 1)
     {
         OrnsteinUhlenbeck sOU(0.05, 0.2, 0.1, 0.2);
@@ -207,7 +213,7 @@ int main()
         std::cout << "I-Spread : " << sBondPricer.I_Spread(dBondPrice) << std::endl;
         std::cout << "Z-Spread : " << sBondPricer.Z_Spread(dBondPrice) << std::endl;
         std::cout << "Z-Spread (2% margin) : " << sBondPricer.Z_Spread(dBondPrice * 1.02) << std::endl;
-        
+                
         /*
          Regression test
          Bond Pricer : 0.733378
@@ -216,7 +222,7 @@ int main()
          Z-Spread : -0.000419156
          Z-Spread (2% margin) : -0.0015014
          */
-        
+
         std::cout << "Good Bye !" << std::endl;
     }
 }

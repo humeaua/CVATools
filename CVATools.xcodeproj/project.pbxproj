@@ -39,6 +39,7 @@
 		4FCA83F11703866D00D6F8DD /* BlackScholes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */; };
 		4FDB682917228D57003B18AC /* KernelFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682817228D57003B18AC /* KernelFunction.cpp */; };
 		4FDB682C17228DD8003B18AC /* GaussianKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682B17228DD8003B18AC /* GaussianKernel.cpp */; };
+		4FE7C1CF175223E2008174E0 /* RegressionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FE7C1CD175223E2008174E0 /* RegressionTests.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -123,6 +124,8 @@
 		4FDB682817228D57003B18AC /* KernelFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KernelFunction.cpp; sourceTree = "<group>"; };
 		4FDB682A17228D8F003B18AC /* GaussianKernel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GaussianKernel.h; sourceTree = "<group>"; };
 		4FDB682B17228DD8003B18AC /* GaussianKernel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GaussianKernel.cpp; sourceTree = "<group>"; };
+		4FE7C1CD175223E2008174E0 /* RegressionTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegressionTests.cpp; sourceTree = "<group>"; };
+		4FE7C1CE175223E2008174E0 /* RegressionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegressionTests.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				4F909B0F16ECE3F500C94591 /* main.cpp */,
+				4FE7C1CD175223E2008174E0 /* RegressionTests.cpp */,
+				4FE7C1CE175223E2008174E0 /* RegressionTests.h */,
 				4F2F4626173E85F500DA873B /* Require.h */,
 				4F2F462D173E862700DA873B /* VectorUtilities.cpp */,
 				4F2F462E173E862800DA873B /* VectorUtilities.h */,
@@ -350,6 +355,7 @@
 				4F2F4633173E87AF00DA873B /* BondPricer.cpp in Sources */,
 				4F3BBB7517510E060071A08E /* Coupon.cpp in Sources */,
 				4F3BBB78175110680071A08E /* Bond.cpp in Sources */,
+				4FE7C1CF175223E2008174E0 /* RegressionTests.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

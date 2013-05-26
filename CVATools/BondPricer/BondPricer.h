@@ -27,6 +27,8 @@ protected:
     virtual double Z_SpreadFunc(double r) const;
     virtual double Z_SpreadDeriv(double r) const;
     
+    virtual double AccruedInterest() const;
+    
 public:
     BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::YieldCurve & sYieldCurve, Finance::MyBasis eBasis, Finance::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate, double dToleranceNewton = 1e-06, std::size_t iNIterMaxNewton = 100);
     virtual ~BondPricer();

@@ -11,6 +11,7 @@
 #include "DiscountFactor.h"
 #include <cmath>
 #include "Coverage.h"
+#include "VectorUtilities.h"
 
 BondPricer::BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::YieldCurve & sYieldCurve, Finance::MyBasis eBasis, Finance::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate, double dTolerance, std::size_t iNIterMax) : sYieldCurve_(sYieldCurve), dToleranceNewton_(dTolerance), iNIterMaxNewton_(iNIterMax), Bond(dNotional, true)
 {
@@ -67,14 +68,62 @@ bool BondPricer::HasAlreadyBegun() const
 
 double BondPricer::CleanPrice() const
 {
-    //  to be implemented
-    return 0.0;
+    if (!HasAlreadyBegun())
+    {
+        return Price();
+    }
+    else
+    {
+        double dPrice = 0.;
+        Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
+        if (vCoupons_.size() > 0)
+        {
+            //  1st coupon
+            if (vCoupons_[0].GetStartDate() > sTodayDate)
+            {
+                if (vCoupons_[0].IsFixedRateCoupon())
+                {
+                    dPrice += vCoupons_[0].GetCoupon() * vCoupons_[0].GetPayingDateDF(sYieldCurve_);
+                }
+                else
+                {
+                    Finance::DF sDF(sYieldCurve_);
+                    dPrice += vCoupons_[0].GetCoupon() * (sDF.DiscountFactor(sTodayDate) - vCoupons_[0].GetPayingDateDF(sYieldCurve_));
+                }
+            }
+            for (std::size_t iDate = 1 ; iDate < vCoupons_.size() ; ++iDate)
+            {
+                if (vCoupons_[iDate].GetStartDate() > sTodayDate)
+                {
+                    if (vCoupons_[iDate].IsFixedRateCoupon())
+                    {
+                        dPrice += vCoupons_[iDate].GetCoupon() * vCoupons_[iDate].GetPayingDateDF(sYieldCurve_);
+                    }
+                    else
+                    {
+                        dPrice += vCoupons_[iDate].GetCoupon() * (vCoupons_[iDate - 1].GetPayingDateDF(sYieldCurve_) - vCoupons_[iDate].GetPayingDateDF(sYieldCurve_));
+                    }
+                }
+            }
+            if (bIsNotionalRepaidBack_)
+            {
+                dPrice += dNotional_ * vCoupons_.back().GetPayingDateDF(sYieldCurve_);
+            }
+        }
+        return dPrice;
+    }
 }
 
 double BondPricer::DirtyPrice() const
 {
-    //  to be implemented
-    return 0.0;
+    if (!HasAlreadyBegun())
+    {
+        return Price();
+    }
+    else
+    {
+        return CleanPrice() + AccruedInterest();
+    }
 }
 
 double BondPricer::PriceToYieldDeriv(double r) const
@@ -191,4 +240,24 @@ double BondPricer::Z_SpreadFunc(double r) const
         dRes += dNotional_ * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sTodayDate)) + r, -dCoverage);
     }
     return dRes;
+}
+
+double BondPricer::AccruedInterest() const
+{
+    if (HasAlreadyBegun())
+    {
+        std::vector<Utilities::Date::MyDate> sStartDates;
+        for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
+        {
+            sStartDates.push_back(vCoupons_[iDate].GetStartDate());
+        }
+        Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
+        
+        int iFind = Utilities::FindInVector(sStartDates, sTodayDate);
+        return vCoupons_[iFind].GetPayingDateDF(sYieldCurve_) * Finance::GetCoverage(sTodayDate, vCoupons_[iFind].GetEndDate(), vCoupons_[iFind].GetBasis()) * vCoupons_[iFind].GetCoupon();
+    }
+    else
+    {
+        return 0.0;
+    }
 }

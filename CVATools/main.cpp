@@ -205,16 +205,18 @@ int main()
         std::cout << "Bond Pricer : " << dBondPrice << std::endl;
         std::cout << "Yield : " << sBondPricer.PriceToYield(dBondPrice) << std::endl;
         std::cout << "I-Spread : " << sBondPricer.I_Spread(dBondPrice) << std::endl;
+        std::cout << "Z-Spread : " << sBondPricer.Z_Spread(dBondPrice) << std::endl;
+        std::cout << "Z-Spread (2% margin) : " << sBondPricer.Z_Spread(dBondPrice * 1.02) << std::endl;
         
         /*
          Regression test
-         Bond Pricer : 0.732557
-         Yield : 0.0260326
-         I-Spread : -0.00121407
+         Bond Pricer : 0.733378
+         Yield : 0.0259757
+         I-Spread : -0.00125763
+         Z-Spread : -0.000419156
+         Z-Spread (2% margin) : -0.0015014
          */
         
         std::cout << "Good Bye !" << std::endl;
-        
     }
 }
-

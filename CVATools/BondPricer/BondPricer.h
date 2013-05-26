@@ -24,6 +24,9 @@ protected:
     virtual double PriceToYieldFunc(double r) const;
     virtual double PriceToYieldDeriv(double r) const;
     
+    virtual double Z_SpreadFunc(double r) const;
+    virtual double Z_SpreadDeriv(double r) const;
+    
 public:
     BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::YieldCurve & sYieldCurve, Finance::MyBasis eBasis, Finance::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate, double dToleranceNewton = 1e-06, std::size_t iNIterMaxNewton = 100);
     virtual ~BondPricer();
@@ -37,6 +40,7 @@ public:
     //  Only for fixed coupon Bond
     virtual double PriceToYield(double dPrice) const;
     virtual double I_Spread(double dPrice) const;
+    virtual double Z_Spread(double dPrice) const;
 };
 
 #endif

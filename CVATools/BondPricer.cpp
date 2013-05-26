@@ -86,8 +86,11 @@ double BondPricer::PriceToYieldDeriv(double r) const
         double dCoverage = GetCoverage(sToday, vCoupons_[iDate].GetEndDate(), vCoupons_[iDate].GetBasis());
         dDeriv -= dCoverage * vCoupons_[iDate].GetCoupon() * pow(1. + r, - dCoverage - 1);
     }
-    double dCoverage = GetCoverage(sToday, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis());
-    dDeriv -= dCoverage * pow(1. + r, - dCoverage - 1);
+    if (bIsNotionalRepaidBack_)
+    {
+        double dCoverage = GetCoverage(sToday, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis());
+        dDeriv -= dCoverage * pow(1. + r, - dCoverage - 1);
+    }
     return dDeriv;
 }
 
@@ -99,7 +102,10 @@ double BondPricer::PriceToYieldFunc(double r) const
     {
         dPrice += vCoupons_[iDate].GetCoupon() * pow(1. + r, - GetCoverage(sToday, vCoupons_[iDate].GetEndDate(), vCoupons_[iDate].GetBasis()));
     }
-    dPrice += pow(1. + r, - GetCoverage(sToday, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis()));
+    if (bIsNotionalRepaidBack_)
+    {
+        dPrice += pow(1. + r, - GetCoverage(sToday, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis()));
+    }
     return dPrice;
 }
 
@@ -127,4 +133,62 @@ double BondPricer::I_Spread(double dPrice) const
 {
     Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
     return PriceToYield(dPrice) - sYieldCurve_.Interp1D(vCoupons_.back().GetEndDate().Diff(sTodayDate));
+}
+
+double BondPricer::Z_Spread(double dPrice) const
+{
+    //  Newton Raphson method to find the yield that correspond to the price of the bond
+    double dYield = 0.0;
+    std::size_t iNIter = 0;
+    
+    double dPrice0 = Z_SpreadFunc(dYield);
+    
+    while (std::abs(dPrice0 - dPrice) > dToleranceNewton_ && iNIter <= iNIterMaxNewton_)
+    {
+        dYield -= (dPrice0 - dPrice) / Z_SpreadDeriv(dYield);
+        dPrice0 = Z_SpreadFunc(dYield);
+        
+        //  Update number of iterations
+        iNIter++;
+    }
+    
+    return dYield;
+}
+
+double BondPricer::Z_SpreadDeriv(double r) const
+{
+    double dRes = 0.;
+    Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
+    for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
+    {
+        Utilities::Date::MyDate sEndDate = vCoupons_[iDate].GetEndDate();
+        double dCoverage = Finance::GetCoverage(sTodayDate, sEndDate, vCoupons_[iDate].GetBasis());
+        dRes -= dCoverage * vCoupons_[iDate].GetCoupon() * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sTodayDate)) + r, -dCoverage - 1);
+    }
+    if (bIsNotionalRepaidBack_)
+    {
+        Utilities::Date::MyDate sEndDate = vCoupons_.back().GetEndDate();
+        double dCoverage = Finance::GetCoverage(sTodayDate, sEndDate, vCoupons_.back().GetBasis());
+        dRes -= dCoverage * dNotional_ * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sTodayDate)) + r, -dCoverage - 1);
+    }
+    return dRes;
+}
+
+double BondPricer::Z_SpreadFunc(double r) const
+{
+    double dRes = 0.;
+    Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
+    for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
+    {
+        Utilities::Date::MyDate sEndDate = vCoupons_[iDate].GetEndDate();
+        double dCoverage = Finance::GetCoverage(sTodayDate, sEndDate, vCoupons_[iDate].GetBasis());
+        dRes += vCoupons_[iDate].GetCoupon() * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sTodayDate)) + r, -dCoverage);
+    }
+    if (bIsNotionalRepaidBack_)
+    {
+        Utilities::Date::MyDate sEndDate = vCoupons_.back().GetEndDate();
+        double dCoverage = Finance::GetCoverage(sTodayDate, sEndDate, vCoupons_.back().GetBasis());
+        dRes += dNotional_ * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sTodayDate)) + r, -dCoverage);
+    }
+    return dRes;
 }

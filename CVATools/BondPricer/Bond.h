@@ -23,6 +23,16 @@ void CreateBond(//  Inputs
                 //  Output
                 std::vector<Coupon> & vCoupons);
 
+void CreateBond(//  Inputs
+                const std::vector<double> & dCoupons,
+                const Utilities::Date::MyDate & sStart,
+                const Utilities::Date::MyDate & sEnd,
+                Finance::MyBasis eBasis,
+                Finance::MyFrequency eFrequency,
+                const std::vector<bool> & bIsFixedRate,
+                //  Output
+                std::vector<Coupon> & vCoupons);
+
 class Bond {
 protected:
     std::vector<Coupon> vCoupons_;

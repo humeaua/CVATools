@@ -184,7 +184,7 @@ namespace Utilities
                     }
                 }
                 
-                if (eInterpolationType_ != LIN && eInterpolationType_ != SPLINE_CUBIC)
+                if (eInterpolationType_ != LIN && eInterpolationType_ != SPLINE_CUBIC && eInterpolationType_ != RAW)
                 {
                     //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
                     if (iValue == -1)
@@ -279,7 +279,7 @@ namespace Utilities
                         {
                             throw std::runtime_error("Cannot perform Raw interpolation, variable is too small");
                         }
-                        dResult = 1.0 / dVariable * ((dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]) * (dValues_[iValue2] - dValues_[iValue1]) + (dVariables_[iValue1] - dVariable) / (dVariables_[iValue2] - dVariables_[iValue1]) * (dValues_[iValue2] - dValues_[iValue1]));
+                        dResult = 1.0 / dVariable * ((dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue1] * dVariables_[iValue1] + (dVariables_[iValue2] - dVariable) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue2] * dVariables_[iValue2] );
                         break;
                     }
                         

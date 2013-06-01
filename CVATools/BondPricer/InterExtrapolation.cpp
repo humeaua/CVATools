@@ -11,6 +11,7 @@
 #include "VectorUtilities.h"
 #include <cmath>
 #include "Require.h"
+#include <stdexcept>
 
 namespace Utilities
 {
@@ -265,6 +266,20 @@ namespace Utilities
                             std::size_t n = dVariables_.size();
                             dResult = dValues_.back() + (dVariable - dVariables_.back()) * (-(dValues_[n - 1] - dValues_[n - 2])/(dVariables_[n - 1] - dVariables_[n - 2]) + (dSecondDerivativeValues_[n - 2]) /(6.0 * (dVariables_[n - 1] - dVariables_[n - 2])) + (dSecondDerivativeValues_[n - 1]) /(3.0 * (dVariables_[n - 1] - dVariables_[n - 2])));
                         }
+                        break;
+                    }
+                    case RAW:
+                    {
+                        //  raw interpolation as described in http://www.math.ku.dk/~rolf/HaganWest.pdf by Hagan and West.
+                        //  Linear interpolation in the log of the discount factors
+#ifndef EPSILON_RAW
+#define EPSILON_RAW 1e-07
+#endif
+                        if (dVariable < EPSILON_RAW)
+                        {
+                            throw std::runtime_error("Cannot perform Raw interpolation, variable is too small");
+                        }
+                        dResult = 1.0 / dVariable * ((dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]) * (dValues_[iValue2] - dValues_[iValue1]) + (dVariables_[iValue1] - dVariable) / (dVariables_[iValue2] - dVariables_[iValue1]) * (dValues_[iValue2] - dValues_[iValue1]));
                         break;
                     }
                         

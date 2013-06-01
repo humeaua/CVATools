@@ -22,7 +22,8 @@ namespace Utilities
             NEAR, 
             RIGHT_CONTINUOUS,
             LEFT_CONTINUOUS,
-            SPLINE_CUBIC
+            SPLINE_CUBIC,
+            RAW
         }InterExtrapolationType;
         
         class InterExtrapolation1D

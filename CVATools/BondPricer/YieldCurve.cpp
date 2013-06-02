@@ -35,7 +35,10 @@ namespace Finance {
     
     double YieldCurve::YC(double t) const
     {
-        if (t < 1e-03)
+#ifndef EPSILON_YC
+#define EPSILON_YC 1e-03
+#endif
+        if (t < EPSILON_YC)
         {
             return dValues_[0];
         }

@@ -17,6 +17,7 @@
 #include <sstream>
 
 #include "BondPricer.h"
+#include "GaussianKernel.h"
 #include "RegressionTests.h"
 
 #define NUM_THREADS 5
@@ -69,6 +70,7 @@ int main()
     std::cout << "4- Two Asset simulation" << std::endl;
     std::cout << "5- Bond Pricer" << std::endl;
     std::cout << "6- Yield Curve interpolation" << std::endl;
+    std::cout << "7- Kernel Estimation" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -251,5 +253,28 @@ int main()
             double dT = (double)i / 10.0;
             std::cout << dT << ";" << sYieldCurve.YC(dT) << std::endl;
         }
+    }
+    else if (iTest == 7)
+    {
+        try
+        {
+            std::vector<std::pair<double, double> > dXY;
+            for (std::size_t i = 0 ; i < 100 ; ++i)
+            {
+                dXY.push_back(std::make_pair(i / 10.0, i / 10.0));
+            }
+            GaussianKernel sGaussianKernel(0.1, 1.0e-7);
+            
+            for (double x = 0 ; x < 11 ; x += 0.01)
+            {
+                std::cout << x << ";" << sGaussianKernel.Estimate(dXY, x) << std::endl;
+            }
+            
+        }
+        catch (std::exception & e)
+        {
+            std::cout << "Error : " << e.what() << std::endl;
+        }
+        
     }
 }

@@ -9,7 +9,7 @@
 #include "GaussianKernel.h"
 #include <cmath>
 
-GaussianKernel::GaussianKernel(double dh) : KernelFunction(dh)
+GaussianKernel::GaussianKernel(double dh, double dEpsRegression) : KernelFunction(dh, dEpsRegression)
 {}
 
 double GaussianKernel::k(double u) const

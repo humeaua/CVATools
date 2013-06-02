@@ -22,7 +22,7 @@ namespace Finance {
         
     public:
         YieldCurve();
-        YieldCurve(const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC, Utilities::Interp::InterExtrapolationType eInterExtrapolationType = Utilities::Interp::RAW);
+        YieldCurve(const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC, Utilities::Interp::InterExtrapolationType eInterExtrapolationType = Utilities::Interp::LIN);
         virtual ~YieldCurve();
         
         virtual std::string GetCurrency() const;

@@ -33,6 +33,7 @@
 		4F909B1016ECE3F500C94591 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F909B0F16ECE3F500C94591 /* main.cpp */; };
 		4F909B1216ECE3F500C94591 /* CVATools.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F909B1116ECE3F500C94591 /* CVATools.1 */; };
 		4F9C174116F34D62006E37CB /* DiffusionProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */; };
+		4FB37B46175D28E300506085 /* NewtonRaphson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB37B44175D28E300506085 /* NewtonRaphson.cpp */; };
 		4FB6DDBD16FDB8C10068590A /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB6DDBC16FDB8C10068590A /* Matrix.cpp */; };
 		4FB76C9A17197B450025FBC7 /* PayoffMargrabe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */; };
 		4FB76C9D17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */; };
@@ -113,6 +114,8 @@
 		4F967C1B1709B86D0044F19B /* libCVAToolsLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libCVAToolsLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffusionProcess.cpp; sourceTree = "<group>"; };
 		4F9C174016F34D62006E37CB /* DiffusionProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffusionProcess.h; sourceTree = "<group>"; };
+		4FB37B44175D28E300506085 /* NewtonRaphson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewtonRaphson.cpp; sourceTree = "<group>"; };
+		4FB37B45175D28E300506085 /* NewtonRaphson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewtonRaphson.h; sourceTree = "<group>"; };
 		4FB6DDBB16FDB8990068590A /* Matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		4FB6DDBC16FDB8C10068590A /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 		4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PayoffMargrabe.cpp; sourceTree = "<group>"; };
@@ -204,6 +207,8 @@
 				4F2F4626173E85F500DA873B /* Require.h */,
 				4F2F462D173E862700DA873B /* VectorUtilities.cpp */,
 				4F2F462E173E862800DA873B /* VectorUtilities.h */,
+				4FB37B44175D28E300506085 /* NewtonRaphson.cpp */,
+				4FB37B45175D28E300506085 /* NewtonRaphson.h */,
 				4F2F460F173E856A00DA873B /* Bond_Pricer */,
 				4FDB682717228CD6003B18AC /* KernelFunction.h */,
 				4FDB682817228D57003B18AC /* KernelFunction.cpp */,
@@ -356,6 +361,7 @@
 				4F3BBB7517510E060071A08E /* Coupon.cpp in Sources */,
 				4F3BBB78175110680071A08E /* Bond.cpp in Sources */,
 				4FE7C1CF175223E2008174E0 /* RegressionTests.cpp in Sources */,
+				4FB37B46175D28E300506085 /* NewtonRaphson.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

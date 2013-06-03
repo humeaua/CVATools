@@ -464,13 +464,9 @@ namespace Utilities {
         
         MyDate InitializeTodayDate()
         {
-            std::time_t lToday;
-            std::tm *stm;
-            time(&lToday);
+            Utilities::Date::MyDate sToday;
+            sToday.SetLocalDate();
             
-            stm = localtime(&lToday);
-            Utilities::Date::MyDate sToday(*stm);
-            sToday.Add(1900, YEAR);
             return sToday;
         }
         

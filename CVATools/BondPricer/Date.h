@@ -36,7 +36,6 @@ namespace Utilities {
             int iYear_;
             int iMonth_;
             int iDay_;
-            virtual void SetLocalDate();
         public:
             MyDate();
             MyDate(const int& day, const int& month, const int& year);
@@ -68,6 +67,7 @@ namespace Utilities {
             virtual void Print() const;
             
             virtual double Diff(const MyDate & sDate) const;
+            virtual void SetLocalDate();
         };
         
         bool operator == (const MyDate&, const MyDate&); // comparison operators

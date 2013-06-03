@@ -68,6 +68,8 @@ namespace Utilities {
             
             virtual double Diff(const MyDate & sDate) const;
             virtual void SetLocalDate();
+            
+            virtual std::tm Totm() const;
         };
         
         bool operator == (const MyDate&, const MyDate&); // comparison operators

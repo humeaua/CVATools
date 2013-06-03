@@ -444,22 +444,26 @@ namespace Utilities {
             return sTime0;
         }
         
+        std::tm MyDate::Totm() const
+        {
+            std::tm sDateToBeReturned;
+            sDateToBeReturned.tm_mday   = GetDay();
+            sDateToBeReturned.tm_mon    = GetMonth();
+            sDateToBeReturned.tm_year   = GetYear();
+            
+            sDateToBeReturned.tm_min    = 0;
+            sDateToBeReturned.tm_sec    = 0;
+            sDateToBeReturned.tm_hour   = 0;
+            return sDateToBeReturned;
+        }
+        
         std::tm Add(const std::tm& sDate, long lUnit, TimeUnits eTimeUnit)
         {
             MyDate sMyDate(sDate);
             
             sMyDate.Add(lUnit, eTimeUnit);
             
-            std::tm sDateToBeReturned;
-            sDateToBeReturned.tm_mday   = sMyDate.GetDay();
-            sDateToBeReturned.tm_mon    = sMyDate.GetMonth();
-            sDateToBeReturned.tm_year   = sMyDate.GetYear();
-            
-            sDateToBeReturned.tm_min    = 0;
-            sDateToBeReturned.tm_sec    = 0;
-            sDateToBeReturned.tm_hour   = 0;
-            
-            return sDateToBeReturned;
+            return sMyDate.Totm();
         }
         
         MyDate InitializeTodayDate()

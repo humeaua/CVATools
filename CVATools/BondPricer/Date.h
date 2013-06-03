@@ -30,6 +30,8 @@ namespace Utilities {
         std::tm GetTime(long lDate);
         long GetDate(const std::tm & sTime);
         
+        tm CorrectTime(const tm& sTime);
+        
         class MyDate
         {
         protected:
@@ -44,10 +46,10 @@ namespace Utilities {
             virtual ~MyDate();
             
             virtual bool IsValid() const;
-            //virtual bool IsBusinessDay() const;
+            virtual bool IsBusinessDay() const;
             virtual bool IsLeapYear() const;
             
-            //virtual bool IsWeekendDay() const;
+            virtual bool IsWeekendDay() const;
             
             virtual int GetDay() const ;
             virtual int GetMonth() const ;

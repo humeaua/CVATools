@@ -7,10 +7,14 @@
 //
 
 #include "Date.h"
+#include "VectorUtilities.h"
 
 namespace Utilities {
     
     namespace Date {
+        
+        int DaysAtBeginningOfEachMonth[] = {/*Jan*/0, /*Feb*/31, /*Mar*/59, /*Apr*/90, /*May*/120, /*Jun*/151, /*Jul*/181, /*Aug*/212, /*Sep*/243, /*Oct*/273, /*Nov*/304, /*Dec*/334};
+        std::vector<long> Holidays;
         
         MyDate::MyDate()
         {
@@ -63,32 +67,45 @@ namespace Utilities {
         int MyDate::GetDay() const
         {
             return iDay_;
-        };
+        }
         
         int MyDate::GetMonth() const
         {
             return iMonth_;
-        };
+        }
         
         int MyDate::GetYear() const
         {
             return iYear_;
-        };
+        }
         
         void MyDate::SetDay(const int& iDay)
         {
             iDay_ = iDay;
-        };
+        }
         
         void MyDate::SetMonth(const int& iMonth)
         {
             iMonth_ = iMonth;
-        };
+        }
         
         void MyDate::SetYear(const int& iYear)
         {
             iYear_ = iYear;
-        };
+        }
+        
+        bool MyDate::IsWeekendDay() const
+        {
+            std::tm stm = Totm();
+            return (stm.tm_wday == 0 || stm.tm_wday == 6);
+        }
+        
+        bool MyDate::IsBusinessDay() const
+        {
+            std::size_t iWhere = 0;
+            long lDate = GetDate(*this);
+            return IsWeekendDay() || Utilities::IsFound(Holidays, lDate, &iWhere);
+        }
         
         void MyDate::SetLocalDate()
         {
@@ -131,7 +148,7 @@ namespace Utilities {
                 return false;
             
             return true;
-        };
+        }
         
         bool operator == (const MyDate& d1,const MyDate& d2)
         {
@@ -151,7 +168,7 @@ namespace Utilities {
             if (! (d1.IsValid() && (d2.IsValid())) )
             {
                 return false;
-            };
+            }
             
             if (d1.GetYear()==d2.GetYear())
             {
@@ -164,13 +181,13 @@ namespace Utilities {
                 else
                 {
                     return (d1.GetMonth()<d2.GetMonth());
-                };
+                }
             }
             else
             {
                 // different year
                 return (d1.GetYear()<d2.GetYear());
-            };
+            }
         }
         
         // remaining operators dened in terms of the above
@@ -226,9 +243,10 @@ namespace Utilities {
             
             // must be next year
             return ndat;
-        };
+        }
         
-        MyDate previous_date(const MyDate& d){
+        MyDate previous_date(const MyDate& d)
+        {
             if (!d.IsValid())
             {
                 return MyDate();
@@ -254,7 +272,7 @@ namespace Utilities {
             pdat = MyDate(31,12,(d.GetYear() - 1));
             // try previous year
             return pdat;
-        };
+        }
         
         MyDate MyDate::operator ++(int)
         {
@@ -284,7 +302,7 @@ namespace Utilities {
             // prefix operator, return new value
             *this = previous_date(*this);
             return *this;
-        };
+        }
         
         bool IsLeapYear(const long lYear)
         {
@@ -367,8 +385,6 @@ namespace Utilities {
             std::cout << "Date : " << iDay_ << "/" << iMonth_ + 1 << "/" << iYear_ + 1900 << std::endl;
         }
         
-        int DaysAtBeginningOfEachMonth[] = {/*Jan*/0, /*Feb*/31, /*Mar*/59, /*Apr*/90, /*May*/120, /*Jun*/151, /*Jul*/181, /*Aug*/212, /*Sep*/243, /*Oct*/273, /*Nov*/304, /*Dec*/334};
-        
         long GetDate(const MyDate & sDate)
         {
             if (!sDate.IsValid())
@@ -429,7 +445,6 @@ namespace Utilities {
             return stime;
         }
         
-        tm CorrectTime(const tm& sTime);
         tm CorrectTime(const tm& sTime)
         {
             tm sTime0 = sTime;
@@ -454,6 +469,7 @@ namespace Utilities {
             sDateToBeReturned.tm_min    = 0;
             sDateToBeReturned.tm_sec    = 0;
             sDateToBeReturned.tm_hour   = 0;
+            sDateToBeReturned.tm_wday   = GetDate(sDateToBeReturned) % 7;
             return sDateToBeReturned;
         }
         

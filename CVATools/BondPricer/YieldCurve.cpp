@@ -15,7 +15,7 @@ namespace Finance {
     
     YieldCurve::YieldCurve()
     {
-        eInterpolationType_ = Utilities::Interp::LIN;
+        eInterpolationType_ = Utilities::Interp::RAW;
     }
     
     YieldCurve::YieldCurve(const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC, Utilities::Interp::InterExtrapolationType eInterExtrapolationType) : 

@@ -12,6 +12,9 @@
 MargrabeOptionVasicek::MargrabeOptionVasicek(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2) : MargrabeOptionStochasticRates(dT, dK, sCorrelationMatrix, dInitialValues, dSigma1, dSigma2), dA_(dA), dB_(dB), dSigma_(dSigma)
 {}
 
+MargrabeOptionVasicek::MargrabeOptionVasicek(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2) : MargrabeOptionStochasticRates(dT, dK, dRho12, dRhor1, dRhor2, dInitialValues, dSigma1, dSigma2), dA_(dA), dB_(dB), dSigma_(dSigma)
+{}
+
 MargrabeOptionVasicek::~MargrabeOptionVasicek()
 {}
 

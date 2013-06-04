@@ -19,7 +19,7 @@ public:
 	Matrix(int N, int M);
     Matrix(std::size_t N, std::size_t M);
 	Matrix(const Matrix& m);
-	~Matrix();
+	virtual ~Matrix();
     
     void Reallocate(int N, int M);
     
@@ -29,11 +29,11 @@ public:
     double operator ()(std::size_t i, std::size_t j);
 	double operator ()(std::size_t i, std::size_t j) const;
     
-    void set(int i, int j, double value);
-    void set(std::size_t i, std::size_t j, double value);
+    virtual void set(int i, int j, double value);
+    virtual void set(std::size_t i, std::size_t j, double value);
     
-	int getrows() const;
-	int getcols() const;
+	virtual int getrows() const;
+	virtual int getcols() const;
     
 	void print();
     

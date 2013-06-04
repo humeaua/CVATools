@@ -16,6 +16,12 @@ DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, con
     assert(iNDimensions_ == sCorrelationMatrix_.getcols());
 }
 
+template <size_t iDim>
+DiffusionProcessMultiDim::DiffusionProcessMultiDim(double dCorrelationMatrix[iDim][iDim], const DVector & dX0) : iNDimensions_(iDim), dX0_(dX0)
+{
+    sCorrelationMatrix_ = Matrix(dCorrelationMatrix, iDim);
+}
+
 DiffusionProcessMultiDim::~DiffusionProcessMultiDim()
 {}
 

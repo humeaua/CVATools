@@ -23,6 +23,9 @@ protected:
     DVector dX0_;
 public:
     DiffusionProcessMultiDim(std::size_t iNDimension, const Matrix & sCorrelationMatrix, const DVector & dX0);
+    template <size_t iDim>
+    DiffusionProcessMultiDim(double dCorrelationMatrix[iDim][iDim], const DVector & dX0);
+    
     virtual ~DiffusionProcessMultiDim();
     
     //  MultiDimensional Drift drift

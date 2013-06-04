@@ -19,6 +19,8 @@ public:
 	Matrix(int N, int M);
     Matrix(std::size_t N, std::size_t M);
 	Matrix(const Matrix& m);
+    template <size_t M>
+    Matrix(double dData[][M], int N);
 	virtual ~Matrix();
     
     void Reallocate(int N, int M);

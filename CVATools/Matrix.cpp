@@ -40,6 +40,21 @@ Matrix::Matrix(const Matrix& m)
     }
 }
 
+template <size_t M>
+Matrix::Matrix(double dData[][M], int N)
+{
+    rowsize = N;
+    colsize = M;
+    data.resize(rowsize*colsize);
+    for (std::size_t i = 0 ; i < rowsize; ++i)
+    {
+        for (std::size_t j = 0 ; j < colsize; ++j)
+        {
+            set(i,j, dData[i][j]);
+        }
+    }
+}
+
 Matrix::~Matrix()
 {
     data.clear();

@@ -41,6 +41,7 @@
 		4FDB682917228D57003B18AC /* KernelFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682817228D57003B18AC /* KernelFunction.cpp */; };
 		4FDB682C17228DD8003B18AC /* GaussianKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682B17228DD8003B18AC /* GaussianKernel.cpp */; };
 		4FE7C1CF175223E2008174E0 /* RegressionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FE7C1CD175223E2008174E0 /* RegressionTests.cpp */; };
+		4FED30431761262100E5F587 /* VolSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FED30411761262100E5F587 /* VolSurface.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -129,6 +130,8 @@
 		4FDB682B17228DD8003B18AC /* GaussianKernel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GaussianKernel.cpp; sourceTree = "<group>"; };
 		4FE7C1CD175223E2008174E0 /* RegressionTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegressionTests.cpp; sourceTree = "<group>"; };
 		4FE7C1CE175223E2008174E0 /* RegressionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegressionTests.h; sourceTree = "<group>"; };
+		4FED30411761262100E5F587 /* VolSurface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VolSurface.cpp; sourceTree = "<group>"; };
+		4FED30421761262100E5F587 /* VolSurface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VolSurface.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +233,8 @@
 				4F05886416F47758003D1406 /* Print.h */,
 				4F05886516F47761003D1406 /* Print.cpp */,
 				4F05886016F472FC003D1406 /* OrnsteinUhlenbeck.h */,
+				4FED30411761262100E5F587 /* VolSurface.cpp */,
+				4FED30421761262100E5F587 /* VolSurface.h */,
 				4F05886216F4750E003D1406 /* OrnsteinUhlenbeck.cpp */,
 				4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */,
 				4F0D007C16F62E01003299D9 /* SquareRoot.h */,
@@ -362,6 +367,7 @@
 				4F3BBB78175110680071A08E /* Bond.cpp in Sources */,
 				4FE7C1CF175223E2008174E0 /* RegressionTests.cpp in Sources */,
 				4FB37B46175D28E300506085 /* NewtonRaphson.cpp in Sources */,
+				4FED30431761262100E5F587 /* VolSurface.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

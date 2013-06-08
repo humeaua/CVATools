@@ -84,6 +84,16 @@ namespace Finance {
             }
             case BUS252:
             {
+                long lCount = 0;
+                while (sStart <= sEnd)
+                {
+                    if (sStart.IsBusinessDay())
+                    {
+                        lCount++;
+                    }
+                    sStart++;
+                }
+                dCoverage = lCount / 252.0;
                 break;
             }
             default:

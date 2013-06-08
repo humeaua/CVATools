@@ -28,7 +28,7 @@ double NewtonRaphson1D::algo_root_finder(double dInitialGuess) const
     while (fabs(df0) > dTolerance_ && iNIter <= iNIterMax_)
     {
         dfdx = df(dx);
-        if (dfdx > dEpsValueDeriv_)
+        if (fabs(dfdx) > dEpsValueDeriv_)
         {
             dx -= df0 / df(dx);
         }

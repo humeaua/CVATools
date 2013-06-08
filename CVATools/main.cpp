@@ -201,7 +201,7 @@ int main()
         dYC.push_back(std::make_pair(30.0, 0.0310));
 
         Finance::YieldCurve sYieldCurve("USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::LIN);
-        Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034);
+        Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034), sToday;
         Finance::MyBasis eBasis = Finance::BONDBASIS;
         Finance::MyFrequency eFrequency = Finance::MyFrequencyAnnual;
         double dNotional = 1.;
@@ -209,7 +209,7 @@ int main()
         std::vector<double> dCoupons(20, 0.01);
         bool bIsFixedRate = true;
         
-        BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
+        BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
         double dBondPrice = sBondPricer.Price();
         std::cout << "Bond Pricer : " << dBondPrice << std::endl;
         std::cout << "Yield : " << sBondPricer.PriceToYield(dBondPrice) << std::endl;

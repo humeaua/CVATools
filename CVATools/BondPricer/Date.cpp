@@ -485,8 +485,6 @@ namespace Utilities {
         MyDate InitializeTodayDate()
         {
             Utilities::Date::MyDate sToday;
-            sToday.SetLocalDate();
-            
             return sToday;
         }
         

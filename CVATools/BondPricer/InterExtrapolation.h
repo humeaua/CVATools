@@ -23,7 +23,8 @@ namespace Utilities
             RIGHT_CONTINUOUS,
             LEFT_CONTINUOUS,
             SPLINE_CUBIC,
-            RAW
+            RAW,
+            HERMITE_SPLINE_CUBIC
         }InterExtrapolationType;
         
         class InterExtrapolation1D

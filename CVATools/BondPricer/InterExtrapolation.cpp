@@ -107,54 +107,78 @@ namespace Utilities
         
         double InterExtrapolation1D::Interp1D(double dVariable) const
         {
-			if (eInterpolationType_ == LIN) {
+            //  NEAR Extrapolation
+            if (dVariable < dVariables_.front())
+            {
+                return dValues_.front();
+            }
+            else if (dVariable > dVariables_.back())
+            {
+                return dValues_.back();
+            }
+			if (eInterpolationType_ == LIN)
+            {
 				// BEGINNING OF LINEAR CASE
 				double dResult = 0.0 ;
 				std::size_t iUpperIndex = 0, iLowerIndex = 0;
 				bool bUpper = false, bLower = false ;
 				
-				for (std::size_t iRunningIndex = 0; iRunningIndex < dVariables_.size(); ++iRunningIndex) {
+				for (std::size_t iRunningIndex = 0; iRunningIndex < dVariables_.size(); ++iRunningIndex)
+                {
 					double dRunningVariable = dVariables_[iRunningIndex] ;
-					if (dRunningVariable > dVariable) {
-						if (bUpper) {
-							if (dRunningVariable < dVariables_[iUpperIndex]) {
+					if (dRunningVariable > dVariable)
+                    {
+						if (bUpper)
+                        {
+							if (dRunningVariable < dVariables_[iUpperIndex])
+                            {
 								iUpperIndex = iRunningIndex ;
 							}
 						}
-						else {
+						else
+                        {
 							bUpper = true ;
 							iUpperIndex = iRunningIndex ;
 						}
-						if (!bLower && dRunningVariable > dVariables_[iLowerIndex]) {
+						if (!bLower && dRunningVariable > dVariables_[iLowerIndex])
+                        {
 							iLowerIndex = iRunningIndex ;
 						}
 					}
-					if (dRunningVariable <= dVariable) {
-						if (bLower) {
-							if (dRunningVariable > dVariables_[iLowerIndex]) {
+					if (dRunningVariable <= dVariable)
+                    {
+						if (bLower)
+                        {
+							if (dRunningVariable > dVariables_[iLowerIndex])
+                            {
 								iLowerIndex = iRunningIndex ;
 							}
 						}
-						else {
+						else
+                        {
 							bLower = true ;
 							iLowerIndex = iRunningIndex ;
 						}
-						if (!bUpper && dRunningVariable <= dVariables_[iUpperIndex]) {
+						if (!bUpper && dRunningVariable <= dVariables_[iUpperIndex])
+                        {
 							iUpperIndex = iRunningIndex ;
 						}
 					}
 				}
 				
-				if (dVariables_[iUpperIndex] == dVariables_[iLowerIndex]) {
+				if (dVariables_[iUpperIndex] == dVariables_[iLowerIndex])
+                {
 					return dValues_[iUpperIndex] ;
 				}
-				else {
+				else
+                {
 					dResult = dValues_[iLowerIndex] + (dValues_[iUpperIndex] - dValues_[iLowerIndex]) * (dVariable - dVariables_[iLowerIndex]) / (dVariables_[iUpperIndex] - dVariables_[iLowerIndex]) ;
 					return dResult ;
 				}
 			}
 			// END OF LINEAR CASE
-			else {
+			else
+            {
 				
                 double dResult = 0.0;
                 int iValue, iValue1, iValue2;
@@ -184,7 +208,7 @@ namespace Utilities
                     }
                 }
                 
-                if (eInterpolationType_ != LIN && eInterpolationType_ != SPLINE_CUBIC && eInterpolationType_ != RAW)
+                if (eInterpolationType_ != LIN && eInterpolationType_ != SPLINE_CUBIC && eInterpolationType_ != RAW && eInterpolationType_ != HERMITE_SPLINE_CUBIC)
                 {
                     //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
                     if (iValue == -1)
@@ -280,6 +304,28 @@ namespace Utilities
                             throw std::runtime_error("Cannot perform Raw interpolation, variable is too small");
                         }
                         dResult = 1.0 / dVariable * ((dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue2] * dVariables_[iValue2] + (dVariables_[iValue2] - dVariable) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue1] * dVariables_[iValue1] );
+                        break;
+                    }
+                    case HERMITE_SPLINE_CUBIC:
+                    {
+                        double dm_1 = 0.0, dm_2 = 0.0;
+                        if (iValue2 == iNValues_ - 1)
+                        {
+                            dm_1 = (dValues_.back() - dValues_[iNValues_ - 2]) / (dVariables_.back() - dVariables_[iNValues_ - 2]);
+                        }
+                        else if (iValue1 == 0)
+                        {
+                            dm_2 = (dValues_[1] - dValues_[0]) / (dVariables_[1] - dVariables_[0]);
+                        }
+                        else
+                        {
+                            dm_1 = (dValues_[iValue1 + 1] - dValues_[iValue1]) / (dVariables_[iValue1 + 1] - dVariables_[iValue1]);
+                            dm_2 = (dValues_[iValue2 + 1] - dValues_[iValue2]) / (dVariables_[iValue2 + 1] - dVariables_[iValue2]);
+                        }
+                        
+                        double t = (dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]);
+                        
+                        return (2 * t * t * t - 3 * t * t + 1) * dValues_[iValue1] + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_[iValue2] - dVariables_[iValue1]) + (-2. * t * t * t + 3. * t * t) * dValues_[iValue2] + (t* t * t - t* t) * dm_2 * (dVariables_[iValue2] - dVariables_[iValue1]);
                         break;
                     }
                         

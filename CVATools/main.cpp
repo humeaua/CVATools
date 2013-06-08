@@ -246,9 +246,9 @@ int main()
         dYC.push_back(std::make_pair(20.0, 0.0270));
         dYC.push_back(std::make_pair(30.0, 0.0310));
         
-        Finance::YieldCurve sYieldCurve("USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::RAW);
+        Finance::YieldCurve sYieldCurve("USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::LIN);
         
-        for (std::size_t i = 0 ; i < 300 ; ++i)
+        for (std::size_t i = 0 ; i < 400 ; ++i)
         {
             double dT = (double)i / 10.0;
             std::cout << dT << ";" << sYieldCurve.YC(dT) << std::endl;

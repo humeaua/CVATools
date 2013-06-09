@@ -27,8 +27,7 @@ namespace Finance {
     
     double DF::DiscountFactor(const Utilities::Date::MyDate &sDate) const
     {
-        Utilities::Date::MyDate sToday;
-        double dT = sDate.Diff(sToday);
+        double dT = sDate.Diff(sToday_);
         if (dT > 0)
         {
             return DiscountFactor(dT);

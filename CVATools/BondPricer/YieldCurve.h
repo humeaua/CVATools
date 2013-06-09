@@ -11,6 +11,7 @@
 
 #include "InterExtrapolation.h"
 #include <string>
+#include "Date.h"
 
 namespace Finance {
     
@@ -19,10 +20,10 @@ namespace Finance {
     protected:
         std::string cCCY_;
         std::string cName_;
-        
+        Utilities::Date::MyDate sToday_;
     public:
         YieldCurve();
-        YieldCurve(const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC, Utilities::Interp::InterExtrapolationType eInterExtrapolationType = Utilities::Interp::RAW);
+        YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC, Utilities::Interp::InterExtrapolationType eInterExtrapolationType = Utilities::Interp::RAW);
         virtual ~YieldCurve();
         
         virtual std::string GetCurrency() const;

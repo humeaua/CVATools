@@ -49,6 +49,9 @@ namespace Utilities {
             virtual bool IsBusinessDay() const;
             virtual bool IsLeapYear() const;
             
+            virtual MyDate NextBusinessDay() const;
+            virtual MyDate PreviousBusinessDay() const;
+            
             virtual bool IsWeekendDay() const;
             
             virtual int GetDay() const ;

@@ -38,7 +38,7 @@ namespace Utilities {
         
         MyDate::MyDate(const int& day, const int& month, const int& year)
         {
-            static int length[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+            int length[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
             
             iMonth_ = std::max(1, month);
             iMonth_ = std::min(month,12);
@@ -104,7 +104,29 @@ namespace Utilities {
         {
             std::size_t iWhere = 0;
             long lDate = GetDate(*this);
-            return IsWeekendDay() || Utilities::IsFound(Holidays, lDate, &iWhere);
+            return !IsWeekendDay() || Utilities::IsFound(Holidays, lDate, &iWhere);
+        }
+        
+        MyDate MyDate::NextBusinessDay() const
+        {
+            MyDate sCopy = *this;
+            sCopy++;
+            while (!sCopy.IsBusinessDay())
+            {
+                sCopy++;
+            }
+            return sCopy;
+        }
+        
+        MyDate MyDate::PreviousBusinessDay() const
+        {
+            MyDate sCopy = *this;
+            sCopy--;
+            while (!sCopy.IsBusinessDay())
+            {
+                sCopy--;
+            }
+            return sCopy;
         }
         
         void MyDate::SetLocalDate()
@@ -329,7 +351,6 @@ namespace Utilities {
                     {
                         for (iDay = 0; iDay < iUnit ; ++iDay)
                         {
-                        
                             *this = next_date(*this);
                         }
                     }
@@ -382,7 +403,7 @@ namespace Utilities {
         
         void MyDate::Print() const
         {
-            std::cout << "Date : " << iDay_ << "/" << iMonth_ + 1 << "/" << iYear_ + 1900 << std::endl;
+            std::cout << "Date : " << iDay_ << "/" << iMonth_ << "/" << iYear_ << std::endl;
         }
         
         long GetDate(const MyDate & sDate)
@@ -395,11 +416,11 @@ namespace Utilities {
             {
                 long lResult = 1;
                 int i;
-                for (i = 0 ; i < sDate.GetYear() ; ++ i)
+                for (i = 0 ; i < sDate.GetYear() - 1900 ; ++ i)
                 {
                     lResult += IsLeapYear(i) ? 366 : 365;
                 }
-                lResult += DaysAtBeginningOfEachMonth[sDate.GetMonth()];
+                lResult += DaysAtBeginningOfEachMonth[sDate.GetMonth() - 1];
                 if (IsLeapYear(sDate.GetYear()) && sDate.GetMonth() > 2)
                 {
                     lResult++;
@@ -469,7 +490,7 @@ namespace Utilities {
             sDateToBeReturned.tm_min    = 0;
             sDateToBeReturned.tm_sec    = 0;
             sDateToBeReturned.tm_hour   = 0;
-            sDateToBeReturned.tm_wday   = GetDate(sDateToBeReturned) % 7;
+            sDateToBeReturned.tm_wday   = (GetDate(sDateToBeReturned) - 1) % 7;
             return sDateToBeReturned;
         }
         

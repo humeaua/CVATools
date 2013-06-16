@@ -71,6 +71,7 @@ int main()
     std::cout << "5- Bond Pricer" << std::endl;
     std::cout << "6- Yield Curve interpolation" << std::endl;
     std::cout << "7- Kernel Estimation" << std::endl;
+    std::cout << "8- Business Day" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -277,5 +278,21 @@ int main()
             std::cout << "Error : " << e.what() << std::endl;
         }
         
+    }
+    else if (iTest == 8)
+    {
+        Utilities::Date::MyDate sToday;
+        Utilities::Date::MyDate sNextBD = sToday.NextBusinessDay(), sPrevBD = sToday.PreviousBusinessDay();
+        
+        std::tm Today = sToday.Totm();
+        
+        std::cout << "WeekDay : " << Today.tm_wday << std::endl;
+        
+        std::cout << "Today " << std::endl;
+        sToday.Print();
+        std::cout << "Next Business Day" << std::endl;
+        sNextBD.Print();
+        std::cout << "Previous Business Day" << std::endl;
+        sPrevBD.Print();
     }
 }

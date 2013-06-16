@@ -50,7 +50,7 @@ void RegressionTest_BondPricing()
         
         Pricers::BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
         double dBondPrice = sBondPricer.Price();
-        double dRefBondPrice = 0.720238, dRefYield = 0.027131, dRefISpread = -0.000262296, dRefZSpread = 0.000538938;
+        double dRefBondPrice = 0.720238, dRefYield = 0.0270136, dRefISpread = -0.000286431, dRefZSpread = 0.000403147;
         double dError = 1.0e-5;
         
         std::size_t iError = 0;

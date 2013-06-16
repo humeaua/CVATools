@@ -19,8 +19,14 @@ namespace Pricers {
     class PriceToYieldNewton : public NewtonRaphson1D, public Bond {
     protected:
         double dPrice_;
+        Utilities::Date::MyDate sToday_;
     public:
-        PriceToYieldNewton(const Bond & sBond, double dPrice, std::size_t iNIterMax = 100, double dTolerance = 1e-06, double dEpsValueDeriv = 1e-06);
+        PriceToYieldNewton(const Bond & sBond,
+                           const Utilities::Date::MyDate & sToday,
+                           double dPrice,
+                           std::size_t iNIterMax = 100,
+                           double dTolerance = 1e-06,
+                           double dEpsValueDeriv = 1e-06);
         ~PriceToYieldNewton();
         virtual double f(double x) const;
         virtual double df(double x) const;
@@ -29,9 +35,16 @@ namespace Pricers {
     class ZSpreadNewton : public NewtonRaphson1D, public Bond {
     protected:
         Finance::YieldCurve sYieldCurve_;
+        Utilities::Date::MyDate sToday_;
         double dPrice_;
     public:
-        ZSpreadNewton(const Bond & sBond, const Finance::YieldCurve & sYieldCurve, double dPrice, std::size_t iNIterMax = 100, double dTolerance = 1e-06, double dEpsValueDeriv = 1e-06);
+        ZSpreadNewton(const Bond & sBond,
+                      const Finance::YieldCurve & sYieldCurve,
+                      const Utilities::Date::MyDate & sTodaydouble,
+                      double dPrice,
+                      std::size_t iNIterMax = 100,
+                      double dTolerance = 1e-06,
+                      double dEpsValueDeriv = 1e-06);
         ~ZSpreadNewton();
         virtual double f(double x) const;
         virtual double df(double x) const;

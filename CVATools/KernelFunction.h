@@ -21,7 +21,7 @@ public:
     KernelFunction(double dh, double dEpsRegression);
     virtual double k(double u) const = 0;
     
-    virtual void SetOptimalBandwidth(std::size_t iNObervations, std::size_t iDimension) = 0;
+    virtual void SetOptimalBandwidth(const std::vector<double>& dX, std::size_t iNObervations, std::size_t iDimension) = 0;
     virtual void SetBandwidth(double dh);
     
     virtual double Estimate(const std::vector<std::pair<double, double> > & dXY, double dX) const;

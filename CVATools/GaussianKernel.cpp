@@ -8,6 +8,7 @@
 
 #include "GaussianKernel.h"
 #include <cmath>
+#include "Statistics.h"
 
 GaussianKernel::GaussianKernel(double dh, double dEpsRegression) : KernelFunction(dh, dEpsRegression)
 {}
@@ -18,8 +19,11 @@ double GaussianKernel::k(double u) const
     return exp(-0.5 * u * u);
 }
 
-void GaussianKernel::SetOptimalBandwidth(std::size_t iNObervations, std::size_t iDimension)
+void GaussianKernel::SetOptimalBandwidth(const std::vector<double> & dX, std::size_t iNObervations, std::size_t iDimension)
 {
     //  Compute the correct constant for the minimization of the MISE criterion
-    dh_ = 1.0 / pow(iNObervations, 1.0 / (4.0 + iDimension));
+    Statistics sStats;
+    
+    //  see http://en.wikipedia.org/wiki/Kernel_density_estimation for the correct formula
+    dh_ = pow(4.0 / (3.0 *iNObervations), 1.0 / (4.0 + iDimension)) * sStats.StandardDeviation(dX);
 }

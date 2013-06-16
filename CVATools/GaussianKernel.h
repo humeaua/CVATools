@@ -17,7 +17,7 @@ public:
     GaussianKernel(double dh, double dEpsRegression);
     virtual double k(double u) const;
     
-    virtual void SetOptimalBandwidth(std::size_t iNObervations, std::size_t iDimension);
+    virtual void SetOptimalBandwidth(const std::vector<double> & dX, std::size_t iNObervations, std::size_t iDimension = 1);
 };
 
 #endif

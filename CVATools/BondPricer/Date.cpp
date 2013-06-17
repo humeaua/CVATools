@@ -8,6 +8,7 @@
 
 #include "Date.h"
 #include "VectorUtilities.h"
+#include <stdexcept>
 
 namespace Utilities {
     
@@ -385,15 +386,28 @@ namespace Utilities {
                     iYear_ += iUnit;
                     if (iYear_ < 0)
                     {
-                        //throw MyException((Err)"Year is negative : cannot be negative");
-                        std::cout << "MyDate::Add : Year cannot be negative"<< std::endl;
+                        throw std::runtime_error("MyDate::Add : Year cannot be negative");
                     }
                     break;
                     
                 case BUSINESSDAY:
+                    if (iUnit > 0)
+                    {
+                        for (std::size_t i = 0 ; i < iUnit ; ++i)
+                        {
+                            this->NextBusinessDay();
+                        }
+                    }
+                    else if (iUnit < 0)
+                    {
+                        for (std::size_t i = 0 ; i > iUnit ; --i)
+                        {
+                            this->PreviousBusinessDay();
+                        }
+                    }
+                    break;
                 default:
-                    //throw MyException((Err)"Error in Adding Date : Not yet implemented");
-                    std::cout << "MyDate::Add : Not yet implemented (Add Business Day)" << std::endl;
+                    throw std::runtime_error("MyDate::Add : Could not interpret unit");
                     break;
             }
         }

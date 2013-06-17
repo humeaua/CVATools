@@ -34,6 +34,7 @@
 		4F855E5417199F9000F22474 /* MargrabeOptionVasicek.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F855E5317199F9000F22474 /* MargrabeOptionVasicek.cpp */; };
 		4F909B1016ECE3F500C94591 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F909B0F16ECE3F500C94591 /* main.cpp */; };
 		4F909B1216ECE3F500C94591 /* CVATools.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F909B1116ECE3F500C94591 /* CVATools.1 */; };
+		4F9ABAE8176FB21600D50130 /* SVIParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F9ABAE6176FB21600D50130 /* SVIParameters.cpp */; };
 		4F9C174116F34D62006E37CB /* DiffusionProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */; };
 		4FB37B46175D28E300506085 /* NewtonRaphson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB37B44175D28E300506085 /* NewtonRaphson.cpp */; };
 		4FB6DDBD16FDB8C10068590A /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB6DDBC16FDB8C10068590A /* Matrix.cpp */; };
@@ -119,6 +120,8 @@
 		4F909B0F16ECE3F500C94591 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4F909B1116ECE3F500C94591 /* CVATools.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CVATools.1; sourceTree = "<group>"; };
 		4F967C1B1709B86D0044F19B /* libCVAToolsLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libCVAToolsLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F9ABAE6176FB21600D50130 /* SVIParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SVIParameters.cpp; sourceTree = "<group>"; };
+		4F9ABAE7176FB21600D50130 /* SVIParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIParameters.h; sourceTree = "<group>"; };
 		4F9C173F16F34D62006E37CB /* DiffusionProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffusionProcess.cpp; sourceTree = "<group>"; };
 		4F9C174016F34D62006E37CB /* DiffusionProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiffusionProcess.h; sourceTree = "<group>"; };
 		4FB37B44175D28E300506085 /* NewtonRaphson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewtonRaphson.cpp; sourceTree = "<group>"; };
@@ -243,6 +246,8 @@
 				4F05886016F472FC003D1406 /* OrnsteinUhlenbeck.h */,
 				4FED30411761262100E5F587 /* VolSurface.cpp */,
 				4FED30421761262100E5F587 /* VolSurface.h */,
+				4F9ABAE6176FB21600D50130 /* SVIParameters.cpp */,
+				4F9ABAE7176FB21600D50130 /* SVIParameters.h */,
 				4F83E6E7176DE75A0086E3E9 /* MapUtilities.cpp */,
 				4F83E6E8176DE75A0086E3E9 /* MapUtilities.h */,
 				4F05886216F4750E003D1406 /* OrnsteinUhlenbeck.cpp */,
@@ -380,6 +385,7 @@
 				4FED30431761262100E5F587 /* VolSurface.cpp in Sources */,
 				4F83E6E6176DC8320086E3E9 /* Statistics.cpp in Sources */,
 				4F83E6E9176DE75B0086E3E9 /* MapUtilities.cpp in Sources */,
+				4F9ABAE8176FB21600D50130 /* SVIParameters.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

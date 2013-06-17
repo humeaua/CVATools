@@ -25,6 +25,7 @@ public:
     virtual void SetBandwidth(double dh);
     
     virtual double Estimate(const std::vector<std::pair<double, double> > & dXY, double dX) const;
+    virtual double Estimate(const std::vector<std::pair<std::vector<double>, double> > & dXY, const std::vector<double> & dX) const;
 
 };
 

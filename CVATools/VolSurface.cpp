@@ -8,6 +8,7 @@
 
 #include "VolSurface.h"
 #include <stdexcept>
+#include "InterExtrapolation.h"
 
 VolatilitySurface::VolatilitySurface(const std::map<long, std::map<double, double> > VolSurface) : VolSurface_(VolSurface)
 {}
@@ -39,4 +40,9 @@ double VolatilitySurface::Get(long lExpiry, double dStrike) const
     {
         throw std::runtime_error("Expiry not found");
     }
+}
+
+double VolatilitySurface::Interpolate(long lExpiry, double dStrike) const
+{
+    
 }

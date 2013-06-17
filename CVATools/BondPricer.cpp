@@ -210,8 +210,7 @@ namespace Pricers {
     
     double BondPricer::I_Spread(double dPrice) const
     {
-        Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
-        return PriceToYield(dPrice) - sYieldCurve_.Interp1D(vCoupons_.back().GetEndDate().Diff(sTodayDate));
+        return PriceToYield(dPrice) - sYieldCurve_.Interp1D(vCoupons_.back().GetEndDate().Diff(sToday_));
     }
     
     double BondPricer::Z_Spread(double dPrice) const

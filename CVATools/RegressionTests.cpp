@@ -50,7 +50,7 @@ void RegressionTest_BondPricing()
         
         Pricers::BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
         double dBondPrice = sBondPricer.Price();
-        double dRefBondPrice = 0.720238, dRefYield = 0.0270136, dRefISpread = -0.000286431, dRefZSpread = 0.000403147;
+        double dRefBondPrice = 0.720238, dRefYield = 0.0270136, dRefISpread = -0.000399764, dRefZSpread = 0.000403147;
         double dError = 1.0e-5;
         
         std::size_t iError = 0;
@@ -90,7 +90,7 @@ void RegressionTest_BondPricing()
             iError++;
         }
         
-        std::cout << "Test Bond I-Spread : ";
+        std::cout << "Test Bond Z-Spread : ";
         double dZSpread = sBondPricer.Z_Spread(dBondPrice);
         if (fabs(dZSpread - dRefZSpread) < dError)
         {

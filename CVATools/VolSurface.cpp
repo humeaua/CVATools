@@ -50,5 +50,5 @@ double VolatilitySurface::Get(long lExpiry, double dStrike) const
 double VolatilitySurface::Interpolate(long lExpiry, double dStrike) const
 {
     Utilities::require(dStrike > 0.0, "VolatilitySurface::Interpolate : Strike is negative");
-    return Volatility(log(dStrike / dSpot_));
+    return Volatility(log(dStrike / dSpot_), lExpiry / 365.0);
 }

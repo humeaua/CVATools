@@ -47,6 +47,8 @@ namespace Finance {
         {
             case BONDBASIS:
             case THIRTY360:
+            case _BB:
+            case _30360:
             {
                 dCoverage += (sEnd.GetYear() - sStart.GetYear());
                 dCoverage += (sEnd.GetMonth() - sStart.GetMonth()) / 12.0;
@@ -63,6 +65,8 @@ namespace Finance {
             }
             case MONEYMARKET:
             case ACT360:
+            case _A0:
+            case _MM:
             {
                 dCoverage = (lEnd - lStart) / 360.0;
                 break;
@@ -73,16 +77,19 @@ namespace Finance {
                 break;
             }
             case ACT365:
+            case _A5:
             {
                 dCoverage = (lEnd - lStart) / (Utilities::Date::IsLeapYear(sStart.GetYear()) ? 366.0 : 365.0);
                 break;
             }
             case ACT364:
+            case _A4:
             {
                 dCoverage = (lEnd - lStart) / 364.0;
                 break;
             }
             case BUS252:
+            case _B2:
             {
                 long lCount = 0;
                 while (sStart <= sEnd)

@@ -16,9 +16,10 @@
 #include <cmath>
 #include <sstream>
 
-#include "BondPricer.h"
+#include "BondPricer/BondPricer.h"
 #include "GaussianKernel.h"
 #include "RegressionTests.h"
+#include "MuParser/muParserTest.h"
 
 #define NUM_THREADS 5
 
@@ -72,6 +73,7 @@ int main()
     std::cout << "6- Yield Curve interpolation" << std::endl;
     std::cout << "7- Kernel Estimation" << std::endl;
     std::cout << "8- Business Day" << std::endl;
+    std::cout << "9- Mu Parser Test" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -294,5 +296,10 @@ int main()
         sNextBD.Print();
         std::cout << "Previous Business Day" << std::endl;
         sPrevBD.Print();
+    }
+    else if (iTest == 9)
+    {
+        mu::Test::ParserTester sParserTester;
+        sParserTester.Run();
     }
 }

@@ -9,7 +9,7 @@
 #include <iostream>
 #include "YieldCurve.h"
 #include "VectorUtilities.h"
-#include "Require.h"
+#include <stdexcept>
 
 namespace Finance {
     
@@ -43,8 +43,14 @@ namespace Finance {
         {
             return dValues_[0];
         }
-        Utilities::require(t > 0, "t is not positive in YieldCurve::YC");
-        return Interp1D(t);
+        if (t > 0)
+        {
+            return Interp1D(t);
+        }
+        else
+        {
+            throw std::runtime_error("t is not positive in YieldCurve::YC");
+        }
     }
     
     std::string YieldCurve::GetCurrency() const
@@ -64,7 +70,8 @@ namespace Finance {
 		
         //  Test if the pillars in the yield curve are equal
         bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_, dTolerance);
-        Utilities::require(bPillarAreEqual, "Yield curve pillars are not the same. Should be the same for now ");
+        if (!bPillarAreEqual)
+            throw std::runtime_error("YieldCurve::operator + : Yield curve pillars are not the same. Should be the same for now");
         
         for (std::size_t iPillar = 0 ; iPillar < sYieldCurve.dVariables_.size() ; ++ iPillar)
         {

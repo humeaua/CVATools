@@ -7,6 +7,7 @@
 //
 
 #include "SimulationDataMultiDim.h"
+#include <stdexcept>
 
 //Default constructor
 SimulationDataMultiDim::SimulationDataMultiDim()
@@ -93,12 +94,12 @@ DVector SimulationDataMultiDim::GetData(double dDate, std::size_t iPath) const
         }
         else
         {
-            throw "Error in SimulationDataMultiDim::GetData : Could not find Path";
+            throw std::runtime_error("SimulationDataMultiDim::GetData : Could not find Path");
         }
     }
     else
     {
-        throw "Error in SimulationDataMultiDim::GetData : Could not find Date";
+        throw std::runtime_error("SimulationDataMultiDim::GetData : Could not find Date");
     }
 }
 

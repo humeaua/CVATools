@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "Frequency.h"
+#include <stdexcept>
 
 namespace Finance {
     
@@ -31,7 +32,7 @@ namespace Finance {
         }
         else
         {
-            throw "Unknown frequency in Parse Frequency";
+            throw std::runtime_error("Unknown frequency in Parse Frequency");
         }
     }
     

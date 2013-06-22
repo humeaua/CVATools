@@ -10,7 +10,6 @@
 #include "InterExtrapolation.h"
 #include "VectorUtilities.h"
 #include <cmath>
-#include "Require.h"
 #include <stdexcept>
 
 namespace Utilities
@@ -30,7 +29,8 @@ namespace Utilities
         eInterpolationType_(eInterpolationType)
         
         {
-            Utilities::require(dValues_.size() == dVariables_.size(), "Values and variables are not of the same size");
+            if (dValues_.size() != dVariables_.size())
+                throw std::runtime_error("Values and variables are not of the same size");
             if (eInterpolationType_ == SPLINE_CUBIC)
             {
                 //  Compute the second derivative

@@ -10,7 +10,7 @@
 #define CVATools_Vector_h
 
 #include <vector>
-#include "require.h"
+#include <stdexcept>
 
 template <typename T>
 T norm_2(const std::vector<T> & vect)
@@ -26,14 +26,20 @@ T norm_2(const std::vector<T> & vect)
 template <typename T>
 std::vector<T> Diff(const std::vector<T> & vect1, const std::vector<T> & vect2)
 {
-    Utilities::require(vect1.size() == vect2.size(), "Cannot compute diff, vectors do not have same size");
-    std::vector<T> vectres(vect1.size());
-    
-    for (std::size_t i = 0 ; i < vect1.size() ; ++i)
+    if (vect1.size() == vect2.size())
     {
-        vectres[i] = vect1[i] - vect2[i];
+        std::vector<T> vectres(vect1.size());
+        
+        for (std::size_t i = 0 ; i < vect1.size() ; ++i)
+        {
+            vectres[i] = vect1[i] - vect2[i];
+        }
+        return vectres;
     }
-    return vectres;
+    else
+    {
+        throw std::runtime_error("Diff : Cannot compute diff, vectors do not have same size");
+    }
 }
 
 #endif

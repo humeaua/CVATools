@@ -9,6 +9,7 @@
 
 #include "DiscountFactor.h"
 #include <cmath>
+#include <stdexcept>
 
 namespace Finance {
 	DF::DF()
@@ -34,8 +35,7 @@ namespace Finance {
         }
         else 
         {
-            std::cout << "Error in discount factor : Date is before today" << std::endl;
-            return 0;
+            throw std::runtime_error("Error in discount factor : Date is before today");
         }
     }
 }

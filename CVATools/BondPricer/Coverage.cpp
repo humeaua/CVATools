@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "Coverage.h"
+#include <stdexcept>
 
 namespace Finance {
     
@@ -104,7 +105,7 @@ namespace Finance {
                 break;
             }
             default:
-                std::cout << "Coverage : Not yet implemented" << std::endl;
+                throw std::runtime_error("Not yet implemented");
                 break;
         }
         return dCoverage;

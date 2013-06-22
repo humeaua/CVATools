@@ -8,7 +8,7 @@
 
 #include "Bond.h"
 #include "Schedule.h"
-#include "Require.h"
+#include <stdexcept>
 
 void CreateBond(//  Inputs
                 const std::vector<double> & dCoupons,
@@ -23,7 +23,8 @@ void CreateBond(//  Inputs
     Finance::Schedule sSchedule(sStart, sEnd, eBasis, eFrequency);
     
     std::vector<Finance::EventOfSchedule> vSchedule = sSchedule.GetSchedule();
-    Utilities::require(vSchedule.size() == dCoupons.size(), "CreateBond : Coupon and Schedule do not have the same size. Cannot create Bond");
+    if (vSchedule.size() != dCoupons.size())
+        throw  std::runtime_error("CreateBond : Coupon and Schedule do not have the same size. Cannot create Bond");
     
     for (std::size_t iDate = 0 ; iDate < vSchedule.size() ; ++iDate)
     {
@@ -44,8 +45,10 @@ void CreateBond(//  Inputs
     Finance::Schedule sSchedule(sStart, sEnd, eBasis, eFrequency);
     
     std::vector<Finance::EventOfSchedule> vSchedule = sSchedule.GetSchedule();
-    Utilities::require(vSchedule.size() == dCoupons.size(), "CreateBond : Coupon and Schedule do not have the same size. Cannot create Bond");
-    Utilities::require(vSchedule.size() == bIsFixedRate.size(), "CreateBond : Coupon and Fixed Rate boolean do not the same size. Cannot create Bond");
+    if (vSchedule.size() != dCoupons.size())
+        throw std::runtime_error("CreateBond : Coupon and Schedule do not have the same size. Cannot create Bond");
+    if (vSchedule.size() != bIsFixedRate.size())
+        throw std::runtime_error("CreateBond : Coupon and Fixed Rate boolean do not the same size. Cannot create Bond");
     
     for (std::size_t iDate = 0 ; iDate < vSchedule.size() ; ++iDate)
     {

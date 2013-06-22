@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
+#include <stdexcept>
 
 namespace Utilities {
     
@@ -21,6 +22,15 @@ namespace Utilities {
             fputs("\n", stderr);
             exit(EXIT_FAILURE);
         }
+    }
+    
+    inline void requireException(bool requirement,
+                                 const std::string & msg,
+                                 const std::string & cFunctionName = "")
+    {
+        std::string cMsg = cFunctionName + " : " + msg;
+        if (!requirement)
+            throw std::runtime_error(cMsg);
     }
     
     inline void requireArgs(int argc, int args,

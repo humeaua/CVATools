@@ -24,8 +24,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
 */
 #include "muParser.h"
-//#include "MathFunctions.h"
-//#include "BS.h"
+#include "MathFunctions.h"
+#include "Require.h"
 
 //--- Standard includes ------------------------------------------------------------------------
 #include <cmath>
@@ -77,10 +77,18 @@ namespace mu
     
   //---------------------------------------------------------------------------
   // finance functions
-    value_type Parser::AccCumNorm(value_type x) { return AccCumNorm(x); }
+  value_type Parser::Norm(value_type x) { return AccCumNorm(x); }
     
-    //value_type Parser::BS(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut)
-    //{ return BSlognorm(Forward, Strike, Maturity, Volatility, "PREMIUM", CallPut); }
+  value_type Parser::BS(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut)
+  {
+      Utilities::requireException(Forward > 0.0, "Forward is negative", "Parser::BS");
+      Utilities::requireException(Strike > 0.0, "Strike is negative", "Parser::BS");
+      Utilities::requireException(Volatility * sqrt(Maturity) > 0.0, "Std dev is negative", "Parser::BS");
+      
+      int iCallPut = CallPut == "Call" || CallPut == "CALL" ? 1 : -1;
+      value_type d1 = log(Forward / Strike) / (Volatility * sqrt(Maturity)) + 0.5 * Volatility * sqrt(Maturity);
+      return iCallPut * Forward * AccCumNorm(iCallPut * d1) - iCallPut * Strike * AccCumNorm(iCallPut * (d1 - Volatility * sqrt(Maturity)));
+  }
 
   //---------------------------------------------------------------------------
   /** \brief Callback for the unary minus operator.

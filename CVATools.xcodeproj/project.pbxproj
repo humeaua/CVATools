@@ -49,6 +49,7 @@
 		4FD952951775BB7900B1D25C /* muParserInt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD952881775BB7900B1D25C /* muParserInt.cpp */; };
 		4FD952961775BB7900B1D25C /* muParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9528B1775BB7900B1D25C /* muParserTest.cpp */; };
 		4FD952971775BB7900B1D25C /* muParserTokenReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9528E1775BB7900B1D25C /* muParserTokenReader.cpp */; };
+		4FD9529B1776055A00B1D25C /* MathFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD952991776055700B1D25C /* MathFunctions.cpp */; };
 		4FDB682917228D57003B18AC /* KernelFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682817228D57003B18AC /* KernelFunction.cpp */; };
 		4FDB682C17228DD8003B18AC /* GaussianKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682B17228DD8003B18AC /* GaussianKernel.cpp */; };
 		4FE7C1CF175223E2008174E0 /* RegressionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FE7C1CD175223E2008174E0 /* RegressionTests.cpp */; };
@@ -161,6 +162,8 @@
 		4FD9528D1775BB7900B1D25C /* muParserToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserToken.h; path = MuParser/muParserToken.h; sourceTree = "<group>"; };
 		4FD9528E1775BB7900B1D25C /* muParserTokenReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParserTokenReader.cpp; path = MuParser/muParserTokenReader.cpp; sourceTree = "<group>"; };
 		4FD9528F1775BB7900B1D25C /* muParserTokenReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserTokenReader.h; path = MuParser/muParserTokenReader.h; sourceTree = "<group>"; };
+		4FD952991776055700B1D25C /* MathFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathFunctions.cpp; sourceTree = "<group>"; };
+		4FD9529A1776055800B1D25C /* MathFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFunctions.h; sourceTree = "<group>"; };
 		4FDB682717228CD6003B18AC /* KernelFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KernelFunction.h; sourceTree = "<group>"; };
 		4FDB682817228D57003B18AC /* KernelFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KernelFunction.cpp; sourceTree = "<group>"; };
 		4FDB682A17228D8F003B18AC /* GaussianKernel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GaussianKernel.h; sourceTree = "<group>"; };
@@ -247,6 +250,8 @@
 				4F2F4626173E85F500DA873B /* Require.h */,
 				4F2F462D173E862700DA873B /* VectorUtilities.cpp */,
 				4F2F462E173E862800DA873B /* VectorUtilities.h */,
+				4FD952991776055700B1D25C /* MathFunctions.cpp */,
+				4FD9529A1776055800B1D25C /* MathFunctions.h */,
 				4FB37B44175D28E300506085 /* NewtonRaphson.cpp */,
 				4FB37B45175D28E300506085 /* NewtonRaphson.h */,
 				4F2F460F173E856A00DA873B /* Bond_Pricer */,
@@ -450,6 +455,7 @@
 				4FD952951775BB7900B1D25C /* muParserInt.cpp in Sources */,
 				4FD952961775BB7900B1D25C /* muParserTest.cpp in Sources */,
 				4FD952971775BB7900B1D25C /* muParserTokenReader.cpp in Sources */,
+				4FD9529B1776055A00B1D25C /* MathFunctions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

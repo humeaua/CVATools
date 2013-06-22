@@ -92,9 +92,9 @@ namespace mu
     static value_type  Sqrt(value_type);
     static value_type  Rint(value_type);
     static value_type  Sign(value_type);
-      // finance functions
-      static value_type BS(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut); 
-      static value_type AccCumNorm(value_type x);
+    // finance functions
+    static value_type BS(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut);
+    static value_type Norm(value_type x);
 
     // Prefix operators
     // !!! Unary Minus is a MUST if you want to use negative signs !!!

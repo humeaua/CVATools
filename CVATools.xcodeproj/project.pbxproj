@@ -41,6 +41,14 @@
 		4FB76C9A17197B450025FBC7 /* PayoffMargrabe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9917197B450025FBC7 /* PayoffMargrabe.cpp */; };
 		4FB76C9D17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */; };
 		4FCA83F11703866D00D6F8DD /* BlackScholes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */; };
+		4FD952901775BB7900B1D25C /* muParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9527C1775BB7900B1D25C /* muParser.cpp */; };
+		4FD952911775BB7900B1D25C /* muParserBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9527E1775BB7900B1D25C /* muParserBase.cpp */; };
+		4FD952921775BB7900B1D25C /* muParserBytecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD952801775BB7900B1D25C /* muParserBytecode.cpp */; };
+		4FD952931775BB7900B1D25C /* muParserCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD952821775BB7900B1D25C /* muParserCallback.cpp */; };
+		4FD952941775BB7900B1D25C /* muParserError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD952851775BB7900B1D25C /* muParserError.cpp */; };
+		4FD952951775BB7900B1D25C /* muParserInt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD952881775BB7900B1D25C /* muParserInt.cpp */; };
+		4FD952961775BB7900B1D25C /* muParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9528B1775BB7900B1D25C /* muParserTest.cpp */; };
+		4FD952971775BB7900B1D25C /* muParserTokenReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9528E1775BB7900B1D25C /* muParserTokenReader.cpp */; };
 		4FDB682917228D57003B18AC /* KernelFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682817228D57003B18AC /* KernelFunction.cpp */; };
 		4FDB682C17228DD8003B18AC /* GaussianKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682B17228DD8003B18AC /* GaussianKernel.cpp */; };
 		4FE7C1CF175223E2008174E0 /* RegressionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FE7C1CD175223E2008174E0 /* RegressionTests.cpp */; };
@@ -133,6 +141,26 @@
 		4FB76C9C17197CCE0025FBC7 /* MargrabeOptionStochasticRates.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MargrabeOptionStochasticRates.cpp; sourceTree = "<group>"; };
 		4FCA83EF170385FA00D6F8DD /* BlackScholes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackScholes.h; sourceTree = "<group>"; };
 		4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlackScholes.cpp; sourceTree = "<group>"; };
+		4FD9527C1775BB7900B1D25C /* muParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParser.cpp; path = MuParser/muParser.cpp; sourceTree = "<group>"; };
+		4FD9527D1775BB7900B1D25C /* muParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParser.h; path = MuParser/muParser.h; sourceTree = "<group>"; };
+		4FD9527E1775BB7900B1D25C /* muParserBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParserBase.cpp; path = MuParser/muParserBase.cpp; sourceTree = "<group>"; };
+		4FD9527F1775BB7900B1D25C /* muParserBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserBase.h; path = MuParser/muParserBase.h; sourceTree = "<group>"; };
+		4FD952801775BB7900B1D25C /* muParserBytecode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParserBytecode.cpp; path = MuParser/muParserBytecode.cpp; sourceTree = "<group>"; };
+		4FD952811775BB7900B1D25C /* muParserBytecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserBytecode.h; path = MuParser/muParserBytecode.h; sourceTree = "<group>"; };
+		4FD952821775BB7900B1D25C /* muParserCallback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParserCallback.cpp; path = MuParser/muParserCallback.cpp; sourceTree = "<group>"; };
+		4FD952831775BB7900B1D25C /* muParserCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserCallback.h; path = MuParser/muParserCallback.h; sourceTree = "<group>"; };
+		4FD952841775BB7900B1D25C /* muParserDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserDef.h; path = MuParser/muParserDef.h; sourceTree = "<group>"; };
+		4FD952851775BB7900B1D25C /* muParserError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParserError.cpp; path = MuParser/muParserError.cpp; sourceTree = "<group>"; };
+		4FD952861775BB7900B1D25C /* muParserError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserError.h; path = MuParser/muParserError.h; sourceTree = "<group>"; };
+		4FD952871775BB7900B1D25C /* muParserFixes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserFixes.h; path = MuParser/muParserFixes.h; sourceTree = "<group>"; };
+		4FD952881775BB7900B1D25C /* muParserInt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParserInt.cpp; path = MuParser/muParserInt.cpp; sourceTree = "<group>"; };
+		4FD952891775BB7900B1D25C /* muParserInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserInt.h; path = MuParser/muParserInt.h; sourceTree = "<group>"; };
+		4FD9528A1775BB7900B1D25C /* muParserStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserStack.h; path = MuParser/muParserStack.h; sourceTree = "<group>"; };
+		4FD9528B1775BB7900B1D25C /* muParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParserTest.cpp; path = MuParser/muParserTest.cpp; sourceTree = "<group>"; };
+		4FD9528C1775BB7900B1D25C /* muParserTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserTest.h; path = MuParser/muParserTest.h; sourceTree = "<group>"; };
+		4FD9528D1775BB7900B1D25C /* muParserToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserToken.h; path = MuParser/muParserToken.h; sourceTree = "<group>"; };
+		4FD9528E1775BB7900B1D25C /* muParserTokenReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = muParserTokenReader.cpp; path = MuParser/muParserTokenReader.cpp; sourceTree = "<group>"; };
+		4FD9528F1775BB7900B1D25C /* muParserTokenReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = muParserTokenReader.h; path = MuParser/muParserTokenReader.h; sourceTree = "<group>"; };
 		4FDB682717228CD6003B18AC /* KernelFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KernelFunction.h; sourceTree = "<group>"; };
 		4FDB682817228D57003B18AC /* KernelFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KernelFunction.cpp; sourceTree = "<group>"; };
 		4FDB682A17228D8F003B18AC /* GaussianKernel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GaussianKernel.h; sourceTree = "<group>"; };
@@ -243,6 +271,7 @@
 				4F855E5317199F9000F22474 /* MargrabeOptionVasicek.cpp */,
 				4F05886416F47758003D1406 /* Print.h */,
 				4F05886516F47761003D1406 /* Print.cpp */,
+				4FD9527B1775BB6200B1D25C /* MuParser */,
 				4F05886016F472FC003D1406 /* OrnsteinUhlenbeck.h */,
 				4FED30411761262100E5F587 /* VolSurface.cpp */,
 				4FED30421761262100E5F587 /* VolSurface.h */,
@@ -269,6 +298,33 @@
 				4F909B1116ECE3F500C94591 /* CVATools.1 */,
 			);
 			path = CVATools;
+			sourceTree = "<group>";
+		};
+		4FD9527B1775BB6200B1D25C /* MuParser */ = {
+			isa = PBXGroup;
+			children = (
+				4FD9527C1775BB7900B1D25C /* muParser.cpp */,
+				4FD9527D1775BB7900B1D25C /* muParser.h */,
+				4FD9527E1775BB7900B1D25C /* muParserBase.cpp */,
+				4FD9527F1775BB7900B1D25C /* muParserBase.h */,
+				4FD952801775BB7900B1D25C /* muParserBytecode.cpp */,
+				4FD952811775BB7900B1D25C /* muParserBytecode.h */,
+				4FD952821775BB7900B1D25C /* muParserCallback.cpp */,
+				4FD952831775BB7900B1D25C /* muParserCallback.h */,
+				4FD952841775BB7900B1D25C /* muParserDef.h */,
+				4FD952851775BB7900B1D25C /* muParserError.cpp */,
+				4FD952861775BB7900B1D25C /* muParserError.h */,
+				4FD952871775BB7900B1D25C /* muParserFixes.h */,
+				4FD952881775BB7900B1D25C /* muParserInt.cpp */,
+				4FD952891775BB7900B1D25C /* muParserInt.h */,
+				4FD9528A1775BB7900B1D25C /* muParserStack.h */,
+				4FD9528B1775BB7900B1D25C /* muParserTest.cpp */,
+				4FD9528C1775BB7900B1D25C /* muParserTest.h */,
+				4FD9528D1775BB7900B1D25C /* muParserToken.h */,
+				4FD9528E1775BB7900B1D25C /* muParserTokenReader.cpp */,
+				4FD9528F1775BB7900B1D25C /* muParserTokenReader.h */,
+			);
+			name = MuParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,6 +442,14 @@
 				4F83E6E6176DC8320086E3E9 /* Statistics.cpp in Sources */,
 				4F83E6E9176DE75B0086E3E9 /* MapUtilities.cpp in Sources */,
 				4F9ABAE8176FB21600D50130 /* SVIParameters.cpp in Sources */,
+				4FD952901775BB7900B1D25C /* muParser.cpp in Sources */,
+				4FD952911775BB7900B1D25C /* muParserBase.cpp in Sources */,
+				4FD952921775BB7900B1D25C /* muParserBytecode.cpp in Sources */,
+				4FD952931775BB7900B1D25C /* muParserCallback.cpp in Sources */,
+				4FD952941775BB7900B1D25C /* muParserError.cpp in Sources */,
+				4FD952951775BB7900B1D25C /* muParserInt.cpp in Sources */,
+				4FD952961775BB7900B1D25C /* muParserTest.cpp in Sources */,
+				4FD952971775BB7900B1D25C /* muParserTokenReader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

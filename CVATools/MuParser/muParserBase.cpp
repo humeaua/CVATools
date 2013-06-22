@@ -1815,22 +1815,22 @@ namespace mu
     ParserStack<token_type> stOprt(a_stOprt), 
                             stVal(a_stVal);
 
-    mu::console() << _T("\nValue stack:\n");
+    std::cout << _T("\nValue stack:\n");
     while ( !stVal.empty() ) 
     {
       token_type val = stVal.pop();
       if (val.GetType()==tpSTR)
-        mu::console() << _T(" \"") << val.GetAsString() << _T("\" ");
+        std::cout << _T(" \"") << val.GetAsString() << _T("\" ");
       else
-        mu::console() << _T(" ") << val.GetVal() << _T(" ");
+        std::cout << _T(" ") << val.GetVal() << _T(" ");
     }
-    mu::console() << "\nOperator stack:\n";
+    std::cout << "\nOperator stack:\n";
 
     while ( !stOprt.empty() )
     {
       if (stOprt.top().GetCode()<=cmASSIGN) 
       {
-        mu::console() << _T("OPRT_INTRNL \"")
+        std::cout << _T("OPRT_INTRNL \"")
                       << ParserBase::c_DefaultOprt[stOprt.top().GetCode()] 
                       << _T("\" \n");
       }
@@ -1838,35 +1838,35 @@ namespace mu
       {
         switch(stOprt.top().GetCode())
         {
-        case cmVAR:   mu::console() << _T("VAR\n");  break;
-        case cmVAL:   mu::console() << _T("VAL\n");  break;
-        case cmFUNC:  mu::console() << _T("FUNC \"") 
+        case cmVAR:   std::cout << _T("VAR\n");  break;
+        case cmVAL:   std::cout << _T("VAL\n");  break;
+        case cmFUNC:  std::cout << _T("FUNC \"") 
                                     << stOprt.top().GetAsString() 
                                     << _T("\"\n");   break;
-        case cmFUNC_BULK:  mu::console() << _T("FUNC_BULK \"") 
+        case cmFUNC_BULK:  std::cout << _T("FUNC_BULK \"") 
                                          << stOprt.top().GetAsString() 
                                          << _T("\"\n");   break;
-        case cmOPRT_INFIX: mu::console() << _T("OPRT_INFIX \"")
+        case cmOPRT_INFIX: std::cout << _T("OPRT_INFIX \"")
                                          << stOprt.top().GetAsString() 
                                          << _T("\"\n");      break;
-        case cmOPRT_BIN:   mu::console() << _T("OPRT_BIN \"") 
+        case cmOPRT_BIN:   std::cout << _T("OPRT_BIN \"") 
                                          << stOprt.top().GetAsString() 
                                          << _T("\"\n");           break;
-        case cmFUNC_STR: mu::console() << _T("FUNC_STR\n");       break;
-        case cmEND:      mu::console() << _T("END\n");            break;
-        case cmUNKNOWN:  mu::console() << _T("UNKNOWN\n");        break;
-        case cmBO:       mu::console() << _T("BRACKET \"(\"\n");  break;
-        case cmBC:       mu::console() << _T("BRACKET \")\"\n");  break;
-        case cmIF:       mu::console() << _T("IF\n");  break;
-        case cmELSE:     mu::console() << _T("ELSE\n");  break;
-        case cmENDIF:    mu::console() << _T("ENDIF\n");  break;
-        default:         mu::console() << stOprt.top().GetCode() << _T(" ");  break;
+        case cmFUNC_STR: std::cout << _T("FUNC_STR\n");       break;
+        case cmEND:      std::cout << _T("END\n");            break;
+        case cmUNKNOWN:  std::cout << _T("UNKNOWN\n");        break;
+        case cmBO:       std::cout << _T("BRACKET \"(\"\n");  break;
+        case cmBC:       std::cout << _T("BRACKET \")\"\n");  break;
+        case cmIF:       std::cout << _T("IF\n");  break;
+        case cmELSE:     std::cout << _T("ELSE\n");  break;
+        case cmENDIF:    std::cout << _T("ENDIF\n");  break;
+        default:         std::cout << stOprt.top().GetCode() << _T(" ");  break;
         }
       }	
       stOprt.pop();
     }
 
-    mu::console() << dec << endl;
+    std::cout << dec << endl;
   }
 
   //------------------------------------------------------------------------------

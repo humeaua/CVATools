@@ -103,43 +103,6 @@
 
 namespace mu
 {
-#if defined(_UNICODE)
-
-  //------------------------------------------------------------------------------
-  /** \brief Encapsulate wcout. */
-  inline std::wostream& console()
-  {
-    return std::wcout;
-  }
-
-  /** \brief Encapsulate cin. */
-  inline std::wistream& console_in()
-  {
-    return std::wcin;
-  }
-
-#else
-
-  /** \brief Encapsulate cout. 
-  
-    Used for supporting UNICODE more easily.
-  */
-  inline std::ostream& console()
-  {
-    return std::cout;
-  }
-
-  /** \brief Encapsulate cin. 
-
-    Used for supporting UNICODE more easily.
-  */
-  inline std::istream& console_in()
-  {
-    return std::cin;
-  }
-
-#endif
-
   //------------------------------------------------------------------------------
   /** \brief Bytecode values.
 

@@ -69,7 +69,7 @@ namespace mu
     int ParserTester::TestInterface()
     {
       int iStat = 0;
-      mu::console() << _T("testing member functions...");
+      std::cout << _T("testing member functions...");
    
       // Test RemoveVar
       value_type afVal[3] = {1,2,3};
@@ -100,9 +100,9 @@ namespace mu
       }
 
       if (iStat==0) 
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else 
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -111,7 +111,7 @@ namespace mu
     int ParserTester::TestStrArg()
     {
       int iStat = 0;
-      mu::console() << _T("testing string arguments...");
+      std::cout << _T("testing string arguments...");
  
       iStat += EqnTest(_T("valueof(\"\")"), 123, true);   // empty string arguments caused a crash
       iStat += EqnTest(_T("valueof(\"aaa\")+valueof(\"bbb\")  "), 246, true);
@@ -125,9 +125,9 @@ namespace mu
       iStat += EqnTest(_T("strfun3(\"99\",1,2)"), 102, true);
 
       if (iStat==0)
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else 
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -136,7 +136,7 @@ namespace mu
     int ParserTester::TestBinOprt()
     {
       int iStat = 0;
-      mu::console() << _T("testing binary operators...");
+      std::cout << _T("testing binary operators...");
    
       // built in operators
       // xor operator
@@ -269,9 +269,9 @@ namespace mu
 
 
       if (iStat==0)
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else 
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -283,7 +283,7 @@ namespace mu
       int  iStat= 0,
            iErr = 0;
 
-      mu::console() << "testing name restriction enforcement...";
+      std::cout << "testing name restriction enforcement...";
     
       Parser p;
 
@@ -378,9 +378,9 @@ namespace mu
   #undef PARSER_THROWCHECK
 
       if (iStat==0) 
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else 
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -389,7 +389,7 @@ namespace mu
     int ParserTester::TestSyntax()
     {
       int iStat = 0;
-      mu::console() << _T("testing syntax engine...");
+      std::cout << _T("testing syntax engine...");
 
       iStat += ThrowTest(_T("1,"), ecUNEXPECTED_EOF);  // incomplete hex definition
       iStat += ThrowTest(_T("a,"), ecUNEXPECTED_EOF);  // incomplete hex definition
@@ -427,9 +427,9 @@ namespace mu
       iStat += EqnTest(_T("sin()"), 0, false);     // unexpected closing bracket
 
       if (iStat==0)
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else 
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -438,7 +438,7 @@ namespace mu
     int ParserTester::TestVarConst()
     {
       int iStat = 0;
-      mu::console() << _T("testing variable/constant name recognition...");
+      std::cout << _T("testing variable/constant name recognition...");
 
       // distinguish constants with same basename
       iStat += EqnTest( _T("const"), 1, true);
@@ -528,9 +528,9 @@ namespace mu
       }
 
       if (iStat==0)  
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -539,7 +539,7 @@ namespace mu
     int ParserTester::TestMultiArg()
     {
       int iStat = 0;
-      mu::console() << _T("testing multiarg functions...");
+      std::cout << _T("testing multiarg functions...");
     
       // Compound expressions
       iStat += EqnTest( _T("1,2,3"), 3, true);
@@ -622,9 +622,9 @@ namespace mu
       iStat += EqnTest( _T("sum(,1,2)"),  0, false);
 
       if (iStat==0) 
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
   
       return iStat;
     }
@@ -634,7 +634,7 @@ namespace mu
     int ParserTester::TestInfixOprt()
     {
       int iStat(0);
-      mu::console() << "testing infix operators...";
+      std::cout << "testing infix operators...";
 
       iStat += EqnTest( _T("-1"),    -1, true);
       iStat += EqnTest( _T("-(-1)"),  1, true);
@@ -669,10 +669,10 @@ namespace mu
       iStat += EqnTest( _T("3+-3^2"),-6, true);
       // The following assumes use of sqr as postfix operator ("§") together
       // with a sign operator of low priority:
-      iStat += EqnTest( _T("-2§"), -4, true);
-      iStat += EqnTest( _T("-(1+1)§"),-4, true);
-      iStat += EqnTest( _T("2+-(1+1)§"),-2, true);
-      iStat += EqnTest( _T("2+-2§"), -2, true);
+      iStat += EqnTest( _T("-2"), -4, true);
+      iStat += EqnTest( _T("-(1+1)"),-4, true);
+      iStat += EqnTest( _T("2+-(1+1)"),-2, true);
+      iStat += EqnTest( _T("2+-2"), -2, true);
       // This is the classic behaviour of the infix sign operator (here: "$") which is
       // now deprecated:
       iStat += EqnTest( _T("$2^2"),4, true);
@@ -686,9 +686,9 @@ namespace mu
       iStat += EqnTest( _T("~~ 123"),  123+2, true);
 
       if (iStat==0)
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -698,7 +698,7 @@ namespace mu
     int ParserTester::TestPostFix()
     {
       int iStat = 0;
-      mu::console() << _T("testing postfix operators...");
+      std::cout << _T("testing postfix operators...");
 
       // application
       iStat += EqnTest( _T("3{m}+5"), 5.003, true);
@@ -738,9 +738,9 @@ namespace mu
       iStat += ThrowTest( _T("multi*1.0"), ecUNASSIGNABLE_TOKEN);
 
       if (iStat==0)
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -750,7 +750,7 @@ namespace mu
     int ParserTester::TestVolatile()
     {
       int iStat = 0;
-      mu::console() << "testing volatile/nonvolatile functions...";
+      std::cout << "testing volatile/nonvolatile functions...";
 
       // First test with volatile flag turned on
       try
@@ -787,7 +787,7 @@ namespace mu
       }
       catch(Parser::exception_type &e)
       {
-        mu::console() << _T("\n  ") << e.GetExpr() << _T(" : ") << e.GetMsg();
+        std::cout << _T("\n  ") << e.GetExpr() << _T(" : ") << e.GetMsg();
         iStat += 1;
       }
 
@@ -820,14 +820,14 @@ namespace mu
       }
       catch(Parser::exception_type &e)
       {
-        mu::console() << _T("\n  ") << e.GetExpr() << _T(" : ") << e.GetMsg();
+        std::cout << _T("\n  ") << e.GetExpr() << _T(" : ") << e.GetMsg();
         iStat += 1;
       }
       
       if (iStat==0)
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -836,7 +836,7 @@ namespace mu
     int ParserTester::TestExpression()
     {
       int iStat = 0;
-      mu::console() << _T("testing expression samples...");
+      std::cout << _T("testing expression samples...");
 
       // operator precedencs
       iStat += EqnTest( _T("1+2-3*4/5^6"), 2.99923, true);
@@ -882,9 +882,9 @@ namespace mu
       iStat += EqnTest( _T("1+2-3*4/5^6*(2*(1-5+(3*7^9)*(4+6*7-3)))+12"), -7995810.09926, true);
 	  
       if (iStat==0) 
-        mu::console() << _T("passed") << endl;  
+        std::cout << _T("passed") << endl;  
       else 
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -894,7 +894,7 @@ namespace mu
     int ParserTester::TestIfThenElse()
     {
       int iStat = 0;
-      mu::console() << _T("testing if-then-else operator...");
+      std::cout << _T("testing if-then-else operator...");
 
       // Test error detection
       iStat += ThrowTest(_T(":3"), ecUNEXPECTED_CONDITIONAL); 
@@ -989,9 +989,9 @@ namespace mu
       iStat += EqnTest(_T("a=0?5:b=1?3:4, b"), 3, true);
 
       if (iStat==0) 
-        mu::console() << _T("passed") << endl;  
+        std::cout << _T("passed") << endl;  
       else 
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -1000,7 +1000,7 @@ namespace mu
     int ParserTester::TestException()
     {
       int  iStat = 0;
-      mu::console() << _T("testing error codes...");
+      std::cout << _T("testing error codes...");
 
       iStat += ThrowTest(_T("3+"),           ecUNEXPECTED_EOF);
       iStat += ThrowTest(_T("3+)"),          ecUNEXPECTED_PARENS);
@@ -1066,9 +1066,9 @@ namespace mu
       iStat += ThrowTest( _T("a=\"tttt\""), ecOPRT_TYPE_CONFLICT);
 
       if (iStat==0) 
-        mu::console() << _T("passed") << endl;
+        std::cout << _T("passed") << endl;
       else 
-        mu::console() << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
 
       return iStat;
     }
@@ -1091,28 +1091,28 @@ namespace mu
       }
       catch(Parser::exception_type &e)
       {
-        mu::console() << "\n" << e.GetMsg() << endl;
-        mu::console() << e.GetToken() << endl;
+        std::cout << "\n" << e.GetMsg() << endl;
+        std::cout << e.GetToken() << endl;
         Abort();
       }
       catch(std::exception &e)
       {
-        mu::console() << e.what() << endl;
+        std::cout << e.what() << endl;
         Abort();
       }
       catch(...)
       {
-        mu::console() << "Internal error";
+        std::cout << "Internal error";
         Abort();
       }
 
       if (iStat==0) 
       {
-        mu::console() << "Test passed (" <<  ParserTester::c_iCount << " expressions)" << endl;
+        std::cout << "Test passed (" <<  ParserTester::c_iCount << " expressions)" << endl;
       }
       else 
       {
-        mu::console() << "Test failed with " << iStat 
+        std::cout << "Test failed with " << iStat 
                   << " errors (" <<  ParserTester::c_iCount 
                   << " expressions)" << endl;
       }
@@ -1148,7 +1148,7 @@ namespace mu
         // output the formula in case of an failed test
         if (a_bFail==false || (a_bFail==true && a_iErrc!=e.GetCode()) )
         {
-          mu::console() << _T("\n  ") 
+          std::cout << _T("\n  ") 
                         << _T("Expression: ") << a_str 
                         << _T("  Code:") << e.GetCode() << _T("(") << e.GetMsg() << _T(")")
                         << _T("  Expected:") << a_iErrc;
@@ -1161,7 +1161,7 @@ namespace mu
       bool bRet((a_bFail==false) ? 0 : 1);
       if (bRet==1)
       {
-        mu::console() << _T("\n  ") 
+        std::cout << _T("\n  ") 
                       << _T("Expression: ") << a_str 
                       << _T("  did evaluate; Expected error:") << a_iErrc;
       }
@@ -1250,7 +1250,7 @@ namespace mu
         p1->DefinePostfixOprt( _T("m"), Milli);
         p1->DefinePostfixOprt( _T("meg"), Mega);
         p1->DefinePostfixOprt( _T("#"), times3);
-        p1->DefinePostfixOprt( _T("§"), sqr); 
+        p1->DefinePostfixOprt( _T(""), sqr); 
         p1->SetExpr(a_str);
 
         // Test bytecode integrity
@@ -1289,7 +1289,7 @@ namespace mu
         }
         catch(std::exception &e)
         {
-          mu::console() << _T("\n  ") << e.what() << _T("\n");
+          std::cout << _T("\n  ") << e.what() << _T("\n");
         }
 
         // limited floating point accuracy requires the following test
@@ -1302,7 +1302,7 @@ namespace mu
         iRet = ((bCloseEnough && a_fPass) || (!bCloseEnough && !a_fPass)) ? 0 : 1;
         if (iRet==1)
         {
-          mu::console() << _T("\n  fail: ") << a_str.c_str() 
+          std::cout << _T("\n  fail: ") << a_str.c_str() 
                         << _T(" (incorrect result; expected: ") << a_fRes
                         << _T(" ;calculated: ") << fVal[0] << _T(",") 
                                                 << fVal[1] << _T(",")
@@ -1316,20 +1316,20 @@ namespace mu
         if (a_fPass)
         {
           if (fVal[0]!=fVal[2] && fVal[0]!=-999 && fVal[1]!=-998)
-            mu::console() << _T("\n  fail: ") << a_str.c_str() << _T(" (copy construction)");
+            std::cout << _T("\n  fail: ") << a_str.c_str() << _T(" (copy construction)");
           else
-            mu::console() << _T("\n  fail: ") << a_str.c_str() << _T(" (") << e.GetMsg() << _T(")");
+            std::cout << _T("\n  fail: ") << a_str.c_str() << _T(" (") << e.GetMsg() << _T(")");
           return 1;
         }
       }
       catch(std::exception &e)
       {
-        mu::console() << _T("\n  fail: ") << a_str.c_str() << _T(" (") << e.what() << _T(")");
+        std::cout << _T("\n  fail: ") << a_str.c_str() << _T(" (") << e.what() << _T(")");
         return 1;  // always return a failure since this exception is not expected
       }
       catch(...)
       {
-        mu::console() << _T("\n  fail: ") << a_str.c_str() <<  _T(" (unexpected exception)");
+        std::cout << _T("\n  fail: ") << a_str.c_str() <<  _T(" (unexpected exception)");
         return 1;  // exceptions other than ParserException are not allowed
       }
 
@@ -1365,7 +1365,7 @@ namespace mu
                   (a_fRes!=fVal[0] && !a_fPass) ) ? 0 : 1;
         if (iRet==1)
         {
-          mu::console() << _T("\n  fail: ") << a_str.c_str() 
+          std::cout << _T("\n  fail: ") << a_str.c_str() 
                         << _T(" (incorrect result; expected: ") << a_fRes 
                         << _T(" ;calculated: ") << fVal[0]<< _T(").");
         }
@@ -1374,13 +1374,13 @@ namespace mu
       {
         if (a_fPass)
         {
-          mu::console() << _T("\n  fail: ") << e.GetExpr() << _T(" : ") << e.GetMsg();
+          std::cout << _T("\n  fail: ") << e.GetExpr() << _T(" : ") << e.GetMsg();
           iRet = 1;
         }
       }
       catch(...)
       {
-        mu::console() << _T("\n  fail: ") << a_str.c_str() <<  _T(" (unexpected exception)");
+        std::cout << _T("\n  fail: ") << a_str.c_str() <<  _T(" (unexpected exception)");
         iRet = 1;  // exceptions other than ParserException are not allowed
       }
 
@@ -1391,7 +1391,7 @@ namespace mu
     /** \brief Internal error in test class Test is going to be aborted. */
     void ParserTester::Abort() const
     {
-      mu::console() << _T("Test failed (internal error in test class)") << endl;
+      std::cout << _T("Test failed (internal error in test class)") << endl;
       while (!getchar());
       exit(-1);
     }

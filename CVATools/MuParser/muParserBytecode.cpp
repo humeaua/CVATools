@@ -432,73 +432,73 @@ namespace mu
   {
     if (!m_vRPN.size()) 
     {
-      mu::console() << _T("No bytecode available\n");
+        std::cout << _T("No bytecode available\n");
       return;
     }
 
-    mu::console() << _T("Number of RPN tokens:") << (int)m_vRPN.size() << _T("\n");
+    std::cout << _T("Number of RPN tokens:") << (int)m_vRPN.size() << _T("\n");
     for (std::size_t i=0; i<m_vRPN.size() && m_vRPN[i].Cmd!=cmEND; ++i)
     {
-      mu::console() << std::dec << i << _T(" : \t");
+      std::cout << std::dec << i << _T(" : \t");
       switch (m_vRPN[i].Cmd)
       {
-      case cmVAL:   mu::console() << _T("VAL \t");
-                    mu::console() << _T("[") << m_vRPN[i].Val.data << _T("]\n");
+      case cmVAL:   std::cout << _T("VAL \t");
+                    std::cout << _T("[") << m_vRPN[i].Val.data << _T("]\n");
                     break;
 
-      case cmVAR:   mu::console() << _T("VAR \t");
-	                  mu::console() << _T("[ADDR: 0x") << std::hex << m_vRPN[i].Val.ptr << _T("]\n"); 
+      case cmVAR:   std::cout << _T("VAR \t");
+	                  std::cout << _T("[ADDR: 0x") << std::hex << m_vRPN[i].Val.ptr << _T("]\n"); 
                     break;
 
-      case cmFUNC:  mu::console() << _T("CALL\t");
-                    mu::console() << _T("[ARG:") << std::dec << m_vRPN[i].Fun.argc << _T("]"); 
-                    mu::console() << _T("[ADDR: 0x") << std::hex << m_vRPN[i].Fun.ptr << _T("]\n"); 
+      case cmFUNC:  std::cout << _T("CALL\t");
+                    std::cout << _T("[ARG:") << std::dec << m_vRPN[i].Fun.argc << _T("]"); 
+                    std::cout << _T("[ADDR: 0x") << std::hex << m_vRPN[i].Fun.ptr << _T("]\n"); 
                     break;
 
       case cmFUNC_STR:
-                    mu::console() << _T("CALL STRFUNC\t");
-                    mu::console() << _T("[ARG:") << std::dec << m_vRPN[i].Fun.argc << _T("]");
-                    mu::console() << _T("[IDX:") << std::dec << m_vRPN[i].Fun.idx << _T("]");
-                    mu::console() << _T("[ADDR: 0x") << m_vRPN[i].Fun.ptr << _T("]\n"); 
+                    std::cout << _T("CALL STRFUNC\t");
+                    std::cout << _T("[ARG:") << std::dec << m_vRPN[i].Fun.argc << _T("]");
+                    std::cout << _T("[IDX:") << std::dec << m_vRPN[i].Fun.idx << _T("]");
+                    std::cout << _T("[ADDR: 0x") << m_vRPN[i].Fun.ptr << _T("]\n"); 
                     break;
 
-      case cmLT:    mu::console() << _T("LT\n");  break;
-      case cmGT:    mu::console() << _T("GT\n");  break;
-      case cmLE:    mu::console() << _T("LE\n");  break;
-      case cmGE:    mu::console() << _T("GE\n");  break;
-      case cmEQ:    mu::console() << _T("EQ\n");  break;
-      case cmNEQ:   mu::console() << _T("NEQ\n"); break;
-      case cmADD:   mu::console() << _T("ADD\n"); break;
-      //case cmAND:   mu::console() << _T("AND\n"); break;
-      //case cmOR:    mu::console() << _T("OR\n");  break;
-      //case cmXOR:   mu::console() << _T("XOR\n"); break;
-      case cmLAND:  mu::console() << _T("&&\n"); break;
-      case cmLOR:   mu::console() << _T("||\n"); break;
-      case cmSUB:   mu::console() << _T("SUB\n"); break;
-      case cmMUL:   mu::console() << _T("MUL\n"); break;
-      case cmDIV:   mu::console() << _T("DIV\n"); break;
-      case cmPOW:   mu::console() << _T("POW\n"); break;
+      case cmLT:    std::cout << _T("LT\n");  break;
+      case cmGT:    std::cout << _T("GT\n");  break;
+      case cmLE:    std::cout << _T("LE\n");  break;
+      case cmGE:    std::cout << _T("GE\n");  break;
+      case cmEQ:    std::cout << _T("EQ\n");  break;
+      case cmNEQ:   std::cout << _T("NEQ\n"); break;
+      case cmADD:   std::cout << _T("ADD\n"); break;
+      //case cmAND:   std::cout << _T("AND\n"); break;
+      //case cmOR:    std::cout << _T("OR\n");  break;
+      //case cmXOR:   std::cout << _T("XOR\n"); break;
+      case cmLAND:  std::cout << _T("&&\n"); break;
+      case cmLOR:   std::cout << _T("||\n"); break;
+      case cmSUB:   std::cout << _T("SUB\n"); break;
+      case cmMUL:   std::cout << _T("MUL\n"); break;
+      case cmDIV:   std::cout << _T("DIV\n"); break;
+      case cmPOW:   std::cout << _T("POW\n"); break;
 
-      case cmIF:    mu::console() << _T("IF\t");
-                    mu::console() << _T("[OFFSET:") << std::dec << m_vRPN[i].Oprt.offset << _T("]\n");
+      case cmIF:    std::cout << _T("IF\t");
+                    std::cout << _T("[OFFSET:") << std::dec << m_vRPN[i].Oprt.offset << _T("]\n");
                     break;
 
-      case cmELSE:  mu::console() << _T("ELSE\t");
-                    mu::console() << _T("[OFFSET:") << std::dec << m_vRPN[i].Oprt.offset << _T("]\n");
+      case cmELSE:  std::cout << _T("ELSE\t");
+                    std::cout << _T("[OFFSET:") << std::dec << m_vRPN[i].Oprt.offset << _T("]\n");
                     break;
 
-      case cmENDIF: mu::console() << _T("ENDIF\n"); break;
+      case cmENDIF: std::cout << _T("ENDIF\n"); break;
 
       case cmASSIGN: 
-                    mu::console() << _T("ASSIGN\t");
-                    mu::console() << _T("[ADDR: 0x") << m_vRPN[i].Oprt.ptr << _T("]\n"); 
+                    std::cout << _T("ASSIGN\t");
+                    std::cout << _T("[ADDR: 0x") << m_vRPN[i].Oprt.ptr << _T("]\n"); 
                     break; 
 
-      default:      mu::console() << _T("(unknown code: ") << m_vRPN[i].Cmd << _T(")\n"); 
+      default:      std::cout << _T("(unknown code: ") << m_vRPN[i].Cmd << _T(")\n"); 
                     break;
       } // switch cmdCode
     } // while bytecode
 
-    mu::console() << _T("END") << std::endl;
+    std::cout << _T("END") << std::endl;
   }
 } // namespace mu

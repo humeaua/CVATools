@@ -109,7 +109,8 @@ void RegressionTest_BondPricing()
     }
     catch( std::exception & e)
     {
-        std::cout << "Exception caught : " << e.what() << std::endl;
+        std::cout << "Exception caught : " << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch(...)
     {

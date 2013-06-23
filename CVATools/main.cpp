@@ -98,8 +98,8 @@ int main()
     }
     else if (iTest == 2)
     {
-        SquareRoot sSquareRoot(0.05, 0.2, 0.2, 0.2);
-        std::size_t iNDates = 100, iNPaths = 10;
+        SquareRoot sSquareRoot(0.2, 0.2, 0.2, 0.2);
+        std::size_t iNDates = 1000, iNPaths = 10;
         long long lSeed = 0;
         std::vector<double> dDates;
         double dT = 10;

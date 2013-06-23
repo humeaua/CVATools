@@ -86,7 +86,7 @@ SimulationData SquareRoot::simulate(std::vector<double> & dDates, std::size_t iN
             
             double dNbOfFreedom = poisson(eng);
             std::tr1::gamma_distribution<double> gamma(dNbOfFreedom + 0.5 * dD);
-            dNewValue = gamma(eng);
+            dNewValue = 2.0 * gamma(eng) * exp(-dA_ * dt) / NonCentralityParameter(dt);
             
             sResult.Put(dDates[iDate], iPath, dNewValue);
         }

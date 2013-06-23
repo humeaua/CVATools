@@ -45,8 +45,6 @@ double SquareRoot::expectation(double t0, double x0, double dt) const
 // no term-structure
 double SquareRoot::variance(double t0, double x0, double dt) const
 {
-    //return dSigma_ * dSigma_ * (dB_ * 0.5 / dA_ + (x0 - dB_) / dA_ * exp(-dA_ * dt) + (dB_ - 2. * dX0_) * 0.5 / dA_ * exp(-2. * dA_ * dt));
-    //return dSigma_ * dSigma_ * exp(-dA_ * dt) * x0 *dt;
     return x0 * dSigma_ * dSigma_ * exp(-dA_ * dt) / dA_ * (1 - exp(-dA_ * dt)) + dB_ * dSigma_ * dSigma_ * 0.5 / dA_ * (1 - exp(-dA_ * dt)) * (1 - exp(-dA_ * dt));
 }
 
@@ -85,6 +83,7 @@ SimulationData SquareRoot::simulate(std::vector<double> & dDates, std::size_t iN
             std::tr1::poisson_distribution<double> poisson(0.5 * NonCentralityParameter(dt) * dOldValue);
             
             double dNbOfFreedom = poisson(eng);
+            // 2.0 * gamma_distribution(0.5 * number of degree of freedom) is a chi-squared distribution with the wanted number of degree of freedom
             std::tr1::gamma_distribution<double> gamma(dNbOfFreedom + 0.5 * dD);
             dNewValue = 2.0 * gamma(eng) * exp(-dA_ * dt) / NonCentralityParameter(dt);
             

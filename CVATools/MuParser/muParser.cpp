@@ -83,12 +83,21 @@ namespace mu
   {
       Utilities::requireException(Forward > 0.0, "Forward is negative", "Parser::BS");
       Utilities::requireException(Strike > 0.0, "Strike is negative", "Parser::BS");
-      Utilities::requireException(Volatility * sqrt(Maturity) > 0.0, "Std dev is negative", "Parser::BS");
+      value_type StdDev = Volatility * sqrt(Maturity);
       
       int iCallPut = CallPut == "Call" || CallPut == "CALL" ? 1 : -1;
-      value_type d1 = log(Forward / Strike) / (Volatility * sqrt(Maturity)) + 0.5 * Volatility * sqrt(Maturity);
-      return iCallPut * Forward * AccCumNorm(iCallPut * d1) - iCallPut * Strike * AccCumNorm(iCallPut * (d1 - Volatility * sqrt(Maturity)));
+      value_type d1 = log(Forward / Strike) / (StdDev) + 0.5 * StdDev;
+      return StdDev == 0.0 ? std::max(iCallPut * (Forward - Strike), 0.0) : iCallPut * Forward * AccCumNorm(iCallPut * d1) - iCallPut * Strike * AccCumNorm(iCallPut * (d1 - StdDev));
   }
+    
+    value_type Parser::BSN(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut)
+    {
+        value_type StdDev = Volatility * sqrt(Maturity);
+        value_type d1 = (Forward - Strike) / StdDev;
+        int iCallPut = CallPut == "Call" || CallPut == "CALL" ? 1 : -1;
+        
+        return StdDev == 0.0 ? std::max(iCallPut * (Forward - Strike), 0.0) : iCallPut * (Forward - Strike) * AccCumNorm(d1) + StdDev / sqrt(2.0 * PARSER_CONST_PI) * exp(0.5 * d1 * d1);
+    }
 
   //---------------------------------------------------------------------------
   /** \brief Callback for the unary minus operator.

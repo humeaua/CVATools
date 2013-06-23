@@ -94,6 +94,7 @@ namespace mu
     static value_type  Sign(value_type);
     // finance functions
     static value_type BS(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut);
+    static value_type BSN(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut);
     static value_type Norm(value_type x);
 
     // Prefix operators

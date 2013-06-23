@@ -18,10 +18,8 @@
 DiffusionProcess::DiffusionProcess() : dX0_(0.0)
 {}
 
-DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulationAtZero) : bFloorSimulationAtZero_(bFloorSimulationAtZero)
-{
-    dX0_ = dX0;
-}
+DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulationAtZero, bool bStartFrom0AfterFloor) : bFloorSimulationAtZero_(bFloorSimulationAtZero), bStartFrom0AfterFloor_(bStartFrom0AfterFloor), dX0_(dX0)
+{}
 
 double DiffusionProcess::getx0() const
 {
@@ -81,7 +79,10 @@ SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size
             if (bFloorSimulationAtZero_ && dOldValue < 0.0)
             {
                 sResult.Put(dDates[iDate], iPath, 0.0);
-                dOldValue = 0.0;
+                if (bStartFrom0AfterFloor_)
+                {
+                    dOldValue = 0.0;
+                }
             }
             else
             {

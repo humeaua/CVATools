@@ -14,7 +14,7 @@
 SquareRoot::SquareRoot() : DiffusionProcess(), dA_(0.0), dB_(0.0), dSigma_(0.0)
 {}
 
-SquareRoot::SquareRoot(double dA, double dB, double dSigma, double dX0) : DiffusionProcess(dX0, true), dA_(dA), dB_(dB), dSigma_(dSigma)
+SquareRoot::SquareRoot(double dA, double dB, double dSigma, double dX0) : DiffusionProcess(dX0, true, true), dA_(dA), dB_(dB), dSigma_(dSigma)
 {}
 
 SquareRoot::~SquareRoot()

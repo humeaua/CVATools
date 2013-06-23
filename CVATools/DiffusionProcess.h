@@ -17,7 +17,7 @@ class DiffusionProcess
 {
 public:
     DiffusionProcess();
-    DiffusionProcess(double x0, bool bFloorSimulationAtZero);
+    DiffusionProcess(double x0, bool bFloorSimulationAtZero, bool bStartFrom0AfterFloor);
     
     double getx0() const;
     
@@ -54,6 +54,7 @@ public:
 protected:
     double dX0_;
     bool bFloorSimulationAtZero_;
+    bool bStartFrom0AfterFloor_;
 };
 
 #endif

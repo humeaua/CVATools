@@ -13,7 +13,7 @@
 BlackScholes::BlackScholes() : DiffusionProcess()
 {}
 
-BlackScholes::BlackScholes(double dDrift, double dVol, double dX0) : dDrift_(dDrift), dVol_(dVol), DiffusionProcess(dX0, true)
+BlackScholes::BlackScholes(double dDrift, double dVol, double dX0) : dDrift_(dDrift), dVol_(dVol), DiffusionProcess(dX0, true, false)
 {}
 
 BlackScholes::~BlackScholes()

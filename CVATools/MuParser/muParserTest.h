@@ -155,9 +155,6 @@ namespace mu
           value_type val(0);
           stringstream_type(a_szMsg) >> val;
           return val;
-
-//          using namespace std; // atof is for some compilers in std for some not... 
-//          return atof(a_szMsg);
         }
 
         // postfix operator callback

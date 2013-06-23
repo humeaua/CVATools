@@ -32,8 +32,6 @@
 #define PARSER_CONST_PI  3.141592653589793238462643
 #define PARSER_CONST_E   2.718281828459045235360287
 
-using namespace std;
-
 /** \file
     \brief This file contains the implementation of parser test cases.
 */
@@ -100,9 +98,9 @@ namespace mu
       }
 
       if (iStat==0) 
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else 
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -125,9 +123,9 @@ namespace mu
       iStat += EqnTest(_T("strfun3(\"99\",1,2)"), 102, true);
 
       if (iStat==0)
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else 
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -269,9 +267,9 @@ namespace mu
 
 
       if (iStat==0)
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else 
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -378,9 +376,9 @@ namespace mu
   #undef PARSER_THROWCHECK
 
       if (iStat==0) 
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else 
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -427,9 +425,9 @@ namespace mu
       iStat += EqnTest(_T("sin()"), 0, false);     // unexpected closing bracket
 
       if (iStat==0)
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else 
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -528,9 +526,9 @@ namespace mu
       }
 
       if (iStat==0)  
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -622,9 +620,9 @@ namespace mu
       iStat += EqnTest( _T("sum(,1,2)"),  0, false);
 
       if (iStat==0) 
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
   
       return iStat;
     }
@@ -686,9 +684,9 @@ namespace mu
       iStat += EqnTest( _T("~~ 123"),  123+2, true);
 
       if (iStat==0)
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -738,9 +736,9 @@ namespace mu
       iStat += ThrowTest( _T("multi*1.0"), ecUNASSIGNABLE_TOKEN);
 
       if (iStat==0)
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -825,9 +823,9 @@ namespace mu
       }
       
       if (iStat==0)
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -882,9 +880,9 @@ namespace mu
       iStat += EqnTest( _T("1+2-3*4/5^6*(2*(1-5+(3*7^9)*(4+6*7-3)))+12"), -7995810.09926, true);
 	  
       if (iStat==0) 
-        std::cout << _T("passed") << endl;  
+        std::cout << _T("passed") << std::endl;  
       else 
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -989,9 +987,9 @@ namespace mu
       iStat += EqnTest(_T("a=0?5:b=1?3:4, b"), 3, true);
 
       if (iStat==0) 
-        std::cout << _T("passed") << endl;  
+        std::cout << _T("passed") << std::endl;  
       else 
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -1066,9 +1064,9 @@ namespace mu
       iStat += ThrowTest( _T("a=\"tttt\""), ecOPRT_TYPE_CONFLICT);
 
       if (iStat==0) 
-        std::cout << _T("passed") << endl;
+        std::cout << _T("passed") << std::endl;
       else 
-        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << endl;
+        std::cout << _T("\n  failed with ") << iStat << _T(" errors") << std::endl;
 
       return iStat;
     }
@@ -1091,13 +1089,13 @@ namespace mu
       }
       catch(Parser::exception_type &e)
       {
-        std::cout << "\n" << e.GetMsg() << endl;
-        std::cout << e.GetToken() << endl;
+        std::cout << "\n" << e.GetMsg() << std::endl;
+        std::cout << e.GetToken() << std::endl;
         Abort();
       }
       catch(std::exception &e)
       {
-        std::cout << e.what() << endl;
+        std::cout << e.what() << std::endl;
         Abort();
       }
       catch(...)
@@ -1108,13 +1106,13 @@ namespace mu
 
       if (iStat==0) 
       {
-        std::cout << "Test passed (" <<  ParserTester::c_iCount << " expressions)" << endl;
+        std::cout << "Test passed (" <<  ParserTester::c_iCount << " expressions)" << std::endl;
       }
       else 
       {
         std::cout << "Test failed with " << iStat 
                   << " errors (" <<  ParserTester::c_iCount 
-                  << " expressions)" << endl;
+                  << " expressions)" << std::endl;
       }
       ParserTester::c_iCount = 0;
     }
@@ -1391,7 +1389,7 @@ namespace mu
     /** \brief Internal error in test class Test is going to be aborted. */
     void ParserTester::Abort() const
     {
-      std::cout << _T("Test failed (internal error in test class)") << endl;
+      std::cout << _T("Test failed (internal error in test class)") << std::endl;
       while (!getchar());
       exit(-1);
     }

@@ -29,8 +29,6 @@
 #include <algorithm>
 #include <numeric>
 
-using namespace std;
-
 /** \file
     \brief Implementation of a parser using integer value.
 */

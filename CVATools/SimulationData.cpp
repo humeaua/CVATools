@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "SimulationData.h"
+#include <stdexcept>
 
 SimulationData::SimulationData()
 {}
@@ -43,6 +44,25 @@ void SimulationData::Put(double dDate, std::size_t iPath, double dValue)
 std::map<double, std::map<std::size_t, double> > SimulationData::GetData() const
 {
     return dData_;
+}
+
+double SimulationData::Get(double dDate, std::size_t iPath) const
+{
+    if (dData_.count(dDate) != 0)
+    {
+        if (dData_.find(dDate)->second.count(iPath) != 0)
+        {
+            return dData_.find(dDate)->second.find(iPath)->second;
+        }
+        else
+        {
+            throw std::runtime_error("SimulationData::Get : Path not found");
+        }
+    }
+    else
+    {
+        throw std::runtime_error("SimulationData::Get : Date not found");   
+    }
 }
 
 void SimulationData::Apply(double (*func)(double))

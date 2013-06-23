@@ -19,7 +19,10 @@
 class SquareRoot : public DiffusionProcess
 {
 protected:
-    double dA_, dB_, dSigma_; 
+    double dA_, dB_, dSigma_;
+    
+private:
+    virtual double NonCentralityParameter(double dt) const;
     
 public:
     SquareRoot();
@@ -41,6 +44,9 @@ public:
     
     // no term-structure
     virtual double variance(double t0, double x0, double dt) const;
+    
+    //  Simulation method
+    virtual SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
 };
 
 #endif

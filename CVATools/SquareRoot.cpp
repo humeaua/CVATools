@@ -9,6 +9,7 @@
 #include <iostream>
 #include "SquareRoot.h"
 #include <cmath>
+#include <tr1/random>
 
 SquareRoot::SquareRoot() : DiffusionProcess(), dA_(0.0), dB_(0.0), dSigma_(0.0)
 {}
@@ -45,5 +46,50 @@ double SquareRoot::expectation(double t0, double x0, double dt) const
 double SquareRoot::variance(double t0, double x0, double dt) const
 {
     //return dSigma_ * dSigma_ * (dB_ * 0.5 / dA_ + (x0 - dB_) / dA_ * exp(-dA_ * dt) + (dB_ - 2. * dX0_) * 0.5 / dA_ * exp(-2. * dA_ * dt));
-    return dSigma_ * dSigma_ * exp(-dA_ * dt) * x0 *dt;
+    //return dSigma_ * dSigma_ * exp(-dA_ * dt) * x0 *dt;
+    return x0 * dSigma_ * dSigma_ * exp(-dA_ * dt) / dA_ * (1 - exp(-dA_ * dt)) + dB_ * dSigma_ * dSigma_ * 0.5 / dA_ * (1 - exp(-dA_ * dt)) * (1 - exp(-dA_ * dt));
+}
+
+double SquareRoot::NonCentralityParameter(double dt) const
+{
+    return 4.0 * dA_ * exp(-dA_ * dt) / (dSigma_ * dSigma_ * (1.0 - exp(-dA_ * dt)));
+}
+
+SimulationData SquareRoot::simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const
+{
+    // simulation according to http://www.awdz65.dsl.pipex.com/eqf013_009.pdf
+    
+    SimulationData sResult;
+    std::size_t iNDates = dDates.size();
+    
+    std::tr1::ranlux64_base_01 eng; // core engine class
+    eng.seed(lSeed);
+    
+    double dDate0 = dDates[0];
+    //  initial values 
+    for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
+    {
+        sResult.Put(dDate0, iPath, dX0_);
+    }
+    
+    double dD = 4 * dA_ * dB_ / (dSigma_ * dSigma_);
+    double dOldValue, dNewValue;
+    for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
+    {
+        double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
+        
+        
+        for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
+        {
+            dOldValue = sResult.Get(t0, iPath);
+            std::tr1::poisson_distribution<double> poisson(0.5 * NonCentralityParameter(dt) * dOldValue);
+            
+            double dNbOfFreedom = poisson(eng);
+            std::tr1::gamma_distribution<double> gamma(dNbOfFreedom + 0.5 * dD);
+            dNewValue = gamma(eng);
+            
+            sResult.Put(dDates[iDate], iPath, dNewValue);
+        }
+    }
+    return sResult;
 }

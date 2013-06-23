@@ -30,6 +30,7 @@ public:
     
     // Getter 
     virtual std::map<double, std::map<std::size_t, double> > GetData() const;
+    virtual double Get(double dDate, std::size_t iPath) const;
     
     //  Apply function
     virtual void Apply(double (*func)(double));

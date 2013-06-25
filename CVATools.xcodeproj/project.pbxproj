@@ -32,6 +32,7 @@
 		4F83E6E6176DC8320086E3E9 /* Statistics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F83E6E4176DC8320086E3E9 /* Statistics.cpp */; };
 		4F83E6E9176DE75B0086E3E9 /* MapUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F83E6E7176DE75A0086E3E9 /* MapUtilities.cpp */; };
 		4F855E5417199F9000F22474 /* MargrabeOptionVasicek.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F855E5317199F9000F22474 /* MargrabeOptionVasicek.cpp */; };
+		4F8FB23B17771DCB00163A2E /* LocalVolatility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FB23917771DCA00163A2E /* LocalVolatility.cpp */; };
 		4F909B1016ECE3F500C94591 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F909B0F16ECE3F500C94591 /* main.cpp */; };
 		4F909B1216ECE3F500C94591 /* CVATools.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F909B1116ECE3F500C94591 /* CVATools.1 */; };
 		4F9ABAE8176FB21600D50130 /* SVIParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F9ABAE6176FB21600D50130 /* SVIParameters.cpp */; };
@@ -54,6 +55,13 @@
 		4FDB682C17228DD8003B18AC /* GaussianKernel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB682B17228DD8003B18AC /* GaussianKernel.cpp */; };
 		4FE7C1CF175223E2008174E0 /* RegressionTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FE7C1CD175223E2008174E0 /* RegressionTests.cpp */; };
 		4FED30431761262100E5F587 /* VolSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FED30411761262100E5F587 /* VolSurface.cpp */; };
+		4FF487E9177A4A84000B4FEF /* libboost_chrono.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF487E2177A4A84000B4FEF /* libboost_chrono.dylib */; };
+		4FF487EA177A4A84000B4FEF /* libboost_date_time.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF487E3177A4A84000B4FEF /* libboost_date_time.dylib */; };
+		4FF487EB177A4A84000B4FEF /* libboost_filesystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF487E4177A4A84000B4FEF /* libboost_filesystem.dylib */; };
+		4FF487EC177A4A84000B4FEF /* libboost_regex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF487E5177A4A84000B4FEF /* libboost_regex.dylib */; };
+		4FF487ED177A4A84000B4FEF /* libboost_serialization.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF487E6177A4A84000B4FEF /* libboost_serialization.dylib */; };
+		4FF487EE177A4A84000B4FEF /* libboost_system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF487E7177A4A84000B4FEF /* libboost_system.dylib */; };
+		4FF487EF177A4A84000B4FEF /* libboost_thread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF487E8177A4A84000B4FEF /* libboost_thread.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -125,6 +133,8 @@
 		4F84995E17368D9E006DA0EA /* Vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		4F855E5217199E7500F22474 /* MargrabeOptionVasicek.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MargrabeOptionVasicek.h; sourceTree = "<group>"; };
 		4F855E5317199F9000F22474 /* MargrabeOptionVasicek.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MargrabeOptionVasicek.cpp; sourceTree = "<group>"; };
+		4F8FB23917771DCA00163A2E /* LocalVolatility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalVolatility.cpp; sourceTree = "<group>"; };
+		4F8FB23A17771DCB00163A2E /* LocalVolatility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalVolatility.h; sourceTree = "<group>"; };
 		4F909B0B16ECE3F500C94591 /* CVATools */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CVATools; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F909B0F16ECE3F500C94591 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4F909B1116ECE3F500C94591 /* CVATools.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CVATools.1; sourceTree = "<group>"; };
@@ -172,6 +182,13 @@
 		4FE7C1CE175223E2008174E0 /* RegressionTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegressionTests.h; sourceTree = "<group>"; };
 		4FED30411761262100E5F587 /* VolSurface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VolSurface.cpp; sourceTree = "<group>"; };
 		4FED30421761262100E5F587 /* VolSurface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VolSurface.h; sourceTree = "<group>"; };
+		4FF487E2177A4A84000B4FEF /* libboost_chrono.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_chrono.dylib; path = Libs/libboost_chrono.dylib; sourceTree = "<group>"; };
+		4FF487E3177A4A84000B4FEF /* libboost_date_time.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_date_time.dylib; path = Libs/libboost_date_time.dylib; sourceTree = "<group>"; };
+		4FF487E4177A4A84000B4FEF /* libboost_filesystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_filesystem.dylib; path = Libs/libboost_filesystem.dylib; sourceTree = "<group>"; };
+		4FF487E5177A4A84000B4FEF /* libboost_regex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_regex.dylib; path = Libs/libboost_regex.dylib; sourceTree = "<group>"; };
+		4FF487E6177A4A84000B4FEF /* libboost_serialization.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_serialization.dylib; path = Libs/libboost_serialization.dylib; sourceTree = "<group>"; };
+		4FF487E7177A4A84000B4FEF /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = Libs/libboost_system.dylib; sourceTree = "<group>"; };
+		4FF487E8177A4A84000B4FEF /* libboost_thread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_thread.dylib; path = Libs/libboost_thread.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +196,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FF487E9177A4A84000B4FEF /* libboost_chrono.dylib in Frameworks */,
+				4FF487EA177A4A84000B4FEF /* libboost_date_time.dylib in Frameworks */,
+				4FF487EB177A4A84000B4FEF /* libboost_filesystem.dylib in Frameworks */,
+				4FF487EC177A4A84000B4FEF /* libboost_regex.dylib in Frameworks */,
+				4FF487ED177A4A84000B4FEF /* libboost_serialization.dylib in Frameworks */,
+				4FF487EE177A4A84000B4FEF /* libboost_system.dylib in Frameworks */,
+				4FF487EF177A4A84000B4FEF /* libboost_thread.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +251,7 @@
 		4F909B0016ECE3F500C94591 = {
 			isa = PBXGroup;
 			children = (
+				4FF487F0177A4AA3000B4FEF /* Libs */,
 				4F909B0E16ECE3F500C94591 /* CVATools */,
 				4F909B0C16ECE3F500C94591 /* Products */,
 			);
@@ -300,6 +325,8 @@
 				4FB6DDBC16FDB8C10068590A /* Matrix.cpp */,
 				4FCA83EF170385FA00D6F8DD /* BlackScholes.h */,
 				4FCA83F01703866D00D6F8DD /* BlackScholes.cpp */,
+				4F8FB23917771DCA00163A2E /* LocalVolatility.cpp */,
+				4F8FB23A17771DCB00163A2E /* LocalVolatility.h */,
 				4F909B1116ECE3F500C94591 /* CVATools.1 */,
 			);
 			path = CVATools;
@@ -330,6 +357,20 @@
 				4FD9528F1775BB7900B1D25C /* muParserTokenReader.h */,
 			);
 			name = MuParser;
+			sourceTree = "<group>";
+		};
+		4FF487F0177A4AA3000B4FEF /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				4FF487E2177A4A84000B4FEF /* libboost_chrono.dylib */,
+				4FF487E3177A4A84000B4FEF /* libboost_date_time.dylib */,
+				4FF487E4177A4A84000B4FEF /* libboost_filesystem.dylib */,
+				4FF487E5177A4A84000B4FEF /* libboost_regex.dylib */,
+				4FF487E6177A4A84000B4FEF /* libboost_serialization.dylib */,
+				4FF487E7177A4A84000B4FEF /* libboost_system.dylib */,
+				4FF487E8177A4A84000B4FEF /* libboost_thread.dylib */,
+			);
+			name = Libs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,6 +497,7 @@
 				4FD952961775BB7900B1D25C /* muParserTest.cpp in Sources */,
 				4FD952971775BB7900B1D25C /* muParserTokenReader.cpp in Sources */,
 				4FD9529B1776055A00B1D25C /* MathFunctions.cpp in Sources */,
+				4F8FB23B17771DCB00163A2E /* LocalVolatility.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +571,11 @@
 		4F909B1616ECE3F500C94591 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libs\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -536,6 +583,12 @@
 		4F909B1716ECE3F500C94591 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libs\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -61,7 +61,10 @@ SimulationData BlackScholes::simulate(std::vector<double> &dDates, std::size_t i
             if (bFloorSimulationAtZero_ && dOldValue < 0.0)
             {
                 sResult.Put(dDates[iDate], iPath, 0.0);
-                dOldValue = 0.0;
+                if (bStartFrom0AfterFloor_)
+                {
+                    dOldValue = 0.0;
+                }
             }
             else
             {

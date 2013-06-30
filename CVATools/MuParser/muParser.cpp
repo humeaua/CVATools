@@ -151,7 +151,7 @@ namespace mu
           throw exception_type(_T("too few arguments for function min."));
 
       value_type fRes=a_afArg[0];
-      for (int i=0; i<a_iArgc; ++i) fRes = std::min(fRes, a_afArg[i]);
+      for (int i=1; i<a_iArgc; ++i) fRes = std::min(fRes, a_afArg[i]);
 
       return fRes;
   }
@@ -168,7 +168,7 @@ namespace mu
       throw exception_type(_T("too few arguments for function min."));
 
     value_type fRes=a_afArg[0];
-    for (int i=0; i<a_iArgc; ++i) fRes = std::max(fRes, a_afArg[i]);
+    for (int i=1; i<a_iArgc; ++i) fRes = std::max(fRes, a_afArg[i]);
 
     return fRes;
   }
@@ -264,8 +264,8 @@ namespace mu
     // To change the number of args 
     // finance functions 
     DefineFun(_T("AccCumNorm"), AccCumNorm);
-    //DefineFun(_T("BS"), BS);
-                
+    DefineFun(_T("BS"), BS);
+    DefineFun(_T("BSN"), BSN);
                 
     // Functions with variable number of arguments
     DefineFun(_T("sum"), Sum);

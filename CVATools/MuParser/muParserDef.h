@@ -261,6 +261,9 @@ namespace mu
 
   /** \brief Callback type used for functions with five arguments. */
   typedef value_type (*fun_type10)(value_type, value_type, value_type, value_type, value_type, value_type, value_type, value_type, value_type, value_type);
+    
+    /* functions for Black-Scholes and Black-Scholes normal*/
+    typedef value_type (*fun_typebs)(value_type , value_type , value_type , value_type , string_type );
 
   /** \brief Callback type used for functions without arguments. */
   typedef value_type (*bulkfun_type0)(int, int);

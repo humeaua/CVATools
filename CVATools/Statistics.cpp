@@ -8,6 +8,10 @@
 
 #include "Statistics.h"
 #include <cmath>
+#include <numeric>
+#include "Require.h"
+#include <algorithm>
+#include "VectorUtilities.h"
 
 Statistics::Statistics()
 {}
@@ -17,34 +21,105 @@ Statistics::~Statistics()
 
 double Statistics::Mean(const std::vector<double> &dData) const
 {
-    double dMean = 0.0;
     std::size_t n = dData.size();
-    for (std::size_t i = 0 ; i < n ; ++i)
-    {
-        dMean += dData[i];
-    }
-    return n != 0 ? dMean / n : 0.0;
+    return n == 0 ? 0.0 : std::accumulate(dData.begin(), dData.end(), 0.0)/ n;
 }
 
 double Statistics::Median(const std::vector<double> &dData) const
 {
-    std::size_t n = dData.size();
-    std::vector<double> dDataCopy = dData;
-    std::sort(dDataCopy.begin(), dDataCopy.end());
-    
-    return n % 2 == 1 ? dDataCopy[n / 2] : 0.5 * (dDataCopy[n/2 - 1] + dDataCopy[n/2]);
+    std::size_t iN = dData.size(), nOver2 = iN / 2;
+    if (iN % 2)
+    {
+        return kthSmallest(dData, nOver2);
+    }
+    else
+    {
+        return 0.5 * (kthSmallest(dData, nOver2) + kthSmallest(dData, nOver2 - 1));
+    }
 }
 
-double Statistics::Variance(const std::vector<double> &dData) const
+std::size_t Statistics::Partition(const std::vector<double> &dData, std::size_t iPivot) const
 {
-    double dVariance = 0.0, dMean = 0.0;
-    for (std::size_t i = 0 ; i < dData.size() ; ++i)
+/*
+ function partition(list, left, right, pivotIndex)
+    pivotValue := list[pivotIndex]
+    swap list[pivotIndex] and list[right]  // Move pivot to end
+    storeIndex := left
+    for i from left to right-1
+        if list[i] < pivotValue
+            swap list[storeIndex] and list[i]
+            increment storeIndex
+        swap list[right] and list[storeIndex]  // Move pivot to its final place
+    return storeIndex
+ */
+    
+    Utilities::requireException(iPivot < dData.size(), "Pivot is over the size of the data");
+    double dPivotValue = dData[iPivot];
+    std::size_t iN = dData.size();
+    std::vector<double> dCopy = dData;
+    
+    std::swap(dCopy[iPivot], dCopy.back());
+    
+    std::size_t iStoreIndex = 0;
+    
+    for (std::size_t i = 0 ; i < iN ; ++i)
     {
-        dMean += dData[i];
-        dVariance += dData[i] * dData[i];
+        if (dData[i] < dPivotValue)
+        {
+            std::swap(dCopy[iStoreIndex], dCopy[i]);
+            iStoreIndex++;
+        }
+        std::swap(dCopy.back(), dCopy[iStoreIndex]);
     }
-    dMean /= dData.size();
-    return dVariance / dData.size() - dMean * dMean;
+    return iStoreIndex;
+}
+
+double Statistics::kthSmallest(const std::vector<double> &dData, std::size_t k) const
+{
+/*
+ // Returns the k-th smallest element of list within left..right inclusive.
+ function select(list, left, right, k)
+    if left = right        // If the list contains only one element
+        return list[left]  // Return that element
+    pivotIndex := ...     // select a pivotIndex between left and right
+    pivotNewIndex := partition(list, left, right, pivotIndex)
+    pivotDist := pivotNewIndex - left + 1
+    // The pivot is in its final sorted position,
+    // so pivotDist reflects its 1-based position if list were sorted
+    if pivotDist = k
+        return list[pivotNewIndex]
+    else if k < pivotDist
+        return select(list, left, pivotNewIndex - 1, k)
+    else
+        return select(list, pivotNewIndex + 1, right, k - pivotDist)
+ */
+    std::size_t iN = dData.size();
+    if (iN == 1)
+        return dData.back();
+    std::size_t iPivotIndex = iN / 2;
+    std::size_t iPivotNewIndex = Partition(dData, iPivotIndex), iPivotDist = iPivotNewIndex + 1;
+    
+    if (iPivotDist == k)
+        return dData[k];
+    else if (k < iPivotDist)
+    {
+        std::vector<double> dNewData = Utilities::Subset(dData, 0, iPivotNewIndex - 1);
+        return kthSmallest(dNewData, k);
+    }
+    else
+    {
+        std::vector<double> dNewData = Utilities::Subset(dData, iPivotNewIndex + 1, iN - 1);
+        return kthSmallest(dNewData, k - iPivotDist);
+    }
+}
+
+double Statistics::Variance(const std::vector<double> &v) const
+{
+    double mean = Mean(v);
+    std::vector<double> diff(v.size());
+    std::transform(v.begin(), v.end(), diff.begin(),
+                   std::bind2nd(std::minus<double>(), mean));
+    return v.size() == 0 ? 0.0 : std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0) / v.size();
 }
 
 double Statistics::StandardDeviation(const std::vector<double> &dData) const

@@ -12,6 +12,7 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include "Require.h"
 
 namespace Utilities {
     
@@ -87,6 +88,21 @@ namespace Utilities {
     
     // May change this function to a template version
     bool AreEqual(const std::vector<double> & vect1, const std::vector<double> & vect2, double tolerance);
+    
+    template<class T> std::vector<T> Subset(const std::vector<T> & vect, std::size_t iBegin, std::size_t iEnd)
+    {
+        std::size_t iN = vect.size();
+        Utilities::requireException(iBegin < iN, "Begin is out of the data");
+        Utilities::requireException(iEnd < iN, "End is out of the data");
+        Utilities::requireException(iBegin <= iEnd, "End is before beginning of data");
+        
+        std::vector<T> result;
+        for (std::size_t i = iBegin ; i <= iEnd ; ++i)
+        {
+            result.push_back(vect[i]);
+        }
+        return result;
+    }
     
 };
 

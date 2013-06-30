@@ -14,6 +14,8 @@
 
 class Statistics
 {
+private:
+    virtual std::size_t Partition(const std::vector<double> & dData, std::size_t iPivot) const;
 public:
     Statistics();
     virtual ~Statistics();
@@ -23,6 +25,7 @@ public:
     
     //  Method to compute the median of data
     virtual double Median(const std::vector<double> & dData) const;
+    virtual double kthSmallest(const std::vector<double> & dData, std::size_t k) const;
     
     //  Method to compute the standard deviation of data
     virtual double StandardDeviation(const std::vector<double> & dData) const;

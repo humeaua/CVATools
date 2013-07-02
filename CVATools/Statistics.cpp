@@ -25,6 +25,18 @@ double Statistics::Mean(const std::vector<double> &dData) const
     return n == 0 ? 0.0 : std::accumulate(dData.begin(), dData.end(), 0.0)/ n;
 }
 
+double Statistics::MeanOld(const std::vector<double> &dData) const
+{
+    std::size_t n = dData.size();
+    double dResult = 0.0;
+    
+    for (std::size_t i = 0 ; i < n ; ++i)
+    {
+        dResult += dData[i];
+    }
+    return n == 0 ? 0.0 : dResult / n;
+}
+
 double Statistics::Median(const std::vector<double> &dData) const
 {
     std::size_t iN = dData.size(), nOver2 = iN / 2;
@@ -122,9 +134,30 @@ double Statistics::Variance(const std::vector<double> &v) const
     return v.size() == 0 ? 0.0 : std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0) / v.size();
 }
 
+double Statistics::VarianceOld(const std::vector<double> &v) const
+{
+    std::size_t n = v.size();
+    double dMean = 0.0, dVariance = 0.0, dElementLoc;
+    for (std::size_t i = 0 ; i < n ; ++i)
+    {
+        dElementLoc = v[i];
+        dMean += dElementLoc;
+        dVariance += dElementLoc * dElementLoc;
+    }
+    dMean /= n;
+    dVariance /= n;
+    dVariance -= dMean * dMean;
+    return n == 0 ? 0.0 : dVariance;
+}
+
 double Statistics::StandardDeviation(const std::vector<double> &dData) const
 {
     return sqrt(Variance(dData));
+}
+
+double Statistics::StandardDeviationOld(const std::vector<double> &dData) const
+{
+    return sqrt(VarianceOld(dData));
 }
 
 double Statistics::Quantile(double dQuantile, const std::vector<double> &dData) const

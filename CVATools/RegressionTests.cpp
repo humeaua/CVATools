@@ -10,6 +10,7 @@
 #include <vector>
 #include <cmath>
 #include "BondPricer.h"
+#include "Statistics.h"
 
 void RegressionTest_BondPricing()
 {
@@ -116,4 +117,35 @@ void RegressionTest_BondPricing()
     {
         std::cout << "Unknown exception caught" << std::endl;
     }
+}
+
+void RegressionTest_TimeStatistics()
+{
+    // Regression Test Statistics Time
+    
+    std::cout << "Regression Test Time Computation for statistics" << std::endl;
+    std::vector<double> dData(1000000, 1.0);
+    Statistics sStats;
+    
+    clock_t tic = clock();
+    double dResult = sStats.MeanOld(dData);
+    
+    std::cout << "Mean old time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
+    
+    tic = clock();
+     dResult = sStats.Mean(dData);
+    
+    std::cout << "Mean time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
+    
+    tic = clock();
+    dResult = sStats.VarianceOld(dData);
+    
+    std::cout << "Variance old time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
+    
+    tic = clock();
+    dResult = sStats.Variance(dData);
+    
+    std::cout << "Variance time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
+    
+
 }

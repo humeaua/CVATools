@@ -12,5 +12,6 @@
 #include <iostream>
 
 void RegressionTest_BondPricing();
+void RegressionTest_TimeStatistics();
 
 #endif /* defined(__CVATools__RegressionTests__) */

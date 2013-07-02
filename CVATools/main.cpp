@@ -80,6 +80,8 @@ int main()
     if (iTest == 0)
     {
         RegressionTest_BondPricing();
+        std::cout << std::endl;
+        RegressionTest_TimeStatistics();
     }
     if (iTest == 1)
     {

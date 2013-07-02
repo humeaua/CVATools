@@ -22,6 +22,7 @@ public:
     
     //  Method to compute the mean of data
     virtual double Mean(const std::vector<double> & dData) const;
+    virtual double MeanOld(const std::vector<double> & dData) const;
     
     //  Method to compute the median of data
     virtual double Median(const std::vector<double> & dData) const;
@@ -29,9 +30,11 @@ public:
     
     //  Method to compute the standard deviation of data
     virtual double StandardDeviation(const std::vector<double> & dData) const;
+    virtual double StandardDeviationOld(const std::vector<double> & dData) const;
     
     //  Method to compute the variance of data
     virtual double Variance(const std::vector<double> & dData) const;
+    virtual double VarianceOld(const std::vector<double> & dData) const;
     
     //  Method to compute the Quantile of data
     virtual double Quantile(double dQuantile, const std::vector<double> & dData) const;

@@ -12,6 +12,17 @@
 #include <vector>
 #include <stdexcept>
 
+template <class C>
+class MyVector : public std::vector<C> {
+    
+    
+public:
+    virtual std::vector<C> operator+(std::vector<C> &);
+    virtual std::vector<C> operator-(std::vector<C> &);
+    virtual std::vector<C> operator*(std::vector<C> &);
+    virtual std::vector<C> operator/(std::vector<C> &);
+};
+
 template <typename T>
 T norm_2(const std::vector<T> & vect)
 {

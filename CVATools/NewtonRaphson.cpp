@@ -8,18 +8,12 @@
 
 #include "NewtonRaphson.h"
 #include <cmath>
-#include <stdexcept>
+#include "Require.h"
 
 NewtonRaphson1D::NewtonRaphson1D(std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : iNIterMax_(iNIterMax), dTolerance_(dTolerance), dEpsValueDeriv_(dEpsValueDeriv)
 {
-    if (dEpsValueDeriv_ <= 0.0)
-    {
-        throw std::runtime_error("NewtonRaphson1D : Epsilon value for derivative should be positive");
-    }
-    if (dTolerance_ <= 0.0)
-    {
-        throw std::runtime_error("NewtonRaphson1D : Tolerance should be positive");
-    }
+    Utilities::requireException(dEpsValueDeriv > 0, "NewtonRaphson1D : Epsilon value for derivative should be positive");
+    Utilities::requireException(dTolerance > 0, "NewtonRaphson1D : Tolerance should be positive");
 }
 
 double NewtonRaphson1D::algo_root_finder(double dInitialGuess) const

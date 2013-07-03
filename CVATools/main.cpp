@@ -20,6 +20,7 @@
 #include "GaussianKernel.h"
 #include "RegressionTests.h"
 #include "MuParser/muParserTest.h"
+#include "Vector.h"
 
 #define NUM_THREADS 5
 
@@ -74,6 +75,7 @@ int main()
     std::cout << "7- Kernel Estimation" << std::endl;
     std::cout << "8- Business Day" << std::endl;
     std::cout << "9- Mu Parser Test" << std::endl;
+    std::cout << "10- My Vector Test" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -303,5 +305,29 @@ int main()
     {
         mu::Test::ParserTester sParserTester;
         sParserTester.Run();
+    }
+    else if (iTest == 10)
+    {
+        MyVector<double> vect0(10,0), vect1(10,1), vectAdd = vect0 + vect1, vectSubs = vect0 - vect1, vectMult = vect0 * vect1, vectDiv = vect0 / vect1;
+        std::cout << "Addition" << std::endl;
+        for (std::size_t i = 0 ; i < vectAdd.size() ; ++i)
+        {
+            std::cout << vectAdd[i] << std::endl;
+        }
+        std::cout << "Substraction" << std::endl;
+        for (std::size_t i = 0 ; i < vectSubs.size() ; ++i)
+        {
+            std::cout << vectSubs[i] << std::endl;
+        }
+        std::cout << "Multiplication" << std::endl;
+        for (std::size_t i = 0 ; i < vectMult.size() ; ++i)
+        {
+            std::cout << vectMult[i] << std::endl;
+        }
+        std::cout << "Division" << std::endl;
+        for (std::size_t i = 0 ; i < vectDiv.size() ; ++i)
+        {
+            std::cout << vectDiv[i] << std::endl;
+        }
     }
 }

@@ -125,7 +125,7 @@ void RegressionTest_TimeStatistics()
     
     std::cout << "Regression Test Time Computation for statistics" << std::endl;
     std::vector<double> dData(1000000, 1.0);
-    Statistics sStats;
+    Maths::Statistics sStats;
     
     clock_t tic = clock();
     double dResult = sStats.MeanOld(dData);

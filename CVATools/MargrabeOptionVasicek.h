@@ -21,28 +21,34 @@
  the goal of the class is to price a Margrabe option of payoff at time T (S_1 - K S_2)_+
  */
 
-class MargrabeOptionVasicek : public MargrabeOptionStochasticRates
+namespace Finance
 {
-protected:
-    double dA_, dB_, dSigma_;
-public:
-    MargrabeOptionVasicek(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
-    MargrabeOptionVasicek(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
-    
-    virtual ~MargrabeOptionVasicek();
-
-    //  MultiDimensional Drift drift
-    virtual DVector MultiDrift(double dt, DVector dx) const ;
-    
-    //  MultiDimensional volatility vector
-    virtual DVector MultiVol(double dt, DVector dx) const;
-    
-    virtual double alpha(double t, double r_t) const;
-    virtual double beta(double t, double r_t) const;
-    
-    //  Simulation method
-    virtual SimulationDataMultiDim simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
-
-};
+    namespace Option
+    {
+        class MargrabeOptionVasicek : public MargrabeOptionStochasticRates
+        {
+        protected:
+            double dA_, dB_, dSigma_;
+        public:
+            MargrabeOptionVasicek(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
+            MargrabeOptionVasicek(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
+            
+            virtual ~MargrabeOptionVasicek();
+            
+            //  MultiDimensional Drift drift
+            virtual DVector MultiDrift(double dt, DVector dx) const ;
+            
+            //  MultiDimensional volatility vector
+            virtual DVector MultiVol(double dt, DVector dx) const;
+            
+            virtual double alpha(double t, double r_t) const;
+            virtual double beta(double t, double r_t) const;
+            
+            //  Simulation method
+            virtual SimulationDataMultiDim simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
+            
+        };
+    }
+}
 
 #endif

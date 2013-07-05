@@ -158,7 +158,7 @@ int main()
         dInitialValues[1] = log(100);
         dInitialValues[2] = 0.02; // value for initial short rate
         
-        MargrabeOptionVasicek sOption(1.0, 1, sCorrelMatrix, dInitialValues, 0.05, 0.03, 0.01, 0.2, 0.3);
+        Finance::Option::MargrabeOptionVasicek sOption(1.0, 1, sCorrelMatrix, dInitialValues, 0.05, 0.03, 0.01, 0.2, 0.3);
         
         //  Simulation Values
         std::vector<double> dDates;
@@ -271,7 +271,7 @@ int main()
             {
                 dXY.push_back(std::make_pair(i / 10.0, i / 10.0));
             }
-            GaussianKernel sGaussianKernel(0.1, 1.0e-7);
+            Maths::GaussianKernel sGaussianKernel(0.1, 1.0e-7);
             
             for (double x = 0 ; x < 11 ; x += 0.01)
             {
@@ -308,7 +308,7 @@ int main()
     }
     else if (iTest == 10)
     {
-        MyVector<double> vect0(10,0), vect1(10,1), vectAdd = vect0 + vect1, vectSubs = vect0 - vect1, vectMult = vect0 * vect1, vectDiv = vect0 / vect1;
+        Utilities::MyVector<double> vect0(10,0), vect1(10,1), vectAdd = vect0 + vect1, vectSubs = vect0 - vect1, vectMult = vect0 * vect1, vectDiv = vect0 / vect1;
         std::cout << "Addition" << std::endl;
         for (std::size_t i = 0 ; i < vectAdd.size() ; ++i)
         {
@@ -330,7 +330,7 @@ int main()
             std::cout << vectDiv[i] << std::endl;
         }
         
-        MyVector<double> vect0Add = vect0 + 1.0;
+        Utilities::MyVector<double> vect0Add = vect0 + 1.0;
         std::cout << "Addition" << std::endl;
         for (std::size_t i = 0 ; i < vect0Add.size() ; ++i)
         {

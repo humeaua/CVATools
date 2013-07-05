@@ -8,8 +8,14 @@
 
 #include "Payoff.h"
 
-Payoff::Payoff()
-{}
-
-Payoff::~Payoff()
-{}
+namespace Finance
+{
+    namespace Payoff
+    {
+        Payoff::Payoff()
+        {}
+        
+        Payoff::~Payoff()
+        {}
+    }
+}

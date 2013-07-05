@@ -11,22 +11,29 @@
 
 #include "Payoff.h"
 
-typedef enum
+namespace Finance
 {
-    CALL,
-    PUT,
-    STRADDLE
-}VanillaOptionType;
-
-class PayoffVanillaOption {
-protected:
-    double dStrike_;
-    VanillaOptionType eOptionType_;
-public:
-    PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType_);
-    virtual ~PayoffVanillaOption();
-    
-    virtual double pay(double dS) const;
-};
+    namespace Payoff
+    {
+        typedef enum
+        {
+            CALL,
+            PUT,
+            STRADDLE
+        }VanillaOptionType;
+        
+        class PayoffVanillaOption : public Payoff
+        {
+        protected:
+            double dStrike_;
+            VanillaOptionType eOptionType_;
+        public:
+            PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType_);
+            virtual ~PayoffVanillaOption();
+            
+            virtual double pay(double dS) const;
+        };
+    }
+}
 
 #endif

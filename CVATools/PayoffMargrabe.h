@@ -11,16 +11,22 @@
 
 #include "Payoff2D.h"
 
-class PayoffMargrabe : public Payoff2D
+namespace Finance
 {
-protected:
-    double dK_;
-    
-public:
-    PayoffMargrabe(double dK);
-    virtual ~PayoffMargrabe();
-    
-    virtual double pay(double s1, double s2) const;
-};
+    namespace Payoff
+    {
+        class PayoffMargrabe : public Payoff2D
+        {
+        protected:
+            double dK_;
+            
+        public:
+            PayoffMargrabe(double dK);
+            virtual ~PayoffMargrabe();
+            
+            virtual double pay(double s1, double s2) const;
+        };
+    }
+}
 
 #endif

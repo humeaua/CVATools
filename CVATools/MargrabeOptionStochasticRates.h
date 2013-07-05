@@ -23,22 +23,28 @@
  the goal of the class is to price a Margrabe option of payoff at time T (S_1 - K S_2)_+
  */
 
-class MargrabeOptionStochasticRates : public PayoffMargrabe, public DiffusionProcessMultiDim
+namespace Finance
 {
-protected:
-    double dT_;
-    double dS1_, dS2_;
-    double dR0_;
-    
-    double dSigma1_, dSigma2_;
-public:
-    MargrabeOptionStochasticRates(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSimga2);
-    MargrabeOptionStochasticRates(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dSigma1, double dSimga2);
-    
-    virtual ~MargrabeOptionStochasticRates();
-    
-    virtual double alpha(double t, double r_t) const = 0;
-    virtual double beta(double t, double r_t) const = 0;
-};
+    namespace Option
+    {
+        class MargrabeOptionStochasticRates : public Payoff::PayoffMargrabe, public DiffusionProcessMultiDim
+        {
+        protected:
+            double dT_;
+            double dS1_, dS2_;
+            double dR0_;
+            
+            double dSigma1_, dSigma2_;
+        public:
+            MargrabeOptionStochasticRates(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSimga2);
+            MargrabeOptionStochasticRates(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dSigma1, double dSimga2);
+            
+            virtual ~MargrabeOptionStochasticRates();
+            
+            virtual double alpha(double t, double r_t) const = 0;
+            virtual double beta(double t, double r_t) const = 0;
+        };
+    }
+}
 
 #endif

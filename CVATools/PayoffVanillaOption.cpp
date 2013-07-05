@@ -10,27 +10,33 @@
 #include <iostream>
 #include <cmath>
 
-PayoffVanillaOption::PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType) : dStrike_(dStrike), eOptionType_(eOptionType)
-{}
-
-PayoffVanillaOption::~PayoffVanillaOption()
-{}
-
-double PayoffVanillaOption::pay(double dS) const
+namespace Finance
 {
-    switch (eOptionType_) {
-        case CALL:
-            return std::max(dS - dStrike_, 0.0);
-            break;
-            
-        case PUT:
-            return std::max(dStrike_ - dS, 0.0);
-            break;
-            
-        case STRADDLE:
-            return fabs(dStrike_ - dS);
-            
-        default:
-            break;
+    namespace Payoff
+    {
+        PayoffVanillaOption::PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType) : dStrike_(dStrike), eOptionType_(eOptionType)
+        {}
+        
+        PayoffVanillaOption::~PayoffVanillaOption()
+        {}
+        
+        double PayoffVanillaOption::pay(double dS) const
+        {
+            switch (eOptionType_) {
+                case CALL:
+                    return std::max(dS - dStrike_, 0.0);
+                    break;
+                    
+                case PUT:
+                    return std::max(dStrike_ - dS, 0.0);
+                    break;
+                    
+                case STRADDLE:
+                    return fabs(dStrike_ - dS);
+                    
+                default:
+                    break;
+            }
+        }
     }
 }

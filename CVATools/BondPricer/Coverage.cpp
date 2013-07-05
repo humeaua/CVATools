@@ -108,7 +108,6 @@ namespace Finance
                     break;
                 }
                 default:
-                    //throw ::std::runtime_error((::std::string)("Not yet implemented"));
                     break;
             }
             return dCoverage;

@@ -11,16 +11,20 @@
 
 #include "DiscountFactor.h"
 
-namespace Finance {
-    class ForwardRate : public DF
+namespace Finance
+{
+    namespace Instruments
     {
-    public:
-        ForwardRate();
-        ForwardRate(const YieldCurve & sInitialYieldCurve);
-        virtual ~ForwardRate();
-        
-        virtual double FwdRate(double dStart, double dEnd) const;
-    };
+        class ForwardRate : public DF
+        {
+        public:
+            ForwardRate();
+            ForwardRate(const YieldCurve & sInitialYieldCurve);
+            virtual ~ForwardRate();
+            
+            virtual double FwdRate(double dStart, double dEnd) const;
+        };
+    }
 }
 
 #endif

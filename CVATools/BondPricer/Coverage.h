@@ -12,27 +12,30 @@
 #include "Basis.h"
 #include "Date.h"
 
-namespace Finance {
-    
-    class Coverage
+namespace Finance
+{
+    namespace Base
     {
-    public:
-        Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd);
-        virtual ~Coverage();
+        class Coverage
+        {
+        public:
+            Coverage(::Finance::Base::MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd);
+            virtual ~Coverage();
+            
+            virtual ::Finance::Base::MyBasis GetBasis() const;
+            virtual Utilities::Date::MyDate GetStartDate() const;
+            virtual Utilities::Date::MyDate GetEndDate() const;
+            
+            virtual double ComputeCoverage();
+        private:
+            ::Finance::Base::MyBasis eBasis_;
+            
+            Utilities::Date::MyDate sStart_, sEnd_;
+            
+        };
         
-        virtual MyBasis GetBasis() const;
-        virtual Utilities::Date::MyDate GetStartDate() const;
-        virtual Utilities::Date::MyDate GetEndDate() const;
-        
-        virtual double ComputeCoverage();
-    private:
-        MyBasis eBasis_;
-        
-        Utilities::Date::MyDate sStart_, sEnd_;
-        
-    };
-    
-    double GetCoverage(const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, MyBasis eBasis);
+        double GetCoverage(const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, ::Finance::Base::MyBasis eBasis);
+    }
 }
 
 #endif

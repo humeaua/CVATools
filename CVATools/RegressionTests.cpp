@@ -40,16 +40,16 @@ void RegressionTest_BondPricing()
         dYC.push_back(std::make_pair(30.0, 0.0310));
         
         Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034), sToday(10, 5, 2013);
-        Finance::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::LIN);
+        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::LIN);
         
-        Finance::MyBasis eBasis = Finance::BONDBASIS;
-        Finance::MyFrequency eFrequency = Finance::MyFrequencyAnnual;
+        Finance::Base::MyBasis eBasis = Finance::Base::BONDBASIS;
+        Finance::Base::MyFrequency eFrequency = Finance::Base::MyFrequencyAnnual;
         double dNotional = 1.;
         
         std::vector<double> dCoupons(20, 0.01);
         bool bIsFixedRate = true;
         
-        Pricers::BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
+        Finance::Pricers::BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
         double dBondPrice = sBondPricer.Price();
         double dRefBondPrice = 0.720238, dRefYield = 0.0270136, dRefISpread = -0.000399764, dRefZSpread = 0.000403147;
         double dError = 1.0e-5;

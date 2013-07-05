@@ -13,35 +13,41 @@
 #include "Coupon.h"
 #include "Frequency.h"
 
-void CreateBond(//  Inputs
-                const std::vector<double> & dCoupons,
-                const Utilities::Date::MyDate & sStart,
-                const Utilities::Date::MyDate & sEnd,
-                Finance::MyBasis eBasis,
-                Finance::MyFrequency eFrequency,
-                bool bIsFixedRate,
-                //  Output
-                std::vector<Coupon> & vCoupons);
-
-void CreateBond(//  Inputs
-                const std::vector<double> & dCoupons,
-                const Utilities::Date::MyDate & sStart,
-                const Utilities::Date::MyDate & sEnd,
-                Finance::MyBasis eBasis,
-                Finance::MyFrequency eFrequency,
-                const std::vector<bool> & bIsFixedRate,
-                //  Output
-                std::vector<Coupon> & vCoupons);
-
-class Bond {
-protected:
-    std::vector<Coupon> vCoupons_;
-    bool bIsNotionalRepaidBack_;
-    double dNotional_;
-public:
-    Bond(double dNotional, bool bIsNotionalRepaidBack);
-    Bond(double dNotional, bool bIsNotionalRepaidBack, const std::vector<Coupon> & vCoupons);
-    virtual ~Bond();
-};
+namespace Finance
+{
+    namespace Instruments
+    {
+        void CreateBond(//  Inputs
+                        const std::vector<double> & dCoupons,
+                        const Utilities::Date::MyDate & sStart,
+                        const Utilities::Date::MyDate & sEnd,
+                        Finance::Base::MyBasis eBasis,
+                        Finance::Base::MyFrequency eFrequency,
+                        bool bIsFixedRate,
+                        //  Output
+                        std::vector<Base::Coupon> & vCoupons);
+        
+        void CreateBond(//  Inputs
+                        const std::vector<double> & dCoupons,
+                        const Utilities::Date::MyDate & sStart,
+                        const Utilities::Date::MyDate & sEnd,
+                        Finance::Base::MyBasis eBasis,
+                        Finance::Base::MyFrequency eFrequency,
+                        const std::vector<bool> & bIsFixedRate,
+                        //  Output
+                        std::vector<Base::Coupon> & vCoupons);
+        
+        class Bond {
+        protected:
+            std::vector<Base::Coupon> vCoupons_;
+            bool bIsNotionalRepaidBack_;
+            double dNotional_;
+        public:
+            Bond(double dNotional, bool bIsNotionalRepaidBack);
+            Bond(double dNotional, bool bIsNotionalRepaidBack, const std::vector<Base::Coupon> & vCoupons);
+            virtual ~Bond();
+        };
+    }
+}
 
 #endif /* defined(__CVATools__Bond__) */

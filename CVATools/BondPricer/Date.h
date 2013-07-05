@@ -11,10 +11,10 @@
 
 #include <iostream>
 
-namespace Utilities {
-    
-    namespace Date {
-        
+namespace Utilities
+{    
+    namespace Date
+    {
         typedef enum TimeUnits_
         {
             DAY,

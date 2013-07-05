@@ -11,20 +11,23 @@
 
 #include "Date.h"
 
-namespace Finance {
-    typedef enum
+namespace Finance
+{
+    namespace Base
     {
-        MyFrequencyAnnual,
-        MyFrequencySemiannual,
-        MyFrequencyQuarterly,
-        MyFrequencyMonthly
-    }MyFrequency;
-
-    class Frequency{
-    public:
-        static std::pair<std::size_t, Utilities::Date::TimeUnits> ParseFrequency(MyFrequency eFrequency);
-    };
-    
+        typedef enum
+        {
+            MyFrequencyAnnual,
+            MyFrequencySemiannual,
+            MyFrequencyQuarterly,
+            MyFrequencyMonthly
+        }MyFrequency;
+        
+        class Frequency{
+        public:
+            static std::pair<std::size_t, Utilities::Date::TimeUnits> ParseFrequency(MyFrequency eFrequency);
+        };
+    }
 }
 
 #endif

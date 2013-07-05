@@ -10,10 +10,10 @@
 #include "VectorUtilities.h"
 #include <stdexcept>
 
-namespace Utilities {
-    
-    namespace Date {
-        
+namespace Utilities
+{    
+    namespace Date
+    {
         int DaysAtBeginningOfEachMonth[] = {/*Jan*/0, /*Feb*/31, /*Mar*/59, /*Apr*/90, /*May*/120, /*Jun*/151, /*Jul*/181, /*Aug*/212, /*Sep*/243, /*Oct*/273, /*Nov*/304, /*Dec*/334};
         std::vector<long> Holidays;
         
@@ -522,6 +522,5 @@ namespace Utilities {
             Utilities::Date::MyDate sToday;
             return sToday;
         }
-        
     }
 }

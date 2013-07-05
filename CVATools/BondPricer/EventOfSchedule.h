@@ -15,25 +15,28 @@
 
 namespace Finance
 {
-    class EventOfSchedule
+    namespace Base
     {
-    protected:
-        //  the pay date is the end date
-        Utilities::Date::MyDate sStart_, sEnd_;
-        
-        MyBasis eBasis_;
-        
-    public:
-        
-        EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis);
-        virtual ~EventOfSchedule();
-        
-        virtual double GetCoverage() const;
-        virtual double GetPayingDateDF(const YieldCurve & sYieldCurve) const;
-        virtual Utilities::Date::MyDate GetEndDate() const;
-        virtual Utilities::Date::MyDate GetStartDate() const;
-        virtual MyBasis GetBasis() const;
-    };
+        class EventOfSchedule
+        {
+        protected:
+            //  the pay date is the end date
+            Utilities::Date::MyDate sStart_, sEnd_;
+            
+            ::Finance::Base::MyBasis eBasis_;
+            
+        public:
+            
+            EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis);
+            virtual ~EventOfSchedule();
+            
+            virtual double GetCoverage() const;
+            virtual double GetPayingDateDF(const ::Finance::Base::YieldCurve & sYieldCurve) const;
+            virtual Utilities::Date::MyDate GetEndDate() const;
+            virtual Utilities::Date::MyDate GetStartDate() const;
+            virtual ::Finance::Base::MyBasis GetBasis() const;
+        };
+    }
 }
 
 #endif

@@ -10,30 +10,32 @@
 #include "Frequency.h"
 #include <stdexcept>
 
-namespace Finance {
-    
-    std::pair<std::size_t, Utilities::Date::TimeUnits> Frequency::ParseFrequency(MyFrequency eFrequency)
+namespace Finance
+{
+    namespace Base
     {
-        if (eFrequency == MyFrequencyAnnual)
+        std::pair<std::size_t, Utilities::Date::TimeUnits> Frequency::ParseFrequency(MyFrequency eFrequency)
         {
-            return std::make_pair(1, Utilities::Date::YEAR);
-        }
-        else if (eFrequency == MyFrequencyMonthly)
-        {
-            return std::make_pair(1, Utilities::Date::MONTH);
-        }
-        else if (eFrequency == MyFrequencyQuarterly)
-        {
-            return std::make_pair(3, Utilities::Date::MONTH);
-        }
-        else if (eFrequency == MyFrequencySemiannual)
-        {
-            return std::make_pair(6, Utilities::Date::MONTH);
-        }
-        else
-        {
-            throw std::runtime_error("Unknown frequency in Parse Frequency");
+            if (eFrequency == MyFrequencyAnnual)
+            {
+                return std::make_pair(1, Utilities::Date::YEAR);
+            }
+            else if (eFrequency == MyFrequencyMonthly)
+            {
+                return std::make_pair(1, Utilities::Date::MONTH);
+            }
+            else if (eFrequency == MyFrequencyQuarterly)
+            {
+                return std::make_pair(3, Utilities::Date::MONTH);
+            }
+            else if (eFrequency == MyFrequencySemiannual)
+            {
+                return std::make_pair(6, Utilities::Date::MONTH);
+            }
+            else
+            {
+                throw std::runtime_error("Unknown frequency in Parse Frequency");
+            }
         }
     }
-    
 }

@@ -11,31 +11,36 @@
 #include <cmath>
 #include <stdexcept>
 
-namespace Finance {
-	DF::DF()
-	{}
-	
-	DF::DF(const YieldCurve & sInitialYieldCurve) : YieldCurve(sInitialYieldCurve)
-	{}
-	
-	DF::~DF()
-	{}
-	
-	double DF::DiscountFactor(double dT) const
-	{
-		return exp(-dT * YC(dT));
-	}
-    
-    double DF::DiscountFactor(const Utilities::Date::MyDate &sDate) const
+namespace Finance
+{
+    namespace Instruments
     {
-        double dT = sDate.Diff(sToday_);
-        if (dT > 0)
+        DF::DF()
+        {}
+        
+        DF::DF(const YieldCurve & sInitialYieldCurve) : YieldCurve(sInitialYieldCurve)
+        {}
+        
+        DF::~DF()
+        {}
+        
+        double DF::DiscountFactor(double dT) const
         {
-            return DiscountFactor(dT);
+            return exp(-dT * YC(dT));
         }
-        else 
+        
+        double DF::DiscountFactor(const Utilities::Date::MyDate &sDate) const
         {
-            throw std::runtime_error("Error in discount factor : Date is before today");
+            double dT = sDate.Diff(sToday_);
+            if (dT > 0)
+            {
+                return DiscountFactor(dT);
+            }
+            else
+            {
+                throw std::runtime_error("Error in discount factor : Date is before today");
+            }
         }
     }
 }
+

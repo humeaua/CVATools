@@ -12,18 +12,24 @@
 #include <iostream>
 #include "EventOfSchedule.h"
 
-class Coupon : public Finance::EventOfSchedule
+namespace Finance
 {
-protected:
-    double dCoupon_;
-    bool bIsFixedRate_;
-    
-public:
-    Coupon(double dCoupon, bool bIsFixedRate, const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::MyBasis eBasis);
-    virtual ~Coupon();
-    
-    double GetCoupon() const;
-    bool IsFixedRateCoupon() const;
-};
+    namespace Base
+    {
+        class Coupon : public Finance::Base::EventOfSchedule
+        {
+        protected:
+            double dCoupon_;
+            bool bIsFixedRate_;
+            
+        public:
+            Coupon(double dCoupon, bool bIsFixedRate, const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis);
+            virtual ~Coupon();
+            
+            double GetCoupon() const;
+            bool IsFixedRateCoupon() const;
+        };
+    }
+}
 
 #endif /* defined(__CVATools__Coupon__) */

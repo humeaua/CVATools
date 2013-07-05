@@ -13,17 +13,21 @@
 #include "YieldCurve.h"
 #include "Date.h"
 
-namespace Finance {
-	class DF: public YieldCurve
-	{
-	public:
-		DF();
-		DF(const YieldCurve & sInitialYieldCurve);
-		virtual ~DF();
-		virtual double DiscountFactor(double dDate) const;
-        virtual double DiscountFactor(const Utilities::Date::MyDate & sDate) const;
-	private:	
-	};
+namespace Finance
+{
+    namespace Instruments
+    {
+        class DF: public Base::YieldCurve
+        {
+        public:
+            DF();
+            DF(const YieldCurve & sInitialYieldCurve);
+            virtual ~DF();
+            virtual double DiscountFactor(double dDate) const;
+            virtual double DiscountFactor(const Utilities::Date::MyDate & sDate) const;
+        private:	
+        };
+    }
 }
 
 #endif

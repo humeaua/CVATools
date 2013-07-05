@@ -10,20 +10,24 @@
 #include "ForwardRate.h"
 #include <stdexcept>
 
-namespace Finance {
-    ForwardRate::ForwardRate()
-    {}
-    
-    ForwardRate::ForwardRate(const YieldCurve & sInitialYieldCurve) : DF(sInitialYieldCurve)
-    {}
-    
-    ForwardRate::~ForwardRate()
-    {}
-    
-    double ForwardRate::FwdRate(double dStart, double dEnd) const
+namespace Finance
+{
+    namespace Instruments
     {
-        if (dStart > dEnd)
-            throw std::runtime_error("ForwardRate::FwdRate : Start is after End in ForwardRate::FwdRate");
-        return 1.0 / (dEnd - dStart) * (DiscountFactor(dStart) / DiscountFactor(dEnd) - 1.0);
+        ForwardRate::ForwardRate()
+        {}
+        
+        ForwardRate::ForwardRate(const YieldCurve & sInitialYieldCurve) : DF(sInitialYieldCurve)
+        {}
+        
+        ForwardRate::~ForwardRate()
+        {}
+        
+        double ForwardRate::FwdRate(double dStart, double dEnd) const
+        {
+            if (dStart > dEnd)
+                throw std::runtime_error("ForwardRate::FwdRate : Start is after End in ForwardRate::FwdRate");
+            return 1.0 / (dEnd - dStart) * (DiscountFactor(dStart) / DiscountFactor(dEnd) - 1.0);
+        }
     }
 }

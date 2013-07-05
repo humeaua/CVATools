@@ -329,5 +329,12 @@ int main()
         {
             std::cout << vectDiv[i] << std::endl;
         }
+        
+        MyVector<double> vect0Add = vect0 + 1.0;
+        std::cout << "Addition" << std::endl;
+        for (std::size_t i = 0 ; i < vect0Add.size() ; ++i)
+        {
+            std::cout << vect0Add[i] << std::endl;
+        }
     }
 }

@@ -74,6 +74,47 @@ public:
         }
         return result;
     };
+    
+    virtual MyVector<C,Alloc> operator+(C value)
+    {
+        MyVector<C,Alloc> result(this->size());
+        for (std::size_t i = 0 ; i < this->size() ; ++i)
+        {
+            result[i] = (*this)[i] + value;
+        }
+        return result;
+    };
+    
+    virtual MyVector<C,Alloc> operator-(C value)
+    {
+        MyVector<C,Alloc> result(this->size());
+        for (std::size_t i = 0 ; i < this->size() ; ++i)
+        {
+            result[i] = (*this)[i] - value;
+        }
+        return result;
+    };
+    
+    virtual MyVector<C,Alloc> operator*(C value)
+    {
+        MyVector<C,Alloc> result(this->size());
+        for (std::size_t i = 0 ; i < this->size() ; ++i)
+        {
+            result[i] = (*this)[i] * value;
+        }
+        return result;
+    };
+    
+    virtual MyVector<C,Alloc> operator/(C value)
+    {
+        Utilities::requireException(value != 0.0, "value is 0");
+        MyVector<C,Alloc> result(this->size());
+        for (std::size_t i = 0 ; i < this->size() ; ++i)
+        {
+            result[i] = (*this)[i] / value;
+        }
+        return result;
+    };
 };
 
 template <typename T>

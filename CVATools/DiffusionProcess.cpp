@@ -15,80 +15,86 @@
  sigma(t, x(t))dz(t).
  *********************************************************************************/
 
-DiffusionProcess::DiffusionProcess() : dX0_(0.0)
-{}
-
-DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulationAtZero, bool bStartFrom0AfterFloor) : bFloorSimulationAtZero_(bFloorSimulationAtZero), bStartFrom0AfterFloor_(bStartFrom0AfterFloor), dX0_(dX0)
-{}
-
-double DiffusionProcess::getx0() const
+namespace Finance
 {
-    return dX0_;
-}
-
-// returns the expectation of the process after a time interval
-// returns E(x_{t_0 + delta t} | x_{t_0} = x_0) since it is Markov.
-// By default, it returns the Euler approximation defined by
-// x_0 + mu(t_0, x_0) delta t.
-
-double DiffusionProcess::expectation(double t0, double x0, double dt) const
-{
-    return x0 + drift(t0, x0) * dt;
-}
-
-// returns the variance of the process after a time interval
-// returns Var(x_{t_0 + Delta t} | x_{t_0} = x_0).
-// By default, it returns the Euler approximation defined by
-// sigma(t_0, x_0)^2 \Delta t .
-
-double DiffusionProcess::variance(double t0, double x0, double dt) const 
-{
-    double dSigma = diffusion(t0, x0);
-    return dSigma * dSigma * dt;
-}
-
-// return the standard deviation of the process after a time interval 
-// returns stdev(x_{t_0 + Delta t} | x_{t_0} = x_0).
-// By default, it returns the Euler approximation defined by
-// sigma(t_0, x_0) sqrt(\Delta t) .
-
-double DiffusionProcess::stdev(double t0, double x0, double dt) const
-{
-    return sqrt(variance(t0, x0, dt));
-}
-
-//  return a simulation data of the simulated path for the diffusion process
-
-SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const
-{
-    SimulationData sResult;
-    std::size_t iNDates = dDates.size();
-    
-    std::tr1::ranlux64_base_01 eng; // core engine class
-    eng.seed(lSeed);
-    std::tr1::normal_distribution<double> dist(0.0,1.0); 
-    double dDate0 = dDates[0];
-    for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
+    namespace Processes
     {
-        double dOldValue = dX0_;
-        sResult.Put(dDate0, iPath, dOldValue);
-        for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
+        DiffusionProcess::DiffusionProcess() : dX0_(0.0)
+        {}
+        
+        DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulationAtZero, bool bStartFrom0AfterFloor) : bFloorSimulationAtZero_(bFloorSimulationAtZero), bStartFrom0AfterFloor_(bStartFrom0AfterFloor), dX0_(dX0)
+        {}
+        
+        double DiffusionProcess::getx0() const
         {
-            double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
-            dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
-            if (bFloorSimulationAtZero_ && dOldValue < 0.0)
+            return dX0_;
+        }
+        
+        // returns the expectation of the process after a time interval
+        // returns E(x_{t_0 + delta t} | x_{t_0} = x_0) since it is Markov.
+        // By default, it returns the Euler approximation defined by
+        // x_0 + mu(t_0, x_0) delta t.
+        
+        double DiffusionProcess::expectation(double t0, double x0, double dt) const
+        {
+            return x0 + drift(t0, x0) * dt;
+        }
+        
+        // returns the variance of the process after a time interval
+        // returns Var(x_{t_0 + Delta t} | x_{t_0} = x_0).
+        // By default, it returns the Euler approximation defined by
+        // sigma(t_0, x_0)^2 \Delta t .
+        
+        double DiffusionProcess::variance(double t0, double x0, double dt) const
+        {
+            double dSigma = diffusion(t0, x0);
+            return dSigma * dSigma * dt;
+        }
+        
+        // return the standard deviation of the process after a time interval
+        // returns stdev(x_{t_0 + Delta t} | x_{t_0} = x_0).
+        // By default, it returns the Euler approximation defined by
+        // sigma(t_0, x_0) sqrt(\Delta t) .
+        
+        double DiffusionProcess::stdev(double t0, double x0, double dt) const
+        {
+            return sqrt(variance(t0, x0, dt));
+        }
+        
+        //  return a simulation data of the simulated path for the diffusion process
+        
+        Utilities::SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const
+        {
+            Utilities::SimulationData sResult;
+            std::size_t iNDates = dDates.size();
+            
+            std::tr1::ranlux64_base_01 eng; // core engine class
+            eng.seed(lSeed);
+            std::tr1::normal_distribution<double> dist(0.0,1.0);
+            double dDate0 = dDates[0];
+            for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
-                sResult.Put(dDates[iDate], iPath, 0.0);
-                if (bStartFrom0AfterFloor_)
+                double dOldValue = dX0_;
+                sResult.Put(dDate0, iPath, dOldValue);
+                for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
                 {
-                    dOldValue = 0.0;
+                    double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
+                    dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
+                    if (bFloorSimulationAtZero_ && dOldValue < 0.0)
+                    {
+                        sResult.Put(dDates[iDate], iPath, 0.0);
+                        if (bStartFrom0AfterFloor_)
+                        {
+                            dOldValue = 0.0;
+                        }
+                    }
+                    else
+                    {
+                        sResult.Put(dDates[iDate], iPath, dOldValue);
+                    }
                 }
             }
-            else
-            {
-                sResult.Put(dDates[iDate], iPath, dOldValue);
-            }
+            return sResult;
         }
     }
-    return sResult;
 }

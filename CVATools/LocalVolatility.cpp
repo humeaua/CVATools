@@ -9,6 +9,10 @@
 #include "LocalVolatility.h"
 #include <tr1/random>
 
+namespace Utilities
+{
+    namespace Processes
+    {
 LocalVolatility::LocalVolatility(double S0) : DiffusionProcess(S0, false, false)
 {}
 
@@ -52,4 +56,6 @@ SimulationData LocalVolatility::simulate(std::vector<double> &dDates, std::size_
         }
     }
     return sResult;
+}
+    }
 }

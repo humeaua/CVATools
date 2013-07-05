@@ -13,7 +13,7 @@ namespace Finance
 {
     namespace Option
     {
-MargrabeOptionVasicek::MargrabeOptionVasicek(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2) : MargrabeOptionStochasticRates(dT, dK, sCorrelationMatrix, dInitialValues, dSigma1, dSigma2), dA_(dA), dB_(dB), dSigma_(dSigma)
+MargrabeOptionVasicek::MargrabeOptionVasicek(double dT, double dK, const Utilities::Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2) : MargrabeOptionStochasticRates(dT, dK, sCorrelationMatrix, dInitialValues, dSigma1, dSigma2), dA_(dA), dB_(dB), dSigma_(dSigma)
 {}
 
 MargrabeOptionVasicek::MargrabeOptionVasicek(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2) : MargrabeOptionStochasticRates(dT, dK, dRho12, dRhor1, dRhor2, dInitialValues, dSigma1, dSigma2), dA_(dA), dB_(dB), dSigma_(dSigma)
@@ -46,10 +46,10 @@ double MargrabeOptionVasicek::beta(double t, double r_t) const
 }
 
 //  Simulation method
-SimulationDataMultiDim MargrabeOptionVasicek::simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const
+Utilities::SimulationDataMultiDim MargrabeOptionVasicek::simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const
 {
     //  we need to store the two asset prices, the integral of the short rate and the short rate itself
-    SimulationDataMultiDim sResult(dDates, iNPaths, 4);
+    Utilities::SimulationDataMultiDim sResult(dDates, iNPaths, 4);
     
     //  Set random number simulator engine
     std::tr1::ranlux64_base_01 eng; // core engine class
@@ -68,7 +68,7 @@ SimulationDataMultiDim MargrabeOptionVasicek::simulate(std::vector<double> & dDa
     }
     
     // Choleski Decomposition of correlation matrix
-    Matrix sCholDec(3,3);
+    Utilities::Matrix sCholDec(3,3);
     CholeskiDecomposition(sCorrelationMatrix_, sCholDec);
     DVector dRandomNumbers(3,0.0), dCorrelatedRN(3,0.0);
     for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)        

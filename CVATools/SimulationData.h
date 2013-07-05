@@ -12,28 +12,31 @@
 #include <map>
 #include <iostream>
 
-class SimulationData {
-protected:
-    //        Date,             Path
-    std::map<double, std::map<std::size_t, double> > dData_;
-    
-public:
-    
-    //Default constructor
-    SimulationData();
-    
-    //  Destructor
-    virtual ~SimulationData();
-    
-    //  Put function
-    virtual void Put(double dDate, std::size_t iPath, double dValue);
-    
-    // Getter 
-    virtual std::map<double, std::map<std::size_t, double> > GetData() const;
-    virtual double Get(double dDate, std::size_t iPath) const;
-    
-    //  Apply function
-    virtual void Apply(double (*func)(double));
-};
+namespace Utilities
+{
+    class SimulationData {
+    protected:
+        //        Date,             Path
+        std::map<double, std::map<std::size_t, double> > dData_;
+        
+    public:
+        
+        //Default constructor
+        SimulationData();
+        
+        //  Destructor
+        virtual ~SimulationData();
+        
+        //  Put function
+        virtual void Put(double dDate, std::size_t iPath, double dValue);
+        
+        // Getter
+        virtual std::map<double, std::map<std::size_t, double> > GetData() const;
+        virtual double Get(double dDate, std::size_t iPath) const;
+        
+        //  Apply function
+        virtual void Apply(double (*func)(double));
+    };
+}
 
 #endif

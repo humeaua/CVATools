@@ -10,70 +10,73 @@
 #include "SimulationData.h"
 #include <stdexcept>
 
-SimulationData::SimulationData()
-{}
-
-SimulationData::~SimulationData()
+namespace Utilities
 {
-    for (std::map<double, std::map<std::size_t, double> >::iterator iter = dData_.begin() ; iter != dData_.end() ; ++iter)
+    SimulationData::SimulationData()
+    {}
+    
+    SimulationData::~SimulationData()
     {
-        iter->second.clear();
-    }
-    dData_.clear();
-}
-
-void SimulationData::Put(double dDate, std::size_t iPath, double dValue)
-{
-    if (dData_.count(dDate) != 0)
-    {
-        if (dData_.find(dDate)->second.count(iPath) != 0)
+        for (std::map<double, std::map<std::size_t, double> >::iterator iter = dData_.begin() ; iter != dData_.end() ; ++iter)
         {
-            dData_.find(dDate)->second.find(iPath)->second = dValue;
+            iter->second.clear();
+        }
+        dData_.clear();
+    }
+    
+    void SimulationData::Put(double dDate, std::size_t iPath, double dValue)
+    {
+        if (dData_.count(dDate) != 0)
+        {
+            if (dData_.find(dDate)->second.count(iPath) != 0)
+            {
+                dData_.find(dDate)->second.find(iPath)->second = dValue;
+            }
+            else
+            {
+                dData_.find(dDate)->second[iPath] = dValue;
+            }
         }
         else
         {
-            dData_.find(dDate)->second[iPath] = dValue;
+            dData_[dDate][iPath] = dValue;
         }
     }
-    else
+    
+    std::map<double, std::map<std::size_t, double> > SimulationData::GetData() const
     {
-        dData_[dDate][iPath] = dValue;
+        return dData_;
     }
-}
-
-std::map<double, std::map<std::size_t, double> > SimulationData::GetData() const
-{
-    return dData_;
-}
-
-double SimulationData::Get(double dDate, std::size_t iPath) const
-{
-    if (dData_.count(dDate) != 0)
+    
+    double SimulationData::Get(double dDate, std::size_t iPath) const
     {
-        if (dData_.find(dDate)->second.count(iPath) != 0)
+        if (dData_.count(dDate) != 0)
         {
-            return dData_.find(dDate)->second.find(iPath)->second;
+            if (dData_.find(dDate)->second.count(iPath) != 0)
+            {
+                return dData_.find(dDate)->second.find(iPath)->second;
+            }
+            else
+            {
+                throw std::runtime_error("SimulationData::Get : Path not found");
+            }
         }
         else
         {
-            throw std::runtime_error("SimulationData::Get : Path not found");
+            throw std::runtime_error("SimulationData::Get : Date not found");
         }
     }
-    else
+    
+    void SimulationData::Apply(double (*func)(double))
     {
-        throw std::runtime_error("SimulationData::Get : Date not found");   
-    }
-}
-
-void SimulationData::Apply(double (*func)(double))
-{
-    std::map<double, std::map<std::size_t, double> >::iterator itDates = dData_.begin();
-    for ( ; itDates != dData_.end() ; ++itDates)
-    {
-        std::map<std::size_t, double>::iterator itPaths = itDates->second.begin();
-        for ( ; itPaths != itDates->second.end() ; ++itPaths)
+        std::map<double, std::map<std::size_t, double> >::iterator itDates = dData_.begin();
+        for ( ; itDates != dData_.end() ; ++itDates)
         {
-            itPaths->second = func(itPaths->second);
+            std::map<std::size_t, double>::iterator itPaths = itDates->second.begin();
+            for ( ; itPaths != itDates->second.end() ; ++itPaths)
+            {
+                itPaths->second = func(itPaths->second);
+            }
         }
     }
 }

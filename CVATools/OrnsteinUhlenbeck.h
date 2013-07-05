@@ -14,35 +14,42 @@
 //  The Ornstein Ulhenbeck process is defined as below
 //  dX_t = a(b-X_t)dt + \sigma dW_t
 
+namespace Finance
+{
+    namespace Processes
+    {
+        
 #ifndef MEANREVERSIONTHRESHOLD
 #define MEANREVERSIONTHRESHOLD 1e-07
 #endif
-
-class OrnsteinUhlenbeck : public DiffusionProcess {
-protected:
-    
-    double dA_, dB_, dSigma_;
-    
-public:
-    OrnsteinUhlenbeck();
-    OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0);
-    
-    virtual ~OrnsteinUhlenbeck();
-    
-    virtual double drift(double dt, double dx) const;
-    virtual double diffusion(double dt, double dx) const;
-    
-    // returns the expectation of the process after a time interval
-    // returns E(x_{t_0 + delta t} | x_{t_0} = x_0) since it is Markov.
-    
-    // no term-structure
-    virtual double expectation(double t0, double x0, double dt) const;
-    
-    // returns the variance of the process after a time interval
-    // returns Var(x_{t_0 + Delta t} | x_{t_0} = x_0).
-    
-    // no term-structure
-    virtual double variance(double t0, double x0, double dt) const;
-};
+        
+        class OrnsteinUhlenbeck : public DiffusionProcess {
+        protected:
+            
+            double dA_, dB_, dSigma_;
+            
+        public:
+            OrnsteinUhlenbeck();
+            OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0);
+            
+            virtual ~OrnsteinUhlenbeck();
+            
+            virtual double drift(double dt, double dx) const;
+            virtual double diffusion(double dt, double dx) const;
+            
+            // returns the expectation of the process after a time interval
+            // returns E(x_{t_0 + delta t} | x_{t_0} = x_0) since it is Markov.
+            
+            // no term-structure
+            virtual double expectation(double t0, double x0, double dt) const;
+            
+            // returns the variance of the process after a time interval
+            // returns Var(x_{t_0 + Delta t} | x_{t_0} = x_0).
+            
+            // no term-structure
+            virtual double variance(double t0, double x0, double dt) const;
+        };
+    }
+}
 
 #endif

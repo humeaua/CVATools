@@ -15,7 +15,7 @@ namespace Finance
     {
         MargrabeOptionStochasticRates::MargrabeOptionStochasticRates(double dT,
                                                                      double dK,
-                                                                     const Matrix & sCorrelationMatrix,
+                                                                     const Utilities::Matrix & sCorrelationMatrix,
                                                                      const std::vector<double>& dInitialValues,
                                                                      double dSigma1,
                                                                      double dSigma2)
@@ -41,7 +41,7 @@ namespace Finance
         :
         PayoffMargrabe(dK),
         dT_(dT),
-        DiffusionProcessMultiDim(3, Matrix(3, 3), dInitialValues),
+        DiffusionProcessMultiDim(3, Utilities::Matrix(3, 3), dInitialValues),
         dS1_(dInitialValues[0]),
         dS2_(dInitialValues[1]),
         dR0_(dInitialValues[2]),

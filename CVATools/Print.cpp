@@ -10,185 +10,188 @@
 #include "Print.h"
 #include <sstream>
 
-Print::Print() : bAppend_(false)
-{}
-
-Print::Print(const std::string & cFileName, const bool bAppend, const std::size_t iPrecision) : cFileName_(cFileName), bAppend_(bAppend), iPrecision_(iPrecision)
+namespace Utilities
 {
-    std::stringstream out ;
-    out << iPrecision_;
-    cPrecision_ = out.str();
-}
-
-Print::~Print()
-{
-    cFileName_.clear();
-}
-
-void Print::PrintInFile(const std::vector<double> &dData)
-{
-    FILE * sFile;
-    sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
-    //  Check if the file is well opened
-    if (sFile)
+    Print::Print() : bAppend_(false)
+    {}
+    
+    Print::Print(const std::string & cFileName, const bool bAppend, const std::size_t iPrecision) : cFileName_(cFileName), bAppend_(bAppend), iPrecision_(iPrecision)
     {
-        for (std::size_t i = 0 ; i < dData.size() ; ++i)
-        {
-            //  Print Data in the file with the given precision
-            fprintf(sFile, ("%."+ cPrecision_ + "lf").c_str(), dData[i]);
-            fprintf(sFile, "\n");
-        }
-        // Close the file
-        fclose(sFile);
+        std::stringstream out ;
+        out << iPrecision_;
+        cPrecision_ = out.str();
     }
-}
-
-void Print::PrintInFile(const std::vector<std::pair<double, std::size_t> > &dData)
-{
-    FILE * sFile;
-    sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
-    //  Check if the file is well opened
-    if (sFile)
+    
+    Print::~Print()
     {
-        for (std::size_t i = 0 ; i < dData.size() ; ++i)
-        {
-            //  Print Data in the file with the given precision
-            fprintf(sFile, ("%."+ cPrecision_ + "lf,%lu").c_str(), dData[i].first, dData[i].second);
-            fprintf(sFile, "\n");
-        }
-        // Close the file
-        fclose(sFile);
+        cFileName_.clear();
     }
-}
-
-void Print::PrintInFile(const std::vector<std::pair<double, double> > &dData)
-{
-    FILE * sFile;
-    sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
-    //  Check if the file is well opened
-    if (sFile)
+    
+    void Print::PrintInFile(const std::vector<double> &dData)
     {
-        for (std::size_t i = 0 ; i < dData.size() ; ++i)
+        FILE * sFile;
+        sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
+        //  Check if the file is well opened
+        if (sFile)
         {
-            //  Print Data in the file with the given precision
-            fprintf(sFile, ("%."+ cPrecision_ + "lf,%."+ cPrecision_ + "lf").c_str(), dData[i].first, dData[i].second);
-            fprintf(sFile, "\n");
-        }
-        // Close the file
-        fclose(sFile);
-    }
-}
-
-void Print::PrintInFile(const std::vector<std::vector<double> > & dData)
-{
-    FILE * sFile;
-    sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
-    //  Check if the file is well opened
-    if (sFile)
-    {
-        for (std::size_t i = 0 ; i < dData.size() ; ++i)
-        {
-            //  Print Data in the file with the given precision
-            //fprintf(sFile, ("%."+ cPrecision_ + "lf,%."+ cPrecision_ + "lf").c_str(), dData[i].first, dData[i].second);
-            for (std::size_t j = 0 ; j < dData[i].size() ; ++j)
+            for (std::size_t i = 0 ; i < dData.size() ; ++i)
             {
-                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), dData[i][j]);
+                //  Print Data in the file with the given precision
+                fprintf(sFile, ("%."+ cPrecision_ + "lf").c_str(), dData[i]);
+                fprintf(sFile, "\n");
             }
-            fprintf(sFile, "\n");
+            // Close the file
+            fclose(sFile);
         }
-        // Close the file
-        fclose(sFile);
     }
-}
-
-void Print::PrintInFile(const std::map<double, std::map<double, double> > &mData)
-{
-    FILE * sFile;
-    sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
-    //  Check if the file is well opened
-    if (sFile)
+    
+    void Print::PrintInFile(const std::vector<std::pair<double, std::size_t> > &dData)
     {
-        fprintf(sFile,",");
-        std::map<double, std::map<double, double> >::const_iterator iter = mData.begin();
-        for (std::map<double, double>::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
+        FILE * sFile;
+        sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
+        //  Check if the file is well opened
+        if (sFile)
         {
-            fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->first);
+            for (std::size_t i = 0 ; i < dData.size() ; ++i)
+            {
+                //  Print Data in the file with the given precision
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,%lu").c_str(), dData[i].first, dData[i].second);
+                fprintf(sFile, "\n");
+            }
+            // Close the file
+            fclose(sFile);
         }
-        fprintf(sFile, "\n");
-        for ( ; iter != mData.end() ; ++iter)
+    }
+    
+    void Print::PrintInFile(const std::vector<std::pair<double, double> > &dData)
+    {
+        FILE * sFile;
+        sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
+        //  Check if the file is well opened
+        if (sFile)
         {
-            fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), iter->first);
+            for (std::size_t i = 0 ; i < dData.size() ; ++i)
+            {
+                //  Print Data in the file with the given precision
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,%."+ cPrecision_ + "lf").c_str(), dData[i].first, dData[i].second);
+                fprintf(sFile, "\n");
+            }
+            // Close the file
+            fclose(sFile);
+        }
+    }
+    
+    void Print::PrintInFile(const std::vector<std::vector<double> > & dData)
+    {
+        FILE * sFile;
+        sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
+        //  Check if the file is well opened
+        if (sFile)
+        {
+            for (std::size_t i = 0 ; i < dData.size() ; ++i)
+            {
+                //  Print Data in the file with the given precision
+                //fprintf(sFile, ("%."+ cPrecision_ + "lf,%."+ cPrecision_ + "lf").c_str(), dData[i].first, dData[i].second);
+                for (std::size_t j = 0 ; j < dData[i].size() ; ++j)
+                {
+                    fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), dData[i][j]);
+                }
+                fprintf(sFile, "\n");
+            }
+            // Close the file
+            fclose(sFile);
+        }
+    }
+    
+    void Print::PrintInFile(const std::map<double, std::map<double, double> > &mData)
+    {
+        FILE * sFile;
+        sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
+        //  Check if the file is well opened
+        if (sFile)
+        {
+            fprintf(sFile,",");
+            std::map<double, std::map<double, double> >::const_iterator iter = mData.begin();
             for (std::map<double, double>::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
             {
-                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->second);
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->first);
             }
             fprintf(sFile, "\n");
+            for ( ; iter != mData.end() ; ++iter)
+            {
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), iter->first);
+                for (std::map<double, double>::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
+                {
+                    fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->second);
+                }
+                fprintf(sFile, "\n");
+            }
+            fclose(sFile);
         }
-        fclose(sFile);
     }
-}
-
-void Print::PrintInFile(const std::map<double, std::map<std::size_t, double> > &mData)
-{
-    FILE * sFile;
-    sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
-    //  Check if the file is well opened
-    if (sFile)
+    
+    void Print::PrintInFile(const std::map<double, std::map<std::size_t, double> > &mData)
     {
-        fprintf(sFile,",");
-        std::map<double, std::map<std::size_t, double> >::const_iterator iter = mData.begin();
-        for (std::map<std::size_t, double>::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
+        FILE * sFile;
+        sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
+        //  Check if the file is well opened
+        if (sFile)
         {
-            fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->first);
-        }
-        fprintf(sFile, "\n");
-        for ( ; iter != mData.end() ; ++iter)
-        {
-            fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), iter->first);
+            fprintf(sFile,",");
+            std::map<double, std::map<std::size_t, double> >::const_iterator iter = mData.begin();
             for (std::map<std::size_t, double>::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
             {
-                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->second);
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->first);
             }
             fprintf(sFile, "\n");
+            for ( ; iter != mData.end() ; ++iter)
+            {
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), iter->first);
+                for (std::map<std::size_t, double>::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
+                {
+                    fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->second);
+                }
+                fprintf(sFile, "\n");
+            }
+            fclose(sFile);
         }
-        fclose(sFile);
     }
-}
-
-void Print::PrintInFile(const std::map<double, std::map<std::size_t, std::vector<double> > > & mData, std::size_t iDim)
-{
-    FILE * sFile;
-    sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
-    int iErr = 0;
-    //  Check if the file is well opened
-    if (sFile)
+    
+    void Print::PrintInFile(const std::map<double, std::map<std::size_t, std::vector<double> > > & mData, std::size_t iDim)
     {
-        fprintf(sFile,",");
-        std::map<double, std::map<std::size_t, std::vector<double> > >::const_iterator iter = mData.begin();
-        for (std::map<std::size_t, std::vector<double> >::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
+        FILE * sFile;
+        sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
+        int iErr = 0;
+        //  Check if the file is well opened
+        if (sFile)
         {
-            fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->first);
-        }
-        fprintf(sFile, "\n");
-        for ( ; iter != mData.end() ; ++iter)
-        {
-            fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), iter->first);
+            fprintf(sFile,",");
+            std::map<double, std::map<std::size_t, std::vector<double> > >::const_iterator iter = mData.begin();
             for (std::map<std::size_t, std::vector<double> >::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
             {
-                if (iDim >= it->second.size())
-                {
-                    iErr = 1;
-                    std::cout << "Print::PrintInFile : Index out of bounds" << std::endl;
-                    break;
-                }
-                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->second[iDim]);
-            }
-            if (iErr)
-            {
-                break;
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->first);
             }
             fprintf(sFile, "\n");
+            for ( ; iter != mData.end() ; ++iter)
+            {
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), iter->first);
+                for (std::map<std::size_t, std::vector<double> >::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
+                {
+                    if (iDim >= it->second.size())
+                    {
+                        iErr = 1;
+                        std::cout << "Print::PrintInFile : Index out of bounds" << std::endl;
+                        break;
+                    }
+                    fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), it->second[iDim]);
+                }
+                if (iErr)
+                {
+                    break;
+                }
+                fprintf(sFile, "\n");
+            }
+            fclose(sFile);
         }
-        fclose(sFile);
     }
 }

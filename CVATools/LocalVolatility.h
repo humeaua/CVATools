@@ -19,16 +19,23 @@
  
  */
 
-class LocalVolatility : public DiffusionProcess {
-protected:
-    
-public:
-    LocalVolatility(double x0);
-    virtual ~LocalVolatility();
-    
-    virtual double SigmaLoc(double t, double dS) const = 0;
-    
-    virtual SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
-};
+namespace Utilities
+{
+    namespace Processes
+    {
+        class LocalVolatility : public Finance::Processes::DiffusionProcess
+        {
+        protected:
+            
+        public:
+            LocalVolatility(double x0);
+            virtual ~LocalVolatility();
+            
+            virtual double SigmaLoc(double t, double dS) const = 0;
+            
+            virtual SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
+        };
+    }
+}
 
 #endif /* defined(__CVATools__LocalVolatility__) */

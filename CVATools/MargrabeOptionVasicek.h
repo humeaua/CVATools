@@ -30,7 +30,7 @@ namespace Finance
         protected:
             double dA_, dB_, dSigma_;
         public:
-            MargrabeOptionVasicek(double dT, double dK, const Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
+            MargrabeOptionVasicek(double dT, double dK, const Utilities::Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
             MargrabeOptionVasicek(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
             
             virtual ~MargrabeOptionVasicek();
@@ -45,7 +45,7 @@ namespace Finance
             virtual double beta(double t, double r_t) const;
             
             //  Simulation method
-            virtual SimulationDataMultiDim simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
+            virtual Utilities::SimulationDataMultiDim simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
             
         };
     }

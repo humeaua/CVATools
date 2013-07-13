@@ -21,7 +21,7 @@ namespace Utilities
             WEEK,
             MONTH,
             YEAR,
-            BUSINESSDAY // not implemented for now
+            BUSINESSDAY
         }TimeUnits;
         
         bool IsLeapYear(long lYear);

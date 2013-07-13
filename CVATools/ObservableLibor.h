@@ -21,11 +21,13 @@ namespace Finance
         {
         protected:
             int iLag_;
+            int iTenor_;
             Finance::Base::YieldCurve sYC_;
         public:
             ObservableLibor(const std::string & cCCY,
                             const Finance::Base::YieldCurve & sYC,
-                            int iLag);
+                            int iLag,
+                            int iTenor);
             
             virtual double Observe(const long & lDate) const = 0;
             virtual std::vector<double> Observe(const std::vector<long>& lDates) const = 0;

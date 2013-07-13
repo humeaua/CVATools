@@ -9,7 +9,7 @@
 
 #include "DiscountFactor.h"
 #include <cmath>
-#include <stdexcept>
+#include "Require.h"
 
 namespace Finance
 {
@@ -32,14 +32,9 @@ namespace Finance
         double DF::DiscountFactor(const Utilities::Date::MyDate &sDate) const
         {
             double dT = sDate.Diff(sToday_);
-            if (dT > 0)
-            {
-                return DiscountFactor(dT);
-            }
-            else
-            {
-                throw std::runtime_error("Error in discount factor : Date is before today");
-            }
+            
+            Utilities::requireException(dT > 0, "DF::DiscountFactor : Date is before today");
+            return DiscountFactor(dT);
         }
     }
 }

@@ -12,22 +12,22 @@
 
 namespace Utilities
 {
-    Print::Print() : bAppend_(false)
+    PrintC::PrintC() : bAppend_(false)
     {}
     
-    Print::Print(const std::string & cFileName, const bool bAppend, const std::size_t iPrecision) : cFileName_(cFileName), bAppend_(bAppend), iPrecision_(iPrecision)
+    PrintC::PrintC(const std::string & cFileName, const bool bAppend, const std::size_t iPrecision) : cFileName_(cFileName), bAppend_(bAppend), iPrecision_(iPrecision)
     {
         std::stringstream out ;
         out << iPrecision_;
         cPrecision_ = out.str();
     }
     
-    Print::~Print()
+    PrintC::~PrintC()
     {
         cFileName_.clear();
     }
     
-    void Print::PrintInFile(const std::vector<double> &dData)
+    void PrintC::PrintInFile(const std::vector<double> &dData)
     {
         FILE * sFile;
         sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
@@ -45,7 +45,7 @@ namespace Utilities
         }
     }
     
-    void Print::PrintInFile(const std::vector<std::pair<double, std::size_t> > &dData)
+    void PrintC::PrintInFile(const std::vector<std::pair<double, std::size_t> > &dData)
     {
         FILE * sFile;
         sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
@@ -63,7 +63,7 @@ namespace Utilities
         }
     }
     
-    void Print::PrintInFile(const std::vector<std::pair<double, double> > &dData)
+    void PrintC::PrintInFile(const std::vector<std::pair<double, double> > &dData)
     {
         FILE * sFile;
         sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
@@ -81,7 +81,7 @@ namespace Utilities
         }
     }
     
-    void Print::PrintInFile(const std::vector<std::vector<double> > & dData)
+    void PrintC::PrintInFile(const std::vector<std::vector<double> > & dData)
     {
         FILE * sFile;
         sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
@@ -103,7 +103,7 @@ namespace Utilities
         }
     }
     
-    void Print::PrintInFile(const std::map<double, std::map<double, double> > &mData)
+    void PrintC::PrintInFile(const std::map<double, std::map<double, double> > &mData)
     {
         FILE * sFile;
         sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
@@ -130,7 +130,7 @@ namespace Utilities
         }
     }
     
-    void Print::PrintInFile(const std::map<double, std::map<std::size_t, double> > &mData)
+    void PrintC::PrintInFile(const std::map<double, std::map<std::size_t, double> > &mData)
     {
         FILE * sFile;
         sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");
@@ -157,7 +157,7 @@ namespace Utilities
         }
     }
     
-    void Print::PrintInFile(const std::map<double, std::map<std::size_t, std::vector<double> > > & mData, std::size_t iDim)
+    void PrintC::PrintInFile(const std::map<double, std::map<std::size_t, std::vector<double> > > & mData, std::size_t iDim)
     {
         FILE * sFile;
         sFile = fopen(cFileName_.c_str(), bAppend_ ? "a" : "w");

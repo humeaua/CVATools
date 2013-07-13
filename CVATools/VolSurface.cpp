@@ -7,10 +7,9 @@
 //
 
 #include "VolSurface.h"
-#include <stdexcept>
 #include "InterExtrapolation.h"
 #include <cmath>
-#include <stdexcept>
+#include "Require.h"
 
 namespace Finance
 {
@@ -18,14 +17,8 @@ namespace Finance
     {
         VolatilitySurface::VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface) : dSpot_(dSpot), VolSurface_(VolSurface)
         {
-            if (dSpot > 0.0)
-            {
-                Calibrate(VolSurface_);
-            }
-            else
-            {
-                throw std::runtime_error("VolatilitySurface::VolatilitySurface : Spot is negative");
-            }
+            Utilities::requireException(dSpot > 0.0, "VolatilitySurface::VolatilitySurface : Spot is negative");
+            Calibrate(VolSurface_);
         }
         
         VolatilitySurface::~VolatilitySurface()

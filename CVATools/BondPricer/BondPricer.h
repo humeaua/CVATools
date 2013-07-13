@@ -30,7 +30,7 @@ namespace Finance
                                std::size_t iNIterMax = 100,
                                double dTolerance = 1e-06,
                                double dEpsValueDeriv = 1e-06);
-            ~PriceToYieldNewton();
+            virtual ~PriceToYieldNewton();
             virtual double f(double x) const;
             virtual double df(double x) const;
         };
@@ -49,7 +49,7 @@ namespace Finance
                           std::size_t iNIterMax = 100,
                           double dTolerance = 1e-06,
                           double dEpsValueDeriv = 1e-06);
-            ~ZSpreadNewton();
+            virtual ~ZSpreadNewton();
             virtual double f(double x) const;
             virtual double df(double x) const;
         };

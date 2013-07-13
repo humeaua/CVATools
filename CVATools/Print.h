@@ -15,12 +15,12 @@
 
 namespace Utilities
 {
-    class Print
+    class PrintC
     {
     public:
-        Print();
-        Print(const std::string & cFileName, const bool bAppend, const std::size_t iPrecision);
-        virtual ~Print();
+        PrintC();
+        PrintC(const std::string & cFileName, const bool bAppend, const std::size_t iPrecision);
+        virtual ~PrintC();
         
         virtual void PrintInFile(const std::vector<double> & dData);
         virtual void PrintInFile(const std::vector<std::pair<double, std::size_t> > & dData);

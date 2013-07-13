@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include "Coverage.h"
-//#include <stdexcept>
 
 namespace Finance
 {

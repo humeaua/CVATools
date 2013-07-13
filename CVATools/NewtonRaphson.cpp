@@ -33,7 +33,7 @@ double NewtonRaphson1D::algo_root_finder(double dInitialGuess) const
         }
         else
         {
-            throw std::runtime_error("NewtonRaphson1D : Derivative is too small.");
+            throw Utilities::MyException("NewtonRaphson1D : Derivative is too small.");
         }
         df0 = f(dx);
         
@@ -43,7 +43,7 @@ double NewtonRaphson1D::algo_root_finder(double dInitialGuess) const
     
     if (iNIter >= iNIterMax_)
     {
-        throw std::runtime_error("NewtonRaphson1D : Newton Algorithm has not converged");
+        throw Utilities::MyException("NewtonRaphson1D : Newton Algorithm has not converged");
     }
     
     return dx;

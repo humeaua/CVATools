@@ -10,7 +10,7 @@
 #include "InterExtrapolation.h"
 #include "VectorUtilities.h"
 #include <cmath>
-#include <stdexcept>
+#include "Require.h"
 
 namespace Utilities
 {
@@ -29,8 +29,7 @@ namespace Utilities
         eInterpolationType_(eInterpolationType)
         
         {
-            if (dValues_.size() != dVariables_.size())
-                throw std::runtime_error("Values and variables are not of the same size");
+            Utilities::requireException(dValues_.size() == dVariables_.size(), "Variables and values are not the same size");
             if (eInterpolationType_ == SPLINE_CUBIC)
             {
                 //  Compute the second derivative
@@ -299,10 +298,7 @@ namespace Utilities
 #ifndef EPSILON_RAW
 #define EPSILON_RAW 1e-07
 #endif
-                        if (dVariable < EPSILON_RAW)
-                        {
-                            throw std::runtime_error("Cannot perform Raw interpolation, variable is too small");
-                        }
+                        Utilities::requireException(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small");
                         dResult = 1.0 / dVariable * ((dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue2] * dVariables_[iValue2] + (dVariables_[iValue2] - dVariable) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue1] * dVariables_[iValue1] );
                         break;
                     }

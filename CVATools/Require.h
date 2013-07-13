@@ -9,7 +9,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
-#include <stdexcept>
+#include "Exception.h"
 
 namespace Utilities {
     
@@ -30,7 +30,7 @@ namespace Utilities {
     {
         std::string cMsg = cFunctionName + " : " + msg;
         if (!requirement)
-            throw std::runtime_error(cMsg);
+            throw MyException(cMsg);
     }
     
     inline void requireArgs(int argc, int args,

@@ -8,7 +8,6 @@
 
 #include "Date.h"
 #include "VectorUtilities.h"
-#include <stdexcept>
 
 namespace Utilities
 {    

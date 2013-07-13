@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "ForwardRate.h"
-#include <stdexcept>
+#include "Require.h"
 
 namespace Finance
 {
@@ -25,8 +25,7 @@ namespace Finance
         
         double ForwardRate::FwdRate(double dStart, double dEnd) const
         {
-            if (dStart > dEnd)
-                throw std::runtime_error("ForwardRate::FwdRate : Start is after End in ForwardRate::FwdRate");
+            Utilities::requireException(dStart < dEnd, "ForwardRate::FwdRate : Start is after End in ForwardRate::FwdRate");
             return 1.0 / (dEnd - dStart) * (DiscountFactor(dStart) / DiscountFactor(dEnd) - 1.0);
         }
     }

@@ -7,7 +7,7 @@
 //
 
 #include "SimulationDataMultiDim.h"
-#include <stdexcept>
+#include "Exception.h"
 
 namespace Utilities
 {
@@ -96,12 +96,12 @@ namespace Utilities
             }
             else
             {
-                throw std::runtime_error("SimulationDataMultiDim::GetData : Could not find Path");
+                throw Utilities::MyException("SimulationDataMultiDim::GetData : Could not find Path");
             }
         }
         else
         {
-            throw std::runtime_error("SimulationDataMultiDim::GetData : Could not find Date");
+            throw Utilities::MyException("SimulationDataMultiDim::GetData : Could not find Date");
         }
     }
     

@@ -97,7 +97,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sOU.simulate(dDates, iNPaths, lSeed);
-        Utilities::Print sPrint("/Users/alexhum49/Desktop/OrnsteinUlhenbeck.csv", false, 10);
+        Utilities::PrintC sPrint("/Users/alexhum49/Desktop/OrnsteinUlhenbeck.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 2)
@@ -112,7 +112,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sSquareRoot.simulate(dDates, iNPaths, lSeed);
-        Utilities::Print sPrint("/Users/alexhum49/Desktop/SquareRoot.csv", false, 10);
+        Utilities::PrintC sPrint("/Users/alexhum49/Desktop/SquareRoot.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 3)
@@ -127,7 +127,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sBS.simulate(dDates, iNPaths, lSeed);
-        Utilities::Print sPrint("/Users/alexhum49/Desktop/BlackScholes.csv", false, 10);
+        Utilities::PrintC sPrint("/Users/alexhum49/Desktop/BlackScholes.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 4)
@@ -176,7 +176,7 @@ int main()
             std::stringstream out ;
             out << i;
             
-            Utilities::Print sPrint("/Users/alexhum49/Desktop/Margrabe_" + out.str() + ".csv", false, 10);
+            Utilities::PrintC sPrint("/Users/alexhum49/Desktop/Margrabe_" + out.str() + ".csv", false, 10);
             sPrint.PrintInFile(sDatamap,i);
         }
         

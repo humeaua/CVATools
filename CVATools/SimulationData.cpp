@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "SimulationData.h"
-#include <stdexcept>
+#include "Exception.h"
 
 namespace Utilities
 {
@@ -58,12 +58,12 @@ namespace Utilities
             }
             else
             {
-                throw std::runtime_error("SimulationData::Get : Path not found");
+                throw Utilities::MyException("SimulationData::Get : Path not found");
             }
         }
         else
         {
-            throw std::runtime_error("SimulationData::Get : Date not found");
+            throw Utilities::MyException("SimulationData::Get : Date not found");
         }
     }
     

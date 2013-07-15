@@ -76,6 +76,7 @@ int main()
     std::cout << "8- Business Day" << std::endl;
     std::cout << "9- Mu Parser Test" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
+    std::cout << "11- Fibonacci Series" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -335,6 +336,30 @@ int main()
         for (std::size_t i = 0 ; i < vect0Add.size() ; ++i)
         {
             std::cout << vect0Add[i] << std::endl;
+        }
+    }
+    else if (iTest == 11)
+    {
+        // Fibonacci series
+        std::cout << "Enter n : " << std::endl;
+        std::size_t n = 0;
+        std::cin >> n;
+        
+        if (n == 0 || n == 1)
+        {
+            std::cout << "nth Element of Fibonacci series is : 1 " << std::endl;
+        }
+        else
+        {
+            std::size_t iNOld = 1, iNVeryOld = 1, iTemp;
+            for (std::size_t i = 0 ; i < n - 1; i++)
+            {
+                iTemp = iNOld;
+                iNOld += iNVeryOld;
+                iNVeryOld = iTemp;
+            }
+            
+            std::cout << "nth Element of Fibonacci series is : " << iNOld << std::endl;
         }
     }
 }

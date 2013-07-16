@@ -162,6 +162,50 @@ namespace Maths
         return sqrt(VarianceOld(dData));
     }
     
+    std::vector<double> Statistics::RollingAverage(const std::vector<double>& dData) const
+    {
+        std::size_t iN = dData.size();
+        std::vector<double> dResults(iN);
+        dResults[0] = dData[0];
+        
+        for (std::size_t i = 1 ; i < iN ; ++i)
+        {
+            dResults[i] = 1.0 / (i + 1.0) * dData[i] + i / (i + 1.0) * dResults[i - 1];
+        }
+        return dResults;
+    }
+    
+    std::vector<double> Statistics::RollingVariance(const std::vector<double>& dData) const
+    {
+        std::size_t iN = dData.size();
+        std::vector<double> dResults(iN);
+        double dMean = dData[0];
+        dResults[0] = 0;
+        
+        for (std::size_t i = 1 ; i < iN ; ++i)
+        {
+            dMean = 1.0 / (i + 1.0) * dData[i] + i / (i + 1.0) * dMean;
+            dResults[i] = dResults[i - 1] + (dData[i] - dMean) * (dData[i] - dMean);
+        }
+        return dResults;
+    }
+    
+    std::vector<double> Statistics::RollingStandardDeviation(const std::vector<double>& dData) const
+    {
+        std::size_t iN = dData.size();
+        std::vector<double> dResults(iN);
+        double dMean = dData[0];
+        dResults[0] = 0;
+        
+        for (std::size_t i = 1 ; i < iN ; ++i)
+        {
+            dMean = 1.0 / (i + 1.0) * dData[i] + i / (i + 1.0) * dMean;
+            dResults[i] = dResults[i - 1] * dResults[i - 1] + (dData[i] - dMean) * (dData[i] - dMean);
+            dResults[i] = sqrt(dResults[i]);
+        }
+        return dResults;
+    }
+    
     double Statistics::Quantile(double dQuantile, const std::vector<double> &dData) const
     {
         std::vector<double> dDataCopy = dData;

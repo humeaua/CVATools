@@ -77,6 +77,7 @@ int main()
     std::cout << "9- Mu Parser Test" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "11- Fibonacci Series" << std::endl;
+    std::cout << "12- Smart pointers" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -361,5 +362,13 @@ int main()
             
             std::cout << "nth Element of Fibonacci series is : " << iNOld << std::endl;
         }
+    }
+    else if (iTest == 12)
+    {
+        std::auto_ptr<Utilities::Date::MyDate> pDate(new Utilities::Date::MyDate());
+        
+        std::cout << "Day : " << pDate->GetDay() << std::endl;
+        std::cout << "Month : " << pDate->GetMonth() << std::endl;
+        std::cout << "Year : " << pDate->GetYear() << std::endl;
     }
 }

@@ -38,6 +38,11 @@ namespace Maths
         virtual double Variance(const std::vector<double> & dData) const;
         virtual double VarianceOld(const std::vector<double> & dData) const;
         
+        //  Rolling methods
+        virtual std::vector<double> RollingAverage(const std::vector<double>& dData) const;
+        virtual std::vector<double> RollingVariance(const std::vector<double>& dData) const;
+        virtual std::vector<double> RollingStandardDeviation(const std::vector<double>& dData) const;
+        
         //  Method to compute the Quantile of data
         virtual double Quantile(double dQuantile, const std::vector<double> & dData) const;
         

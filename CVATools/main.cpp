@@ -22,6 +22,8 @@
 #include "MuParser/muParserTest.h"
 #include "Vector.h"
 
+#include <tr1/memory>
+
 #define NUM_THREADS 5
 
 /*int main (int argc, const char * argv[])
@@ -367,8 +369,27 @@ int main()
     {
         std::auto_ptr<Utilities::Date::MyDate> pDate(new Utilities::Date::MyDate());
         
+        std::cout << "Date" << std::endl;
         std::cout << "Day : " << pDate->GetDay() << std::endl;
         std::cout << "Month : " << pDate->GetMonth() << std::endl;
         std::cout << "Year : " << pDate->GetYear() << std::endl;
+        std::cout << std::endl;
+        
+        std::tr1::shared_ptr<Utilities::Date::MyDate> pDate0(new Utilities::Date::MyDate());
+        
+        std::cout << "Date0" << std::endl;
+        std::cout << "Day : " << pDate0->GetDay() << std::endl;
+        std::cout << "Month : " << pDate0->GetMonth() << std::endl;
+        std::cout << "Year : " << pDate0->GetYear() << std::endl;
+        std::cout << std::endl;
+        
+        std::tr1::shared_ptr<Utilities::Date::MyDate> pDate1(new Utilities::Date::MyDate(20,7,2012));
+        pDate0.swap(pDate1);
+        
+        std::cout << "Date0" << std::endl;
+        std::cout << "Day : " << pDate0->GetDay() << std::endl;
+        std::cout << "Month : " << pDate0->GetMonth() << std::endl;
+        std::cout << "Year : " << pDate0->GetYear() << std::endl;
+        std::cout << std::endl;
     }
 }

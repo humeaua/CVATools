@@ -67,6 +67,24 @@ namespace Utilities
         }
     }
     
+    std::vector<double> SimulationData::Get(double dDate) const
+    {
+        if (dData_.count(dDate))
+        {
+            std::vector<double> dResult;
+            std::map<std::size_t, double> mMyMap = dData_.find(dDate)->second;
+            for (std::map<std::size_t, double>::iterator it = mMyMap.begin() ; it != mMyMap.end() ; ++it)
+            {
+                dResult.push_back(it->second);
+            }
+            return dResult;
+        }
+        else
+        {
+            throw Utilities::MyException("SimulationData::Get : Date not found");
+        }
+    }
+
     void SimulationData::Apply(double (*func)(double))
     {
         std::map<double, std::map<std::size_t, double> >::iterator itDates = dData_.begin();

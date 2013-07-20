@@ -11,7 +11,7 @@
 
 #include "DiffusionProcess.h"
 
-namespace Utilities
+namespace Finance
 {
     namespace Processes
     {
@@ -41,7 +41,7 @@ namespace Utilities
             // no term-structure
             virtual double variance(double t0, double x0, double dt) const;
             
-            virtual SimulationData simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const;
+            virtual Utilities::SimulationData simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const;
         };
     }
 }

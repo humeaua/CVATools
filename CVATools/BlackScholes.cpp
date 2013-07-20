@@ -10,7 +10,7 @@
 #include <cmath>
 #include <tr1/random>
 
-namespace Utilities
+namespace Finance
 {
     namespace Processes
     {
@@ -45,9 +45,9 @@ namespace Utilities
         
         //  return a simulation data of the simulated path for the diffusion process
         
-        SimulationData BlackScholes::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const
+        Utilities::SimulationData BlackScholes::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const
         {
-            SimulationData sResult;
+            Utilities::SimulationData sResult;
             std::size_t iNDates = dDates.size();
             
             std::tr1::ranlux64_base_01 eng; // core engine class

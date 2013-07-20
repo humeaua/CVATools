@@ -23,6 +23,9 @@
 #include "Vector.h"
 
 #include <tr1/memory>
+#include "PayoffVanillaOption.h"
+#include "BlackScholes.h"
+#include "PayoffLinearization.h"
 
 #define NUM_THREADS 5
 
@@ -80,6 +83,7 @@ int main()
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "11- Fibonacci Series" << std::endl;
     std::cout << "12- Smart pointers" << std::endl;
+    std::cout << "13- Payoff Linearization" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -121,7 +125,7 @@ int main()
     }
     else if (iTest == 3)
     {
-        Utilities::Processes::BlackScholes sBS(0.08, 0.4, 10);
+        Finance::Processes::BlackScholes sBS(0.08, 0.4, 10);
         std::size_t iNDates = 1000, iNPaths = 10;
         long long lSeed = 1;
         std::vector<double> dDates;
@@ -391,5 +395,22 @@ int main()
         std::cout << "Month : " << pDate0->GetMonth() << std::endl;
         std::cout << "Year : " << pDate0->GetYear() << std::endl;
         std::cout << std::endl;
+    }
+    else if (iTest == 13)
+    {
+        // Payoff Linearisation
+        Finance::Payoff::PayoffVanillaOption sPayoff(1.0, Finance::Payoff::CALL);
+        Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 4.0);
+        
+        PayoffLinearization sPayoffLinearization(100000);
+        
+        std::vector<double> dSimulationsDates;
+        dSimulationsDates.push_back(0.0);
+        dSimulationsDates.push_back(1.0);
+        
+        std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
+        
+        std::cout << "Cst : " << dRegCoefs.first << std::endl;
+        std::cout << "Coef Stock : " << dRegCoefs.second << std::endl;
     }
 }

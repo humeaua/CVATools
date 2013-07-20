@@ -11,6 +11,7 @@
 
 #include <map>
 #include <iostream>
+#include <vector>
 
 namespace Utilities
 {
@@ -33,6 +34,7 @@ namespace Utilities
         // Getter
         virtual std::map<double, std::map<std::size_t, double> > GetData() const;
         virtual double Get(double dDate, std::size_t iPath) const;
+        virtual std::vector<double> Get(double dDate) const;
         
         //  Apply function
         virtual void Apply(double (*func)(double));

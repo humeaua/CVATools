@@ -53,6 +53,7 @@ namespace Maths
             {
                 dProjResponse[iVar] += sRegressionData(i, iVar) * sResponse[i];
             }
+            dProjResponse[iVar] /= iNObservations;
         }
         
         std::vector<double> dRegCoefs(iNVars, 0.0);

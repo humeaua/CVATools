@@ -64,6 +64,6 @@ std::pair<double, double> PayoffLinearization::Linearise(const Finance::Processe
     dRegCoefs.second    = sInverse(1, 0) * dY + sInverse(1, 1) * dXY;
     
 FREE_RETURN:
-    delete dPayoff;
+    delete[] dPayoff;
     return dRegCoefs;
 }

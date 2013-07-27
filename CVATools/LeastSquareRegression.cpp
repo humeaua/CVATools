@@ -42,7 +42,7 @@ namespace Maths
                                                                const std::vector<double> & sResponse) const
     {
         Utilities::Matrix sCovarianceMatrix = ComputeCovarianceMatrix(sRegressionData);
-        std::size_t iNVars = sRegressionData.GetNbVariables(), iNObservations = sRegressionData.GetNbObservations();
+        std::size_t iNObservations = sRegressionData.GetNbObservations(), iNVars = sCovarianceMatrix.getcols();
         Utilities::Matrix sInverse(iNVars, iNVars);
         Utilities::matrixinverse(sInverse, sCovarianceMatrix);
         

@@ -154,9 +154,14 @@ namespace Maths
     {
         std::size_t iNVars = sPolyRegPms_.sPowerAndRegVariables.size(), iNObservations = sRegressionData.GetNbObservations();
         std::vector<double> dPredictedValues(iNObservations, 0.0), dRegCoefs = ComputeRegCoefs(sRegressionData, sResponse);
+        iNVars -= bAddConstantInRegression_ ? 1 : 0;
         
         for (std::size_t i = 0 ; i < iNObservations ; ++i)
         {
+            if (bAddConstantInRegression_)
+            {
+                dPredictedValues[i] = dRegCoefs.back();
+            }
             for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
             {
                 dPredictedValues[i] += pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][0]),sPolyRegPms_.sPowerAndRegVariables[iVar][2]) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][1]),sPolyRegPms_.sPowerAndRegVariables[iVar][3]) * dRegCoefs[iVar];

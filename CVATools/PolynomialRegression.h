@@ -35,7 +35,7 @@ namespace Maths
         
         virtual Utilities::Matrix ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const;
         
-        //  Methods from Base Class RegressionMethod in both std::vector and Utilites::MyVector
+        //  Update Predicted Values method as the variables are not any more the same
         virtual std::vector<double> GetPredictedValues(const Utilities::RegressionData & sRegressionData,
                                                        const std::vector<double> & sResponse) const;
     };

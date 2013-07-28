@@ -22,6 +22,8 @@ namespace Maths
         LinearRegression(bool bAddConstantInRegression);
         virtual Utilities::Matrix ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const;
         
+        virtual std::vector<double> GetPredictedValues(const Utilities::RegressionData & sRegressionData,
+                                                       const std::vector<double> & sResponse) const;
     };
 }
 #endif /* defined(__CVATools__LinearRegression__) */

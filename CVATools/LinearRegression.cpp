@@ -73,4 +73,25 @@ namespace Maths
         
         return sCovarianceMatrix;
     }
+    
+    std::vector<double> LinearRegression::GetPredictedValues(const Utilities::RegressionData & sRegressionData,
+                                                                  const std::vector<double> & sResponse) const
+    {
+        std::size_t iNVars = sRegressionData.GetNbVariables(), iNObservations = sRegressionData.GetNbObservations();
+        std::vector<double> dPredictedValues(iNObservations, 0.0), dRegCoefs = ComputeRegCoefs(sRegressionData, sResponse);
+        iNVars -= bAddConstantInRegression_ ? 1 : 0;
+        
+        for (std::size_t i = 0 ; i < iNObservations ; ++i)
+        {
+            if (bAddConstantInRegression_)
+            {
+                dPredictedValues[i] = dRegCoefs.back();
+            }
+            for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
+            {
+                dPredictedValues[i] += sRegressionData(i, iVar) * dRegCoefs[iVar];
+            }
+        }
+        return dPredictedValues;
+    }
 }

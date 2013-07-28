@@ -34,6 +34,10 @@ namespace Maths
         virtual ~PolynomialRegression();
         
         virtual Utilities::Matrix ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const;
+        
+        //  Methods from Base Class RegressionMethod in both std::vector and Utilites::MyVector
+        virtual std::vector<double> GetPredictedValues(const Utilities::RegressionData & sRegressionData,
+                                                       const std::vector<double> & sResponse) const;
     };
 }
 

@@ -14,9 +14,8 @@
 
 namespace Utiliites {
     
-    class HashTable : public std::tr1::unordered_map<std::string, std::string>
+    template<class C, class D> class HashTable : public std::tr1::unordered_map<C, D>
     {
-    protected:
     public:
         virtual void print() const;
     };

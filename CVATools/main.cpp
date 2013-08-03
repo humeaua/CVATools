@@ -84,6 +84,7 @@ int main()
     std::cout << "11- Fibonacci Series" << std::endl;
     std::cout << "12- Smart pointers" << std::endl;
     std::cout << "13- Payoff Linearization" << std::endl;
+    std::cout << "14- Cracking the coding interview" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -412,5 +413,11 @@ int main()
         
         std::cout << "Cst : " << dRegCoefs.first << std::endl;
         std::cout << "Coef Stock : " << dRegCoefs.second << std::endl;
+    }
+    else if (iTest == 14)
+    {
+        //  cracking the coding interview
+        //std::string cString = "ALEXANDRE";
+        //char[] cCharArray = cString.to
     }
 }

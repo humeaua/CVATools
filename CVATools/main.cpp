@@ -417,7 +417,9 @@ int main()
     else if (iTest == 14)
     {
         //  cracking the coding interview
-        //std::string cString = "ALEXANDRE";
+        std::string cString = "ALEXANDRE";
+        cString.append(" HUMEAU");
+        std::cout << cString << std::endl;
         //char[] cCharArray = cString.to
     }
 }

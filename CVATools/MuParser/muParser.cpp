@@ -77,7 +77,7 @@ namespace mu
     
   //---------------------------------------------------------------------------
   // finance functions
-  value_type Parser::Norm(value_type x) { return AccCumNorm(x); }
+  value_type Parser::Norm(value_type x) { return Maths::AccCumNorm(x); }
     
   value_type Parser::BS(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut)
   {
@@ -87,7 +87,7 @@ namespace mu
       
       int iCallPut = CallPut == "Call" || CallPut == "CALL" ? 1 : -1;
       value_type d1 = log(Forward / Strike) / (StdDev) + 0.5 * StdDev;
-      return StdDev == 0.0 ? std::max(iCallPut * (Forward - Strike), 0.0) : iCallPut * Forward * AccCumNorm(iCallPut * d1) - iCallPut * Strike * AccCumNorm(iCallPut * (d1 - StdDev));
+      return StdDev == 0.0 ? std::max(iCallPut * (Forward - Strike), 0.0) : iCallPut * Forward * Maths::AccCumNorm(iCallPut * d1) - iCallPut * Strike * Maths::AccCumNorm(iCallPut * (d1 - StdDev));
   }
     
     value_type Parser::BSN(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut)
@@ -96,7 +96,7 @@ namespace mu
         value_type d1 = (Forward - Strike) / StdDev;
         int iCallPut = CallPut == "Call" || CallPut == "CALL" ? 1 : -1;
         
-        return StdDev == 0.0 ? std::max(iCallPut * (Forward - Strike), 0.0) : iCallPut * (Forward - Strike) * AccCumNorm(d1) + StdDev / sqrt(2.0 * PARSER_CONST_PI) * exp(0.5 * d1 * d1);
+        return StdDev == 0.0 ? std::max(iCallPut * (Forward - Strike), 0.0) : iCallPut * (Forward - Strike) * Maths::AccCumNorm(d1) + StdDev / sqrt(2.0 * PARSER_CONST_PI) * exp(0.5 * d1 * d1);
     }
 
   //---------------------------------------------------------------------------
@@ -263,7 +263,7 @@ namespace mu
     DefineFun(_T("abs"), Abs);
     // To change the number of args 
     // finance functions 
-    DefineFun(_T("AccCumNorm"), AccCumNorm);
+    DefineFun(_T("AccCumNorm"), Maths::AccCumNorm);
     DefineFun(_T("BS"), BS);
     DefineFun(_T("BSN"), BSN);
                 

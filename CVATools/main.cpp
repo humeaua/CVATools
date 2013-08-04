@@ -403,7 +403,7 @@ int main()
         Finance::Payoff::PayoffVanillaOption sPayoff(1.0, Finance::Payoff::CALL);
         Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0);
         
-        PayoffLinearization sPayoffLinearization(1000);
+        Maths::PayoffLinearization sPayoffLinearization(1000);
         
         std::vector<double> dSimulationsDates;
         dSimulationsDates.push_back(0.0);

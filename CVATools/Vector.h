@@ -116,6 +116,16 @@ namespace Utilities
             }
             return result;
         };
+        
+        virtual C Sum() const
+        {
+            C res = (*this)[0];
+            for (std::size_t i = 1 ; i < this->size() ; ++i)
+            {
+                res += (*this)[i];
+            }
+            return res;
+        };
     };
     
     template <typename T>

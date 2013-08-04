@@ -13,17 +13,20 @@
 #include "Payoff.h"
 #include "DiffusionProcess.h"
 
-class PayoffLinearization
+namespace Maths
 {
-    std::size_t iNPaths_;
-    
-public:
-    PayoffLinearization(std::size_t iNPaths);
-    
-    //  Method that return a pair of double - the two regression coefficients on the constant and on S_t
-    std::pair<double, double> Linearise(const Finance::Processes::DiffusionProcess & sDiffusionProcess,
-                                        const Finance::Payoff::Payoff & sPayoff,
-                                        std::vector<double>& dSimulationDates) const;
-};
+    class PayoffLinearization
+    {
+        std::size_t iNPaths_;
+        
+    public:
+        PayoffLinearization(std::size_t iNPaths);
+        
+        //  Method that return a pair of double - the two regression coefficients on the constant and on S_t
+        std::pair<double, double> Linearise(const Finance::Processes::DiffusionProcess & sDiffusionProcess,
+                                            const Finance::Payoff::Payoff & sPayoff,
+                                            std::vector<double>& dSimulationDates) const;
+    };
+}
 
 #endif /* defined(__CVATools__PayoffLinearization__) */

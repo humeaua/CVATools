@@ -11,6 +11,9 @@
 
 #include <iostream>
 
-double AccCumNorm(double x);
+namespace Maths
+{
+    double AccCumNorm(double x);
+}
 
 #endif /* defined(__CVATools__MathFunctions__) */

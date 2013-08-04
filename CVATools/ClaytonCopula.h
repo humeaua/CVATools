@@ -10,11 +10,11 @@
 #define __CVATools__ClaytonCopula__
 
 #include <iostream>
-#include "Copula.h"
+#include "ArchimedeanCopula.h"
 
 namespace Maths
 {
-    class ClaytonCopula : public Copula
+    class ClaytonCopula : public ArchimedeanCopula
     {
     protected:
         double dAlpha_;
@@ -22,8 +22,10 @@ namespace Maths
         ClaytonCopula(double dAlpha);
         virtual ~ClaytonCopula();
         
-        virtual double ClaytonFunction1D(const double dX) const;
-        virtual double CopulaFunction(const Utilities::MyVector<double> & dVariables) const;
+        virtual double Generator(double x) const;
+        virtual double GeneratorInverse(double x) const;
+        
+        virtual double KendallTau() const;
     };
 }
 

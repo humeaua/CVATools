@@ -15,7 +15,4 @@ namespace Maths
     
     Copula::Copula(const CopulaType eCopulaType) : eCopulaType_(eCopulaType)
     {}
-    
-    Copula::~Copula()
-    {}
 }

@@ -28,9 +28,10 @@ namespace Maths {
     public:
         Copula();
         Copula(const CopulaType eCopulaType);
-        virtual ~Copula();
         
         virtual double CopulaFunction(const Utilities::MyVector<double> & dVariables) const = 0;
+        
+        virtual double KendallTau() const = 0;
     };
 }
 

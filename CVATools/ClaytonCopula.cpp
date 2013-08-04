@@ -11,19 +11,24 @@
 
 namespace Maths
 {
-    ClaytonCopula::ClaytonCopula(double dAlpha) : Copula(CLAYTON), dAlpha_(dAlpha)
+    ClaytonCopula::ClaytonCopula(double dAlpha) : ArchimedeanCopula(CLAYTON), dAlpha_(dAlpha)
     {}
     
     ClaytonCopula::~ClaytonCopula()
     {}
     
-    double ClaytonCopula::ClaytonFunction1D(const double dX) const
+    double ClaytonCopula::Generator(double dX) const
     {
         return (pow(dX, -dAlpha_) - 1.0) / dAlpha_;
     }
     
-    double ClaytonCopula::CopulaFunction(const Utilities::MyVector<double> & dVariables) const
+    double ClaytonCopula::GeneratorInverse(double x) const
     {
-        return pow(dAlpha_ * dVariables.Sum() + 1.0, -1.0 / dAlpha_);
+        return pow(1 + dAlpha_ * x, -1.0 / dAlpha_);
+    }
+    
+    double ClaytonCopula::KendallTau() const
+    {
+        return dAlpha_ / (dAlpha_ + 2);
     }
 }

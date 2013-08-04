@@ -15,16 +15,11 @@ namespace Utilities
     PrintC::PrintC() : bAppend_(false)
     {}
     
-    PrintC::PrintC(const std::string & cFileName, const bool bAppend, const std::size_t iPrecision) : cFileName_(cFileName), bAppend_(bAppend), iPrecision_(iPrecision)
+    PrintC::PrintC(const std::string & cFileName, const bool bAppend, const std::size_t iPrecision) : cFileName_(cFileName), bAppend_(bAppend)
     {
         std::stringstream out ;
-        out << iPrecision_;
+        out << iPrecision;
         cPrecision_ = out.str();
-    }
-    
-    PrintC::~PrintC()
-    {
-        cFileName_.clear();
     }
     
     void PrintC::PrintInFile(const std::vector<double> &dData)

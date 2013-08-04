@@ -18,7 +18,7 @@ namespace Finance
 {
     namespace Pricers
     {
-        class PriceToYieldNewton : public NewtonRaphson1D, public Instruments::Bond
+        class PriceToYieldNewton : public Maths::NewtonRaphson1D, public Instruments::Bond
         {
         protected:
             double dPrice_;
@@ -35,7 +35,7 @@ namespace Finance
             virtual double df(double x) const;
         };
         
-        class ZSpreadNewton : public NewtonRaphson1D, public Instruments::Bond
+        class ZSpreadNewton : public Maths::NewtonRaphson1D, public Instruments::Bond
         {
         protected:
             Finance::Base::YieldCurve sYieldCurve_;

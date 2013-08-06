@@ -26,6 +26,7 @@
 #include "PayoffVanillaOption.h"
 #include "BlackScholes.h"
 #include "PayoffLinearization.h"
+#include "ClaytonCopula.h"
 
 #define NUM_THREADS 5
 
@@ -85,6 +86,7 @@ int main()
     std::cout << "12- Smart pointers" << std::endl;
     std::cout << "13- Payoff Linearization" << std::endl;
     std::cout << "14- Cracking the coding interview" << std::endl;
+    std::cout << "15- Clayton Copula" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -421,5 +423,18 @@ int main()
         cString.append(" HUMEAU");
         std::cout << cString << std::endl;
         //char[] cCharArray = cString.to
+    }
+    else if (iTest == 15)
+    {
+        // clayton copula testing
+        Maths::ClaytonCopula sClaytonCopula(1);
+        std::size_t iNRealisations = 100;
+
+        std::vector<std::pair<double, double> > dRealisations = sClaytonCopula.GenerateCorrelatedVariables(0, iNRealisations);
+        
+        for (std::size_t i = 0; i < iNRealisations; ++i)
+        {
+            std::cout << dRealisations[i].first << ";" << dRealisations[i].second << std::endl;
+        }
     }
 }

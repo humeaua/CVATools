@@ -428,13 +428,5 @@ int main()
     {
         // clayton copula testing
         Maths::ClaytonCopula sClaytonCopula(1);
-        std::size_t iNRealisations = 100;
-
-        std::vector<std::pair<double, double> > dRealisations = sClaytonCopula.GenerateCorrelatedVariables(0, iNRealisations);
-        
-        for (std::size_t i = 0; i < iNRealisations; ++i)
-        {
-            std::cout << dRealisations[i].first << ";" << dRealisations[i].second << std::endl;
-        }
     }
 }

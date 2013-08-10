@@ -20,15 +20,11 @@ namespace Maths
         double dAlpha_;
     public:
         ClaytonCopula(double dAlpha);
-        virtual ~ClaytonCopula();
         
         virtual double Generator(double x) const;
         virtual double GeneratorInverse(double x) const;
         
         virtual double KendallTau() const;
-        
-        virtual double InverseGeneratorRandomVariables(double u1, double u2) const;
-        virtual std::vector<std::pair<double, double> > GenerateCorrelatedVariables(long long lSeed, std::size_t iNRealisations) const;
     };
 }
 

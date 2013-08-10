@@ -9,7 +9,6 @@
 #include <pthread.h>
 #include <iostream>
 #include "OrnsteinUhlenbeck.h"
-#include "Print.h"
 #include "SquareRoot.h"
 #include "BlackScholes.h"
 #include "MargrabeOptionVasicek.h"
@@ -109,7 +108,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sOU.simulate(dDates, iNPaths, lSeed);
-        Utilities::PrintC sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/OrnsteinUlhenbeck.csv", false, 10);
+        Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/OrnsteinUlhenbeck.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 2)
@@ -124,7 +123,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sSquareRoot.simulate(dDates, iNPaths, lSeed);
-        Utilities::PrintC sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/SquareRoot.csv", false, 10);
+        Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/SquareRoot.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 3)
@@ -139,7 +138,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sBS.simulate(dDates, iNPaths, lSeed);
-        Utilities::PrintC sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/BlackScholes.csv", false, 10);
+        Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/BlackScholes.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 4)
@@ -188,7 +187,7 @@ int main()
             std::stringstream out ;
             out << i;
             
-            Utilities::PrintC sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/Margrabe_" + out.str() + ".csv", false, 10);
+            Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/Margrabe_" + out.str() + ".csv", false, 10);
             sPrint.PrintInFile(sDatamap,i);
         }
         

@@ -8,9 +8,11 @@
 
 #include "MathFunctions.h"
 #include <cmath>
+#include "Require.h"
 
 namespace Maths
 {
+    // Approximation of the cumulative normal function
     double AccCumNorm(double x)
     {
         double dRes;
@@ -62,5 +64,32 @@ namespace Maths
         {
             return dRes;
         }
+    }
+    
+    // Approximation of the Debye function
+    double DebyeFunction(double x, std::size_t k)
+    {
+        
+#ifndef EPSILON
+#define EPSILON 1.0e-07
+#endif
+        
+        // Check for exception values
+        Utilities::requireException(k < 2, "Cannot compute Debye function for k >= 2", "DebyeFunction");
+        Utilities::requireException(fabs(x) > EPSILON, "x is too small", "DebyeFunction");
+        
+#ifndef NBSTEPINT
+#define NBSTEPINT 100
+#endif
+        
+        double h = x / NBSTEPINT, dRes = 0.0;
+        
+        // case i = 0
+        dRes += pow(EPSILON,k-1.0);
+        for (std::size_t i = 1 ; i < NBSTEPINT ; ++i)
+        {
+            dRes += pow(i*h, k) / (exp(i*h)-1.0);
+        }
+        return dRes * k / pow(x, k);
     }
 }

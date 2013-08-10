@@ -26,7 +26,8 @@
 #include "PayoffVanillaOption.h"
 #include "BlackScholes.h"
 #include "PayoffLinearization.h"
-#include "ClaytonCopula.h"
+#include "MathFunctions.h"
+#include "Printcpp.h"
 
 #define NUM_THREADS 5
 
@@ -86,7 +87,7 @@ int main()
     std::cout << "12- Smart pointers" << std::endl;
     std::cout << "13- Payoff Linearization" << std::endl;
     std::cout << "14- Cracking the coding interview" << std::endl;
-    std::cout << "15- Clayton Copula" << std::endl;
+    std::cout << "15- Debye Function" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -108,7 +109,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sOU.simulate(dDates, iNPaths, lSeed);
-        Utilities::PrintC sPrint("/Users/alexhum49/Desktop/OrnsteinUlhenbeck.csv", false, 10);
+        Utilities::PrintC sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/OrnsteinUlhenbeck.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 2)
@@ -123,7 +124,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sSquareRoot.simulate(dDates, iNPaths, lSeed);
-        Utilities::PrintC sPrint("/Users/alexhum49/Desktop/SquareRoot.csv", false, 10);
+        Utilities::PrintC sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/SquareRoot.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 3)
@@ -138,7 +139,7 @@ int main()
             dDates.push_back(dT * iDate / iNDates);
         }
         Utilities::SimulationData sResult = sBS.simulate(dDates, iNPaths, lSeed);
-        Utilities::PrintC sPrint("/Users/alexhum49/Desktop/BlackScholes.csv", false, 10);
+        Utilities::PrintC sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/BlackScholes.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 4)
@@ -187,7 +188,7 @@ int main()
             std::stringstream out ;
             out << i;
             
-            Utilities::PrintC sPrint("/Users/alexhum49/Desktop/Margrabe_" + out.str() + ".csv", false, 10);
+            Utilities::PrintC sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/Margrabe_" + out.str() + ".csv", false, 10);
             sPrint.PrintInFile(sDatamap,i);
         }
         
@@ -426,7 +427,21 @@ int main()
     }
     else if (iTest == 15)
     {
-        // clayton copula testing
-        Maths::ClaytonCopula sClaytonCopula(1);
+        // Debye function testing for Frank copula
+        std::size_t k = 1;
+        std::vector<std::pair<double, double> > dXY;
+        try
+        {
+            for (double x = 0.01 ; x < 10.0 ; x += 0.01)
+            {
+                dXY.push_back(std::make_pair(x, Maths::DebyeFunction(x, k)));
+            }
+        }
+        catch(Utilities::MyException & e)
+        {
+            std::cout << "Exception caught" << e.what() << std::endl;
+        }
+        Utilities::PrintCpp sPrintCPP("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/DebyeFunction.csv", false, 10);
+        sPrintCPP.PrintInFile(dXY);
     }
 }

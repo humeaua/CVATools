@@ -18,6 +18,7 @@ namespace Maths {
         INDEPENDENT,
         CLAYTON,
         GUMBEL,
+        FRANK,
         GAUSSIAN
     } CopulaType;
     

@@ -14,6 +14,8 @@
 namespace Maths
 {
     double AccCumNorm(double x);
+    
+    double DebyeFunction(double x, std::size_t k);
 }
 
 #endif /* defined(__CVATools__MathFunctions__) */

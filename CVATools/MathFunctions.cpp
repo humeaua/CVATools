@@ -67,28 +67,53 @@ namespace Maths
     }
     
     // Approximation of the Debye function
-    double DebyeFunction(double x, std::size_t k)
+    double DebyeFunction(double x, double k)
     {
         
 #ifndef EPSILON
-#define EPSILON 1.0e-07
+#define EPSILON 0.001
 #endif
         
         // Check for exception values
-        Utilities::requireException(k < 2, "Cannot compute Debye function for k >= 2", "DebyeFunction");
+        Utilities::requireException(k < 3, "Cannot compute Debye function for k >= 2", "DebyeFunction");
         Utilities::requireException(fabs(x) > EPSILON, "x is too small", "DebyeFunction");
         
 #ifndef NBSTEPINT
-#define NBSTEPINT 100
+#define NBSTEPINT 0.001
 #endif
         
-        double h = x / NBSTEPINT, dRes = 0.0;
-        
-        // case i = 0
-        dRes += pow(EPSILON,k-1.0);
-        for (std::size_t i = 1 ; i < NBSTEPINT ; ++i)
+        double dRes = 0.0;
+        if (x > 0)
         {
-            dRes += pow(i*h, k) / (exp(i*h)-1.0);
+            // case i = 0
+            dRes += pow(EPSILON,k-1.0);
+            double dx = EPSILON;
+            for ( dx = EPSILON ; dx < x ; dx += NBSTEPINT)
+            {
+                dRes += pow(dx, k) / (exp(dx)-1.0) * NBSTEPINT;
+            }
+            dx -= NBSTEPINT;
+            dRes += pow(dx, k) / (exp(dx)-1.0) * (x - dx);
+
+        }
+        else
+        {
+            
+#ifndef ERROR
+#define ERROR 1e-10
+#endif
+            
+            Utilities::requireException(fabs(k - (int)k) > ERROR,  "Power has to be an integer when computing Debye function for negative value", "DebyeFunction");
+            // case i = 0
+            dRes -= pow(EPSILON,k-1.0);
+            double dx = EPSILON;
+            for ( dx = EPSILON ; dx < x ; dx -= NBSTEPINT)
+            {
+                dRes -= pow(dx, k) / (exp(dx)-1.0) * NBSTEPINT;
+            }
+            dx -= NBSTEPINT;
+            dRes += pow(dx, k) / (exp(dx)-1.0) * (x - dx);
+            
         }
         return dRes * k / pow(x, k);
     }

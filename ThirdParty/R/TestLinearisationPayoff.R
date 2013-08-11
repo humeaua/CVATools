@@ -1,4 +1,4 @@
-filename = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/ThirdParty/R/Data/FinalSpot.csv"
+filename = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/FinalSpot.csv"
 
 simul = read.csv(filename,header=FALSE)
 
@@ -9,13 +9,15 @@ names(simul)[1] <- "und"
 res = lm(simul$payoff~simul$und)
 
 summary(res)
+help(lm)
+res$coefficients[2]
 abline(res)
 
 library(MASS)
 help(lm.ridge)
 #data(payoff)
 # does not work yet
-resridge = lm.ridge(simul$payoff ~ .,simul)
+resridge = lm.ridge(payoff ~ .,simul,lambda=seq(0,10,by=0.1))
 
 data
 

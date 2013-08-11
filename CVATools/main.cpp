@@ -27,6 +27,7 @@
 #include "PayoffLinearization.h"
 #include "MathFunctions.h"
 #include "Printcpp.h"
+//#include "Sobol.h"
 
 #define NUM_THREADS 5
 
@@ -87,6 +88,7 @@ int main()
     std::cout << "13- Payoff Linearization" << std::endl;
     std::cout << "14- Cracking the coding interview" << std::endl;
     std::cout << "15- Debye Function" << std::endl;
+    std::cout << "16- Sobol Sequences" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -442,5 +444,9 @@ int main()
         }
         Utilities::PrintCpp sPrintCPP("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/DebyeFunction.csv", false, 10);
         sPrintCPP.PrintInFile(dXY);
+    }
+    else if (iTest == 16)
+    {
+        
     }
 }

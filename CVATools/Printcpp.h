@@ -59,7 +59,8 @@ namespace Utilities
                 myfile << dData[i][0] ;
                 for (std::size_t j = 0 ; i < dData[i].size() ; ++j)
                 {
-                    myfile << "," << dData[i][j] ;
+                    myfile << "," ;
+                    myfile << dData[i][j] ;
                 }
                 myfile << "\n";
             }
@@ -75,15 +76,18 @@ namespace Utilities
             typename std::map<C, std::map<D, E> >::const_iterator iter = mData.begin();
             for (typename std::map<D, E>::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
             {
-                myfile << it->first << "," ;
+                myfile << it->first ;
+                myfile << "," ;
             }
             myfile << "\n" ;
             for ( ; iter != mData.end() ; ++iter)
             {
-                myfile << iter->first << "," ;
+                myfile << iter->first;
+                myfile << "," ;
                 for (typename std::map<D, E>::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
                 {
                     myfile << it->second;
+                    myfile << ",";
                 }
                 myfile << "\n" ;
             }
@@ -99,15 +103,18 @@ namespace Utilities
             typename std::map<C, std::map<D, std::vector<E> > >::const_iterator iter = mData.begin();
             for (typename std::map<D, std::vector<E> >::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
             {
-                myfile << it->first << "," ;
+                myfile << it->first ;
+                myfile << "," ;
             }
             myfile << "\n" ;
             for ( ; iter != mData.end() ; ++iter)
             {
-                myfile << iter->first << "," ;
+                myfile << iter->first;
+                myfile << "," ;
                 for (typename std::map<D, std::vector<E> >::const_iterator it = iter->second.begin() ; it != iter->second.end() ; ++it)
                 {
                     myfile << it->second[iDim];
+                    myfile << "," ;
                 }
                 myfile << "\n" ;
             }

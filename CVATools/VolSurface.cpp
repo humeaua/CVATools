@@ -17,7 +17,7 @@ namespace Finance
     {
         VolatilitySurface::VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface) : dSpot_(dSpot), VolSurface_(VolSurface)
         {
-            Utilities::requireException(dSpot > 0.0, "VolatilitySurface::VolatilitySurface : Spot is negative");
+            Utilities::requireException(dSpot > 0.0, "Spot is negative", "VolatilitySurface::VolatilitySurface");
             Calibrate(VolSurface_);
         }
         
@@ -41,12 +41,12 @@ namespace Finance
                 }
                 else
                 {
-                    throw std::runtime_error("Strike not found");
+                    throw Utilities::MyException("VolatilitySurface::Get : Strike not found");
                 }
             }
             else
             {
-                throw std::runtime_error("Expiry not found");
+                throw Utilities::MyException("VolatilitySurface::Get : Expiry not found");
             }
         }
         
@@ -58,7 +58,7 @@ namespace Finance
             }
             else
             {
-                throw std::runtime_error("VolatilitySurface::Interpolate : Strike is negative");
+                throw Utilities::MyException("VolatilitySurface::Interpolate : Strike is negative");
             }
         }
     }

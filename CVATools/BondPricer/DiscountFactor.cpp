@@ -33,7 +33,7 @@ namespace Finance
         {
             double dT = sDate.Diff(sToday_);
             
-            Utilities::requireException(dT > 0, "DF::DiscountFactor : Date is before today");
+            Utilities::requireException(dT > 0, "DF::DiscountFactor : Date is before today","DF::DiscountFactor");
             return DiscountFactor(dT);
         }
     }

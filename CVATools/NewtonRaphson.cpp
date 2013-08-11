@@ -14,8 +14,8 @@ namespace Maths
 {
     NewtonRaphson1D::NewtonRaphson1D(std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : iNIterMax_(iNIterMax), dTolerance_(dTolerance), dEpsValueDeriv_(dEpsValueDeriv)
     {
-        Utilities::requireException(dEpsValueDeriv > 0, "NewtonRaphson1D : Epsilon value for derivative should be positive");
-        Utilities::requireException(dTolerance > 0, "NewtonRaphson1D : Tolerance should be positive");
+        Utilities::requireException(dEpsValueDeriv > 0, "Epsilon value for derivative should be positive", "NewtonRaphson1D::NewtonRaphson1D");
+        Utilities::requireException(dTolerance > 0, "Tolerance should be positive", "NewtonRaphson1D::NewtonRaphson1D");
     }
     
     double NewtonRaphson1D::algo_root_finder(double dInitialGuess) const
@@ -35,7 +35,7 @@ namespace Maths
             }
             else
             {
-                throw Utilities::MyException("NewtonRaphson1D : Derivative is too small.");
+                throw Utilities::MyException("NewtonRaphson1D::algo_root_finder : Derivative is too small.");
             }
             df0 = f(dx);
             
@@ -45,7 +45,7 @@ namespace Maths
         
         if (iNIter >= iNIterMax_)
         {
-            throw Utilities::MyException("NewtonRaphson1D : Newton Algorithm has not converged");
+            throw Utilities::MyException("NewtonRaphson1D::algo_root_finder : Newton Algorithm has not converged");
         }
         return dx;
     }

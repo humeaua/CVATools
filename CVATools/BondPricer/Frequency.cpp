@@ -34,7 +34,7 @@ namespace Finance
             }
             else
             {
-                throw Utilities::MyException("Unknown frequency in Parse Frequency");
+                throw Utilities::MyException("Frequency::ParseFrequency : Unknown frequency in Parse Frequency");
             }
         }
     }

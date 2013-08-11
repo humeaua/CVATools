@@ -29,7 +29,7 @@ namespace Utilities
         eInterpolationType_(eInterpolationType)
         
         {
-            Utilities::requireException(dValues_.size() == dVariables_.size(), "Variables and values are not the same size");
+            Utilities::requireException(dValues_.size() == dVariables_.size(), "Variables and values are not the same size","InterExtrapolation1D::InterExtrapolation1D");
             if (eInterpolationType_ == SPLINE_CUBIC)
             {
                 //  Compute the second derivative
@@ -298,7 +298,7 @@ namespace Utilities
 #ifndef EPSILON_RAW
 #define EPSILON_RAW 1e-07
 #endif
-                        Utilities::requireException(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small");
+                        Utilities::requireException(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small","InterExtrapolation1D::Interp1");
                         dResult = 1.0 / dVariable * ((dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue2] * dVariables_[iValue2] + (dVariables_[iValue2] - dVariable) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue1] * dVariables_[iValue1] );
                         break;
                     }

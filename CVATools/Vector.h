@@ -33,7 +33,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator+(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size for +");
+            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator+(MyVector<C,Alloc> &)");
             MyVector<C,Alloc> result(v.size());
             for (std::size_t i = 0 ; i < v.size() ; ++i)
             {
@@ -44,7 +44,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator-(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size for -");
+            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator-(MyVector<C,Alloc> &)");
             MyVector<C,Alloc> result(v.size());
             for (std::size_t i = 0 ; i < v.size() ; ++i)
             {
@@ -55,7 +55,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator*(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size for *");
+            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size for *", "MyVector<C,Alloc> operator*(MyVector<C,Alloc> &)");
             MyVector<C,Alloc> result(v.size());
             for (std::size_t i = 0 ; i < v.size() ; ++i)
             {
@@ -66,7 +66,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator/(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size for /");
+            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size for /", "MyVector<C,Alloc> operator/(MyVector<C,Alloc> &)");
             MyVector<C,Alloc> result(v.size());
             for (std::size_t i = 0 ; i < v.size() ; ++i)
             {
@@ -108,7 +108,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator/(C value)
         {
-            Utilities::requireException(value != 0.0, "value is 0");
+            Utilities::requireException(value != 0.0, "value is 0", "MyVector<C,Alloc> operator/(C value)");
             MyVector<C,Alloc> result(this->size());
             for (std::size_t i = 0 ; i < this->size() ; ++i)
             {
@@ -142,7 +142,7 @@ namespace Utilities
     template <typename T>
     std::vector<T> Diff(const std::vector<T> & vect1, const std::vector<T> & vect2)
     {
-        Utilities::requireException(vect1.size() == vect2.size(), "Diff : Cannot compute diff, vectors do not have same size");
+        Utilities::requireException(vect1.size() == vect2.size(), "Cannot compute diff, vectors do not have same size","Diff");
         
         std::vector<T> vectres(vect1.size());
         

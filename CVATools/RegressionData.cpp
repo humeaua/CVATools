@@ -56,16 +56,16 @@ namespace Utilities
     
     double RegressionData::operator ()(size_t i, size_t j)
     {
-        requireException(i < iNObservations_, "Observation index is out of bounds", "RegressionData::operator (int,int)");
-        requireException(j < iNVars_, "Variable index is out of bounds", "RegressionData::operator (int,int)");
+        requireException(i < iNObservations_, "Observation index is out of bounds", "RegressionData::operator (size_t,size_t)");
+        requireException(j < iNVars_, "Variable index is out of bounds", "RegressionData::operator (size_t,size_t)");
         
         return dData_[i][j];
     }
     
     double RegressionData::operator ()(size_t i, size_t j) const
     {
-        requireException(i < iNObservations_, "Observation index is out of bounds", "RegressionData::operator (int,int)");
-        requireException(j < iNVars_, "Variable index is out of bounds", "RegressionData::operator (int,int)");
+        requireException(i < iNObservations_, "Observation index is out of bounds", "RegressionData::operator (size_t,size_t)");
+        requireException(j < iNVars_, "Variable index is out of bounds", "RegressionData::operator (size_t,size_t)");
         
         return dData_[i][j];
     }

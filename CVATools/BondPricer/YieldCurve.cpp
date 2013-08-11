@@ -72,7 +72,7 @@ namespace Finance
             
             //  Test if the pillars in the yield curve are equal
             bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_, dTolerance);
-            Utilities::requireException(bPillarAreEqual, "YieldCurve::operator + : Yield curve pillars are not the same. Should be the same for now");
+            Utilities::requireException(bPillarAreEqual, "Yield curve pillars are not the same. Should be the same for now", "YieldCurve::operator +");
             
             for (std::size_t iPillar = 0 ; iPillar < sYieldCurve.dVariables_.size() ; ++ iPillar)
             {

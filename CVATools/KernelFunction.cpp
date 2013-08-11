@@ -29,7 +29,7 @@ namespace Maths
             dResX += k(fabs(dXY[i].first - dX) / dh_);
             dResXY += k(fabs(dXY[i].first - dX) / dh_) * dXY[i].second;
         }
-        Utilities::requireException(fabs(dResX) > dEpsRegression_, "Kernel sum too small : cannot compute estimation");
+        Utilities::requireException(fabs(dResX) > dEpsRegression_, "Kernel sum too small - cannot compute estimation", "KernelFunction::Estimate");
         
         return dResXY / dResX;
     }
@@ -42,7 +42,7 @@ namespace Maths
             dResX += k(Utilities::norm_2(Utilities::Diff(dXY[i].first, dX)) / dh_);
             dResXY += k(Utilities::norm_2(Utilities::Diff(dXY[i].first, dX)) / dh_) * dXY[i].second;
         }
-        Utilities::requireException(fabs(dResX) > dEpsRegression_, "Kernel sum too small : cannot compute estimation");
+        Utilities::requireException(fabs(dResX) > dEpsRegression_, "Kernel sum too small : cannot compute estimation", "KernelFunction::Estimate");
         
         return dResXY / dResX;
     }

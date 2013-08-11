@@ -715,33 +715,6 @@ float r4_uniform_01 ( int *seed ) ;
 //    0 and 1. 
 // 
 
-double r8_abs ( double x ) ;
-
-//****************************************************************************80 
-// 
-//  Purpose: 
-// 
-//    R8_ABS returns the absolute value of an R8. 
-// 
-//  Licensing: 
-// 
-//    This code is distributed under the GNU LGPL license.  
-// 
-//  Modified: 
-// 
-//    01 December 2006 
-// 
-//  Author: 
-// 
-//    John Burkardt 
-// 
-//  Parameters: 
-// 
-//    Input, double X, the quantity whose absolute value is desired. 
-// 
-//    Output, double R8_ABS, the absolute value of X. 
-// 
-
 int r8_nint ( double x ) ;
 
 //****************************************************************************80 

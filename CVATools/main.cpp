@@ -450,13 +450,23 @@ int main()
         //  Generation of quasi-random number using sobol sequences
         int dim_num = 1110;
         long long int seed = 110;
-        double * quasi1 = new double[dim_num], *quasi2 = new double[dim_num];
+        double* quasi1 = new double[dim_num], *quasi2 = new double[dim_num];
         i8_sobol (dim_num,&seed,quasi1);
         i8_sobol(dim_num, &seed, quasi2);
         
+        std::vector<std::pair<double, double> > dPairOfRandomNumber;
         for (std::size_t i = 0 ; i < dim_num ; ++i)
         {
-            std::cout << quasi1[i] << ";" << quasi2[i] << std::endl;
+            dPairOfRandomNumber.push_back(std::make_pair(quasi1[i], quasi2[i]));
         }
+        Utilities::PrintCpp sPrintCPP("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/SobolSequence.csv", false, 10);
+        sPrintCPP.PrintInFile(dPairOfRandomNumber);
+        
+        if (quasi1)
+            delete [] quasi1; quasi1 = NULL;
+        if (quasi2)
+            delete [] quasi2; quasi2 = NULL;
+        
     }
+    std::cout << "Done !" << std::endl;
 }

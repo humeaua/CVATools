@@ -27,7 +27,7 @@
 #include "PayoffLinearization.h"
 #include "MathFunctions.h"
 #include "Printcpp.h"
-//#include "Sobol.h"
+#include "Sobol.h"
 
 #define NUM_THREADS 5
 
@@ -447,6 +447,16 @@ int main()
     }
     else if (iTest == 16)
     {
+        //  Generation of quasi-random number using sobol sequences
+        int dim_num = 1110;
+        long long int seed = 110;
+        double * quasi1 = new double[dim_num], *quasi2 = new double[dim_num];
+        i8_sobol (dim_num,&seed,quasi1);
+        i8_sobol(dim_num, &seed, quasi2);
         
+        for (std::size_t i = 0 ; i < dim_num ; ++i)
+        {
+            std::cout << quasi1[i] << ";" << quasi2[i] << std::endl;
+        }
     }
 }

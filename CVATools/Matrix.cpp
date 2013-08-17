@@ -36,8 +36,7 @@ namespace Utilities
         {
             for (std::size_t j = 0 ; j < colsize ; ++j)
             {
-                //(*this)(i,j) = m(i,j);
-                set(i,j,m(i,j));
+                data[i + j * rowsize] = m(i,j);
             }
         }
     }
@@ -52,14 +51,15 @@ namespace Utilities
         {
             for (std::size_t j = 0 ; j < colsize; ++j)
             {
-                set(i,j, dData[i][j]);
+                data[i + j * rowsize] = dData[i][j];
             }
         }
     }
     
     Matrix::~Matrix()
     {
-        data.clear();
+        if (!data.empty())
+            data.clear();
     }
     
     void Matrix::Reallocate(int N, int M)
@@ -70,24 +70,24 @@ namespace Utilities
         data.resize(rowsize * colsize);
     }
     
-    double Matrix::operator ()(int i, int j)
+    double& Matrix::operator ()(int i, int j)
     {
         return data[i + rowsize*j];
     }
     
-    double Matrix::operator ()(int i, int j) const
+    double& Matrix::operator ()(int i, int j) const
+    {
+        return (double&)data[i + rowsize*j];
+    }
+    
+    double& Matrix::operator ()(std::size_t i, std::size_t j)
     {
         return data[i + rowsize*j];
     }
     
-    double Matrix::operator ()(std::size_t i, std::size_t j)
+    double& Matrix::operator ()(std::size_t i, std::size_t j) const
     {
-        return data[i + rowsize*j];
-    }
-    
-    double Matrix::operator ()(std::size_t i, std::size_t j) const
-    {
-        return data[i + rowsize*j];
+        return (double&)data[i + rowsize*j];
     }
     
     void Matrix::set(int i, int j, double value)
@@ -119,23 +119,20 @@ namespace Utilities
             }
             std::cout << std::endl;
         }
-        //std::cout << "rows: " << rowsize << "  cols: " << colsize << "  data: " << data << std::endl;
     }
     
     void addmatrix(Matrix& New, const Matrix& One, const Matrix& Two)
     {
         for (int i=0;i<One.getrows();i++)
             for (int j=0;j<One.getcols();j++)
-                //New(i,j) = One(i,j) + Two(i,j);
-                New.set(i, j, One(i,j) + Two(i,j));
+                New(i,j) = One(i,j) + Two(i,j);
     }
     
     void transpose(Matrix& T, const Matrix& mat)
     {
         for (int i=0; i<mat.getcols(); i++)
             for (int j=0; j<mat.getrows(); j++)
-                //T(i,j) = mat(j,i);
-                T.set(i,j, mat(j,i));
+                T(i,j) = mat(j,i);
     }
     
     void multmatrix(Matrix& New1, const Matrix& one, const Matrix& two)
@@ -149,7 +146,7 @@ namespace Utilities
                 {
                     dValue += one(i,k)*two(k,j);
                 }
-                New1.set(i,j,dValue);
+                New1(i,j) = dValue;
             }
         }
     }
@@ -247,8 +244,7 @@ namespace Utilities
         {
             for (int j=0;j<mat.getcols();j++)
             {
-                //hi(i,j) = J[i][mat.getcols()+ j];
-                hi.set(i, j, J[i][mat.getcols()+ j]);
+                hi(i,j) = J[i][mat.getcols()+ j];
             }
         }
     }
@@ -314,8 +310,7 @@ namespace Utilities
         {
             for (int j=0;j<mat.getcols();j++)
             {
-                //U(i,j) = J[i][j];
-                U.set(i, j, J[i][j]);
+                U(i,j) = J[i][j];
             }
         }
         
@@ -323,8 +318,7 @@ namespace Utilities
         {
             for (int j=0;j<mat.getcols();j++)
             {
-                //L(i,j) = LL[i][j];
-                L.set(i, j, LL[i][j]);
+                L(i,j) = LL[i][j];
             }
         }
     }
@@ -398,8 +392,7 @@ namespace Utilities
         {
             for (int j=0;j<iNRows;j++)
             {
-                //dSquareRoot(i,j) = L[i][j];
-                dSquareRoot.set(i, j, L[i][j]);
+                dSquareRoot(i,j) = L[i][j];
             }
         }
     }

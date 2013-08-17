@@ -27,11 +27,11 @@ namespace Utilities
         
         void Reallocate(int N, int M);
         
-        double operator ()(int i, int j);
-        double operator ()(int i, int j) const;
+        double& operator ()(int i, int j);
+        double& operator ()(int i, int j) const;
         
-        double operator ()(std::size_t i, std::size_t j);
-        double operator ()(std::size_t i, std::size_t j) const;
+        double& operator ()(std::size_t i, std::size_t j);
+        double& operator ()(std::size_t i, std::size_t j) const;
         
         virtual void set(int i, int j, double value);
         virtual void set(std::size_t i, std::size_t j, double value);

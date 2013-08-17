@@ -115,8 +115,7 @@ namespace Utilities
     std::vector<T> Diff(const std::vector<T> & vect1, const std::vector<T> & vect2)
     {
         Utilities::requireException(vect1.size() == vect2.size(), "Cannot compute diff, vectors do not have same size","Diff");
-        std::vector<T> result;
-        result.reserve(vect1.size());
+        std::vector<T> result(vect1.size());
         
         std::transform(vect1.begin(), vect1.end(), vect2.begin(), std::back_inserter(result), std::minus<T>());
         return result;

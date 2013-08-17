@@ -28,6 +28,7 @@
 #include "MathFunctions.h"
 #include "Printcpp.h"
 #include "Sobol.h"
+#include <functional>
 
 #define NUM_THREADS 5
 
@@ -89,6 +90,7 @@ int main()
     std::cout << "14- Cracking the coding interview" << std::endl;
     std::cout << "15- Debye Function" << std::endl;
     std::cout << "16- Sobol Sequences" << std::endl;
+    std::cout << "17- Thinking in C++" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -467,6 +469,26 @@ int main()
         if (quasi2)
             delete [] quasi2; quasi2 = NULL;
         
+    }
+    else if (iTest == 17)
+    {
+        // Thinking in C++ - Volume 2
+        std::vector<int> iVect(10, 2);
+        std::copy(iVect.begin(), iVect.end(), std::ostream_iterator<int>(std::cout, "\n"));
+        
+        std::transform(iVect.begin(), iVect.end(), iVect.begin(), bind2nd(std::multiplies<int>(), 10));
+        std::copy(iVect.begin(), iVect.end(), std::ostream_iterator<int>(std::cout, "\n"));
+        
+        iVect.at(0)++;
+        std::cout << iVect.at(0) << std::endl;
+        
+        int * bli = iVect.data();
+        std::cout << "Print of bli" << std::endl;
+        std::copy(bli, bli + iVect.size(), std::ostream_iterator<int>(std::cout, ","));
+        
+        std::cout << std::endl;
+        iVect.erase( std::remove_if(iVect.begin(), iVect.end(), bind2nd(std::greater_equal<int>(), 20) ), iVect.end() );
+        std::copy(bli, bli + iVect.size(), std::ostream_iterator<int>(std::cout, ","));
     }
     std::cout << "Done !" << std::endl;
 }

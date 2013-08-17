@@ -12,6 +12,8 @@
 #include <vector>
 #include <stdexcept>
 #include "Require.h"
+#include <numeric>
+#include <algorithm>
 
 namespace Utilities
 {
@@ -30,127 +32,94 @@ namespace Utilities
                   const std::allocator<C>& alloc = std::allocator<C>()) : std::vector<C>(first, last, alloc) {};
         
         MyVector (const MyVector & x) : std::vector<C>(x) {};
+        MyVector (const std::vector<C> & x) : std::vector<C>(x) {};
         
         virtual MyVector<C,Alloc> operator+(MyVector<C,Alloc> &v)
         {
             Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator+(MyVector<C,Alloc> &)");
-            MyVector<C,Alloc> result(v.size());
-            for (std::size_t i = 0 ; i < v.size() ; ++i)
-            {
-                result[i] = (*this)[i] + v[i];
-            }
-            return result;
+            std::vector<C> result;
+            result.reserve(v.size());
+            
+            std::transform(this->begin(), this->end(), v.begin(), std::back_inserter(result), std::plus<C>());
+            return MyVector<C>(result);
         };
-        
+
         virtual MyVector<C,Alloc> operator-(MyVector<C,Alloc> &v)
         {
             Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator-(MyVector<C,Alloc> &)");
-            MyVector<C,Alloc> result(v.size());
-            for (std::size_t i = 0 ; i < v.size() ; ++i)
-            {
-                result[i] = (*this)[i] - v[i];
-            }
-            return result;
+            std::vector<C> result;
+            result.reserve(v.size());
+            
+            std::transform(this->begin(), this->end(), v.begin(), std::back_inserter(result), std::minus<C>());
+            return MyVector<C>(result);
         };
         
         virtual MyVector<C,Alloc> operator*(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size for *", "MyVector<C,Alloc> operator*(MyVector<C,Alloc> &)");
-            MyVector<C,Alloc> result(v.size());
-            for (std::size_t i = 0 ; i < v.size() ; ++i)
-            {
-                result[i] = (*this)[i] * v[i];
-            }
-            return result;
+            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator* (MyVector<C,Alloc> &)");
+            std::vector<C> result;
+            result.reserve(v.size());
+            
+            std::transform(this->begin(), this->end(), v.begin(), std::back_inserter(result), std::multiplies<C>());
+            return MyVector<C>(result);
         };
         
         virtual MyVector<C,Alloc> operator/(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size for /", "MyVector<C,Alloc> operator/(MyVector<C,Alloc> &)");
-            MyVector<C,Alloc> result(v.size());
-            for (std::size_t i = 0 ; i < v.size() ; ++i)
-            {
-                Utilities::requireException(v[i] != 0.0, "value is 0");
-                result[i] = (*this)[i] / v[i];
-            }
-            return result;
+            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator/(MyVector<C,Alloc> &)");
+            std::vector<C> result;
+            result.reserve(v.size());
+            
+            std::transform(this->begin(), this->end(), v.begin(), std::back_inserter(result), std::divides<C>());
+            return MyVector<C>(result);
         };
         
         virtual MyVector<C,Alloc> operator+(C value)
         {
-            MyVector<C,Alloc> result(this->size());
-            for (std::size_t i = 0 ; i < this->size() ; ++i)
-            {
-                result[i] = (*this)[i] + value;
-            }
-            return result;
+            std::transform(this->begin(), this->end(), this->begin(), bind2nd(std::plus<C>(), value));
+            return *this;
         };
         
         virtual MyVector<C,Alloc> operator-(C value)
         {
-            MyVector<C,Alloc> result(this->size());
-            for (std::size_t i = 0 ; i < this->size() ; ++i)
-            {
-                result[i] = (*this)[i] - value;
-            }
-            return result;
+            std::transform(this->begin(), this->end(), this->begin(), bind2nd(std::minus<C>(), value));
+            return *this;
         };
         
         virtual MyVector<C,Alloc> operator*(C value)
         {
-            MyVector<C,Alloc> result(this->size());
-            for (std::size_t i = 0 ; i < this->size() ; ++i)
-            {
-                result[i] = (*this)[i] * value;
-            }
-            return result;
+            std::transform(this->begin(), this->end(), this->begin(), bind2nd(std::multiplies<C>(), value));
+            return *this;
         };
         
         virtual MyVector<C,Alloc> operator/(C value)
         {
             Utilities::requireException(value != 0.0, "value is 0", "MyVector<C,Alloc> operator/(C value)");
-            MyVector<C,Alloc> result(this->size());
-            for (std::size_t i = 0 ; i < this->size() ; ++i)
-            {
-                result[i] = (*this)[i] / value;
-            }
-            return result;
+            std::transform(this->begin(), this->end(), this->begin(), bind2nd(std::divides<C>(), value));
+            return *this;
         };
         
         virtual C Sum() const
         {
-            C res = (*this)[0];
-            for (std::size_t i = 1 ; i < this->size() ; ++i)
-            {
-                res += (*this)[i];
-            }
-            return res;
+            return std::accumulate(this->begin(), this->end(), 0);
         };
     };
     
     template <typename T>
     T norm_2(const std::vector<T> & vect)
     {
-        T sum = 0;
-        for (std::size_t i = 0 ; i < vect.size() ; ++i)
-        {
-            sum += vect[i] * vect[i];
-        }
-        return sqrt(sum);
+        return sqrt(std::inner_product(vect.begin(), vect.end(), vect.begin(), 0.0));
     }
     
     template <typename T>
     std::vector<T> Diff(const std::vector<T> & vect1, const std::vector<T> & vect2)
     {
         Utilities::requireException(vect1.size() == vect2.size(), "Cannot compute diff, vectors do not have same size","Diff");
+        std::vector<T> result;
+        result.reserve(vect1.size());
         
-        std::vector<T> vectres(vect1.size());
-        
-        for (std::size_t i = 0 ; i < vect1.size() ; ++i)
-        {
-            vectres[i] = vect1[i] - vect2[i];
-        }
-        return vectres;
+        std::transform(vect1.begin(), vect1.end(), vect2.begin(), std::back_inserter(result), std::minus<T>());
+        return result;
     }
 }
 

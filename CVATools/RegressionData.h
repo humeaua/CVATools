@@ -35,10 +35,10 @@ namespace Utilities
         }
         
         //  Access operators
-        double operator ()(int i, int j);
-        double operator ()(int i, int j) const;
-        double operator ()(size_t i, size_t j);
-        double operator ()(size_t i, size_t j) const;
+        double& operator ()(int i, int j);
+        double& operator ()(int i, int j) const;
+        double& operator ()(size_t i, size_t j);
+        double& operator ()(size_t i, size_t j) const;
         
     };
 }

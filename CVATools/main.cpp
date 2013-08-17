@@ -196,13 +196,13 @@ int main()
         }
         
         //  Test for apply function
-        /*sData.Apply(exp);
-        sDatamap = sData.GetData();
-        DVector firstvect = sDatamap.find(0)->second.find(0)->second;
-        for (std::size_t i = 0 ; i < firstvect.size() ; ++i)
-        {
-            std::cout << i << " " << firstvect[i] << std::endl;
-        }*/
+        //sData.Apply(exp);
+        //sDatamap = sData.GetData();
+        //DVector firstvect = sDatamap.find(0)->second.find(0)->second;
+        //for (std::size_t i = 0 ; i < firstvect.size() ; ++i)
+        //{
+        //    std::cout << i << " " << firstvect[i] << std::endl;
+        //}
     }
     else if (iTest == 5)
     {
@@ -240,14 +240,13 @@ int main()
         std::cout << "Z-Spread : " << sBondPricer.Z_Spread(dBondPrice) << std::endl;
         std::cout << "Z-Spread (2% margin) : " << sBondPricer.Z_Spread(dBondPrice * 1.02) << std::endl;
                 
-        /*
-         Regression test
-         Bond Pricer : 0.733378
-         Yield : 0.0259757
-         I-Spread : -0.00125763
-         Z-Spread : -0.000419156
-         Z-Spread (2% margin) : -0.0015014
-         */
+        
+         //Regression test
+         //Bond Pricer : 0.733378
+         //Yield : 0.0259757
+         //I-Spread : -0.00125763
+         //Z-Spread : -0.000419156
+         //Z-Spread (2% margin) : -0.0015014
 
         std::cout << "Good Bye !" << std::endl;
     }

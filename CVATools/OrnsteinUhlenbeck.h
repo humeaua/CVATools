@@ -29,7 +29,6 @@ namespace Finance
             double dA_, dB_, dSigma_;
             
         public:
-            OrnsteinUhlenbeck();
             OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0);
             
             virtual ~OrnsteinUhlenbeck();

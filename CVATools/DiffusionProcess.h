@@ -20,7 +20,6 @@ namespace Finance
         class DiffusionProcess
         {
         public:
-            DiffusionProcess();
             DiffusionProcess(double x0, bool bFloorSimulationAtZero, bool bStartFrom0AfterFloor);
             
             double getx0() const;

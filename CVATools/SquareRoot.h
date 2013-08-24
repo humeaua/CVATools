@@ -29,7 +29,6 @@ namespace Finance
             virtual double NonCentralityParameter(double dt) const;
             
         public:
-            SquareRoot();
             SquareRoot(double dA, double dB, double dSigma, double dX0);
             
             virtual ~SquareRoot();

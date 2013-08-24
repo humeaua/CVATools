@@ -29,6 +29,7 @@
 #include "Printcpp.h"
 #include "Sobol.h"
 #include <functional>
+#include "StochCorrel.h"
 
 #define NUM_THREADS 5
 
@@ -91,6 +92,7 @@ int main()
     std::cout << "15- Debye Function" << std::endl;
     std::cout << "16- Sobol Sequences" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
+    std::cout << "18- Stochastic Correlation" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -488,6 +490,21 @@ int main()
         std::cout << std::endl;
         iVect.erase( std::remove_if(iVect.begin(), iVect.end(), bind2nd(std::greater_equal<int>(), 20) ), iVect.end() );
         std::copy(bli, bli + iVect.size(), std::ostream_iterator<int>(std::cout, ","));
+    }
+    else if (iTest == 18)
+    {
+        Finance::Processes::StochCorrel sStochCorrel(1.0, 0, 0.2, 0.5);
+        std::size_t iNDates = 500, iNPaths = 10;
+        long long lSeed = 0;
+        std::vector<double> dDates;
+        double dT = 10;
+        for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
+        {
+            dDates.push_back(dT * iDate / iNDates);
+        }
+        Utilities::SimulationData sResult = sStochCorrel.simulate(dDates, iNPaths, lSeed);
+        Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/StochCorrel.csv", false, 10);
+        sPrint.PrintInFile(sResult.GetData());
     }
     std::cout << "Done !" << std::endl;
 }

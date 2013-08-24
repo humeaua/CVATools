@@ -21,7 +21,6 @@ namespace Finance
             double dDrift_, dVol_;
             
         public:
-            BlackScholes();
             BlackScholes(double dDrift, double dVol, double dX0);
             
             virtual ~BlackScholes();

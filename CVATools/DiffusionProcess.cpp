@@ -19,9 +19,6 @@ namespace Finance
 {
     namespace Processes
     {
-        DiffusionProcess::DiffusionProcess() : dX0_(0.0)
-        {}
-        
         DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulationAtZero, bool bStartFrom0AfterFloor) : bFloorSimulationAtZero_(bFloorSimulationAtZero), bStartFrom0AfterFloor_(bStartFrom0AfterFloor), dX0_(dX0)
         {}
         

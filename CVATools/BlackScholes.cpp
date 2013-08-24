@@ -14,7 +14,7 @@ namespace Finance
 {
     namespace Processes
     {
-        BlackScholes::BlackScholes(double dDrift, double dVol, double dX0) : dDrift_(dDrift), dVol_(dVol), DiffusionProcess(dX0, true, false)
+        BlackScholes::BlackScholes(double dDrift, double dVol, double dX0) : dDrift_(dDrift), dVol_(dVol), DiffusionProcess(dX0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())
         {}
         
         BlackScholes::~BlackScholes()
@@ -59,10 +59,10 @@ namespace Finance
                 {
                     double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
                     dOldValue *= exp((dDrift_ - dVol_ * dVol_ * 0.5) * dt + dVol_ * sqrt(dt) * dist(eng));
-                    if (bFloorSimulationAtZero_ && dOldValue < 0.0)
+                    if (bFloorSimulation_ && dOldValue < 0.0)
                     {
                         sResult.Put(dDates[iDate], iPath, 0.0);
-                        if (bStartFrom0AfterFloor_)
+                        if (bStartFromFloor_)
                         {
                             dOldValue = 0.0;
                         }

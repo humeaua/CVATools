@@ -15,7 +15,7 @@ namespace Finance
 {
     namespace Processes
     {
-        SquareRoot::SquareRoot(double dA, double dB, double dSigma, double dX0) : DiffusionProcess(dX0, true, true), dA_(dA), dB_(dB), dSigma_(dSigma)
+        SquareRoot::SquareRoot(double dA, double dB, double dSigma, double dX0) : DiffusionProcess(dX0, true, true, false, false, std::numeric_limits<double>::infinity(), 0.0), dA_(dA), dB_(dB), dSigma_(dSigma)
         {}
         
         SquareRoot::~SquareRoot()

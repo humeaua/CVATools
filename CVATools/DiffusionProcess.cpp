@@ -19,7 +19,7 @@ namespace Finance
 {
     namespace Processes
     {
-        DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulationAtZero, bool bStartFrom0AfterFloor) : bFloorSimulationAtZero_(bFloorSimulationAtZero), bStartFrom0AfterFloor_(bStartFrom0AfterFloor), dX0_(dX0)
+        DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor) : bFloorSimulation_(bFloorSimulation), bStartFromFloor_(bStartFromFloor), dX0_(dX0), bCapSimulation_(bCapSimulation), bStartFromCap_(bStartFromCap), dCap_(dCap), dFloor_(dFloor)
         {}
         
         double DiffusionProcess::getx0() const
@@ -77,13 +77,21 @@ namespace Finance
                 {
                     double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
                     dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
-                    if (bFloorSimulationAtZero_ && dOldValue < 0.0)
+                    if (bFloorSimulation_ && dOldValue < dFloor_)
                     {
-                        sResult.Put(dDates[iDate], iPath, 0.0);
-                        if (bStartFrom0AfterFloor_)
+                        sResult.Put(dDates[iDate], iPath, dFloor_);
+                        if (bStartFromFloor_)
                         {
-                            dOldValue = 0.0;
+                            dOldValue = dFloor_;
                         }
+                    }
+                    else if (bCapSimulation_ && dOldValue > dCap_)
+                    {
+                        sResult.Put(dDates[iDate], iPath, dCap_);
+                        if (bStartFromCap_)
+                        {
+                            dOldValue = dCap_;
+                       }
                     }
                     else
                     {

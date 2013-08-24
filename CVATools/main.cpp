@@ -493,7 +493,7 @@ int main()
     }
     else if (iTest == 18)
     {
-        Finance::Processes::StochCorrel sStochCorrel(1.0, 0, 0.2, 0.5);
+        Finance::Processes::StochCorrel sStochCorrel(1.0, 1.0, 0.2, 0.5);
         std::size_t iNDates = 500, iNPaths = 10;
         long long lSeed = 0;
         std::vector<double> dDates;

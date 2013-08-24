@@ -20,7 +20,7 @@ namespace Finance
         class DiffusionProcess
         {
         public:
-            DiffusionProcess(double x0, bool bFloorSimulationAtZero, bool bStartFrom0AfterFloor);
+            DiffusionProcess(double x0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor);
             
             double getx0() const;
             
@@ -56,8 +56,13 @@ namespace Finance
             
         protected:
             double dX0_;
-            bool bFloorSimulationAtZero_;
-            bool bStartFrom0AfterFloor_;
+            bool bFloorSimulation_;
+            bool bStartFromFloor_;
+            bool bCapSimulation_;
+            bool bStartFromCap_;
+            
+            double dCap_;
+            double dFloor_;
         };
     }
 }

@@ -13,7 +13,7 @@ namespace Utilities
 {
     namespace Processes
     {
-        LocalVolatility::LocalVolatility(double S0) : DiffusionProcess(S0, false, false)
+        LocalVolatility::LocalVolatility(double S0) : DiffusionProcess(S0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())
         {}
         
         LocalVolatility::~LocalVolatility()
@@ -41,18 +41,8 @@ namespace Utilities
                     dDrift = drift(t0, dOldValue);
                     dVol = SigmaLoc(t0, dOldValue);
                     dOldValue *= exp((dDrift - dVol  * dVol * 0.5) * dt + dVol * sqrt(dt) * dist(eng));
-                    if (bFloorSimulationAtZero_ && dOldValue < 0.0)
-                    {
-                        sResult.Put(dDates[iDate], iPath, 0.0);
-                        if (bStartFrom0AfterFloor_)
-                        {
-                            dOldValue = 0.0;
-                        }
-                    }
-                    else
-                    {
-                        sResult.Put(dDates[iDate], iPath, dOldValue);
-                    }
+                    
+                    sResult.Put(dDates[iDate], iPath, dOldValue);
                 }
             }
             return sResult;

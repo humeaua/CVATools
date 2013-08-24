@@ -18,12 +18,19 @@ namespace Finance
     namespace Volatility
     {
         class SVIParameters {
+        private:
+            virtual void FillStrikesAndVols(// inputs
+                                            const std::map<long, std::map<double, double> > & sVolSurface,
+                                            long lExpiry,
+                                            //outputs
+                                            std::vector<double> dStrikes,
+                                            std::vector<double> dVols) const;
         protected:
             std::vector<double> dA_, dB_, dRho_, dM_, dSigma_;
             std::vector<double> dExpiries_;
-            
+            double dSpot_;
         public:
-            SVIParameters();
+            SVIParameters(double dSpot);
             virtual ~SVIParameters();
             
             virtual double Volatility(double k, double t) const;

@@ -9,12 +9,13 @@
 #include "SVIParameters.h"
 #include <cmath>
 #include "InterExtrapolation.h"
+#include <numeric>
 
 namespace Finance
 {
     namespace Volatility
     {
-        SVIParameters::SVIParameters()
+        SVIParameters::SVIParameters(double dSpot) : dSpot_(dSpot)
         {}
         
         SVIParameters::~SVIParameters()
@@ -45,6 +46,42 @@ namespace Finance
                 dExpiries_.push_back(it->first);
             }
             // to be implemented
+            // loop over the expiries
+            
+            for (std::vector<double>::iterator itExpiry = dExpiries_.begin() ; itExpiry != dExpiries_.end() ; ++itExpiry)
+            {
+                std::vector<double> dStrikes, dVols;
+                FillStrikesAndVols(sVolSurface, *itExpiry, dStrikes, dVols);
+                
+                //  minimisation of the volatility square function w.r.t. the SVI parameters
+                
+                // (a,b,rho,m,sigma) = argmin sum_i=1^n (vol^2 - a - b(rho(k-m) + sqrt((k-m)^2 + sigma^2)))
+                
+                // â = 1/n \sum_i=1^n vol_i^2
+                double dA = std::inner_product(dStrikes.begin(), dStrikes.end(), dStrikes.begin(), 0.0);
+                dA_.push_back(dA / dStrikes.size());
+                
+                
+                
+            }
+        }
+        
+        void SVIParameters::FillStrikesAndVols(// inputs
+                                               const std::map<long, std::map<double, double> > & sVolSurface,
+                                               long lExpiry,
+                                               //outputs
+                                               std::vector<double> dStrikes,
+                                               std::vector<double> dVols) const
+        {
+            if (sVolSurface.count(lExpiry))
+            {
+                std::map<double, double> sVolSmile = sVolSurface.find(lExpiry)->second;
+                for (std::map<double, double>::iterator itStrike = sVolSmile.begin() ; itStrike != sVolSmile.end() ; ++itStrike)
+                {
+                    dStrikes.push_back(log(itStrike->first / dSpot_));
+                    dVols.push_back(itStrike->second);
+                }
+            }
         }
     }
 }

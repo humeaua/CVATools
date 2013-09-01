@@ -36,25 +36,9 @@ namespace Utilities
             return ((iYear_ % 400 == 0) || ((iYear_ % 4 == 0) && (iYear_ % 100 != 0)));
         }
         
-        MyDate::MyDate(const int& day, const int& month, const int& year)
+        MyDate::MyDate(const int& day, const int& month, const int& year) : iDay_(day), iMonth_(month), iYear_(year)
         {
-            int length[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-            
-            iMonth_ = std::max(1, month);
-            iMonth_ = std::min(month,12);
-            
-            iYear_ = std::max(1, year);
-            
-            if (IsLeapYear() && iMonth_ == 2)
-            {
-                iDay_ = std::max(1,day);
-                iDay_ = std::min(iDay_, length[iMonth_] + 1);
-            }
-            else
-            {
-                iDay_ = std::max(1,day);
-                iDay_ = std::min(iDay_, length[iMonth_]);
-            }
+            Utilities::requireException(IsValid(), "Date is not valid", "MyDate::MyDate");
         }
         
         MyDate::MyDate(const std::tm & sDate)
@@ -518,8 +502,7 @@ namespace Utilities
         
         MyDate InitializeTodayDate()
         {
-            Utilities::Date::MyDate sToday;
-            return sToday;
+            return Utilities::Date::MyDate();
         }
     }
 }

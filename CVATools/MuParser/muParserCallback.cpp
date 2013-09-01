@@ -183,7 +183,17 @@ namespace mu
     
     ParserCallback::ParserCallback(fun_typebs a_pFun, bool a_bAllowOpti)
     :m_pFun((void*)a_pFun)
-    ,m_iArgc(10)
+    ,m_iArgc(5)
+    ,m_iPri(-1)
+    ,m_eOprtAsct(oaNONE)
+    ,m_iCode(cmFUNC)
+    ,m_iType(tpDBL)
+    ,m_bAllowOpti(a_bAllowOpti)
+    {}
+    
+    ParserCallback::ParserCallback(fun_typecsps a_pFun, bool a_bAllowOpti)
+    :m_pFun((void*)a_pFun)
+    ,m_iArgc(4)
     ,m_iPri(-1)
     ,m_eOprtAsct(oaNONE)
     ,m_iCode(cmFUNC)

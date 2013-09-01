@@ -39,6 +39,7 @@ namespace Utilities
                                    bool removeEmpty=false,
                                    bool fullMatch=false);
     
+    std::string ToUpper(const std::string & s);
 }
 
 #endif

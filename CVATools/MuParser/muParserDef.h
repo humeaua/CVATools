@@ -264,6 +264,8 @@ namespace mu
     
     /* functions for Black-Scholes and Black-Scholes normal*/
     typedef value_type (*fun_typebs)(value_type , value_type , value_type , value_type , string_type );
+    /* functions for call-spreads and put-spreads*/
+    typedef value_type (*fun_typecsps)(value_type , value_type , value_type , string_type );
 
   /** \brief Callback type used for functions without arguments. */
   typedef value_type (*bulkfun_type0)(int, int);

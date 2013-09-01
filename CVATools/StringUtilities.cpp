@@ -68,8 +68,13 @@ namespace Utilities {
     {
         std::string cMatch(1,match);
         return Split(s, cMatch, removeEmpty, fullMatch);
-        
     }
     
-
+    std::string ToUpper(const std::string & s)
+    {
+        std::string res(s);
+        for (std::string::iterator it = res.begin() ; it !=res.end() ; ++it)
+            toupper(*it);
+        return res;
+    }
 }

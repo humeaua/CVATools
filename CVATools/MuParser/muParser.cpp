@@ -98,6 +98,53 @@ namespace mu
         
         return StdDev == 0.0 ? std::max(iCallPut * (Forward - Strike), 0.0) : iCallPut * (Forward - Strike) * Maths::AccCumNorm(d1) + StdDev / sqrt(2.0 * PARSER_CONST_PI) * exp(0.5 * d1 * d1);
     }
+    
+    value_type Parser::CallSpread(value_type x, value_type k, value_type epsilon, string_type BuySell)
+    {
+        // Conservative solution
+        Utilities::requireException(epsilon > 0, "Epsilon is negative", "Parser::CallSpread");
+        if (BuySell == "SELL")
+        {
+            if (x < k)
+                return 0.0;
+            else if (x > k + epsilon)
+                return 1;
+            else
+                return (k + epsilon - x) / epsilon;
+        }
+        else
+        {
+            if (x < k - epsilon)
+                return 0.0;
+            else if (x > k)
+                return 1.0;
+            else
+                return (k - epsilon - x) / epsilon;
+        }
+    }
+    
+    value_type Parser::PutSpread(value_type x, value_type k, value_type epsilon, string_type BuySell)
+    {
+        // Conservative solution
+        if (BuySell == "SELL")
+        {
+            if (x < k)
+                return 1.0;
+            else if (x > k + epsilon)
+                return 0.0;
+            else
+                return -(k + epsilon - x) / epsilon;
+        }
+        else
+        {
+            if (x < k - epsilon)
+                return 1.0;
+            else if (x > k)
+                return 0.0;
+            else
+                return -(k - epsilon - x) / epsilon;
+        }
+    }
 
   //---------------------------------------------------------------------------
   /** \brief Callback for the unary minus operator.
@@ -266,6 +313,8 @@ namespace mu
     DefineFun(_T("AccCumNorm"), Maths::AccCumNorm);
     DefineFun(_T("BS"), BS);
     DefineFun(_T("BSN"), BSN);
+    DefineFun(_T("CallSpread"), CallSpread);
+    DefineFun(_T("PutSpread"), PutSpread);
                 
     // Functions with variable number of arguments
     DefineFun(_T("sum"), Sum);

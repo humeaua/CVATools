@@ -19,7 +19,7 @@ namespace Finance
 {
     namespace Processes
     {
-        DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor) : bFloorSimulation_(bFloorSimulation), bStartFromFloor_(bStartFromFloor), dX0_(dX0), bCapSimulation_(bCapSimulation), bStartFromCap_(bStartFromCap), dCap_(dCap), dFloor_(dFloor)
+        DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor) : dX0_(dX0), StochProcessSimulation(bFloorSimulation, bStartFromFloor, bCapSimulation, bStartFromCap, dCap, dFloor)
         {}
         
         double DiffusionProcess::getx0() const

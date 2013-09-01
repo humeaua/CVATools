@@ -13,6 +13,7 @@
 #include "Matrix.h"
 #include <list>
 #include "Type.h"
+#include "StochProcessSimulation.h"
 #include "SimulationDataMultiDim.h"
 
 namespace Finance
@@ -25,8 +26,9 @@ namespace Finance
             std::size_t iNDimensions_;
             Utilities::Matrix sCorrelationMatrix_;
             DVector dX0_;
+            std::vector<StochProcessSimulation> sSimulationParams_;
         public:
-            DiffusionProcessMultiDim(std::size_t iNDimension, const Utilities::Matrix & sCorrelationMatrix, const DVector & dX0);
+            DiffusionProcessMultiDim(std::size_t iNDimension, const Utilities::Matrix & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation>& sSimulationParams);
             template <size_t iDim>
             DiffusionProcessMultiDim(double dCorrelationMatrix[iDim][iDim], const DVector & dX0);
             

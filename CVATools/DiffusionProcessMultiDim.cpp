@@ -14,7 +14,7 @@ namespace Finance
 {
     namespace Processes
     {
-        DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Utilities::Matrix & sCorrelationMatrix, const DVector & dX0) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix), dX0_(dX0)
+        DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Utilities::Matrix & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation> & sSimulationParams) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix), dX0_(dX0)
         {
             assert(iNDimensions_ == sCorrelationMatrix_.getrows());
             assert(iNDimensions_ == sCorrelationMatrix_.getcols());

@@ -101,5 +101,25 @@ namespace Finance
             }
             return sResult;
         }
+        
+        std::vector<double> DiffusionProcess::Generate1Step(double t0, double x0, double dt,
+                                          std::size_t iNPaths, long long & lSeed) const
+        {
+            std::vector<double> dResults;
+            for (std::size_t i = 0 ; i < iNPaths ; ++i)
+            {
+                dResults.push_back(Generate1(t0, x0, dt, lSeed));
+            }
+            return dResults;
+        }
+        
+        double DiffusionProcess::Generate1(double t0, double x0, double dt, long long & lSeed) const
+        {
+            std::tr1::ranlux64_base_01 eng(lSeed); // core engine class
+            std::tr1::normal_distribution<double> dist(expectation(t0, x0, dt),stdev(t0, x0, dt));
+            double dResult = dist(eng);
+            lSeed = (long long)((dResult - x0) * powl(2, 64));
+            return dResult;
+        }
     }
 }

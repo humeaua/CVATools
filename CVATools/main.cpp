@@ -93,6 +93,7 @@ int main()
     std::cout << "16- Sobol Sequences" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
     std::cout << "18- Stochastic Correlation" << std::endl;
+    std::cout << "19- Random number one step generation" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -505,6 +506,21 @@ int main()
         Utilities::SimulationData sResult = sStochCorrel.simulate(dDates, iNPaths, lSeed);
         Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/StochCorrel.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
+    }
+    else if (iTest == 19)
+    {
+        // Test for random numbers
+        Finance::Processes::BlackScholes sBS(0.08, 0.4, 1);
+        long long lSeed = 1;
+        for (std::size_t i = 0 ; i < 10 ; ++i)
+        {
+            double sResult = sBS.Generate1(0.0, 1.0, 0.1, lSeed);
+            std::cout << "Step " << i << " : " << std::endl;
+            std::cout << "Result : " << sResult << std::endl;
+            std::cout << "Seed : " << lSeed << std::endl;
+            
+            std::cout << " " << std::endl;
+        }
     }
     std::cout << "Done !" << std::endl;
 }

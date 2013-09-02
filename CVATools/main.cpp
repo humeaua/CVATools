@@ -28,8 +28,10 @@
 #include "MathFunctions.h"
 #include "Printcpp.h"
 #include "Sobol.h"
+#include <set>
 #include <functional>
 #include "StochCorrel.h"
+#include <stack>
 
 #define NUM_THREADS 5
 
@@ -71,6 +73,21 @@ int main ()
     pthread_exit(NULL);
 }*/
 
+class FileWriter : public std::vector<std::string>
+{
+public:
+    FileWriter(const std::vector<std::string> & stringvect) : std::vector<std::string>(stringvect)
+    {}
+    
+    virtual void Write(std::ostream & out = std::cout) const
+    {
+        for (std::vector<std::string>::const_iterator it = begin(); it != end(); ++it)
+        {
+            out << *it << std::endl;
+        }
+    }
+};
+
 int main()
 {
     std::cout << "Choose the test : " << std::endl;
@@ -94,6 +111,7 @@ int main()
     std::cout << "17- Thinking in C++" << std::endl;
     std::cout << "18- Stochastic Correlation" << std::endl;
     std::cout << "19- Random number one step generation" << std::endl;
+    std::cout << "20- FileWriter" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -475,7 +493,7 @@ int main()
     else if (iTest == 17)
     {
         // Thinking in C++ - Volume 2
-        std::vector<int> iVect(10, 2);
+        /*std::vector<int> iVect(10, 2);
         std::copy(iVect.begin(), iVect.end(), std::ostream_iterator<int>(std::cout, "\n"));
         
         std::transform(iVect.begin(), iVect.end(), iVect.begin(), bind2nd(std::multiplies<int>(), 10));
@@ -490,7 +508,29 @@ int main()
         
         std::cout << std::endl;
         iVect.erase( std::remove_if(iVect.begin(), iVect.end(), bind2nd(std::greater_equal<int>(), 20) ), iVect.end() );
-        std::copy(bli, bli + iVect.size(), std::ostream_iterator<int>(std::cout, ","));
+        std::copy(bli, bli + iVect.size(), std::ostream_iterator<int>(std::cout, ","));*/
+        std::set<double> doubleset;
+        for (std::size_t i = 0 ; i < 10 ; ++i)
+            for (double j = 0.0 ; j < 10.0 ; j+= 1.0)
+                doubleset.insert(j);
+        
+        std::copy(doubleset.begin(), doubleset.end(), std::ostream_iterator<double>(std::cout, "\n"));
+        
+        std::cout << std::endl;
+        std::cout << "Stack" << std::endl;
+        std::stack<double> doublestack;
+        for (std::size_t i = 0 ; i < 10 ; ++i)
+            for (double j = 0.0 ; j < 10.0 ; j+= 1.0)
+                doublestack.push(i*j);
+        
+        while (!doublestack.empty())
+        {
+            std::cout << doublestack.top() << std::endl;
+            doublestack.pop();
+            doublestack.pop();
+        }
+        
+        std::cout << std::endl;
     }
     else if (iTest == 18)
     {
@@ -521,6 +561,12 @@ int main()
             
             std::cout << " " << std::endl;
         }
+    }
+    else if (iTest == 20)
+    {
+        // File writer
+        FileWriter sWriter(std::vector<std::string>(10, "10"));
+        sWriter.Write();
     }
     std::cout << "Done !" << std::endl;
 }

@@ -12,9 +12,4 @@ namespace Utilities
 {
     MyException::MyException(const std::string & cMessage) : std::runtime_error(cMessage)
     {}
-    
-    const char * MyException::what() const throw()
-    {
-        return std::runtime_error::what();
-    }
 }

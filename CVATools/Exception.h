@@ -18,8 +18,6 @@ namespace Utilities
     {
     public:
         explicit MyException(const std::string & cMessage);
-        
-        virtual const char * what() const throw();
     };
 }
 

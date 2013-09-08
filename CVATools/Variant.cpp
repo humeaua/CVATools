@@ -7,6 +7,7 @@
 //
 
 #include "Variant.h"
+#include <cmath>
 
 namespace Utilities
 {
@@ -50,5 +51,10 @@ namespace Utilities
     std::string Variant::GetString() const
     {
         return c;
+    }
+    
+    bool Variant::operator==(const Variant & sRight)
+    {
+        return (fabs(sRight.GetDouble() - d) < std::numeric_limits<double>::epsilon() && sRight.GetInt() == i && sRight.GetLong() == l && sRight.GetString() == c);
     }
 }

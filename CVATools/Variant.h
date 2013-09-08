@@ -34,6 +34,9 @@ namespace Utilities
         virtual int GetInt() const;
         virtual long GetLong() const;
         virtual std::string GetString() const;
+        
+        // Operators
+        virtual bool operator==(const Variant & sRight);
     };
 }
 

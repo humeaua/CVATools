@@ -35,6 +35,7 @@ namespace Utilities
         void posttrav(tree *);
     };
     
+    void printLevelOrder(tree *root);
 }
 
 #endif /* defined(__CVATools__Node__) */

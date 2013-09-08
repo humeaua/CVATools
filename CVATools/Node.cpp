@@ -7,6 +7,7 @@
 //
 
 #include "Node.h"
+#include <queue>
 
 namespace Utilities
 {
@@ -190,4 +191,26 @@ namespace Utilities
         delete marker;
     }
 
+    void printLevelOrder(tree *root)
+    {
+        if (!root) return;
+        std::queue<tree*> currentLevel, nextLevel;
+        currentLevel.push(root);
+        while (!currentLevel.empty())
+        {
+            tree *currNode = currentLevel.front();
+            currentLevel.pop();
+            if (currNode)
+            {
+                std::cout << currNode->info << " ";
+                nextLevel.push(currNode->Left);
+                nextLevel.push(currNode->Left);
+            }
+            if (currentLevel.empty())
+            {
+                std::cout << std::endl;
+                std::swap(currentLevel, nextLevel);
+            }
+        }
+    }
 }

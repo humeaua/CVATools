@@ -17,12 +17,11 @@ namespace Utilities
     class RegressionData
     {
     protected:
-        std::vector<std::vector<double> > dData_;
+        std::vector<double> dData_;
         std::size_t iNObservations_, iNVars_;
     public:
         RegressionData();
         RegressionData(std::size_t iNObservations, std::size_t iNVars);
-        RegressionData(const std::vector<std::vector<double> > & dData);
         
         //  Getters
         std::size_t GetNbObservations() const

@@ -20,8 +20,14 @@ namespace Maths
     {
         virtual std::vector<double> GetPredictedValues(const Utilities::RegressionData & sRegressionData,
                                                        const std::vector<double> & sResponse) const = 0;
+        
         virtual Utilities::MyVector<double> GetPredictedValues(const Utilities::RegressionData & sRegressionData,
                                                                const Utilities::MyVector<double> & sResponse) const = 0;
+        
+        virtual double R2FromScratch(const Utilities::RegressionData & sRegressionData,
+                                     const Utilities::MyVector<double> & sResponse) const;
+        virtual double R2(const Utilities::MyVector<double> & sResponse,
+                          const Utilities::MyVector<double> & sPredictedValues) const;
     
     };
 }

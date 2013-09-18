@@ -13,5 +13,6 @@
 
 void RegressionTest_BondPricing();
 void RegressionTest_TimeStatistics();
+void RegressionTest_PayoffLinearization();
 
 #endif /* defined(__CVATools__RegressionTests__) */

@@ -11,6 +11,9 @@
 #include <cmath>
 #include "BondPricer.h"
 #include "Statistics.h"
+#include "PayoffLinearization.h"
+#include "PayoffVanillaOption.h"
+#include "BlackScholes.h"
 
 void RegressionTest_BondPricing()
 {
@@ -148,4 +151,36 @@ void RegressionTest_TimeStatistics()
     std::cout << "Variance time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
     
 
+}
+
+void RegressionTest_PayoffLinearization()
+{
+    // Payoff Linearisation
+    Finance::Payoff::PayoffVanillaOption sPayoff(1.0, Finance::Payoff::CALL);
+    Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0);
+    
+    Maths::PayoffLinearization sPayoffLinearization(1000);
+    
+    std::vector<double> dSimulationsDates;
+    dSimulationsDates.push_back(0.0);
+    dSimulationsDates.push_back(1.0);
+    
+    /*
+     Cst : -0.485756
+     Coef Stock : 0.648333
+     */
+    
+    double dRefConstant = -0.48575578680955, dRefCoefStock = 0.648332710908638;
+    
+    std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
+    double dEpsilon = 1e-10;
+    std::cout << "Payoff linearization : " ;
+    if (fabs(dRegCoefs.first - dRefConstant) < 1e-5 && fabs(dRegCoefs.second - dRefCoefStock) < 1e-5)
+    {
+        std::cout << "SUCCEDEED" << std::endl;
+    }
+    else
+    {
+        std::cout << "FAILED" << std::endl;
+    }
 }

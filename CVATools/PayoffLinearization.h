@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Payoff.h"
 #include "DiffusionProcess.h"
+#include "Matrix.h"
 
 namespace Maths
 {
@@ -19,13 +20,16 @@ namespace Maths
     {
         std::size_t iNPaths_;
         
+        virtual Utilities::Matrix ComputeCovarianceMatrix(const std::vector<double> & dFinalUnderlying) const;
+        virtual std::pair<double, double> ComputeRegCoefs(const std::vector<double> & dPayoff,
+                                                          const std::vector<double> & dFinalUnderlying) const;
     public:
         PayoffLinearization(std::size_t iNPaths);
         
         //  Method that return a pair of double - the two regression coefficients on the constant and on S_t
-        std::pair<double, double> Linearise(const Finance::Processes::DiffusionProcess & sDiffusionProcess,
-                                            const Finance::Payoff::Payoff & sPayoff,
-                                            std::vector<double>& dSimulationDates) const;
+        virtual std::pair<double, double> Linearise(const Finance::Processes::DiffusionProcess & sDiffusionProcess,
+                                                    const Finance::Payoff::Payoff & sPayoff,
+                                                    std::vector<double>& dSimulationDates) const;
     };
 }
 

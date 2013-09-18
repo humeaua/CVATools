@@ -120,6 +120,8 @@ int main()
         RegressionTest_BondPricing();
         std::cout << std::endl;
         RegressionTest_TimeStatistics();
+        std::cout << std::endl;
+        RegressionTest_PayoffLinearization();
     }
     if (iTest == 1)
     {

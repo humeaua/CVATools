@@ -378,14 +378,14 @@ namespace Utilities
                     {
                         for (std::size_t i = 0 ; i < iUnit ; ++i)
                         {
-                            this->NextBusinessDay();
+                            *this = this->NextBusinessDay();
                         }
                     }
                     else if (iUnit < 0)
                     {
                         for (std::size_t i = 0 ; i > iUnit ; --i)
                         {
-                            this->PreviousBusinessDay();
+                            *this = this->PreviousBusinessDay();
                         }
                     }
                     break;

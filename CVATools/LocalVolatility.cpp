@@ -30,7 +30,6 @@ namespace Utilities
             eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             double dOldValue, dDrift, t0, dt, dVol;
-            //sResult.dDates_= dDates;
             // Add dates first because path-by-path simulations (don't know why)
             for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
             {
@@ -39,7 +38,6 @@ namespace Utilities
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
                 dOldValue = dX0_;
-                //sResult.Put(dDate0, iPath, dOldValue);
                 sResult(iPath, 0) = dOldValue;
                 for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
                 {
@@ -49,7 +47,6 @@ namespace Utilities
                     dVol = SigmaLoc(t0, dOldValue);
                     dOldValue *= exp((dDrift - dVol  * dVol * 0.5) * dt + dVol * sqrt(dt) * dist(eng));
                     
-                    //sResult.Put(dDates[iDate], iPath, dOldValue);
                     sResult(iPath, iDate) = dOldValue;
                 }
             }

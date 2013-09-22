@@ -32,7 +32,7 @@ namespace Finance
         {
             Processes::StochProcessSimulation sFloored, sNonFloored;
             sFloored.SetFloor(0.0, true);
-            
+            sSimulationParams_.resize(3);
             sSimulationParams_.at(0) = sFloored; // S1
             sSimulationParams_.at(1) = sFloored; // S2
             sSimulationParams_.at(2) = sNonFloored; // r

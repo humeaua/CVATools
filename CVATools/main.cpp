@@ -156,18 +156,29 @@ int main()
     }
     else if (iTest == 3)
     {
-        Finance::Processes::BlackScholes sBS(0.08, 0.4, 10);
-        std::size_t iNDates = 10, iNPaths = 10;
-        long long lSeed = 1;
-        std::vector<double> dDates;
-        double dT = 10;
-        for (std::size_t iDate = 0 ; iDate <= iNDates ; ++iDate)
+        try
         {
-            dDates.push_back(dT * iDate / iNDates);
+            Finance::Processes::BlackScholes sBS(0.08, 0.4, 10);
+            std::size_t iNDates = 10, iNPaths = 10;
+            long long lSeed = 1;
+            std::vector<double> dDates;
+            double dT = 10;
+            for (std::size_t iDate = 0 ; iDate <= iNDates ; ++iDate)
+            {
+                dDates.push_back(dT * iDate / iNDates);
+            }
+            Utilities::SimulationData sResult = sBS.simulate(dDates, iNPaths, lSeed);
+            Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/BlackScholes.csv", false, 10);
+            sPrint.PrintInFile(sResult.GetData());
         }
-        Utilities::SimulationData sResult = sBS.simulate(dDates, iNPaths, lSeed);
-        Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/BlackScholes.csv", false, 10);
-        sPrint.PrintInFile(sResult.GetData());
+        catch (std::exception & e)
+        {
+            std::cout << "Exception caught : " << e.what() << std::endl;
+        }
+        catch (...)
+        {
+            std::cout << "Unknown exception caught!" << std::endl;
+        }
     }
     else if (iTest == 4)
     {

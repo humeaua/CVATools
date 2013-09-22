@@ -73,7 +73,6 @@ namespace Finance
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
                 double dOldValue = dX0_;
-                //sResult.Put(dDate0, iPath, dOldValue);
                 sResult(iPath, 0) = dOldValue; // 1st date
                 for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
                 {
@@ -82,7 +81,6 @@ namespace Finance
                     dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
                     if (bFloorSimulation_ && dOldValue < dFloor_)
                     {
-                        //sResult.Put(dDates[iDate], iPath, dFloor_);
                         sResult(iPath, iDate) = dFloor_; 
                         if (bStartFromFloor_)
                         {
@@ -91,7 +89,6 @@ namespace Finance
                     }
                     else if (bCapSimulation_ && dOldValue > dCap_)
                     {
-                        //sResult.Put(dDates[iDate], iPath, dCap_);
                         sResult(iPath, iDate) = dCap_; 
                         if (bStartFromCap_)
                         {
@@ -100,7 +97,6 @@ namespace Finance
                     }
                     else
                     {
-                        //sResult.Put(dDates[iDate], iPath, dOldValue);
                         sResult(iPath, iDate) = dOldValue;
                     }
                 }

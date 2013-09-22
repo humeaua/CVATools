@@ -50,21 +50,20 @@ namespace Finance
             std::tr1::ranlux64_base_01 eng; // core engine class
             eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
-            //double dDate0 = dDates[0];
-            sResult.AddDate(dDates[0]);
+            for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
+            {
+                sResult.AddDate(dDates[iDate]);
+            }
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
                 double dOldValue = dX0_;
-                //sResult.Put(dDate0, iPath, dOldValue);
                 sResult(iPath, 0) = dOldValue;
                 for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
                 {
                     double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
-                    sResult.AddDate(dDates[iDate]);
                     dOldValue *= exp((dDrift_ - dVol_ * dVol_ * 0.5) * dt + dVol_ * sqrt(dt) * dist(eng));
                     if (bFloorSimulation_ && dOldValue < 0.0)
                     {
-                        //sResult.Put(dDates[iDate], iPath, 0.0);
                         sResult(iPath, iDate) = 0.0;
                         if (bStartFromFloor_)
                         {
@@ -72,9 +71,7 @@ namespace Finance
                         }
                     }
                     else
-                    {
-                        //sResult.Put(dDates[iDate], iPath, dOldValue);
-                        sResult(iPath, iDate) = dOldValue;
+                    {sResult(iPath, iDate) = dOldValue;
                     }
                 }
             }

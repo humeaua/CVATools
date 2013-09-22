@@ -64,12 +64,10 @@ namespace Finance
             std::tr1::ranlux64_base_01 eng; // core engine class
             eng.seed(lSeed);
             
-            //double dDate0 = dDates[0];
             sResult.AddDate(dDates[0]);
             //  initial values
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
-                //sResult.Put(dDate0, iPath, dX0_);
                 sResult(iPath, 0) = 0.0;
             }
             
@@ -82,7 +80,6 @@ namespace Finance
                 
                 for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
                 {
-                    //dOldValue = sResult.Get(t0, iPath);
                     dOldValue = sResult(iPath,iDate - 1);
                     std::tr1::poisson_distribution<double> poisson(0.5 * NonCentralityParameter(dt) * dOldValue);
                     
@@ -91,7 +88,6 @@ namespace Finance
                     std::tr1::gamma_distribution<double> gamma(dNbOfFreedom + 0.5 * dD);
                     dNewValue = 2.0 * gamma(eng) * exp(-dA_ * dt) / NonCentralityParameter(dt);
                     
-                    //sResult.Put(dDates[iDate], iPath, dNewValue);
                     sResult(iPath, iDate) = dNewValue;
                 }
             }

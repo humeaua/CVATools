@@ -21,13 +21,13 @@ namespace Maths
     Statistics::~Statistics()
     {}
     
-    double Statistics::Mean(const std::vector<double> &dData) const
+    double Statistics::Mean(const std::vector<double> &dData)
     {
         std::size_t n = dData.size();
         return n == 0 ? 0.0 : std::accumulate(dData.begin(), dData.end(), 0.0)/ n;
     }
     
-    double Statistics::MeanOld(const std::vector<double> &dData) const
+    double Statistics::MeanOld(const std::vector<double> &dData)
     {
         std::size_t n = dData.size();
         double dResult = 0.0;
@@ -39,7 +39,7 @@ namespace Maths
         return n == 0 ? 0.0 : dResult / n;
     }
     
-    double Statistics::Median(const std::vector<double> &dData) const
+    double Statistics::Median(const std::vector<double> &dData)
     {
         std::size_t iN = dData.size(), nOver2 = iN / 2;
         if (iN % 2)
@@ -52,7 +52,7 @@ namespace Maths
         }
     }
     
-    std::size_t Statistics::Partition(const std::vector<double> &dData, std::size_t iPivot) const
+    std::size_t Statistics::Partition(const std::vector<double> &dData, std::size_t iPivot)
     {
         /*
          function partition(list, left, right, pivotIndex)
@@ -88,7 +88,7 @@ namespace Maths
         return iStoreIndex;
     }
     
-    double Statistics::kthSmallest(const std::vector<double> &dData, std::size_t k) const
+    double Statistics::kthSmallest(const std::vector<double> &dData, std::size_t k)
     {
         /*
          // Returns the k-th smallest element of list within left..right inclusive.
@@ -127,7 +127,7 @@ namespace Maths
         }
     }
     
-    double Statistics::Variance(const std::vector<double> &v) const
+    double Statistics::Variance(const std::vector<double> &v)
     {
         double mean = Mean(v);
         std::vector<double> diff(v.size());
@@ -136,7 +136,7 @@ namespace Maths
         return v.size() == 0 ? 0.0 : std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0) / v.size();
     }
     
-    double Statistics::VarianceOld(const std::vector<double> &v) const
+    double Statistics::VarianceOld(const std::vector<double> &v)
     {
         std::size_t n = v.size();
         double dMean = 0.0, dVariance = 0.0, dElementLoc;
@@ -152,17 +152,17 @@ namespace Maths
         return n == 0 ? 0.0 : dVariance;
     }
     
-    double Statistics::StandardDeviation(const std::vector<double> &dData) const
+    double Statistics::StandardDeviation(const std::vector<double> &dData)
     {
         return sqrt(Variance(dData));
     }
     
-    double Statistics::StandardDeviationOld(const std::vector<double> &dData) const
+    double Statistics::StandardDeviationOld(const std::vector<double> &dData)
     {
         return sqrt(VarianceOld(dData));
     }
     
-    std::vector<double> Statistics::RollingAverage(const std::vector<double>& dData) const
+    std::vector<double> Statistics::RollingAverage(const std::vector<double>& dData)
     {
         std::size_t iN = dData.size();
         std::vector<double> dResults(iN);
@@ -175,7 +175,7 @@ namespace Maths
         return dResults;
     }
     
-    std::vector<double> Statistics::RollingVariance(const std::vector<double>& dData) const
+    std::vector<double> Statistics::RollingVariance(const std::vector<double>& dData)
     {
         std::size_t iN = dData.size();
         std::vector<double> dResults(iN);
@@ -190,7 +190,7 @@ namespace Maths
         return dResults;
     }
     
-    std::vector<double> Statistics::RollingStandardDeviation(const std::vector<double>& dData) const
+    std::vector<double> Statistics::RollingStandardDeviation(const std::vector<double>& dData)
     {
         std::size_t iN = dData.size();
         std::vector<double> dResults(iN);
@@ -206,7 +206,7 @@ namespace Maths
         return dResults;
     }
     
-    double Statistics::Quantile(double dQuantile, const std::vector<double> &dData) const
+    double Statistics::Quantile(double dQuantile, const std::vector<double> &dData)
     {
         std::vector<double> dDataCopy = dData;
         std::sort(dDataCopy.begin(), dDataCopy.end());
@@ -227,7 +227,7 @@ namespace Maths
         }
     }
     
-    std::vector<std::pair<double, std::size_t> > Statistics::EmpiricalDistribution(const std::vector<double> &dData, const std::size_t iNBuckets) const
+    std::vector<std::pair<double, std::size_t> > Statistics::EmpiricalDistribution(const std::vector<double> &dData, const std::size_t iNBuckets)
     {
         std::vector<double> dDataCopy = dData;
         std::vector<std::pair<double, std::size_t> > dResults(iNBuckets);
@@ -261,7 +261,7 @@ namespace Maths
         return dResults;
     }
     
-    std::vector<std::pair<double, std::size_t> > Statistics::EmpiricalDistribution(const std::vector<double> & dData, const std::vector<double> & dPoints) const
+    std::vector<std::pair<double, std::size_t> > Statistics::EmpiricalDistribution(const std::vector<double> & dData, const std::vector<double> & dPoints)
     {
         std::vector<double> dDataCopy = dData;
         std::size_t iNBuckets = dPoints.size();

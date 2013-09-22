@@ -128,25 +128,24 @@ void RegressionTest_TimeStatistics()
     
     std::cout << "Regression Test Time Computation for statistics" << std::endl;
     std::vector<double> dData(1000000, 1.0);
-    Maths::Statistics sStats;
     
     clock_t tic = clock();
-    double dResult = sStats.MeanOld(dData);
+    double dResult = Maths::Statistics::MeanOld(dData);
     
     std::cout << "Mean old time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
     
     tic = clock();
-     dResult = sStats.Mean(dData);
+     dResult = Maths::Statistics::.Mean(dData);
     
     std::cout << "Mean time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
     
     tic = clock();
-    dResult = sStats.VarianceOld(dData);
+    dResult = Maths::Statistics::VarianceOld(dData);
     
     std::cout << "Variance old time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
     
     tic = clock();
-    dResult = sStats.Variance(dData);
+    dResult = Maths::Statistics::Variance(dData);
     
     std::cout << "Variance time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
     

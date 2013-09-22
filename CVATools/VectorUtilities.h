@@ -87,7 +87,21 @@ namespace Utilities {
     };
     
     // May change this function to a template version
-    bool AreEqual(const std::vector<double> & vect1, const std::vector<double> & vect2, double tolerance);
+    template<typename T>
+    bool AreEqual(const std::vector<T> & vect1, const std::vector<T> & vect2, T tolerance)
+    {
+        if (vect1.size() != vect2.size())
+            return false;
+        
+        for (std::size_t i = 0 ; i < vect1.size() ; ++i)
+        {
+            if (fabs(vect1[i] - vect2[i]) > tolerance)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     
     template<class T> std::vector<T> Subset(const std::vector<T> & vect, std::size_t iBegin, std::size_t iEnd)
     {
@@ -102,6 +116,17 @@ namespace Utilities {
             result.push_back(vect[i]);
         }
         return result;
+    }
+    
+    //  Function to get a pointer from a vector
+    //  If vector is empty, the function returns a NULL pointer
+    //  Else it returns the address of the first element of the vector
+    template<typename T> T* GetPointer(const std::vector<T> & vect)
+    {
+        if (vect.empty())
+            return NULL;
+        else
+            return &vect[0]; 
     }
     
 };

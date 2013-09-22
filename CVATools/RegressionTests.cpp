@@ -135,7 +135,7 @@ void RegressionTest_TimeStatistics()
     std::cout << "Mean old time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
     
     tic = clock();
-     dResult = Maths::Statistics::.Mean(dData);
+     dResult = Maths::Statistics::Mean(dData);
     
     std::cout << "Mean time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
     

@@ -175,7 +175,7 @@ void RegressionTest_PayoffLinearization()
     std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
     double dEpsilon = 1e-10;
     std::cout << "Payoff linearization : " ;
-    if (fabs(dRegCoefs.first - dRefConstant) < 1e-5 && fabs(dRegCoefs.second - dRefCoefStock) < 1e-5)
+    if (fabs(dRegCoefs.first - dRefConstant) < dEpsilon && fabs(dRegCoefs.second - dRefCoefStock) < dEpsilon)
     {
         std::cout << "SUCCEDEED" << std::endl;
     }

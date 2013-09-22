@@ -9,92 +9,59 @@
 #include <iostream>
 #include "SimulationData.h"
 #include "Exception.h"
+#include "VectorUtilities.h"
 
 namespace Utilities
 {
-    SimulationData::SimulationData()
+    SimulationData::SimulationData(std::size_t iNPaths, std::size_t iNDates) : RegressionData(iNPaths, iNDates)
     {}
     
     SimulationData::~SimulationData()
     {
-        for (std::map<double, std::map<std::size_t, double> >::iterator iter = dData_.begin() ; iter != dData_.end() ; ++iter)
-        {
-            iter->second.clear();
-        }
-        dData_.clear();
+        dDates_.clear();
     }
     
-    void SimulationData::Put(double dDate, std::size_t iPath, double dValue)
+    void SimulationData::AddDate(double dDate)
     {
-        if (dData_.count(dDate) != 0)
-        {
-            if (dData_.find(dDate)->second.count(iPath) != 0)
-            {
-                dData_.find(dDate)->second.find(iPath)->second = dValue;
-            }
-            else
-            {
-                dData_.find(dDate)->second[iPath] = dValue;
-            }
-        }
-        else
-        {
-            dData_[dDate][iPath] = dValue;
-        }
+        dDates_.push_back(dDate);
     }
     
-    std::map<double, std::map<std::size_t, double> > SimulationData::GetData() const
+    double& SimulationData::operator ()(size_t i, size_t j)
     {
-        return dData_;
+        requireException(i < iNObservations_, "Observation index is out of bounds", "SimulationData::operator (size_t,size_t)");
+        requireException(j < iNVars_, "Variable index is out of bounds", "SimulationData::operator (size_t,size_t)");
+        
+        return dData_[i + j * iNObservations_];
     }
     
-    double SimulationData::Get(double dDate, std::size_t iPath) const
+    double& SimulationData::operator ()(size_t i, size_t j) const
     {
-        if (dData_.count(dDate) != 0)
-        {
-            if (dData_.find(dDate)->second.count(iPath) != 0)
-            {
-                return dData_.find(dDate)->second.find(iPath)->second;
-            }
-            else
-            {
-                throw Utilities::MyException("SimulationData::Get : Path not found");
-            }
-        }
-        else
-        {
-            throw Utilities::MyException("SimulationData::Get : Date not found");
-        }
+        requireException(i < iNObservations_, "Observation index is out of bounds", "SimulationData::operator (size_t,size_t)");
+        requireException(j < iNVars_, "Variable index is out of bounds", "SimulationData::operator (size_t,size_t)");
+        
+        return (double&)dData_[i + j * iNObservations_];
     }
     
     std::vector<double> SimulationData::Get(double dDate) const
     {
-        if (dData_.count(dDate))
-        {
-            std::vector<double> dResult;
-            std::map<std::size_t, double> mMyMap = dData_.find(dDate)->second;
-            for (std::map<std::size_t, double>::iterator it = mMyMap.begin() ; it != mMyMap.end() ; ++it)
-            {
-                dResult.push_back(it->second);
-            }
-            return dResult;
-        }
-        else
-        {
-            throw Utilities::MyException("SimulationData::Get : Date not found");
-        }
+        std::size_t iIndex = Utilities::GetIndex(dDates_, dDate);
+        requireException(iIndex != -1, "Date not found", "SimulationData::Get(double dDate)");
+        
+        return Subset(dData_, iIndex * iNObservations_, (iIndex + 1) * iNObservations_ - 1);
     }
-
-    void SimulationData::Apply(double (*func)(double))
+    
+    std::map<double, std::map<std::size_t, double> > SimulationData::GetData() const
     {
-        std::map<double, std::map<std::size_t, double> >::iterator itDates = dData_.begin();
-        for ( ; itDates != dData_.end() ; ++itDates)
+        std::map<double, std::map<std::size_t, double> > mResult;
+        for (std::size_t iDate = 0 ; iDate < dDates_.size() ; ++iDate)
         {
-            std::map<std::size_t, double>::iterator itPaths = itDates->second.begin();
-            for ( ; itPaths != itDates->second.end() ; ++itPaths)
+            std::map<std::size_t, double> dLocalMap;
+            for (std::size_t iPath = 0 ; iPath < iNObservations_ ; ++iPath)
             {
-                itPaths->second = func(itPaths->second);
+                dLocalMap[iPath] = (*this)(iPath, iDate);
             }
+            mResult[dDates_[iDate]] = dLocalMap;
         }
+        return mResult;
     }
 }

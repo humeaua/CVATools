@@ -128,7 +128,18 @@ namespace Utilities {
         else
             return &vect[0]; 
     }
-    
+
+    //  Function to get the index of a variable in a vector
+    //  Return -1 if not found
+    template<typename T> std::size_t GetIndex(const std::vector<T> & vect, const T & value)
+    {
+        for (std::size_t i = 0 ; i < vect.size() ; ++i)
+        {
+            if (vect[i] == value)
+                return i;
+        }
+        return -1;
+    }
 };
 
 #endif

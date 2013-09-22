@@ -112,6 +112,7 @@ int main()
     std::cout << "18- Stochastic Correlation" << std::endl;
     std::cout << "19- Random number one step generation" << std::endl;
     std::cout << "20- FileWriter" << std::endl;
+    std::cout << "21- Map" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -156,11 +157,11 @@ int main()
     else if (iTest == 3)
     {
         Finance::Processes::BlackScholes sBS(0.08, 0.4, 10);
-        std::size_t iNDates = 1000, iNPaths = 10;
+        std::size_t iNDates = 10, iNPaths = 10;
         long long lSeed = 1;
         std::vector<double> dDates;
         double dT = 10;
-        for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
+        for (std::size_t iDate = 0 ; iDate <= iNDates ; ++iDate)
         {
             dDates.push_back(dT * iDate / iNDates);
         }
@@ -433,14 +434,15 @@ int main()
         
         Maths::PayoffLinearization sPayoffLinearization(1000);
         
-        std::vector<double> dSimulationsDates;
-        dSimulationsDates.push_back(0.0);
-        dSimulationsDates.push_back(1.0);
-        
+        double dDates[2] = {0.0, 1.0};
+        std::vector<double> dSimulationsDates(dDates, dDates + 2);
+    
         std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
         
         std::cout << "Cst : " << dRegCoefs.first << std::endl;
         std::cout << "Coef Stock : " << dRegCoefs.second << std::endl;
+        
+        //std::cout << "R2 : " << sPayoffLinearization.Computer2() << std::endl;
     }
     else if (iTest == 14)
     {
@@ -569,6 +571,16 @@ int main()
         // File writer
         FileWriter sWriter(std::vector<std::string>(10, "10"));
         sWriter.Write();
+    }
+    else if (iTest == 21)
+    {
+        // Map
+        std::map<size_t, double> ConvertIntToDouble;
+        ConvertIntToDouble[0] = 0.0;
+        ConvertIntToDouble[1] = 1.0;
+        ConvertIntToDouble[2] = 2.0;
+        
+        std::cout << ConvertIntToDouble.size() << std::endl;
     }
     std::cout << "Done !" << std::endl;
 }

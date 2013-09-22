@@ -10,7 +10,7 @@
 
 namespace Maths
 {
-    PayoffLinearization::PayoffLinearization(std::size_t iNPaths) : iNPaths_(iNPaths)
+    PayoffLinearization::PayoffLinearization(std::size_t iNPaths) : iNPaths_(iNPaths), Maths::LinearRegression(true)
     {}
     
     Utilities::Matrix PayoffLinearization::ComputeCovarianceMatrix(const std::vector<double> & dFinalUnderlying) const
@@ -26,10 +26,9 @@ namespace Maths
         dX /= iNPaths_;
         dX2 /= iNPaths_;
         
-        sCovarMatrix.set(0, 0, 1);
-        sCovarMatrix.set(0, 1, dX);
-        sCovarMatrix.set(1, 0, dX);
-        sCovarMatrix.set(1, 1, dX2);
+        sCovarMatrix(0,0) = 1.0;
+        sCovarMatrix(0,1) = sCovarMatrix(1, 0) = dX;
+        sCovarMatrix(1,1) = dX2;
         
         return sCovarMatrix;
     }
@@ -63,18 +62,18 @@ namespace Maths
         //  Simulate the stock price
         Utilities::SimulationData sSimulatedData = sDiffusionProcess.simulate(dSimulationDates, iNPaths_, 0);
         
-        //  Get the end date distribution of the stock price
-        double dEndDate = dSimulationDates.back();
-        std::vector<double> dFinalUnderlying = sSimulatedData.Get(dEndDate);
-        sSimulatedData.~SimulationData();
-        
-        //  Get the corresponding Payoff
+        Utilities::RegressionData sRegressionData = sSimulatedData;
         std::vector<double> dPayoff(iNPaths_, 0.0);
+        
+        std::vector<double> dFinalUnderlying = sSimulatedData.Get(dSimulationDates.back());
         
         for (std::size_t iPath = 0 ; iPath < iNPaths_ ; ++iPath)
         {
             dPayoff[iPath] = sPayoff.pay(dFinalUnderlying[iPath]);
         }
-        return ComputeRegCoefs(dPayoff, dFinalUnderlying);
+        
+        std::vector<double> bla = LeastSquareRegression::ComputeRegCoefs(sRegressionData, dPayoff);
+        
+        return std::make_pair(*bla.begin(), *bla.end());
     }
 }

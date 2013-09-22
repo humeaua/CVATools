@@ -9,35 +9,33 @@
 #ifndef CVATools_SimulationData_h
 #define CVATools_SimulationData_h
 
-#include <map>
 #include <iostream>
-#include <vector>
+#include "RegressionData.h"
+#include <map>
 
 namespace Utilities
 {
-    class SimulationData {
+    class SimulationData : public RegressionData
+    {
     protected:
-        //        Date,             Path
-        std::map<double, std::map<std::size_t, double> > dData_;
-        
+        std::vector<double> dDates_;
     public:
+        SimulationData(std::size_t iNPaths, std::size_t iNDates);
         
-        //Default constructor
-        SimulationData();
-        
-        //  Destructor
         virtual ~SimulationData();
+
+        //  Method to add date in the simulation so that we can keep the dates as well and not only the simulated values
+        virtual void AddDate(double dDate);
         
-        //  Put function
-        virtual void Put(double dDate, std::size_t iPath, double dValue);
+        //  Getter and Setter for element
+        virtual double& operator ()(size_t iPath, size_t iDate) const;
+        virtual double& operator ()(size_t iPath, size_t iDate);
         
-        // Getter
-        virtual std::map<double, std::map<std::size_t, double> > GetData() const;
-        virtual double Get(double dDate, std::size_t iPath) const;
+        // Getter for all simulated value for just one date
         virtual std::vector<double> Get(double dDate) const;
         
-        //  Apply function
-        virtual void Apply(double (*func)(double));
+        //  Method to get the old map of the simulation data class
+        virtual std::map<double, std::map<std::size_t, double> > GetData() const;
     };
 }
 

@@ -62,24 +62,28 @@ namespace Finance
         
         Utilities::SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const
         {
-            Utilities::SimulationData sResult;
             std::size_t iNDates = dDates.size();
+            Utilities::SimulationData sResult(iNPaths,iNDates);
             
             std::tr1::ranlux64_base_01 eng; // core engine class
             eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             double dDate0 = dDates[0];
+            sResult.AddDate(dDate0);
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
                 double dOldValue = dX0_;
-                sResult.Put(dDate0, iPath, dOldValue);
+                //sResult.Put(dDate0, iPath, dOldValue);
+                sResult(iPath, 0) = dOldValue; // 1st date
                 for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
                 {
                     double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
+                    sResult.AddDate(dDates[iDate]);
                     dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
                     if (bFloorSimulation_ && dOldValue < dFloor_)
                     {
-                        sResult.Put(dDates[iDate], iPath, dFloor_);
+                        //sResult.Put(dDates[iDate], iPath, dFloor_);
+                        sResult(iPath, iDate) = dFloor_; 
                         if (bStartFromFloor_)
                         {
                             dOldValue = dFloor_;
@@ -87,7 +91,8 @@ namespace Finance
                     }
                     else if (bCapSimulation_ && dOldValue > dCap_)
                     {
-                        sResult.Put(dDates[iDate], iPath, dCap_);
+                        //sResult.Put(dDates[iDate], iPath, dCap_);
+                        sResult(iPath, iDate) = dCap_; 
                         if (bStartFromCap_)
                         {
                             dOldValue = dCap_;
@@ -95,7 +100,8 @@ namespace Finance
                     }
                     else
                     {
-                        sResult.Put(dDates[iDate], iPath, dOldValue);
+                        //sResult.Put(dDates[iDate], iPath, dOldValue);
+                        sResult(iPath, iDate) = dOldValue;
                     }
                 }
             }

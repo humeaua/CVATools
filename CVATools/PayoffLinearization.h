@@ -13,10 +13,11 @@
 #include "Payoff.h"
 #include "DiffusionProcess.h"
 #include "Matrix.h"
+#include "LinearRegression.h"
 
 namespace Maths
 {
-    class PayoffLinearization
+    class PayoffLinearization : public LinearRegression
     {
         std::size_t iNPaths_;
         

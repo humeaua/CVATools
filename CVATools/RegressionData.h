@@ -9,7 +9,6 @@
 #ifndef __CVATools__RegressionData__
 #define __CVATools__RegressionData__
 
-#include <iostream>
 #include <vector>
 
 namespace Utilities
@@ -36,9 +35,8 @@ namespace Utilities
         //  Access operators
         double& operator ()(int i, int j);
         double& operator ()(int i, int j) const;
-        double& operator ()(size_t i, size_t j);
-        double& operator ()(size_t i, size_t j) const;
-        
+        virtual double& operator ()(size_t i, size_t j);
+        virtual double& operator ()(size_t i, size_t j) const;
     };
 }
 

@@ -17,7 +17,7 @@ namespace Utiliites {
     template<class C, class D> class HashTable : public std::tr1::unordered_map<C, D>
     {
     public:
-        virtual void print() const;
+        virtual void print(std::ostream & out = std::cout) const;
     };
 }
 

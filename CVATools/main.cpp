@@ -316,11 +316,12 @@ int main()
         try
         {
             std::vector<std::pair<double, double> > dXY;
-            for (std::size_t i = 0 ; i < 100 ; ++i)
+            for (std::size_t i = 0 ; i < 10 ; ++i)
             {
-                dXY.push_back(std::make_pair(i / 10.0, i / 10.0));
+                dXY.push_back(std::make_pair(i, i));
             }
-            Maths::GaussianKernel sGaussianKernel(0.1, 1.0e-7);
+            //  Bandwidth seems to have a floor effect : the estimated function is a piecewise constant function now with point to spaced
+            Maths::GaussianKernel sGaussianKernel(0.1, 1.0e-9);
             
             for (double x = 0 ; x < 11 ; x += 0.01)
             {

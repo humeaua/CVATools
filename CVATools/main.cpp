@@ -303,7 +303,7 @@ int main()
         dYC.push_back(std::make_pair(20.0, 0.0270));
         dYC.push_back(std::make_pair(30.0, 0.0310));
         
-        Finance::Base::YieldCurve sYieldCurve(Utilities::Date::MyDate(), "USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::LIN);
+        Finance::Base::YieldCurve sYieldCurve(Utilities::Date::MyDate(), "USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::RAW);
         
         for (std::size_t i = 0 ; i < 400 ; ++i)
         {

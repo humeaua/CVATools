@@ -56,8 +56,6 @@ namespace Utilities
     void matrixinverse(Matrix& hi, const Matrix& mat);
     void matrixLU(Matrix& L, Matrix& U, const Matrix& mat);
     
-    std::vector<std::vector<double> > CholeskiDecomposition(//  Input
-                                                            const std::vector<std::vector<double> > & dMatrix);
     void CholeskiDecomposition(//   Input
                                const Matrix & dMatrix,
                                //   Output

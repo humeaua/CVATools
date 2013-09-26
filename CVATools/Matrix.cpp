@@ -324,38 +324,6 @@ namespace Utilities
         }
     }
     
-    std::vector<std::vector<double> > CholeskiDecomposition(//  Input
-                                                            const std::vector<std::vector<double> > & dMatrix)
-    {
-        std::size_t iNRows = dMatrix.size();
-        std::vector<std::vector<double> > L(iNRows, std::vector<double>(iNRows, 0.0));
-        
-        L[0][0] = sqrt(dMatrix[0][0]);
-        for (std::size_t j = 1 ; j < iNRows ; ++j)
-        {
-            L[j][0] = dMatrix[j][0] / L[0][0];
-        }
-        for (std::size_t j = 1 ; j < iNRows ; ++j)
-        {
-            double dSum1 = 0;
-            for (std::size_t k = 0 ; k < j ; ++k)
-            {
-                dSum1 += L[j][k] * L[j][k];
-            }
-            L[j][j] = sqrt(dMatrix[j][j] - dSum1);
-            for (std::size_t i = j + 1 ; i < iNRows ; ++i)
-            {
-                double dSum2 = 0;
-                for (std::size_t k = 0 ; k < j ; ++k)
-                {
-                    dSum2 += L[i][k] * L[j][k];
-                }
-                L[i][j] = (dMatrix[i][j] - dSum2) / L[j][j];
-            }
-        }
-        return L;
-    }
-    
     void CholeskiDecomposition(//   Input
                                const Matrix & dMatrix,
                                //   Output
@@ -407,22 +375,17 @@ namespace Utilities
     //a. nrot returns the number of Jacobi rotations that were required.
     {
         int j,iq,ip,i;
-        double tresh,theta,tau,t,sm,s,h,g,c;//,*b,*z;
-        /*b=vector(1,n);
-        z=vector(1,n);*/
+        double tresh,theta,tau,t,sm,s,h,g,c;
         std::vector<double> b(n, 0.0), z(n, 0.0);
-        //for (ip=1;ip<=n;ip++)
         for (ip=0;ip<n;ip++)
         {
             //Initialize to the identity matrix.
-            //for (iq=1;iq<=n;iq++)
             for (iq=0;iq<n;iq++)
             {
                 v[ip][iq]=0.0;
             }
             v[ip][ip]=1.0;
         }
-        //for (ip=1;ip<=n;ip++)
         for (ip=0;ip<n;ip++)
         {
             //Initialize b and d to the diagonal of a
@@ -434,11 +397,9 @@ namespace Utilities
         for (i=1;i<=50;i++)
         {
             sm=0.0;
-            //for (ip=1;ip<=n-1;ip++)
             for (ip=0;ip<n-1;ip++)
             {
                 //Sum off-diagonal elements.
-                //for (iq=ip+1;iq<=n;iq++)
                 for (iq=ip+1;iq<n;iq++)
                 {
                     sm += fabs(a[ip][iq]);
@@ -447,8 +408,6 @@ namespace Utilities
             if (sm == 0.0)
             {
                 //The normal return, which relies on quadratic convergence to machine underflow.
-                //free_vector(z,1,n);
-                //free_vector(b,1,n);
                 return;
             }
             if (i < 4)
@@ -459,10 +418,8 @@ namespace Utilities
             {
                 tresh=0.0;// ...thereafter.
             }
-            //for (ip=1;ip<=n-1;ip++)
             for (ip=0;ip<n-1;ip++)
             {
-                //for (iq=ip+1;iq<=n;iq++)
                 for (iq=ip+1;iq<n;iq++)
                 {
                     g=100.0*fabs(a[ip][iq]);
@@ -503,13 +460,11 @@ namespace Utilities
                             //Case of rotations p < j < q.
                             ROTATE(a,ip,j,j,iq)
                         }
-                        //for (j=iq+1;j<=n;j++)
                         for (j=iq+1;j<n;j++)
                         {
                             //Case of rotations q < j ≤ n.
                             ROTATE(a,ip,j,iq,j)
                         }
-                        //for (j=1;j<=n;j++)
                         for (j=0;j<n;j++)
                         {
                             ROTATE(v,j,ip,j,iq)
@@ -518,7 +473,6 @@ namespace Utilities
                     }
                 }
             }
-            //for (ip=1;ip<=n;ip++)
             for (ip=0;ip<n;ip++)
             {
                 b[ip] += z[ip];
@@ -526,7 +480,6 @@ namespace Utilities
                 z[ip]=0.0; //and reinitialize z.
             }
         }
-        //nrerror("Too many iterations in routine jacobi");
         throw std::runtime_error("Too many iterations in routine jacobi");
     }
 }

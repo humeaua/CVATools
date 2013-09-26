@@ -613,7 +613,18 @@ int main()
         a[1][1] = a[0][0] = 1.0;
         a[0][1] = a[1][0] = rho;
         
-        Utilities::jacobi(a, n, d, v, &nrot);
+        try
+        {
+            Utilities::jacobi(a, n, d, v, &nrot);
+        }
+        catch (std::exception & e)
+        {
+            std::cout << "Exception caught " << e.what() << std::endl;
+        }
+        catch (...)
+        {
+            std::cout << "Unknown exception caught" << std::endl;
+        }
         
         // Output of the results
         
@@ -624,6 +635,10 @@ int main()
         std::cout << "Eigen vectors" << std::endl;
         std::cout << "1st eigenvector : " << v[0][0] << " ; " << v[1][0] << std::endl;
         std::cout << "2nd eigenvector : " << v[0][1] << " ; " << v[1][1] << std::endl;
+        
+        std::cout << std::endl;
+        std::cout << "Number of rotations : " << nrot << std::endl;
+        std::cout << std::endl;
         
         delete []v[0]; delete []v[1]; delete [] v;
         delete []a[0]; delete []a[1]; delete [] a;

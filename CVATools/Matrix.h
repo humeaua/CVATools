@@ -10,8 +10,8 @@
 #define CVATools_Matrix_h
 
 #include <iostream>
-#include <vector>
 #include "Type.h"
+#include "Vector.h"
 
 namespace Utilities
 {
@@ -26,6 +26,7 @@ namespace Utilities
         virtual ~Matrix();
         
         void Reallocate(int N, int M);
+        void Reallocate(std::size_t N, std::size_t M);
         
         double& operator ()(int i, int j);
         double& operator ()(int i, int j) const;
@@ -61,6 +62,12 @@ namespace Utilities
                                //   Output
                                Matrix & dSquareRoot);
     
+    void jacobi(// Input
+                const Matrix & dMatrix,
+                // Output
+                Matrix & Eigenvectors,
+                Utilities::MyVector<double> & EigenValues,
+                int * nrot);
     void jacobi(double **a, int n, double d[], double **v, int *nrot);
 }
 #endif

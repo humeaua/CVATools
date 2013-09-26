@@ -71,6 +71,14 @@ namespace Utilities
         data.resize(rowsize * colsize);
     }
     
+    void Matrix::Reallocate(std::size_t N, std::size_t M)
+    {
+        data.clear();
+        rowsize = (int)N;
+        colsize = (int)M;
+        data.resize(rowsize * colsize);
+    }
+    
     double& Matrix::operator ()(int i, int j)
     {
         return data[i + rowsize*j];
@@ -367,6 +375,7 @@ namespace Utilities
     }
     
 #define ROTATE(a,i,j,k,l) g=a[i][j];h=a[k][l];a[i][j]=g-s*(h+g*tau); a[k][l]=h+s*(g-h*tau);
+#define ROTATE_CPP(a,i,j,k,l) g=a(i,j);h=a(k,l);a(i,j)=g-s*(h+g*tau); a(k,l)=h+s*(g-h*tau);
     
     void jacobi(double **a, int n, double d[], double **v, int *nrot)
     //Computes all eigenvalues and eigenvectors of a real symmetric matrix a[1..n][1..n]. On
@@ -477,6 +486,128 @@ namespace Utilities
             {
                 b[ip] += z[ip];
                 d[ip]=b[ip]; //Update d with the sum of tapq,
+                z[ip]=0.0; //and reinitialize z.
+            }
+        }
+        throw std::runtime_error("Too many iterations in routine jacobi");
+    }
+    
+    void jacobi(// Input
+                const Matrix & dMatrix,
+                // Output
+                Matrix & Eigenvectors,
+                Utilities::MyVector<double> & EigenValues,
+                int * nrot)
+    {
+        std::size_t n = dMatrix.getcols();
+        
+        // reallocate the eigenvectors matrix and the eigenvalues
+        EigenValues.resize(n);
+        Eigenvectors.Reallocate(n, n);
+        
+        int j,iq,ip,i;
+        double tresh,theta,tau,t,sm,s,h,g,c;
+        std::vector<double> b(n, 0.0), z(n, 0.0);
+        for (ip=0;ip<n;ip++)
+        {
+            //Initialize to the identity matrix.
+            for (iq=0;iq<n;iq++)
+            {
+                Eigenvectors(ip,iq)=0.0;
+            }
+            Eigenvectors(ip,ip)=1.0;
+        }
+        for (ip=0;ip<n;ip++)
+        {
+            //Initialize b and d to the diagonal of a
+            b[ip]=EigenValues[ip]=dMatrix(ip,ip);
+            z[ip]=0.0;
+            //This vector will accumulate terms of the form tapq as in equation (11.1.14).
+        }
+        *nrot=0;
+        for (i=1;i<=50;i++)
+        {
+            sm=0.0;
+            for (ip=0;ip<n-1;ip++)
+            {
+                //Sum off-diagonal elements.
+                for (iq=ip+1;iq<n;iq++)
+                {
+                    sm += fabs(dMatrix(ip,iq));
+                }
+            }
+            if (sm == 0.0)
+            {
+                //The normal return, which relies on quadratic convergence to machine underflow.
+                return;
+            }
+            if (i < 4)
+            {
+                tresh=0.2*sm/(n*n); //...on the first three sweeps.
+            }
+            else
+            {
+                tresh=0.0;// ...thereafter.
+            }
+            for (ip=0;ip<n-1;ip++)
+            {
+                for (iq=ip+1;iq<n;iq++)
+                {
+                    g=100.0*fabs(dMatrix(ip,iq));
+                    //After four sweeps, skip the rotation if the off-diagonal element is small.
+                    if (i > 4 && (float)(fabs(EigenValues[ip])+g) == (float)fabs(EigenValues[ip]) && (float)(fabs(EigenValues[iq])+g) == (float)fabs(EigenValues[iq]))
+                    {
+                        dMatrix(ip,iq)=0.0;
+                    }
+                    else if (fabs(dMatrix(ip,iq)) > tresh)
+                    {
+                        h=EigenValues[iq]-EigenValues[ip];
+                        if ((float)(fabs(h)+g) == (float)fabs(h))
+                        {
+                            t=(dMatrix(ip,iq))/h; //t = 1/(2θ)
+                        }
+                        else
+                        {
+                            theta=0.5*h/(dMatrix(ip,iq)); //Equation (11.1.10).
+                            t=1.0/(fabs(theta)+sqrt(1.0+theta*theta));
+                            if (theta < 0.0) t = -t;
+                        }
+                        c=1.0/sqrt(1+t*t);
+                        s=t*c;
+                        tau=s/(1.0+c);
+                        h=t*dMatrix(ip,iq);
+                        z[ip] -= h;
+                        z[iq] += h;
+                        EigenValues[ip] -= h;
+                        EigenValues[iq] += h;
+                        dMatrix(ip,iq)=0.0;
+                        for (j=1;j<=ip-1;j++)
+                        {
+                            //Case of rotations 1 ≤ j < p.
+                            ROTATE_CPP(dMatrix,j,ip,j,iq)
+                        }
+                        for (j=ip+1;j<=iq-1;j++)
+                        {
+                            //Case of rotations p < j < q.
+                            ROTATE_CPP(dMatrix,ip,j,j,iq)
+                        }
+                        for (j=iq+1;j<n;j++)
+                        {
+                            //Case of rotations q < j ≤ n.
+                            ROTATE_CPP(dMatrix,ip,j,iq,j)
+                        }
+                        for (j=0;j<n;j++)
+                        {
+                            ROTATE_CPP(Eigenvectors,j,ip,j,iq)
+                        }
+                        ++(*nrot);
+                    }
+                }
+            }
+            for (ip=0;ip<n;ip++)
+            {
+                b[ip] += z[ip];
+                EigenValues[ip]=b[ip]; //Update d with the sum of tapq,
                 z[ip]=0.0; //and reinitialize z.
             }
         }

@@ -113,6 +113,7 @@ int main()
     std::cout << "19- Random number one step generation" << std::endl;
     std::cout << "20- FileWriter" << std::endl;
     std::cout << "21- Map" << std::endl;
+    std::cout << "22- Eigendecomposition" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -593,6 +594,39 @@ int main()
         ConvertIntToDouble[2] = 2.0;
         
         std::cout << ConvertIntToDouble.size() << std::endl;
+    }
+    else if (iTest == 22)
+    {
+        // Test of eigendecomposition of a 2*2 matrix
+        double **a, **v, d[2];
+        a = new double*[2];
+        a[0] = new double[2];
+        a[1] = new double[2];
+        v = new double*[2];
+        v[0] = new double[2];
+        v[1] = new double[2];
+        int n = 2, nrot;
+        
+        double rho = 0.0;
+        std::cout << "Enter rho : " ;
+        std::cin >> rho;
+        a[1][1] = a[0][0] = 1.0;
+        a[0][1] = a[1][0] = rho;
+        
+        Utilities::jacobi(a, n, d, v, &nrot);
+        
+        // Output of the results
+        
+        std::cout << "Eigen values" << std::endl;
+        std::cout << d[0] << " ; " << d[1] << std::endl;
+        std::cout << std::endl;
+        
+        std::cout << "Eigen vectors" << std::endl;
+        std::cout << "1st eigenvector : " << v[0][0] << " ; " << v[1][0] << std::endl;
+        std::cout << "2nd eigenvector : " << v[0][1] << " ; " << v[1][1] << std::endl;
+        
+        delete []v[0]; delete []v[1]; delete [] v;
+        delete []a[0]; delete []a[1]; delete [] a;
     }
     std::cout << "Done !" << std::endl;
 }

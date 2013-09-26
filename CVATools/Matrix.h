@@ -62,5 +62,7 @@ namespace Utilities
                                const Matrix & dMatrix,
                                //   Output
                                Matrix & dSquareRoot);
+    
+    void jacobi(double **a, int n, double d[], double **v, int *nrot);
 }
 #endif

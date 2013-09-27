@@ -68,7 +68,7 @@ namespace Utilities
         data.clear();
         rowsize = N;
         colsize = M;
-        data.resize(rowsize * colsize);
+        data.resize(rowsize * colsize, 0.0);
     }
     
     void Matrix::Reallocate(std::size_t N, std::size_t M)
@@ -496,5 +496,30 @@ namespace Utilities
             }
         }
         throw std::runtime_error("Too many iterations in routine jacobi");
+    }
+    
+    //void eigsrt(float d[], float **v, int n)
+    void eigsrt(MyVector<double>& d, Matrix & v)
+    //Given the eigenvalues d[1..n] and eigenvectors v[1..n][1..n] as output from jacobi
+    //(§11.1) or tqli (§11.3), this routine sorts the eigenvalues into descending order, and rearranges
+    //the columns of v correspondingly. The method is straight insertion.
+    {
+        int k,j,i;
+        float p;
+        int n=v.getrows();
+        for (i=0;i<n-1;i++) {
+            p=d[k=i];
+            for (j=i+1;j<n;j++)
+                if (d[j] >= p) p=d[k=j];
+            if (k != i) {
+                d[k]=d[i];
+                d[i]=p;
+                for (j=1;j<=n;j++) {
+                    p=v(j,i);
+                    v(j,i)=v(j,k);
+                    v(j,k)=p;
+                }
+            }
+        }
     }
 }

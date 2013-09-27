@@ -68,5 +68,6 @@ namespace Utilities
                                    Matrix & Eigenvectors,
                                    Utilities::MyVector<double> & EigenValues,
                                    int * nrot);
+    void eigsrt(MyVector<double>& d, Matrix & v);
 }
 #endif

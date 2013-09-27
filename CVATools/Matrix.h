@@ -62,12 +62,11 @@ namespace Utilities
                                //   Output
                                Matrix & dSquareRoot);
     
-    void jacobi(// Input
-                const Matrix & dMatrix,
-                // Output
-                Matrix & Eigenvectors,
-                Utilities::MyVector<double> & EigenValues,
-                int * nrot);
-    void jacobi(double **a, int n, double d[], double **v, int *nrot);
+    void Eigendecomposition_jacobi(// Input
+                                   const Matrix & dMatrix,
+                                   // Output
+                                   Matrix & Eigenvectors,
+                                   Utilities::MyVector<double> & EigenValues,
+                                   int * nrot);
 }
 #endif

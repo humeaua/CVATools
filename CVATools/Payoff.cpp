@@ -12,10 +12,6 @@ namespace Finance
 {
     namespace Payoff
     {
-        Payoff::Payoff()
-        {}
-        
-        Payoff::~Payoff()
-        {}
+       
     }
 }

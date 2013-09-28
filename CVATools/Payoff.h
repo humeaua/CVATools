@@ -18,6 +18,13 @@ namespace Finance
         public:
             virtual double pay(double s1) const = 0;
         };
+        
+        typedef enum
+        {
+            CALL,
+            PUT,
+            STRADDLE
+        }VanillaOptionType;
     }
 }
 

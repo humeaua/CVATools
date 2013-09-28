@@ -15,13 +15,6 @@ namespace Finance
 {
     namespace Payoff
     {
-        typedef enum
-        {
-            CALL,
-            PUT,
-            STRADDLE
-        }VanillaOptionType;
-        
         class PayoffVanillaOption : public Payoff
         {
         protected:

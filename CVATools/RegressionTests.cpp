@@ -155,7 +155,7 @@ void RegressionTest_TimeStatistics()
 void RegressionTest_PayoffLinearization()
 {
     // Payoff Linearisation
-    Finance::Payoff::PayoffVanillaOption sPayoff(1.0, Finance::Payoff::CALL);
+    Finance::Payoff::PayoffVanillaOption sPayoff(1.0, ::Finance::Payoff::CALL);
     Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0);
     
     Maths::PayoffLinearization sPayoffLinearization(1000);

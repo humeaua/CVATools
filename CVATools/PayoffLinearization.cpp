@@ -62,10 +62,10 @@ namespace Maths
         //  Simulate the stock price
         Utilities::SimulationData sSimulatedData = sDiffusionProcess.simulate(dSimulationDates, iNPaths_, 0);
         
-        Utilities::RegressionData sRegressionData = sSimulatedData;
         std::vector<double> dPayoff(iNPaths_, 0.0);
         
         std::vector<double> dFinalUnderlying = sSimulatedData.Get(dSimulationDates.back());
+        Utilities::RegressionData sRegressionData = dFinalUnderlying;
         
         for (std::size_t iPath = 0 ; iPath < iNPaths_ ; ++iPath)
         {
@@ -74,6 +74,6 @@ namespace Maths
         
         std::vector<double> bla = LeastSquareRegression::ComputeRegCoefs(sRegressionData, dPayoff);
         
-        return std::make_pair(*bla.begin(), *bla.end());
+        return std::make_pair(bla.front(), bla.back());
     }
 }

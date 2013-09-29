@@ -21,6 +21,7 @@ namespace Utilities
     public:
         RegressionData();
         RegressionData(std::size_t iNObservations, std::size_t iNVars);
+        RegressionData(const std::vector<double> & dData);
         
         //  Getters
         std::size_t GetNbObservations() const

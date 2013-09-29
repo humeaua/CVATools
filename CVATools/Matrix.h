@@ -19,7 +19,11 @@ namespace Utilities
     {
     public:
         Matrix(int N, int M);
+        Matrix(int N, int M,double value);
         Matrix(std::size_t N, std::size_t M);
+        Matrix(std::size_t N, std::size_t M,double value);
+        Matrix(std::size_t N, bool bIsIdentity);
+        Matrix(int N, bool bIsIdentity);
         Matrix(const Matrix& m);
         template <size_t M>
         Matrix(double dData[][M], int N);
@@ -55,6 +59,8 @@ namespace Utilities
     void multmatrix(Matrix& New1, const Matrix& one, const Matrix& two);
     void mult(DVector & New, const Matrix & matrix, const DVector & Old);
     void matrixinverse(Matrix& hi, const Matrix& mat);
+    void gaussj(Matrix & a, Matrix & b);
+    
     void matrixLU(Matrix& L, Matrix& U, const Matrix& mat);
     
     void CholeskiDecomposition(//   Input

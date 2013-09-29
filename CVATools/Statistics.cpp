@@ -23,8 +23,7 @@ namespace Maths
     
     double Statistics::Mean(const std::vector<double> &dData)
     {
-        std::size_t n = dData.size();
-        return n == 0 ? 0.0 : std::accumulate(dData.begin(), dData.end(), 0.0)/ n;
+        return dData.size() == 0 ? 0.0 : std::accumulate(dData.begin(), dData.end(), 0.0)/ dData.size();
     }
     
     double Statistics::MeanOld(const std::vector<double> &dData)
@@ -131,9 +130,7 @@ namespace Maths
     {
         double mean = Mean(v);
         std::vector<double> diff(v.size());
-        std::transform(v.begin(), v.end(), diff.begin(),
-                       std::bind2nd(std::minus<double>(), mean));
-        return v.size() == 0 ? 0.0 : std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0) / v.size();
+        return v.size() == 1 || v.size() == 0 ? 0.0 : (std::inner_product(v.begin(), v.end(), v.begin(), 0.0) - mean * mean) / (v.size() - 1);
     }
     
     double Statistics::VarianceOld(const std::vector<double> &v)
@@ -149,7 +146,7 @@ namespace Maths
         dMean /= n;
         dVariance /= n;
         dVariance -= dMean * dMean;
-        return n == 0 ? 0.0 : dVariance;
+        return n == 0 || n== 1 ? 0.0 : dVariance;
     }
     
     double Statistics::StandardDeviation(const std::vector<double> &dData)

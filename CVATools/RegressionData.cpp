@@ -19,6 +19,9 @@ namespace Utilities
         dData_.resize(iNObservations * iNVars);
     }
     
+    RegressionData::RegressionData(const std::vector<double> & dData) : dData_(dData), iNVars_(1), iNObservations_(dData.size())
+    {}
+    
     double& RegressionData::operator ()(int i, int j)
     {
         requireException(i >= 0 && j >= 0, "Indexes are negative", "RegressionData::operator (int,int)");

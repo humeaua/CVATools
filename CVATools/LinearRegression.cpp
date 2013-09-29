@@ -18,58 +18,47 @@ namespace Maths
         std::size_t iNVars = sRegressionData.GetNbVariables(), iNVarsLoc = iNVars + (bAddConstantInRegression_ ? 1 : 0), iNObservations = sRegressionData.GetNbObservations();
         Utilities::Matrix sCovarianceMatrix(iNVarsLoc, iNVarsLoc);
         
-        double ** dMatrix = new double*[iNVarsLoc];
-        for (std::size_t i = 0 ; i < iNVarsLoc ; ++i)
-        {
-            dMatrix[i] = new double[iNVarsLoc];
-        }
-        
         if (bAddConstantInRegression_)
         {
-            dMatrix[iNVars][iNVars] = 1.0;
+            sCovarianceMatrix(iNVars,iNVars) = 1.0;
             
             for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
             {
-                dMatrix[iVar][iNVars] = 0;
+                sCovarianceMatrix(iVar,iNVars) = 0;
                 for (std::size_t i = 0 ; i < iNObservations ; ++i)
                 {
-                    dMatrix[iVar][iNVars] += sRegressionData(i,iVar);
+                    sCovarianceMatrix(iVar,iNVars) += sRegressionData(i,iVar);
                 }
-                dMatrix[iVar][iNVars] /= iNObservations;
-                dMatrix[iNVars][iVar] = dMatrix[iVar][iNVars];
+                sCovarianceMatrix(iVar,iNVars) /= iNObservations;
+                sCovarianceMatrix(iNVars,iVar) = sCovarianceMatrix(iVar,iNVars);
             }
         }
         
         for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
         {
-            dMatrix[iVar][iVar] = 0;
+            sCovarianceMatrix(iVar,iVar) = 0;
             for (std::size_t i = 0 ; i < iNObservations ; ++i)
             {
-                dMatrix[iVar][iVar] += sRegressionData(i,iVar) * sRegressionData(i,iVar);
+                sCovarianceMatrix(iVar,iVar) += sRegressionData(i,iVar) * sRegressionData(i,iVar);
             }
-            dMatrix[iVar][iVar] /= iNObservations;
+            sCovarianceMatrix(iVar,iVar) /= iNObservations;
         }
         
         for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
         {
             for (std::size_t jVar = iVar + 1 ; jVar < iNVars ; ++jVar)
             {
-                dMatrix[iVar][jVar] = 0;
+                sCovarianceMatrix(iVar,jVar) = 0;
                 for (std::size_t i = 0 ; i < iNObservations ; ++i)
                 {
-                    dMatrix[iVar][jVar] += sRegressionData(i,iVar) * sRegressionData(i, jVar);
+                    sCovarianceMatrix(iVar,jVar) += sRegressionData(i,iVar) * sRegressionData(i, jVar);
                 }
-                dMatrix[iVar][jVar] /= iNObservations;
-                dMatrix[jVar][iVar] = dMatrix[iVar][jVar];
+                sCovarianceMatrix(iVar,jVar) /= iNObservations;
+                sCovarianceMatrix(jVar,iVar) = sCovarianceMatrix(iVar,jVar);
             }
         }
         
     FREE_RETURN:
-        for (std::size_t i = 0 ; i < iNVars ; ++i)
-        {
-            delete[] dMatrix[i];
-        }
-        delete[] dMatrix;
         
         return sCovarianceMatrix;
     }

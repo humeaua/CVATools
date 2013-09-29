@@ -28,6 +28,42 @@ namespace Utilities
         data.resize(rowsize*colsize);
     }
     
+    Matrix::Matrix(int N, int M, double value)
+    {
+        rowsize = N;
+        colsize = M;
+        data.resize(rowsize*colsize, value);
+    }
+    
+    Matrix::Matrix(int N, bool bIsIdentity)
+    {
+        rowsize = N;
+        colsize = N;
+        data.resize(rowsize*colsize, 0.0);
+        for (std::size_t i = 0 ; i < N ; ++i)
+        {
+            (*this)(i,i) = 1.0;
+        }
+    }
+    
+    Matrix::Matrix(std::size_t N, bool bIsIdentity)
+    {
+        rowsize = (int)N;
+        colsize = (int)N;
+        data.resize(rowsize*colsize, 0.0);
+        for (std::size_t i = 0 ; i < N ; ++i)
+        {
+            (*this)(i,i) = 1.0;
+        }
+    }
+    
+    Matrix::Matrix(std::size_t N, std::size_t M, double value)
+    {
+        rowsize = static_cast<int>(N);
+        colsize = static_cast<int>(M);
+        data.resize(rowsize*colsize, value);
+    }
+    
     Matrix::Matrix(const Matrix& m)
     {
         rowsize = m.rowsize;
@@ -177,85 +213,163 @@ namespace Utilities
     
     void matrixinverse(Matrix& hi, const Matrix& mat)
     {
-        double J[mat.getrows()][2*mat.getrows()];
-        for (int i=0;i<mat.getrows();i++)
+        //  Check the size of the matrix first
+        if (mat.getcols() == 2)
         {
-            int j =0;
-            while (j < mat.getcols())
+            hi.Reallocate(2, 2);
+            double det = mat(0,0) * mat(1,1) - mat(1,0) * mat(0,1);
+            if (det < std::numeric_limits<double>::epsilon())
             {
-                J[i][j]=mat(i,j);
-                j++;
+                throw MyException("matrixinverse : Cannot inverse singular matrix");
             }
-            while (j < 2*mat.getcols())
-            {
-                if (j == i+mat.getcols())
-                {
-                    J[i][j] = 1;
-                    j++;
-                }
-                else
-                {
-                    J[i][j] = 0;
-                    j++;
-                }
-                
-            }
+            hi(0,0) = mat(1,1) / det;
+            hi(1,0) = -mat(1,0) / det;
+            hi(0,1) = -mat(0,1) / det;
+            hi(1,1) = mat(0,0) / det;
         }
-        
-        //gauss jordan
-        for (int index=0;index < mat.getrows();index++)
+        else if (mat.getcols() == 3)
         {
-            if (J[index][index] == 0)
+            double  A = mat(1,1) * mat(2,2) - mat(1,2) * mat(2,1),
+                    B = -(mat(1,0) * mat(2,2) - mat(2,0) * mat(1,2)),
+                    C = mat(1,0) * mat(2,1) - mat(1,1) *mat(2,0),
+                    D = -(mat(0,1) * mat(2,2) - mat(0,2) * mat(2,1)),
+                    E = mat(0,0) * mat(2,2) - mat(0,2) * mat(2,0),
+                    F = -(mat(0,0) * mat(2,1) - mat(2,0) * mat(0,1)),
+                    G = mat(0,1) * mat(1,2) - mat(0,2) * mat(1,1),
+                    H = -(mat(0,0) * mat(1,2) - mat(0,2) * mat(1,0)),
+                    I = mat(0,0) * mat(1,1) - mat(1,0) * mat(0,1);
+            
+            double det = mat(0,0) * A + mat(0,1) * B + mat(0,2) * C;
+            if (det < std::numeric_limits<double>::epsilon())
             {
-                int gotit = 0;
-                int check = index +1;
-                
-                while (gotit != 1)
+                throw MyException("matrixinverse : Cannot inverse singular matrix");
+            }
+            hi.Reallocate(3, 3);
+            hi(0,0) = A / det;
+            hi(1,0) = B / det;
+            hi(2,0) = C / det;
+            hi(0,1) = D / det;
+            hi(1,1) = E / det;
+            hi(2,1) = F / det;
+            hi(0,2) = G / det;
+            hi(1,2) = H / det;
+            hi(2,2) = I / det;
+        }
+        else
+        {
+            // local copy
+            hi = mat;
+            //  define dummy matrix b to apply gauss jordan inverse algorithm
+            Matrix b(hi.getcols(), true);
+            gaussj(hi, b);
+        }
+    }
+    
+#define SWAP(a,b) {temp=(a);(a)=(b);(b)=temp;}
+    //  Numerical Recipes in C p63-64
+    void gaussj(Matrix & a, Matrix & b)
+    //Linear equation solution by Gauss-Jordan elimination, equation (2.1.1) above. a[1..n][1..n]
+    //is the input matrix. b[1..n][1..m] is input containing the m right-hand side vectors. On
+    //output, a is replaced by its matrix inverse, and b is replaced by the corresponding set of solution
+    //vectors.
+    {
+        Utilities::requireException(a.getcols() == a.getrows(), "a is not a square matrix", "Utilities::gaussj");
+        Utilities::requireException(a.getrows() == b.getrows(), "b must the same number of rows as a", "Utilities::gaussj");
+        int i,icol,irow,j,k,l,ll,n=a.getcols(),m=b.getcols();
+        double big,dum,pivinv,temp;
+        //The integer arrays ipiv, indxr, and indxc are used for book-keeping on the pivoting
+        std::vector<int> indxc(n,0), indxr(n,0), ipiv(n,0);
+        for (j=0;j<n;j++)
+        {
+            ipiv[j]=0;
+        }
+        for (i=0;i<n;i++)
+        {
+            //This is the main loop over the columns to be reduced
+            big=0.0; 
+            for (j=0;j<n;j++)
+            {
+                //This is the outer loop of the search for a pivot element
+                if (ipiv[j] != 1)
                 {
-                    if (J[check][check] != 0)
+                    for (k=0;k<n;k++)
                     {
-                        double swit[2*mat.getcols()];
-                        for (int colcount = 0; colcount < 2*mat.getcols();colcount++)
+                        if (ipiv[k] == 0)
                         {
-                            swit[colcount] = J[index][colcount];
-                            J[index][colcount] = J[check][colcount];
-                            J[check][colcount] = swit[colcount];
+                            if (fabs(a(j,k)) >= big)
+                            {
+                                big=fabs(a(j,k));
+                                irow=j;
+                                icol=k;
+                            }
                         }
-                        gotit = 1;
                     }
-                    
-                    else
-                    {check++;}
                 }
             }
-            
-            double beta = J[index][index];
-            
-            for (int j=index; j< 2*mat.getcols(); j++)
+            ++(ipiv[icol]);
+            //We now have the pivot element, so we interchange rows, if needed, to put the pivot
+            //    element on the diagonal. The columns are not physically interchanged, only relabeled:
+            //    indxc[i], the column of the ith pivot element, is the ith column that is reduced, while
+            //        indxr[i] is the row in which that pivot element was originally located. If indxr[i] =
+            //        indxc[i] there is an implied column interchange. With this form of bookkeeping, the
+            //        solution b’s will end up in the correct order, and the inverse matrix will be scrambled
+            //       by columns.
+            if (irow != icol)
             {
-                J[index][j] = J[index][j]/beta;
-            }
-            
-            for (int k=0;k< mat.getrows();k++)
-            {
-                if (k != index)
+                for (l=0;l<n;l++)
                 {
-                    double alpha = J[k][index];
-                    for (int l=index; l<2*mat.getcols();l++)
+                    SWAP(a(irow,l),a(icol,l))
+                }
+                for (l=0;l<m;l++)
+                {
+                    SWAP(b(irow,l),b(icol,l))
+                }
+            }
+            indxr[i]=irow; //We are now ready to divide the pivot row by the
+            indxc[i]=icol; //pivot element, located at irow and icol.
+            if (a(icol,icol) == 0.0)
+                throw std::runtime_error("gaussj: Singular Matrix");
+            pivinv=1.0/a(icol,icol);
+            a(icol,icol)=1.0;
+            for (l=0;l<n;l++)
+            {
+                a(icol,l) *= pivinv;
+            }
+            for (l=0;l<m;l++)
+            {
+                b(icol,l) *= pivinv;
+            }
+            for (ll=0;ll<n;ll++)
+            {
+                //Next, we reduce the rows...
+                if (ll != icol) { //...except for the pivot one, of course.
+                    dum=a(ll,icol);
+                    a(ll,icol)=0.0;
+                    for (l=1;l<=n;l++)
                     {
-                        J[k][l] += (-alpha)*(J[index][l]);
+                        a(ll,l) -= a(icol,l)*dum;
+                    }
+                    for (l=1;l<=m;l++)
+                    {
+                        b(ll,l) -= b(icol,l)*dum;
                     }
                 }
             }
         }
-        
-        for (int i=0;i<mat.getrows();i++)
+        //This is the end of the main loop over columns of the reduction. It only remains to unscramble
+        //the solution in view of the column interchanges. We do this by interchanging pairs of
+        //   columns in the reverse order that the permutation was built up.
+        for (l=n-1;l>=0;l--)
         {
-            for (int j=0;j<mat.getcols();j++)
+            if (indxr[l] != indxc[l])
             {
-                hi(i,j) = J[i][mat.getcols()+ j];
+                for (k=0;k<n;k++)
+                {
+                    SWAP(a(k,indxr[l]),a(k,indxc[l]));
+                }
             }
         }
+        //And we are done.
     }
     
     void matrixLU(Matrix& L, Matrix& U, const Matrix& mat)

@@ -7,6 +7,9 @@
 //
 
 #include "LeastSquareRegression.h"
+#include "Exception.h"
+#include "Statistics.h"
+#include "Matrix.h"
 
 namespace Maths
 {
@@ -43,27 +46,44 @@ namespace Maths
     {
         Utilities::Matrix sCovarianceMatrix = ComputeCovarianceMatrix(sRegressionData);
         std::size_t iNObservations = sRegressionData.GetNbObservations(), iNVars = sCovarianceMatrix.getcols();
+        std::size_t iNVarsReg = sRegressionData.GetNbVariables();
         Utilities::Matrix sInverse(iNVars, iNVars);
         Utilities::matrixinverse(sInverse, sCovarianceMatrix);
         
         std::vector<double> dProjResponse(iNVars, 0.0);
-        for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
+        //  Check if the regression data structure has the same number of variables as the number of rows of the covariance matrix
+        //  If not, a constant has been added in the regression
+        if (iNVars == iNVarsReg)
         {
-            for (std::size_t i = 0 ; i < iNObservations ; ++i)
+            for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
             {
-                dProjResponse[iVar] += sRegressionData(i, iVar) * sResponse[i];
+                for (std::size_t i = 0 ; i < iNObservations ; ++i)
+                {
+                    dProjResponse[iVar] += sRegressionData(i, iVar) * sResponse[i];
+                }
+                dProjResponse[iVar] /= iNObservations;
             }
-            dProjResponse[iVar] /= iNObservations;
+        }
+        else if (iNVars == iNVarsReg + 1)
+        {
+            for (std::size_t iVar = 0 ; iVar < iNVars - 1 ; ++iVar)
+            {
+                for (std::size_t i = 0 ; i < iNObservations ; ++i)
+                {
+                    dProjResponse[iVar] += sRegressionData(i, iVar) * sResponse[i];
+                }
+                dProjResponse[iVar] /= iNObservations;
+            }
+            dProjResponse[iNVars - 1] = Statistics::Mean(sResponse);
+        }
+        else
+        {
+            throw Utilities::MyException("LeastSquareRegression::ComputeRegCoefs : Could not check the number of variables : must input a valid number of variables");
         }
         
         std::vector<double> dRegCoefs(iNVars, 0.0);
-        for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
-        {
-            for (std::size_t jVar = 0 ; jVar < iNVars ; ++iVar)
-            {
-                dRegCoefs[iVar] += sInverse(iVar, jVar) * dProjResponse[iVar];
-            }
-        }
+        Utilities::mult(dRegCoefs, sInverse, dProjResponse);
+        
         return dRegCoefs;
     }
 

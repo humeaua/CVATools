@@ -131,25 +131,45 @@ void RegressionTest_TimeStatistics()
     
     clock_t tic = clock();
     double dResult = Maths::Statistics::MeanOld(dData);
-    
-    std::cout << "Mean old time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
+    double dTimeOld =(double)(clock() - tic)/CLOCKS_PER_SEC;
+    std::cout << "Mean old time elapsed  " << dTimeOld << " seconds" << std::endl;
     
     tic = clock();
-     dResult = Maths::Statistics::Mean(dData);
+    dResult = Maths::Statistics::Mean(dData);
+    double dTimeNew =(double)(clock() - tic)/CLOCKS_PER_SEC;
+    std::cout << "Mean time elapsed  " << dTimeNew << " seconds" << std::endl;
     
-    std::cout << "Mean time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
+    if (dTimeNew < dTimeOld)
+    {
+        std::cout << "Computation mean : SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        std::cout << "Computation mean : FAILED" << std::endl;
+    }
+    std::cout << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
     
+    std::cout << std::endl;
     tic = clock();
     dResult = Maths::Statistics::VarianceOld(dData);
-    
-    std::cout << "Variance old time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
+    dTimeOld = (double)(clock() - tic)/CLOCKS_PER_SEC;
+    std::cout << "Variance old time elapsed  " << dTimeOld << " seconds" << std::endl;
     
     tic = clock();
     dResult = Maths::Statistics::Variance(dData);
+    dTimeNew = (double)(clock() - tic)/CLOCKS_PER_SEC;
+    std::cout << "Variance time elapsed  " << dTimeNew << " seconds" << std::endl;
     
-    std::cout << "Variance time elapsed  " << (double)(clock() - tic)/CLOCKS_PER_SEC << " seconds" << std::endl;
+    if (dTimeNew < dTimeOld)
+    {
+        std::cout << "Computation variance : SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        std::cout << "Computation variance : FAILED" << std::endl;
+    }
     
-
+    std::cout << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
 }
 
 void RegressionTest_PayoffLinearization()
@@ -174,7 +194,7 @@ void RegressionTest_PayoffLinearization()
     std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
     double dEpsilon = 1e-10;
     std::cout << "Payoff linearization : " ;
-    if (fabs(dRegCoefs.first - dRefConstant) < dEpsilon && fabs(dRegCoefs.second - dRefCoefStock) < dEpsilon)
+    if (fabs(dRegCoefs.first - dRefCoefStock) < dEpsilon && fabs(dRegCoefs.second - dRefConstant) < dEpsilon)
     {
         std::cout << "SUCCEDEED" << std::endl;
     }
@@ -182,4 +202,7 @@ void RegressionTest_PayoffLinearization()
     {
         std::cout << "FAILED" << std::endl;
     }
+    
+    std::cout << "beta_1 : " << dRegCoefs.first << std::endl;
+    std::cout << "beta_2 : " << dRegCoefs.second << std::endl;
 }

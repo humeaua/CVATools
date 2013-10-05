@@ -121,7 +121,7 @@ namespace Utilities {
     //  Function to get a pointer from a vector
     //  If vector is empty, the function returns a NULL pointer
     //  Else it returns the address of the first element of the vector
-    template<typename T> T* GetPointer(const std::vector<T> & vect)
+    template<typename T> T* GetPointer(std::vector<T> & vect)
     {
         if (vect.empty())
             return NULL;

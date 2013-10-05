@@ -20,6 +20,7 @@
 #include "RegressionTests.h"
 #include "MuParser/muParserTest.h"
 #include "Vector.h"
+#include "VectorUtilities.h"
 
 #include <tr1/memory>
 #include "PayoffVanillaOption.h"
@@ -202,11 +203,11 @@ int main()
         //std::cout << sCholDec(2,0) << " " << sCholDec(2,1) << " " << sCholDec(2,2) << std::endl;
         
         //  Definition of vector of initial values
-        DVector dInitialValues(3,0.0);
+        Utilities::MyVector<double> dInitialValues(3,0.0);
         // values for stocks are ln(S_1) and ln(S_2)
-        dInitialValues[0] = log(100);
-        dInitialValues[1] = log(100);
-        dInitialValues[2] = 0.02; // value for initial short rate
+        dInitialValues.at(0) = log(100);
+        dInitialValues.at(1) = log(100);
+        dInitialValues.at(2) = 0.02; // value for initial short rate
         
         Finance::Option::MargrabeOptionVasicek sOption(1.0, 1, sCorrelMatrix, dInitialValues, 0.05, 0.03, 0.01, 0.2, 0.3);
         
@@ -362,29 +363,29 @@ int main()
         std::cout << "Addition" << std::endl;
         for (std::size_t i = 0 ; i < vectAdd.size() ; ++i)
         {
-            std::cout << vectAdd[i] << std::endl;
+            std::cout << vectAdd.at(i) << std::endl;
         }
         std::cout << "Substraction" << std::endl;
         for (std::size_t i = 0 ; i < vectSubs.size() ; ++i)
         {
-            std::cout << vectSubs[i] << std::endl;
+            std::cout << vectSubs.at(i) << std::endl;
         }
         std::cout << "Multiplication" << std::endl;
         for (std::size_t i = 0 ; i < vectMult.size() ; ++i)
         {
-            std::cout << vectMult[i] << std::endl;
+            std::cout << vectMult.at(i) << std::endl;
         }
         std::cout << "Division" << std::endl;
         for (std::size_t i = 0 ; i < vectDiv.size() ; ++i)
         {
-            std::cout << vectDiv[i] << std::endl;
+            std::cout << vectDiv.at(i) << std::endl;
         }
         
         Utilities::MyVector<double> vect0Add = vect0 + 1.0;
         std::cout << "Addition" << std::endl;
         for (std::size_t i = 0 ; i < vect0Add.size() ; ++i)
         {
-            std::cout << vect0Add[i] << std::endl;
+            std::cout << vect0Add.at(i) << std::endl;
         }
     }
     else if (iTest == 11)
@@ -488,9 +489,9 @@ int main()
         //  Generation of quasi-random number using sobol sequences
         int dim_num = 1110;
         long long int seed = 110;
-        double* quasi1 = new double[dim_num], *quasi2 = new double[dim_num];
-        i8_sobol (dim_num,&seed,quasi1);
-        i8_sobol(dim_num, &seed, quasi2);
+        std::vector<double> quasi1(dim_num, 0.0), quasi2(dim_num, 0.0);
+        i8_sobol (dim_num,&seed,Utilities::GetPointer(quasi1));
+        i8_sobol(dim_num, &seed, Utilities::GetPointer(quasi2));
         
         std::vector<std::pair<double, double> > dPairOfRandomNumber;
         for (std::size_t i = 0 ; i < dim_num ; ++i)
@@ -499,12 +500,6 @@ int main()
         }
         Utilities::PrintCpp sPrintCPP("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/SobolSequence.csv", false, 10);
         sPrintCPP.PrintInFile(dPairOfRandomNumber);
-        
-        if (quasi1)
-            delete [] quasi1; quasi1 = NULL;
-        if (quasi2)
-            delete [] quasi2; quasi2 = NULL;
-        
     }
     else if (iTest == 17)
     {
@@ -588,9 +583,9 @@ int main()
     {
         // Map
         std::map<size_t, double> ConvertIntToDouble;
-        ConvertIntToDouble[0] = 0.0;
-        ConvertIntToDouble[1] = 1.0;
-        ConvertIntToDouble[2] = 2.0;
+        ConvertIntToDouble.at(0) = 0.0;
+        ConvertIntToDouble.at(1) = 1.0;
+        ConvertIntToDouble.at(2) = 2.0;
         
         std::cout << ConvertIntToDouble.size() << std::endl;
     }

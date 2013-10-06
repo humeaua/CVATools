@@ -33,7 +33,7 @@ namespace Maths
         
         for (std::size_t i = 0 ; i < n ; ++i)
         {
-            dResult += dData[i];
+            dResult += dData.at(i);
         }
         return n == 0 ? 0.0 : dResult / n;
     }
@@ -67,7 +67,7 @@ namespace Maths
          */
         
         Utilities::requireException(iPivot < dData.size(), "Pivot is over the size of the data", "Statistics::Partition");
-        double dPivotValue = dData[iPivot];
+        double dPivotValue = dData.at(iPivot);
         std::size_t iN = dData.size();
         std::vector<double> dCopy = dData;
         
@@ -77,12 +77,12 @@ namespace Maths
         
         for (std::size_t i = 0 ; i < iN ; ++i)
         {
-            if (dData[i] < dPivotValue)
+            if (dData.at(i) < dPivotValue)
             {
-                std::swap(dCopy[iStoreIndex], dCopy[i]);
+                std::swap(dCopy.at(iStoreIndex), dCopy.at(i));
                 iStoreIndex++;
             }
-            std::swap(dCopy.back(), dCopy[iStoreIndex]);
+            std::swap(dCopy.back(), dCopy.at(iStoreIndex));
         }
         return iStoreIndex;
     }
@@ -139,7 +139,7 @@ namespace Maths
         double dMean = 0.0, dVariance = 0.0, dElementLoc;
         for (std::size_t i = 0 ; i < n ; ++i)
         {
-            dElementLoc = v[i];
+            dElementLoc = v.at(i);
             dMean += dElementLoc;
             dVariance += dElementLoc * dElementLoc;
         }
@@ -163,11 +163,11 @@ namespace Maths
     {
         std::size_t iN = dData.size();
         std::vector<double> dResults(iN);
-        dResults[0] = dData[0];
+        dResults.at(0) = dData.at(0);
         
         for (std::size_t i = 1 ; i < iN ; ++i)
         {
-            dResults[i] = 1.0 / (i + 1.0) * dData[i] + i / (i + 1.0) * dResults[i - 1];
+            dResults.at(i) = 1.0 / (i + 1.0) * dData.at(i) + i / (i + 1.0) * dResults.at(i - 1);
         }
         return dResults;
     }
@@ -181,8 +181,8 @@ namespace Maths
         
         for (std::size_t i = 1 ; i < iN ; ++i)
         {
-            dMean = 1.0 / (i + 1.0) * dData[i] + i / (i + 1.0) * dMean;
-            dResults[i] = dResults[i - 1] + (dData[i] - dMean) * (dData[i] - dMean);
+            dMean = 1.0 / (i + 1.0) * dData.at(i) + i / (i + 1.0) * dMean;
+            dResults.at(i) = dResults.at(i-1) + (dData.at(i) - dMean) * (dData.at(i) - dMean);
         }
         return dResults;
     }
@@ -191,14 +191,14 @@ namespace Maths
     {
         std::size_t iN = dData.size();
         std::vector<double> dResults(iN);
-        double dMean = dData[0];
-        dResults[0] = 0;
+        double dMean = dData.at(0);
+        dResults.at(0) = 0;
         
         for (std::size_t i = 1 ; i < iN ; ++i)
         {
-            dMean = 1.0 / (i + 1.0) * dData[i] + i / (i + 1.0) * dMean;
-            dResults[i] = dResults[i - 1] * dResults[i - 1] + (dData[i] - dMean) * (dData[i] - dMean);
-            dResults[i] = sqrt(dResults[i]);
+            dMean = 1.0 / (i + 1.0) * dData.at(i) + i / (i + 1.0) * dMean;
+            dResults.at(i) = dResults[i - 1] * dResults.at(i-1) + (dData.at(i) - dMean) * (dData.at(i) - dMean);
+            dResults.at(i) = sqrt(dResults.at(i));
         }
         return dResults;
     }
@@ -211,12 +211,12 @@ namespace Maths
         {
             if (dQuantile == 1.0 || dQuantile == 0.0)
             {
-                return dQuantile == 0.0 ? dDataCopy[0] : dDataCopy.back();
+                return dQuantile == 0.0 ? dDataCopy.at(0) : dDataCopy.back();
             }
             std::size_t iNElmts = dDataCopy.size(), iElmtQuantile = (std::size_t)floor(dQuantile * iNElmts);
             double dElmtQuantile = dQuantile * iNElmts - iElmtQuantile;
             
-            return dElmtQuantile * dDataCopy[iElmtQuantile] + (1 - dElmtQuantile) * dDataCopy[iElmtQuantile + 1];
+            return dElmtQuantile * dDataCopy.at(iElmtQuantile) + (1 - dElmtQuantile) * dDataCopy.at(iElmtQuantile + 1);
         }
         else
         {
@@ -230,23 +230,23 @@ namespace Maths
         std::vector<std::pair<double, std::size_t> > dResults(iNBuckets);
         std::sort(dDataCopy.begin(), dDataCopy.end());
         
-        double dMin = dDataCopy[0], dMax = dDataCopy.back();
+        double dMin = dDataCopy.at(0), dMax = dDataCopy.back();
         double h = (dMax - dMin) / iNBuckets;
         
         std::size_t iBucketBeginNew = 0;
         
         for (std::size_t iBucket = 0 ; iBucket < iNBuckets ; ++iBucket)
         {
-            dResults[iBucket].first = dMin + iBucket * h;
+            dResults.at(iBucket).first = dMin + iBucket * h;
         }
         
         for (std::size_t iPoint = 0 ; iPoint < dDataCopy.size() - 1 ; ++iPoint)
         {
             for (std::size_t iBucket = iBucketBeginNew ; iBucket < iNBuckets ; ++iBucket)
             {
-                if (dDataCopy[iPoint] >= dMin + iBucket * h && dDataCopy[iPoint] < dMin + (iBucket + 1) * h)
+                if (dDataCopy.at(iPoint) >= dMin + iBucket * h && dDataCopy.at(iPoint) < dMin + (iBucket + 1) * h)
                 {
-                    dResults[iBucket].second++;
+                    dResults.at(iBucket).second++;
                     //  We can restrict the search to the last bucket since the vector in sorted
                     iBucketBeginNew = iBucket;
                     break;
@@ -269,16 +269,16 @@ namespace Maths
         
         for (std::size_t iBucket = 0 ; iBucket < iNBuckets ; ++iBucket)
         {
-            dResults[iBucket].first = dPoints[iBucket];
+            dResults.at(iBucket).first = dPoints.at(iBucket);
         }
         
         for (std::size_t iPoint = 0 ; iPoint < dDataCopy.size() - 1 ; ++iPoint)
         {
             for (std::size_t iBucket = iBucketBeginNew ; iBucket < iNBuckets - 1 ; ++iBucket)
             {
-                if (dDataCopy[iPoint] >= dPoints[iBucket] && dDataCopy[iPoint] < dPoints[iBucket + 1])
+                if (dDataCopy.at(iPoint) >= dPoints.at(iBucket) && dDataCopy.at(iPoint) < dPoints.at(iBucket + 1))
                 {
-                    dResults[iBucket].second++;
+                    dResults.at(iBucket).second++;
                     //  We can restrict the search to the last bucket since the vector in sorted
                     iBucketBeginNew = iBucket;
                     break;

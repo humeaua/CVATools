@@ -26,7 +26,7 @@ namespace Maths
         {
             for (std::size_t i = 0 ; i < iNObservations ; ++i)
             {
-                dProjResponse[iVar] += sRegressionData(i, iVar) * sResponse[i];
+                dProjResponse.at(iVar) += sRegressionData(i, iVar) * sResponse.at(i);
             }
         }
         
@@ -35,7 +35,7 @@ namespace Maths
         {
             for (std::size_t jVar = 0 ; jVar < iNVars ; ++iVar)
             {
-                dRegCoefs[iVar] += sInverse(iVar, jVar) * dProjResponse[iVar];
+                dRegCoefs.at(iVar) += sInverse(iVar, jVar) * dProjResponse.at(iVar);
             }
         }
         return dRegCoefs;
@@ -59,9 +59,9 @@ namespace Maths
             {
                 for (std::size_t i = 0 ; i < iNObservations ; ++i)
                 {
-                    dProjResponse[iVar] += sRegressionData(i, iVar) * sResponse[i];
+                    dProjResponse.at(iVar) += sRegressionData(i, iVar) * sResponse.at(i);
                 }
-                dProjResponse[iVar] /= iNObservations;
+                dProjResponse.at(iVar) /= iNObservations;
             }
         }
         else if (iNVars == iNVarsReg + 1)
@@ -70,11 +70,11 @@ namespace Maths
             {
                 for (std::size_t i = 0 ; i < iNObservations ; ++i)
                 {
-                    dProjResponse[iVar] += sRegressionData(i, iVar) * sResponse[i];
+                    dProjResponse.at(iVar) += sRegressionData(i, iVar) * sResponse.at(i);
                 }
-                dProjResponse[iVar] /= iNObservations;
+                dProjResponse.at(iVar) /= iNObservations;
             }
-            dProjResponse[iNVars - 1] = Statistics::Mean(sResponse);
+            dProjResponse.at(iNVars - 1) = Statistics::Mean(sResponse);
         }
         else
         {
@@ -98,7 +98,7 @@ namespace Maths
         {
             for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
             {
-                dPredictedValues[i] += sRegressionData(i, iVar) * dRegCoefs[iVar];
+                dPredictedValues.at(i) += sRegressionData(i, iVar) * dRegCoefs.at(iVar);
             }
         }
         return dPredictedValues;

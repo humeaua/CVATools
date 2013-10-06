@@ -124,11 +124,11 @@ namespace Finance
             DVector dCurrentValues(4,0.0);
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
-                dCurrentValues[0] = dS1_;
-                dCurrentValues[1] = dS2_;
-                dCurrentValues[2] = 0.0;
-                dCurrentValues[3] = dR0_;
-                sResult.Put(dDates[0], iPath, dCurrentValues);
+                dCurrentValues.at(0) = dS1_;
+                dCurrentValues.at(1) = dS2_;
+                dCurrentValues.at(2) = 0.0;
+                dCurrentValues.at(3) = dR0_;
+                sResult.Put(dDates.at(0), iPath, dCurrentValues);
             }
             
             // Choleski Decomposition of correlation matrix
@@ -143,21 +143,21 @@ namespace Finance
                     double dt = dDates[iDate] - dDates[iDate - 1];
                     for (std::size_t i = 0 ; i < 3 ; ++i)
                     {
-                        dRandomNumbers[i] = dist(eng);
+                        dRandomNumbers.at(i) = dist(eng);
                     }
                     mult(dCorrelatedRN, sCholDec, dRandomNumbers);
                     
-                    dNewShortRate = dOldShortRate * exp(-dA_ * dt) + dB_ * (1.0 - exp(-dA_ * dt)) + dCorrelatedRN[2] * dSigma_ * sqrt((1 - exp(-dA_ * 2.0 * dt)) * 0.5 / dA_);
-                    dNewIntShortRate = dOldIntShortRate + dOldShortRate * (1 - exp(-dA_ * dt)) / dA_ + dB_ * (dt - (1 - exp(-dA_ * dt))/ dA_) +  dCorrelatedRN[2] * dSigma_ / dA_ * sqrt(dt - 2 * (1 - exp(-dA_ * dt)) / dA_ + (1 - exp(-2. * dA_ * dt)) * 0.5 / dA_);
-                    dNewStock1 = dOldStock1 + dNewIntShortRate - dOldIntShortRate - 0.5 * dSigma1_ * dSigma1_ * dt + dSigma1_ * sqrt(dt) * dCorrelatedRN[0];
-                    dNewStock2 = dOldStock2 + dNewIntShortRate - dOldIntShortRate - 0.5 * dSigma2_ * dSigma2_ * dt + dSigma2_ * sqrt(dt) * dCorrelatedRN[1];
+                    dNewShortRate = dOldShortRate * exp(-dA_ * dt) + dB_ * (1.0 - exp(-dA_ * dt)) + dCorrelatedRN.at(2) * dSigma_ * sqrt((1 - exp(-dA_ * 2.0 * dt)) * 0.5 / dA_);
+                    dNewIntShortRate = dOldIntShortRate + dOldShortRate * (1 - exp(-dA_ * dt)) / dA_ + dB_ * (dt - (1 - exp(-dA_ * dt))/ dA_) +  dCorrelatedRN.at(2) * dSigma_ / dA_ * sqrt(dt - 2 * (1 - exp(-dA_ * dt)) / dA_ + (1 - exp(-2. * dA_ * dt)) * 0.5 / dA_);
+                    dNewStock1 = dOldStock1 + dNewIntShortRate - dOldIntShortRate - 0.5 * dSigma1_ * dSigma1_ * dt + dSigma1_ * sqrt(dt) * dCorrelatedRN.at(0);
+                    dNewStock2 = dOldStock2 + dNewIntShortRate - dOldIntShortRate - 0.5 * dSigma2_ * dSigma2_ * dt + dSigma2_ * sqrt(dt) * dCorrelatedRN.at(1);
                     
-                    dCurrentValues[0] = dNewStock1;
-                    dCurrentValues[1] = dNewStock2;
-                    dCurrentValues[2] = dNewIntShortRate;
-                    dCurrentValues[3] = dNewShortRate;
+                    dCurrentValues.at(0) = dNewStock1;
+                    dCurrentValues.at(1) = dNewStock2;
+                    dCurrentValues.at(2) = dNewIntShortRate;
+                    dCurrentValues.at(3) = dNewShortRate;
                     
-                    sResult.Put(dDates[iDate], iPath, dCurrentValues);
+                    sResult.Put(dDates.at(iDate), iPath, dCurrentValues);
                     
                     //  update values
                     dOldStock1 = dNewStock1;

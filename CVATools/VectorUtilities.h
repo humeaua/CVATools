@@ -27,7 +27,7 @@ namespace Utilities {
         }
         for (std::size_t i = 0 ; i < copy.size() - 1 ; ++i)
         {
-            if ((value >= copy[i]) && (value < copy[i + 1])) {
+            if ((value >= copy.at(i)) && (value < copy.at(i + 1))) {
                 return static_cast<int>(i);
 			}
         }
@@ -49,7 +49,7 @@ namespace Utilities {
         }
         else if (i < v.size()) 
         {
-            return v[i];
+            return v.at(i);
         }
         else 
         {
@@ -64,8 +64,8 @@ namespace Utilities {
         
         for (std::size_t i = 0 ; i < VectorOfPair.size() ; ++i)
         {
-            PairOfVector.first.push_back(VectorOfPair[i].first);
-            PairOfVector.second.push_back(VectorOfPair[i].second);
+            PairOfVector.first.push_back(VectorOfPair.at(i).first);
+            PairOfVector.second.push_back(VectorOfPair.at(i).second);
         }
         return PairOfVector;
     };
@@ -75,7 +75,7 @@ namespace Utilities {
         //  Check if the value is in the vector
         for (std::size_t i = 0 ; i < vect.size(); ++i)
         {
-            if (vect[i] == value)
+            if (vect.at(i) == value)
             {
                 *iWhere = i;
                 return true;
@@ -95,7 +95,7 @@ namespace Utilities {
         
         for (std::size_t i = 0 ; i < vect1.size() ; ++i)
         {
-            if (fabs(vect1[i] - vect2[i]) > tolerance)
+            if (fabs(vect1.at(i) - vect2.at(i)) > tolerance)
             {
                 return false;
             }
@@ -113,7 +113,7 @@ namespace Utilities {
         std::vector<T> result;
         for (std::size_t i = iBegin ; i <= iEnd ; ++i)
         {
-            result.push_back(vect[i]);
+            result.push_back(vect.at(i));
         }
         return result;
     }
@@ -126,7 +126,7 @@ namespace Utilities {
         if (vect.empty())
             return NULL;
         else
-            return &vect[0]; 
+            return &(vect.at(0));
     }
 
     //  Function to get the index of a variable in a vector
@@ -135,7 +135,7 @@ namespace Utilities {
     {
         for (std::size_t i = 0 ; i < vect.size() ; ++i)
         {
-            if (vect[i] == value)
+            if (vect.at(i) == value)
                 return i;
         }
         return -1;

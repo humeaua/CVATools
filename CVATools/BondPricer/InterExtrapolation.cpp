@@ -52,24 +52,24 @@ namespace Utilities
                 if (yp1 > 0.99e30)
                 {
                     //The lower boundary condition is set either to be "natural"
-                    dSecondDerivativeValues_[1] = u[1] = 0.0;
+                    dSecondDerivativeValues_.at(1) = u.at(1) = 0.0;
                 }
                 else 
                 { 
                     //or else to have a specified first derivative.
-                    dSecondDerivativeValues_[1] = -0.5;
-                    u[1]=(3.0/(dVariables_[2]-dVariables_[1]))*((dValues_[2]-dValues_[1])/(dVariables_[2]-dVariables_[1])-yp1);
+                    dSecondDerivativeValues_.at(1) = -0.5;
+                    u.at(1)=(3.0/(dVariables_.at(2)-dVariables_.at(1)))*((dValues_.at(2)-dValues_.at(1))/(dVariables_.at(2)-dVariables_.at(1))-yp1);
                 }
                 
                 for (i=2;i<=n-1;i++) 
                 { 
                     //This is the decomposition loop of the tridiagonal algorithm.
                     //y2 and u are used for temporary storage of the decomposed factors.
-                    sig=(dVariables_[i]-dVariables_[i-1])/(dVariables_[i+1]-dVariables_[i-1]);
-                    p=sig*dSecondDerivativeValues_[i-1]+2.0;
-                    dSecondDerivativeValues_[i]=(sig-1.0)/p;
-                    u[i]=(dValues_[i+1]-dValues_[i])/(dVariables_[i+1]-dVariables_[i]) - (dValues_[i]-dValues_[i-1])/(dVariables_[i]-dVariables_[i-1]);
-                    u[i]=(6.0*u[i]/(dVariables_[i+1]-dVariables_[i-1])-sig*u[i-1])/p;
+                    sig=(dVariables_.at(i)-dVariables_.at(i-1))/(dVariables_.at(i+1)-dVariables_.at(i-1)); // bit weird no ?!
+                    p=sig*dSecondDerivativeValues_.at(i-1)+2.0;
+                    dSecondDerivativeValues_.at(i)=(sig-1.0)/p;
+                    u.at(i)=(dValues_.at(i+1)-dValues_.at(i))/(dVariables_.at(i+1)-dVariables_.at(i)) - (dValues_.at(i)-dValues_.at(i-1))/(dVariables_.at(i)-dVariables_.at(i-1));
+                    u.at(i)=(6.0*u.at(i)/(dVariables_.at(i+1)-dVariables_.at(i-1))-sig*u.at(i-1))/p;
                 }
                 
                 if (ypn > 0.99e30) 
@@ -81,16 +81,16 @@ namespace Utilities
                 { 
                     //or else to have a specified first derivative.
                     qn=0.5;
-                    un=(3.0/(dVariables_[n]-dVariables_[n-1]))*(ypn-(dValues_[n]-dValues_[n-1])/(dVariables_[n]-dVariables_[n-1]));
+                    un=(3.0/(dVariables_.at(n)-dVariables_.at(n-1)))*(ypn-(dValues_.at(n)-dValues_.at(n-1))/(dVariables_.at(n)-dVariables_.at(n-1)));
                 }
-                dSecondDerivativeValues_[n]=(un-qn*u[n-1])/(qn*dSecondDerivativeValues_[n-1]+1.0);
+                dSecondDerivativeValues_.at(n)=(un-qn*u.at(n-1))/(qn*dSecondDerivativeValues_.at(n-1)+1.0);
                 //Set second derivative at edge to 0.0
-                dSecondDerivativeValues_[n] = 0.0;
+                dSecondDerivativeValues_.at(n) = 0.0;
                 
                 //This is the backsubstitution loop of the tridiagonal algorithm
                 for (k=n-1;k>=1;k--) 
                 {
-                    dSecondDerivativeValues_[k]=dSecondDerivativeValues_[k]*dSecondDerivativeValues_[k+1]+u[k]; 
+                    dSecondDerivativeValues_.at(k)=dSecondDerivativeValues_.at(k)*dSecondDerivativeValues_.at(k+1)+u.at(k);
                 }
                 
                 //  Set second derivative at edge to 0
@@ -124,12 +124,12 @@ namespace Utilities
 				
 				for (std::size_t iRunningIndex = 0; iRunningIndex < dVariables_.size(); ++iRunningIndex)
                 {
-					double dRunningVariable = dVariables_[iRunningIndex] ;
+					double dRunningVariable = dVariables_.at(iRunningIndex) ;
 					if (dRunningVariable > dVariable)
                     {
 						if (bUpper)
                         {
-							if (dRunningVariable < dVariables_[iUpperIndex])
+							if (dRunningVariable < dVariables_.at(iUpperIndex))
                             {
 								iUpperIndex = iRunningIndex ;
 							}
@@ -139,7 +139,7 @@ namespace Utilities
 							bUpper = true ;
 							iUpperIndex = iRunningIndex ;
 						}
-						if (!bLower && dRunningVariable > dVariables_[iLowerIndex])
+						if (!bLower && dRunningVariable > dVariables_.at(iLowerIndex))
                         {
 							iLowerIndex = iRunningIndex ;
 						}
@@ -148,7 +148,7 @@ namespace Utilities
                     {
 						if (bLower)
                         {
-							if (dRunningVariable > dVariables_[iLowerIndex])
+							if (dRunningVariable > dVariables_.at(iLowerIndex))
                             {
 								iLowerIndex = iRunningIndex ;
 							}
@@ -158,20 +158,20 @@ namespace Utilities
 							bLower = true ;
 							iLowerIndex = iRunningIndex ;
 						}
-						if (!bUpper && dRunningVariable <= dVariables_[iUpperIndex])
+						if (!bUpper && dRunningVariable <= dVariables_.at(iUpperIndex))
                         {
 							iUpperIndex = iRunningIndex ;
 						}
 					}
 				}
 				
-				if (dVariables_[iUpperIndex] == dVariables_[iLowerIndex])
+				if (dVariables_.at(iUpperIndex) == dVariables_.at(iLowerIndex))
                 {
-					return dValues_[iUpperIndex] ;
+					return dValues_.at(iUpperIndex);
 				}
 				else
                 {
-					dResult = dValues_[iLowerIndex] + (dValues_[iUpperIndex] - dValues_[iLowerIndex]) * (dVariable - dVariables_[iLowerIndex]) / (dVariables_[iUpperIndex] - dVariables_[iLowerIndex]) ;
+					dResult = dValues_.at(iLowerIndex) + (dValues_.at(iUpperIndex) - dValues_.at(iLowerIndex)) * (dVariable - dVariables_.at(iLowerIndex)) / (dVariables_.at(iUpperIndex) - dVariables_.at(iLowerIndex)) ;
 					return dResult ;
 				}
 			}
@@ -194,7 +194,7 @@ namespace Utilities
                 if (iValue == -1)
                 {
                     // Extrapolation
-                    if (dVariable > dVariables_[iNValues_ - 1])
+                    if (dVariable > dVariables_.at(iNValues_ - 1))
                     {
                         iValue1 = static_cast<int>(iNValues_ - 2);
                         iValue2 = static_cast<int>(iNValues_ - 1);
@@ -229,22 +229,22 @@ namespace Utilities
                 {
                     case LIN:
                     {
-                        dResult = dValues_[iValue1] + (dValues_[iValue2] - dValues_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]) * (dVariable - dVariables_[iValue1]);
+                        dResult = dValues_.at(iValue1) + (dValues_.at(iValue2) - dValues_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * (dVariable - dVariables_.at(iValue1));
                         break;
                     }
                     case NEAR:
                     {
-                        dResult = iValue2 == (int)iNValues_ || iValue2 == 0 ? dValues_[iValue2] : std::abs(dVariable - dVariables_[iValue1]) < std::abs(dVariable - dVariables_[iValue2]) ? dValues_[iValue1] : dValues_[iValue2];
+                        dResult = iValue2 == (int)iNValues_ || iValue2 == 0 ? dValues_.at(iValue2) : std::abs(dVariable - dVariables_.at(iValue1)) < std::abs(dVariable - dVariables_.at(iValue2)) ? dValues_.at(iValue1) : dValues_.at(iValue2);
                         break;
                     }
                     case RIGHT_CONTINUOUS:
                     {
-                        dResult = iValue2 == (int)iNValues_? dValues_[iValue2 - 1] : dValues_[iValue2];
+                        dResult = iValue2 == (int)iNValues_? dValues_.at(iValue2 - 1) : dValues_.at(iValue2);
                         break;
                     }
                     case LEFT_CONTINUOUS:
                     {
-                        dResult = iValue1 == -1 ? dValues_[0] : dValues_[iValue1];
+                        dResult = iValue1 == -1 ? dValues_.at(0) : dValues_.at(iValue1);
                         break;
                     }
                     case SPLINE_CUBIC:
@@ -266,7 +266,7 @@ namespace Utilities
                         while (khi-klo > 1) 
                         {
                             k=(khi+klo) >> 1;
-                            if (dVariables_[k] > dVariable)
+                            if (dVariables_.at(k) > dVariable)
                                 khi=k;
                             else 
                                 klo=k;
@@ -274,20 +274,20 @@ namespace Utilities
                         //klo and khi now bracket the input value of x.
                         //khi = iValue2
                         //  klo = iValue1
-                        h=dVariables_[khi]-dVariables_[klo];
+                        h=dVariables_.at(khi)-dVariables_.at(klo);
                         //  The variables must be distinct
                         
-                        a=(dVariables_[khi]-dVariable)/h;
-                        b=(dVariable-dVariables_[klo])/h; 
+                        a=(dVariables_.at(khi)-dVariable)/h;
+                        b=(dVariable-dVariables_.at(klo))/h;
                         //Cubic spline polynomial is now evaluated.
                         if (dVariable < dVariables_.back())
                         {
-                            dResult=a*dValues_[klo]+b*dValues_[khi]+((a*a*a-a)*dSecondDerivativeValues_[klo]+(b*b*b-b)*dSecondDerivativeValues_[khi])*(h*h)/6.0;
+                            dResult=a*dValues_.at(klo)+b*dValues_.at(khi)+((a*a*a-a)*dSecondDerivativeValues_.at(klo)+(b*b*b-b)*dSecondDerivativeValues_.at(khi))*(h*h)/6.0;
                         }
                         else
                         {
                             std::size_t n = dVariables_.size();
-                            dResult = dValues_.back() + (dVariable - dVariables_.back()) * (-(dValues_[n - 1] - dValues_[n - 2])/(dVariables_[n - 1] - dVariables_[n - 2]) + (dSecondDerivativeValues_[n - 2]) /(6.0 * (dVariables_[n - 1] - dVariables_[n - 2])) + (dSecondDerivativeValues_[n - 1]) /(3.0 * (dVariables_[n - 1] - dVariables_[n - 2])));
+                            dResult = dValues_.back() + (dVariable - dVariables_.back()) * (-(dValues_.at(n - 1) - dValues_.at(n - 2))/(dVariables_.at(n - 1) - dVariables_.at(n - 2)) + (dSecondDerivativeValues_.at(n - 2)) /(6.0 * (dVariables_.at(n - 1) - dVariables_.at(n - 2))) + (dSecondDerivativeValues_.at(n - 1)) /(3.0 * (dVariables_.at(n - 1) - dVariables_.at(n - 2))));
                         }
                         break;
                     }
@@ -299,7 +299,7 @@ namespace Utilities
 #define EPSILON_RAW 1e-07
 #endif
                         Utilities::requireException(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small","InterExtrapolation1D::Interp1");
-                        dResult = 1.0 / dVariable * ((dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue2] * dVariables_[iValue2] + (dVariables_[iValue2] - dVariable) / (dVariables_[iValue2] - dVariables_[iValue1]) * dValues_[iValue1] * dVariables_[iValue1] );
+                        dResult = 1.0 / dVariable * ((dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue2) * dVariables_.at(iValue2) + (dVariables_.at(iValue2) - dVariable) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue1) * dVariables_.at(iValue1) );
                         break;
                     }
                     case HERMITE_SPLINE_CUBIC:
@@ -307,21 +307,21 @@ namespace Utilities
                         double dm_1 = 0.0, dm_2 = 0.0;
                         if (iValue2 == iNValues_ - 1)
                         {
-                            dm_1 = (dValues_.back() - dValues_[iNValues_ - 2]) / (dVariables_.back() - dVariables_[iNValues_ - 2]);
+                            dm_1 = (dValues_.back() - dValues_.at(iNValues_ - 2)) / (dVariables_.back() - dVariables_.at(iNValues_ - 2));
                         }
                         else if (iValue1 == 0)
                         {
-                            dm_2 = (dValues_[1] - dValues_[0]) / (dVariables_[1] - dVariables_[0]);
+                            dm_2 = (dValues_.at(1) - dValues_.at(0)) / (dVariables_.at(1) - dVariables_.at(0));
                         }
                         else
                         {
-                            dm_1 = (dValues_[iValue1 + 1] - dValues_[iValue1]) / (dVariables_[iValue1 + 1] - dVariables_[iValue1]);
-                            dm_2 = (dValues_[iValue2 + 1] - dValues_[iValue2]) / (dVariables_[iValue2 + 1] - dVariables_[iValue2]);
+                            dm_1 = (dValues_.at(iValue1 + 1) - dValues_.at(iValue1)) / (dVariables_.at(iValue1 + 1) - dVariables_.at(iValue1));
+                            dm_2 = (dValues_.at(iValue2 + 1) - dValues_.at(iValue2)) / (dVariables_.at(iValue2 + 1) - dVariables_.at(iValue2));
                         }
                         
-                        double t = (dVariable - dVariables_[iValue1]) / (dVariables_[iValue2] - dVariables_[iValue1]);
+                        double t = (dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1));
                         
-                        return (2 * t * t * t - 3 * t * t + 1) * dValues_[iValue1] + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_[iValue2] - dVariables_[iValue1]) + (-2. * t * t * t + 3. * t * t) * dValues_[iValue2] + (t* t * t - t* t) * dm_2 * (dVariables_[iValue2] - dVariables_[iValue1]);
+                        return (2 * t * t * t - 3 * t * t + 1) * dValues_.at(iValue1) + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1)) + (-2. * t * t * t + 3. * t * t) * dValues_.at(iValue2) + (t* t * t - t* t) * dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
                         break;
                     }
                         

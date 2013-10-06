@@ -19,7 +19,7 @@ namespace Maths
         double dtemp = 0.0, dX = 0.0, dX2 = 0.0;
         for (std::size_t iPath = 0 ; iPath < iNPaths_ ; ++iPath)
         {
-            dtemp = dFinalUnderlying[iPath];
+            dtemp = dFinalUnderlying.at(iPath);
             dX += dtemp;
             dX2 += dtemp * dtemp;
         }
@@ -42,9 +42,9 @@ namespace Maths
         double dY = 0.0, dXY = 0.0, dtemp = 0.0;
         for (std::size_t iPath = 0 ; iPath < iNPaths_ ; ++iPath)
         {
-            dtemp = dFinalUnderlying[iPath];
-            dXY += dtemp * dPayoff[iPath];
-            dY += dPayoff[iPath];
+            dtemp = dFinalUnderlying.at(iPath);
+            dXY += dtemp * dPayoff.at(iPath);
+            dY += dPayoff.at(iPath);
         }
         dXY /= iNPaths_;
         dY /= iNPaths_;
@@ -69,7 +69,7 @@ namespace Maths
         
         for (std::size_t iPath = 0 ; iPath < iNPaths_ ; ++iPath)
         {
-            dPayoff[iPath] = sPayoff.pay(dFinalUnderlying[iPath]);
+            dPayoff.at(iPath) = sPayoff.pay(dFinalUnderlying.at(iPath));
         }
         
         std::vector<double> bla = LeastSquareRegression::ComputeRegCoefs(sRegressionData, dPayoff);

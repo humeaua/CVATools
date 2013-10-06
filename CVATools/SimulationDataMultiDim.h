@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include "Type.h"
+#include "Vector.h"
 
 namespace Utilities
 {
@@ -31,12 +32,12 @@ namespace Utilities
         virtual ~SimulationDataMultiDim();
         
         //  Put function
-        virtual void Put(double dDate, std::size_t iPath, DVector dValue);
+        virtual void Put(double dDate, std::size_t iPath, const Utilities::MyVector<double>& dValue);
         virtual void Put(double dDate, std::size_t iPath, std::size_t iDimension, double dValue);
         
         // Getter
-        virtual std::map<double, std::map<std::size_t, DVector> > GetData() const;
-        virtual DVector GetData(double dDate, std::size_t iPath) const;
+        virtual std::map<double, std::map<std::size_t, DVector > > GetData() const;
+        virtual Utilities::MyVector<double> GetData(double dDate, std::size_t iPath) const;
         
         //  Apply functions
         virtual void Apply(double (*func)(double));

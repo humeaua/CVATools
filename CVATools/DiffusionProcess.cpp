@@ -68,7 +68,7 @@ namespace Finance
             std::tr1::ranlux64_base_01 eng; // core engine class
             eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
-            double dDate0 = dDates[0];
+            double dDate0 = dDates.at(0);
             sResult.AddDate(dDate0);
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {

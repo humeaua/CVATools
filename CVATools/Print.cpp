@@ -32,7 +32,7 @@ namespace Utilities
             for (std::size_t i = 0 ; i < dData.size() ; ++i)
             {
                 //  Print Data in the file with the given precision
-                fprintf(sFile, ("%."+ cPrecision_ + "lf").c_str(), dData[i]);
+                fprintf(sFile, ("%."+ cPrecision_ + "lf").c_str(), dData.at(i));
                 fprintf(sFile, "\n");
             }
             // Close the file
@@ -50,7 +50,7 @@ namespace Utilities
             for (std::size_t i = 0 ; i < dData.size() ; ++i)
             {
                 //  Print Data in the file with the given precision
-                fprintf(sFile, ("%."+ cPrecision_ + "lf,%lu").c_str(), dData[i].first, dData[i].second);
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,%lu").c_str(), dData.at(i).first, dData.at(i).second);
                 fprintf(sFile, "\n");
             }
             // Close the file
@@ -68,7 +68,7 @@ namespace Utilities
             for (std::size_t i = 0 ; i < dData.size() ; ++i)
             {
                 //  Print Data in the file with the given precision
-                fprintf(sFile, ("%."+ cPrecision_ + "lf,%."+ cPrecision_ + "lf").c_str(), dData[i].first, dData[i].second);
+                fprintf(sFile, ("%."+ cPrecision_ + "lf,%."+ cPrecision_ + "lf").c_str(), dData.at(i).first, dData.at(i).second);
                 fprintf(sFile, "\n");
             }
             // Close the file
@@ -89,7 +89,7 @@ namespace Utilities
                 //fprintf(sFile, ("%."+ cPrecision_ + "lf,%."+ cPrecision_ + "lf").c_str(), dData[i].first, dData[i].second);
                 for (std::size_t j = 0 ; j < dData[i].size() ; ++j)
                 {
-                    fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), dData[i][j]);
+                    fprintf(sFile, ("%."+ cPrecision_ + "lf,").c_str(), dData.at(i).at(j));
                 }
                 fprintf(sFile, "\n");
             }

@@ -75,7 +75,7 @@ namespace Finance
             double dOldValue, dNewValue;
             for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
             {
-                double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
+                double t0 = dDates.at(iDate - 1), dt = dDates.at(iDate) - t0;
                 sResult.AddDate(dDates[iDate]);
                 
                 for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)

@@ -24,9 +24,9 @@ namespace Finance
         PayoffMargrabe(dK),
         dT_(dT),
         DiffusionProcessMultiDim(3, sCorrelationMatrix, dInitialValues, std::vector<Processes::StochProcessSimulation>(3, Processes::StochProcessSimulation())),
-        dS1_(dInitialValues[0]),
-        dS2_(dInitialValues[1]),
-        dR0_(dInitialValues[2]),
+        dS1_(dInitialValues.at(0)),
+        dS2_(dInitialValues.at(1)),
+        dR0_(dInitialValues.at(2)),
         dSigma1_(dSigma1),
         dSigma2_(dSigma2)
         {
@@ -50,9 +50,9 @@ namespace Finance
         PayoffMargrabe(dK),
         dT_(dT),
         DiffusionProcessMultiDim(3, Utilities::Matrix(3, 3), dInitialValues, std::vector<Processes::StochProcessSimulation>(3, Processes::StochProcessSimulation())),
-        dS1_(dInitialValues[0]),
-        dS2_(dInitialValues[1]),
-        dR0_(dInitialValues[2]),
+        dS1_(dInitialValues.at(0)),
+        dS2_(dInitialValues.at(1)),
+        dR0_(dInitialValues.at(2)),
         dSigma1_(dSigma1),
         dSigma2_(dSigma2)
         {
@@ -79,9 +79,9 @@ namespace Finance
         PayoffMargrabe(dK),
         dT_(dT),
         DiffusionProcessMultiDim(3, sCorrelationMatrix, dInitialValues, sSimulationParams),
-        dS1_(dInitialValues[0]),
-        dS2_(dInitialValues[1]),
-        dR0_(dInitialValues[2]),
+        dS1_(dInitialValues.at(0)),
+        dS2_(dInitialValues.at(1)),
+        dR0_(dInitialValues.at(2)),
         dSigma1_(dSigma1),
         dSigma2_(dSigma2)
         {
@@ -93,9 +93,9 @@ namespace Finance
         PayoffMargrabe(dK),
         dT_(dT),
         DiffusionProcessMultiDim(3, Utilities::Matrix(3, 3), dInitialValues, sSimulationParams),
-        dS1_(dInitialValues[0]),
-        dS2_(dInitialValues[1]),
-        dR0_(dInitialValues[2]),
+        dS1_(dInitialValues.at(0)),
+        dS2_(dInitialValues.at(1)),
+        dR0_(dInitialValues.at(2)),
         dSigma1_(dSigma1),
         dSigma2_(dSigma2)
         {

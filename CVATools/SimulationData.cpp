@@ -31,7 +31,7 @@ namespace Utilities
         requireException(i < iNObservations_, "Observation index is out of bounds", "SimulationData::operator (size_t,size_t)");
         requireException(j < iNVars_, "Variable index is out of bounds", "SimulationData::operator (size_t,size_t)");
         
-        return dData_[i + j * iNObservations_];
+        return dData_.at(i + j * iNObservations_);
     }
     
     double& SimulationData::operator ()(size_t i, size_t j) const
@@ -39,7 +39,7 @@ namespace Utilities
         requireException(i < iNObservations_, "Observation index is out of bounds", "SimulationData::operator (size_t,size_t)");
         requireException(j < iNVars_, "Variable index is out of bounds", "SimulationData::operator (size_t,size_t)");
         
-        return (double&)dData_[i + j * iNObservations_];
+        return (double&)dData_.at(i + j * iNObservations_);
     }
     
     std::vector<double> SimulationData::Get(double dDate) const
@@ -60,7 +60,7 @@ namespace Utilities
             {
                 dLocalMap[iPath] = (*this)(iPath, iDate);
             }
-            mResult[dDates_[iDate]] = dLocalMap;
+            mResult[dDates_.at(iDate)] = dLocalMap;
         }
         return mResult;
     }

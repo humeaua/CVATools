@@ -43,7 +43,7 @@ namespace Finance
 #endif
             if (t < EPSILON_YC)
             {
-                return dValues_[0];
+                return dValues_.at(0);
             }
             if (t > 0)
             {
@@ -76,8 +76,8 @@ namespace Finance
             
             for (std::size_t iPillar = 0 ; iPillar < sYieldCurve.dVariables_.size() ; ++ iPillar)
             {
-                sResult.dVariables_.push_back(sYieldCurve.dVariables_[iPillar] + dVariables_[iPillar]);
-                sResult.dValues_.push_back(sYieldCurve.dValues_[iPillar] + dValues_[iPillar]);
+                sResult.dVariables_.push_back(sYieldCurve.dVariables_.at(iPillar) + dVariables_.at(iPillar));
+                sResult.dValues_.push_back(sYieldCurve.dValues_.at(iPillar) + dValues_.at(iPillar));
             }
             
             return sResult;
@@ -106,7 +106,7 @@ namespace Finance
         {
             for (std::size_t i = 0 ; i < dVariables_.size() ; ++i)
             {
-                dValues_[i] -= dShift * exp(-dVariables_[i] / dTau);
+                dValues_.at(i) -= dShift * exp(-dVariables_.at(i) / dTau);
             }
         }
     }

@@ -33,7 +33,7 @@ namespace Utilities
             // Add dates first because path-by-path simulations (don't know why)
             for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
             {
-                sResult.AddDate(dDates[iDate]);
+                sResult.AddDate(dDates.at(iDate));
             }
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
@@ -41,8 +41,8 @@ namespace Utilities
                 sResult(iPath, 0) = dOldValue;
                 for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
                 {
-                    t0 = dDates[iDate - 1];
-                    dt = dDates[iDate] - t0;
+                    t0 = dDates.at(iDate - 1);
+                    dt = dDates.at(iDate) - t0;
                     dDrift = drift(t0, dOldValue);
                     dVol = SigmaLoc(t0, dOldValue);
                     dOldValue *= exp((dDrift - dVol  * dVol * 0.5) * dt + dVol * sqrt(dt) * dist(eng));

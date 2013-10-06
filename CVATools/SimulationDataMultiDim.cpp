@@ -23,7 +23,7 @@ namespace Utilities
         {
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
-                dData_[dDates[iDate]][iPath] = sEmptyVector;
+                dData_[dDates.at(iDate)][iPath] = sEmptyVector;
             }
         }
     }
@@ -33,7 +33,7 @@ namespace Utilities
     {}
     
     //  Put function
-    void SimulationDataMultiDim::Put(double dDate, std::size_t iPath, DVector dValue)
+    void SimulationDataMultiDim::Put(double dDate, std::size_t iPath, const Utilities::MyVector<double> & dValue)
     {
         if (dData_.count(dDate) != 0)
         {
@@ -51,6 +51,7 @@ namespace Utilities
             dData_[dDate][iPath] = dValue;
         }
     }
+    
     void SimulationDataMultiDim::Put(double dDate, std::size_t iPath, std::size_t iDimension, double dValue)
     {
         if (dData_.count(dDate) != 0)
@@ -68,24 +69,24 @@ namespace Utilities
             }
             else
             {
-                dData_.find(dDate)->second[iPath] = DVector(iDimension + 1);
+                dData_.find(dDate)->second[iPath] = Utilities::MyVector<double>(iDimension + 1, 0.0);
                 dData_.find(dDate)->second[iPath][iDimension] = dValue;
             }
         }
         else
         {
-            dData_[dDate][iPath] = DVector(iDimension + 1);
+            dData_[dDate][iPath] = Utilities::MyVector<double>(iDimension + 1, 0.0);
             dData_[dDate][iPath][iDimension] = dValue;
         }
     }
     
     // Getter
-    std::map<double, std::map<std::size_t, DVector> > SimulationDataMultiDim::GetData() const
+    std::map<double, std::map<std::size_t, DVector > > SimulationDataMultiDim::GetData() const
     {
         return dData_;
     }
     
-    DVector SimulationDataMultiDim::GetData(double dDate, std::size_t iPath) const
+    Utilities::MyVector<double> SimulationDataMultiDim::GetData(double dDate, std::size_t iPath) const
     {
         if (dData_.count(dDate) != 0)
         {
@@ -116,7 +117,7 @@ namespace Utilities
             {
                 for (std::size_t iDim = 0 ; iDim < itPaths->second.size() ; ++iDim)
                 {
-                    itPaths->second[iDim] = func(itPaths->second[iDim]);
+                    itPaths->second.at(iDim) = func(itPaths->second.at(iDim));
                 }
             }
         }

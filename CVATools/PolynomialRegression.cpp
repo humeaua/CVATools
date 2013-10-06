@@ -19,11 +19,11 @@ namespace Maths
         for (std::size_t iVar = 0 ; iVar < dRegressionPower.size() ; ++iVar)
         {
             std::vector<std::size_t> iVect(4, 0);
-            iVect[0] = iVect[1] = iVar;
-            iVect[3] = 0;
-            for (std::size_t iPower = 1 ; iPower < dRegressionPower[iVar] ; ++iPower)
+            iVect.at(0) = iVect.at(1) = iVar;
+            iVect.at(3) = 0;
+            for (std::size_t iPower = 1 ; iPower < dRegressionPower.at(iVar) ; ++iPower)
             {
-                iVect[2] = iPower;
+                iVect.at(2) = iPower;
                 sPowerAndRegVariables.push_back(iVect);
             }
         }
@@ -34,14 +34,14 @@ namespace Maths
                 for (std::size_t jVar = iVar + 1 ; jVar < dRegressionPower.size() ; ++jVar)
                 {
                     std::vector<std::size_t> iVect(4, 0);
-                    iVect[0] = iVar;
-                    iVect[1] = jVar;
-                    for (std::size_t iPower = 1 ; iPower < dRegressionPower[iVar] ; ++iPower)
+                    iVect.at(0) = iVar;
+                    iVect.at(1) = jVar;
+                    for (std::size_t iPower = 1 ; iPower < dRegressionPower.at(iVar) ; ++iPower)
                     {
-                        for (std::size_t jPower = 1 ; jPower < dRegressionPower[jVar] ; ++jPower)
+                        for (std::size_t jPower = 1 ; jPower < dRegressionPower.at(jVar) ; ++jPower)
                         {
-                            iVect[2] = iPower;
-                            iVect[3] = jPower;
+                            iVect.at(2) = iPower;
+                            iVect.at(3) = jPower;
                             sPowerAndRegVariables.push_back(iVect);
                         }
                     }
@@ -54,7 +54,7 @@ namespace Maths
     {
         for (std::size_t i = 0 ; i < sPowerAndRegVariables.size() ; ++i)
         {
-            sPowerAndRegVariables[i].clear();
+            sPowerAndRegVariables.at(i).clear();
         }
         sPowerAndRegVariables.clear();
     }
@@ -76,7 +76,7 @@ namespace Maths
         for (std::size_t i = 0 ; i < cString.size() ; ++i)
         {
             //  may pass this to a more relable c++ version of atoi
-            iRegressionPower[i] = atoi(cString[i].c_str());
+            iRegressionPower.at(i) = atoi(cString.at(i).c_str());
         }
     }
     
@@ -105,7 +105,7 @@ namespace Maths
                 dMatrix[iVar][iNVars] = 0;
                 for (std::size_t i = 0 ; i < iNObservations ; ++i)
                 {
-                    dMatrix[iVar][iNVars] += pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][0]),sPolyRegPms_.sPowerAndRegVariables[iVar][2]) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][1]),sPolyRegPms_.sPowerAndRegVariables[iVar][3]);
+                    dMatrix[iVar][iNVars] += pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(0)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(2)) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(1)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(3));
                 }
                 dMatrix[iVar][iNVars] /= iNObservations;
                 dMatrix[iNVars][iVar] = dMatrix[iVar][iNVars];
@@ -117,7 +117,7 @@ namespace Maths
             dMatrix[iVar][iVar] = 0;
             for (std::size_t i = 0 ; i < iNObservations ; ++i)
             {
-                double dVar = pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][0]),sPolyRegPms_.sPowerAndRegVariables[iVar][2]) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][1]),sPolyRegPms_.sPowerAndRegVariables[iVar][3]);
+                double dVar = pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(0)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(2)) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(1)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(3));
                 dMatrix[iVar][iVar] += dVar * dVar;
             }
             dMatrix[iVar][iVar] /= iNObservations;
@@ -130,8 +130,8 @@ namespace Maths
                 dMatrix[iVar][jVar] = 0;
                 for (std::size_t i = 0 ; i < iNObservations ; ++i)
                 {
-                    double dVar1 = pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][0]),sPolyRegPms_.sPowerAndRegVariables[iVar][2]) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][1]),sPolyRegPms_.sPowerAndRegVariables[iVar][3]),
-                    dVar2 = pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[jVar][0]),sPolyRegPms_.sPowerAndRegVariables[jVar][2]) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[jVar][1]),sPolyRegPms_.sPowerAndRegVariables[jVar][3]);
+                    double dVar1 = pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(0)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(2)) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(1)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(3)),
+                    dVar2 = pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(0)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(2)) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(1)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(3));
                     dMatrix[iVar][jVar] += dVar1 * dVar2;
                 }
                 dMatrix[iVar][jVar] /= iNObservations;
@@ -160,11 +160,11 @@ namespace Maths
         {
             if (bAddConstantInRegression_)
             {
-                dPredictedValues[i] = dRegCoefs.back();
+                dPredictedValues.at(i) = dRegCoefs.back();
             }
             for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
             {
-                dPredictedValues[i] += pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][0]),sPolyRegPms_.sPowerAndRegVariables[iVar][2]) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables[iVar][1]),sPolyRegPms_.sPowerAndRegVariables[iVar][3]) * dRegCoefs[iVar];
+                dPredictedValues.at(i) += pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(0)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(2)) * pow(sRegressionData(i,sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(1)),sPolyRegPms_.sPowerAndRegVariables.at(iVar).at(3)) * dRegCoefs.at(iVar);
             }
         }
         return dPredictedValues;

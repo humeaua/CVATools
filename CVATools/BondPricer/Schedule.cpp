@@ -38,7 +38,7 @@ namespace Finance
                 sSchedule_.push_back(sEvent);
                 
                 // Vect of coverage from today
-                class Coverage sCoverageFromToday(eBasis, sTodayDate, sCurrentEnd);
+                Coverage sCoverageFromToday(eBasis, sTodayDate, sCurrentEnd);
                 dCoverageFromToday_.push_back(sCoverageFromToday.ComputeCoverage());
                 
                 //  Update current

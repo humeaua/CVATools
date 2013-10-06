@@ -21,7 +21,7 @@ namespace Maths
         double dRes = 0;
         for (std::size_t i = 0 ; i < dVariables.size() ; ++i)
         {
-            dRes += Generator(dVariables[i]);
+            dRes += Generator(dVariables.at(i));
         }
         return GeneratorInverse(dRes);
     }

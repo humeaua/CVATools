@@ -117,32 +117,32 @@ namespace Utilities
     
     double& Matrix::operator ()(int i, int j)
     {
-        return data[i + rowsize*j];
+        return data.at(i + rowsize*j);
     }
     
     double& Matrix::operator ()(int i, int j) const
     {
-        return (double&)data[i + rowsize*j];
+        return (double&)data.at(i + rowsize*j);
     }
     
     double& Matrix::operator ()(std::size_t i, std::size_t j)
     {
-        return data[i + rowsize*j];
+        return data.at(i + rowsize*j);
     }
     
     double& Matrix::operator ()(std::size_t i, std::size_t j) const
     {
-        return (double&)data[i + rowsize*j];
+        return (double&)data.at(i + rowsize*j);
     }
     
     void Matrix::set(int i, int j, double value)
     {
-        data[i + rowsize*j] = value;
+        data.at(i + rowsize*j) = value;
     }
     
     void Matrix::set(std::size_t i, std::size_t j, double value)
     {
-        data[i + rowsize*j] = value;
+        data.at(i + rowsize*j) = value;
     }
     
     int Matrix::getrows() const
@@ -160,7 +160,7 @@ namespace Utilities
         {
             for (int j=0; j<colsize; j++)
             {
-                std::cout << data[i+rowsize*j] << '\t';
+                std::cout << (*this)(i,j) << '\t';
             }
             std::cout << std::endl;
         }
@@ -203,10 +203,10 @@ namespace Utilities
         
         for (int i = 0 ; i < matrix.getrows() ; ++i)
         {
-            New[i] = 0.;
+            New.at(i) = 0.;
             for (int j = 0 ; j < matrix.getcols() ; ++j)
             {
-                New[i] += matrix(i,j) * Old[j];
+                New.at(i) += matrix(i,j) * Old.at(j);
             }
         }
     }
@@ -281,7 +281,7 @@ namespace Utilities
         std::vector<int> indxc(n,0), indxr(n,0), ipiv(n,0);
         for (j=0;j<n;j++)
         {
-            ipiv[j]=0;
+            ipiv.at(j)=0;
         }
         for (i=0;i<n;i++)
         {
@@ -290,11 +290,11 @@ namespace Utilities
             for (j=0;j<n;j++)
             {
                 //This is the outer loop of the search for a pivot element
-                if (ipiv[j] != 1)
+                if (ipiv.at(j) != 1)
                 {
                     for (k=0;k<n;k++)
                     {
-                        if (ipiv[k] == 0)
+                        if (ipiv.at(k) == 0)
                         {
                             if (fabs(a(j,k)) >= big)
                             {
@@ -306,7 +306,7 @@ namespace Utilities
                     }
                 }
             }
-            ++(ipiv[icol]);
+            ++(ipiv.at(icol));
             //We now have the pivot element, so we interchange rows, if needed, to put the pivot
             //    element on the diagonal. The columns are not physically interchanged, only relabeled:
             //    indxc[i], the column of the ith pivot element, is the ith column that is reduced, while
@@ -325,8 +325,8 @@ namespace Utilities
                     SWAP(b(irow,l),b(icol,l))
                 }
             }
-            indxr[i]=irow; //We are now ready to divide the pivot row by the
-            indxc[i]=icol; //pivot element, located at irow and icol.
+            indxr.at(i)=irow; //We are now ready to divide the pivot row by the
+            indxc.at(i)=icol; //pivot element, located at irow and icol.
             if (a(icol,icol) == 0.0)
                 throw std::runtime_error("gaussj: Singular Matrix");
             pivinv=1.0/a(icol,icol);
@@ -361,11 +361,11 @@ namespace Utilities
         //   columns in the reverse order that the permutation was built up.
         for (l=n-1;l>=0;l--)
         {
-            if (indxr[l] != indxc[l])
+            if (indxr.at(l) != indxc.at(l))
             {
                 for (k=0;k<n;k++)
                 {
-                    SWAP(a(k,indxr[l]),a(k,indxc[l]));
+                    SWAP(a(k,indxr.at(l)),a(k,indxc.at(l)));
                 }
             }
         }
@@ -456,34 +456,34 @@ namespace Utilities
         
         std::vector<std::vector<double> > L(iNRows, std::vector<double>(iNRows, 0.0));
         
-        L[0][0] = sqrt(dMatrix(0,0));
+        L.at(0).at(0) = sqrt(dMatrix(0,0));
         for (int j = 1 ; j < iNRows ; ++j)
         {
-            L[j][0] = dMatrix(j,0) / L[0][0];
+            L.at(j).at(0) = dMatrix(j,0) / L.at(0).at(0);
         }
         for (std::size_t j = 1 ; j < iNRows ; ++j)
         {
             double dSum1 = 0;
             for (std::size_t k = 0 ; k < j ; ++k)
             {
-                dSum1 += L[j][k] * L[j][k];
+                dSum1 += L.at(j).at(k) * L.at(j).at(k);
             }
-            L[j][j] = sqrt(dMatrix(j,j) - dSum1);
+            L.at(j).at(j) = sqrt(dMatrix(j,j) - dSum1);
             for (std::size_t i = j + 1 ; i < iNRows ; ++i)
             {
                 double dSum2 = 0;
                 for (std::size_t k = 0 ; k < j ; ++k)
                 {
-                    dSum2 += L[i][k] * L[j][k];
+                    dSum2 += L.at(i).at(k) * L.at(j).at(k);
                 }
-                L[i][j] = (dMatrix(i,j) - dSum2) / L[j][j];
+                L.at(i).at(j) = (dMatrix(i,j) - dSum2) / L.at(j).at(j);
             }
         }
         for (int i=0;i<iNRows;i++)
         {
             for (int j=0;j<iNRows;j++)
             {
-                dSquareRoot(i,j) = L[i][j];
+                dSquareRoot(i,j) = L.at(i).at(j);
             }
         }
     }
@@ -518,8 +518,8 @@ namespace Utilities
         for (ip=0;ip<n;ip++)
         {
             //Initialize b and d to the diagonal of a
-            b[ip]=EigenValues[ip]=dMatrix(ip,ip);
-            z[ip]=0.0;
+            b.at(ip)=EigenValues.at(ip)=dMatrix(ip,ip);
+            z.at(ip)=0.0;
             //This vector will accumulate terms of the form tapq as in equation (11.1.14).
         }
         *nrot=0;
@@ -553,13 +553,13 @@ namespace Utilities
                 {
                     g=100.0*fabs(dMatrix(ip,iq));
                     //After four sweeps, skip the rotation if the off-diagonal element is small.
-                    if (i > 4 && (float)(fabs(EigenValues[ip])+g) == (float)fabs(EigenValues[ip]) && (float)(fabs(EigenValues[iq])+g) == (float)fabs(EigenValues[iq]))
+                    if (i > 4 && (float)(fabs(EigenValues.at(ip))+g) == (float)fabs(EigenValues.at(ip)) && (float)(fabs(EigenValues.at(iq))+g) == (float)fabs(EigenValues.at(iq)))
                     {
                         dMatrix(ip,iq)=0.0;
                     }
                     else if (fabs(dMatrix(ip,iq)) > tresh)
                     {
-                        h=EigenValues[iq]-EigenValues[ip];
+                        h=EigenValues.at(iq)-EigenValues.at(ip);
                         if ((float)(fabs(h)+g) == (float)fabs(h))
                         {
                             t=(dMatrix(ip,iq))/h; //t = 1/(2θ)
@@ -574,10 +574,10 @@ namespace Utilities
                         s=t*c;
                         tau=s/(1.0+c);
                         h=t*dMatrix(ip,iq);
-                        z[ip] -= h;
-                        z[iq] += h;
-                        EigenValues[ip] -= h;
-                        EigenValues[iq] += h;
+                        z.at(ip) -= h;
+                        z.at(ip) += h;
+                        EigenValues.at(ip) -= h;
+                        EigenValues.at(iq) += h;
                         dMatrix(ip,iq)=0.0;
                         for (j=1;j<=ip-1;j++)
                         {
@@ -604,15 +604,14 @@ namespace Utilities
             }
             for (ip=0;ip<n;ip++)
             {
-                b[ip] += z[ip];
-                EigenValues[ip]=b[ip]; //Update d with the sum of tapq,
-                z[ip]=0.0; //and reinitialize z.
+                b.at(ip) += z.at(ip);
+                EigenValues[ip]=b.at(ip); //Update d with the sum of tapq,
+                z.at(ip)=0.0; //and reinitialize z.
             }
         }
         throw std::runtime_error("Too many iterations in routine jacobi");
     }
     
-    //void eigsrt(float d[], float **v, int n)
     void eigsrt(MyVector<double>& d, Matrix & v)
     //Given the eigenvalues d[1..n] and eigenvectors v[1..n][1..n] as output from jacobi
     //(§11.1) or tqli (§11.3), this routine sorts the eigenvalues into descending order, and rearranges
@@ -621,14 +620,22 @@ namespace Utilities
         int k,j,i;
         float p;
         int n=v.getrows();
-        for (i=0;i<n-1;i++) {
-            p=d[k=i];
+        for (i=0;i<n-1;i++)
+        {
+            p=d.at(k=i);
             for (j=i+1;j<n;j++)
-                if (d[j] >= p) p=d[k=j];
-            if (k != i) {
-                d[k]=d[i];
-                d[i]=p;
-                for (j=1;j<=n;j++) {
+            {
+                if (d.at(j) >= p)
+                {
+                    p=d.at(k=j);
+                }
+            }
+            if (k != i)
+            {
+                d.at(k)=d.at(i);
+                d.at(i)=p;
+                for (j=1;j<=n;j++)
+                {
                     p=v(j,i);
                     v(j,i)=v(j,k);
                     v(j,k)=p;

@@ -27,7 +27,7 @@ namespace Finance
             double dPrice = 0.0;
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
-                dPrice += vCoupons_[iDate].GetCoupon() * pow(1. + r, - GetCoverage(sToday_, vCoupons_[iDate].GetEndDate(), vCoupons_[iDate].GetBasis()));
+                dPrice += vCoupons_.at(iDate).GetCoupon() * pow(1. + r, - GetCoverage(sToday_, vCoupons_.at(iDate).GetEndDate(), vCoupons_[iDate].GetBasis()));
             }
             if (bIsNotionalRepaidBack_)
             {
@@ -41,8 +41,8 @@ namespace Finance
             double dDeriv = 0.0;
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
-                double dCoverage = GetCoverage(sToday_, vCoupons_[iDate].GetEndDate(), vCoupons_[iDate].GetBasis());
-                dDeriv -= dCoverage * vCoupons_[iDate].GetCoupon() * pow(1. + r, - dCoverage - 1);
+                double dCoverage = GetCoverage(sToday_, vCoupons_.at(iDate).GetEndDate(), vCoupons_.at(iDate).GetBasis());
+                dDeriv -= dCoverage * vCoupons_.at(iDate).GetCoupon() * pow(1. + r, - dCoverage - 1);
             }
             if (bIsNotionalRepaidBack_)
             {
@@ -63,9 +63,9 @@ namespace Finance
             double dRes = 0.;
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
-                Utilities::Date::MyDate sEndDate = vCoupons_[iDate].GetEndDate();
-                double dCoverage = Finance::Base::GetCoverage(sToday_, sEndDate, vCoupons_[iDate].GetBasis());
-                dRes += vCoupons_[iDate].GetCoupon() * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sToday_)) + r, -dCoverage);
+                Utilities::Date::MyDate sEndDate = vCoupons_.at(iDate).GetEndDate();
+                double dCoverage = Finance::Base::GetCoverage(sToday_, sEndDate, vCoupons_.at(iDate).GetBasis());
+                dRes += vCoupons_.at(iDate).GetCoupon() * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sToday_)) + r, -dCoverage);
             }
             if (bIsNotionalRepaidBack_)
             {
@@ -82,8 +82,8 @@ namespace Finance
             Utilities::Date::MyDate sToday = Utilities::Date::InitializeTodayDate();
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
-                double dCoverage = GetCoverage(sToday, vCoupons_[iDate].GetEndDate(), vCoupons_[iDate].GetBasis());
-                dDeriv -= dCoverage * vCoupons_[iDate].GetCoupon() * pow(1. + r, - dCoverage - 1);
+                double dCoverage = GetCoverage(sToday, vCoupons_.at(iDate).GetEndDate(), vCoupons_.at(iDate).GetBasis());
+                dDeriv -= dCoverage * vCoupons_.at(iDate).GetCoupon() * pow(1. + r, - dCoverage - 1);
             }
             if (bIsNotionalRepaidBack_)
             {
@@ -107,24 +107,24 @@ namespace Finance
             if (vCoupons_.size() > 0)
             {
                 //  1st coupon
-                if (vCoupons_[0].IsFixedRateCoupon())
+                if (vCoupons_.at(0).IsFixedRateCoupon())
                 {
-                    dPrice += vCoupons_[0].GetCoupon() * vCoupons_[0].GetPayingDateDF(sYieldCurve_);
+                    dPrice += vCoupons_.at(0).GetCoupon() * vCoupons_.at(0).GetPayingDateDF(sYieldCurve_);
                 }
                 else
                 {
                     Finance::Instruments::DF sDF(sYieldCurve_);
-                    dPrice += vCoupons_[0].GetCoupon() * (sDF.DiscountFactor(sToday_) - vCoupons_[0].GetPayingDateDF(sYieldCurve_));
+                    dPrice += vCoupons_.at(0).GetCoupon() * (sDF.DiscountFactor(sToday_) - vCoupons_.at(0).GetPayingDateDF(sYieldCurve_));
                 }
                 for (std::size_t iDate = 1 ; iDate < vCoupons_.size() ; ++iDate)
                 {
                     if (vCoupons_[iDate].IsFixedRateCoupon())
                     {
-                        dPrice += vCoupons_[iDate].GetCoupon() * vCoupons_[iDate].GetPayingDateDF(sYieldCurve_);
+                        dPrice += vCoupons_.at(iDate).GetCoupon() * vCoupons_.at(iDate).GetPayingDateDF(sYieldCurve_);
                     }
                     else
                     {
-                        dPrice += vCoupons_[iDate].GetCoupon() * (vCoupons_[iDate - 1].GetPayingDateDF(sYieldCurve_) - vCoupons_[iDate].GetPayingDateDF(sYieldCurve_));
+                        dPrice += vCoupons_.at(iDate).GetCoupon() * (vCoupons_.at(iDate - 1).GetPayingDateDF(sYieldCurve_) - vCoupons_.at(iDate).GetPayingDateDF(sYieldCurve_));
                     }
                 }
                 if (bIsNotionalRepaidBack_)
@@ -156,29 +156,29 @@ namespace Finance
                 if (vCoupons_.size() > 0)
                 {
                     //  1st coupon
-                    if (vCoupons_[0].GetStartDate() > sTodayDate)
+                    if (vCoupons_.at(0).GetStartDate() > sTodayDate)
                     {
-                        if (vCoupons_[0].IsFixedRateCoupon())
+                        if (vCoupons_.at(0).IsFixedRateCoupon())
                         {
-                            dPrice += vCoupons_[0].GetCoupon() * vCoupons_[0].GetPayingDateDF(sYieldCurve_);
+                            dPrice += vCoupons_.at(0).GetCoupon() * vCoupons_.at(0).GetPayingDateDF(sYieldCurve_);
                         }
                         else
                         {
                             Finance::Instruments::DF sDF(sYieldCurve_);
-                            dPrice += vCoupons_[0].GetCoupon() * (sDF.DiscountFactor(sTodayDate) - vCoupons_[0].GetPayingDateDF(sYieldCurve_));
+                            dPrice += vCoupons_.at(0).GetCoupon() * (sDF.DiscountFactor(sTodayDate) - vCoupons_.at(0).GetPayingDateDF(sYieldCurve_));
                         }
                     }
                     for (std::size_t iDate = 1 ; iDate < vCoupons_.size() ; ++iDate)
                     {
                         if (vCoupons_[iDate].GetStartDate() > sTodayDate)
                         {
-                            if (vCoupons_[iDate].IsFixedRateCoupon())
+                            if (vCoupons_.at(iDate).IsFixedRateCoupon())
                             {
-                                dPrice += vCoupons_[iDate].GetCoupon() * vCoupons_[iDate].GetPayingDateDF(sYieldCurve_);
+                                dPrice += vCoupons_.at(iDate).GetCoupon() * vCoupons_.at(iDate).GetPayingDateDF(sYieldCurve_);
                             }
                             else
                             {
-                                dPrice += vCoupons_[iDate].GetCoupon() * (vCoupons_[iDate - 1].GetPayingDateDF(sYieldCurve_) - vCoupons_[iDate].GetPayingDateDF(sYieldCurve_));
+                                dPrice += vCoupons_.at(iDate).GetCoupon() * (vCoupons_.at(iDate - 1).GetPayingDateDF(sYieldCurve_) - vCoupons_.at(iDate).GetPayingDateDF(sYieldCurve_));
                             }
                         }
                     }

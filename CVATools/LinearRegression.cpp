@@ -74,11 +74,11 @@ namespace Maths
         {
             if (bAddConstantInRegression_)
             {
-                dPredictedValues[i] = dRegCoefs.back();
+                dPredictedValues.at(i) = dRegCoefs.back();
             }
             for (std::size_t iVar = 0 ; iVar < iNVars ; ++iVar)
             {
-                dPredictedValues[i] += sRegressionData(i, iVar) * dRegCoefs[iVar];
+                dPredictedValues.at(i) += sRegressionData(i, iVar) * dRegCoefs.at(iVar);
             }
         }
         return dPredictedValues;

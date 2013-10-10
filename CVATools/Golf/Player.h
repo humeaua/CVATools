@@ -10,9 +10,12 @@
 #define __CVATools__Player__
 
 #include <iostream>
+#include "Tournament.h"
 
 namespace Golf
 {
+    class Tournament;
+    
     class Player
     {
     protected:
@@ -28,6 +31,10 @@ namespace Golf
         
         virtual double Average() const;
         virtual void LoadFromFile(const std::string cFileName);
+        
+        virtual std::pair<std::string, std::string> GetName() const;
+        
+        virtual bool HasPlayed(const Tournament & sTournament) const;
     };
 }
 

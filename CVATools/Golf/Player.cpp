@@ -27,4 +27,14 @@ namespace Golf
     {
         return iNTournamentsPlayed_ < 40 ? dTotalPoints_ / 40.0 : iNTournamentsPlayed_ > 52 ? dTotalPoints_ / 52 : dTotalPoints_ / iNTournamentsPlayed_;
     }
+    
+    std::pair<std::string, std::string> Player::GetName() const
+    {
+        return std::make_pair(cFirstName_, cLastName_);
+    }
+    
+    bool Player::HasPlayed(const Golf::Tournament &sTournament) const
+    {
+        return sTournament.GetResults().count(std::make_pair(cFirstName_, cLastName_)) != 0;
+    }
 }

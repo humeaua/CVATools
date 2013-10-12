@@ -12,6 +12,7 @@
 #include <iostream>
 #include <map>
 #include "Player.h"
+#include "Date.h"
 
 namespace Golf
 {
@@ -22,8 +23,9 @@ namespace Golf
     {
     protected:
         TournamentResults mResults_;
+        Utilities::Date::MyDate sDate_;
     public:
-        Tournament(const TournamentResults & mResults_);
+        Tournament(const TournamentResults & mResults_, const Utilities::Date::MyDate & sDate);
         
         virtual void Add(const Player & sPlayer, double dResult);
         virtual void Add(const std::pair<std::string, std::string> & cPlayerName, double dResult);

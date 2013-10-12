@@ -10,7 +10,7 @@
 
 namespace Golf {
     
-    Tournament::Tournament(const TournamentResults & mResults) : mResults_(mResults)
+    Tournament::Tournament(const TournamentResults & mResults, const Utilities::Date::MyDate & sDate) : mResults_(mResults), sDate_(sDate)
     {}
     
     void Tournament::Add(const Player & sPlayer, double dResult)

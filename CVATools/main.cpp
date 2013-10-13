@@ -33,6 +33,7 @@
 #include <functional>
 #include "StochCorrel.h"
 #include <stack>
+#include "OfficialWorldGolfRankings.h"
 
 #define NUM_THREADS 5
 
@@ -114,6 +115,7 @@ int main()
     std::cout << "19- Random number one step generation" << std::endl;
     std::cout << "20- FileWriter" << std::endl;
     std::cout << "21- Map" << std::endl;
+    std::cout << "22- Golf" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -588,6 +590,19 @@ int main()
         ConvertIntToDouble.at(2) = 2.0;
         
         std::cout << ConvertIntToDouble.size() << std::endl;
+    }
+    else if (iTest == 22)
+    {
+        // Golf
+        Golf::OfficialWorldGolfRankings sOGWR;
+        
+        Utilities::Interp::InterExtrapolation1D sOWGRDiscountCurve = sOGWR.GetOWGRDiscountCurve(), sTennisDiscountCurve = sOGWR.GetTennisDiscountCurve();
+        
+        for (double dT = -2.5 ; dT < 1.0 ; dT += 0.041)
+        {
+            std::cout << dT << ";" << sOWGRDiscountCurve.Interp1D(dT) << ";" << sTennisDiscountCurve.Interp1D(dT) << std::endl;
+        }
+        
     }
     std::cout << "Done !" << std::endl;
 }

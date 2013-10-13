@@ -13,6 +13,12 @@ namespace Golf {
     Tournament::Tournament(const TournamentResults & mResults, const Utilities::Date::MyDate & sDate) : mResults_(mResults), sDate_(sDate)
     {}
     
+    Tournament::~Tournament()
+    {
+        mResults_.clear();
+        sDate_.~MyDate();
+    }
+    
     void Tournament::Add(const Player & sPlayer, double dResult)
     {
         if (mResults_.count(sPlayer.GetName()))

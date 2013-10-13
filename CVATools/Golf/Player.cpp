@@ -18,6 +18,12 @@ namespace Golf
         LoadFromFile(cCSVFile);
     }
     
+    Player::~Player()
+    {
+        cFirstName_.~basic_string();
+        cLastName_.~basic_string();
+    }
+    
     void Player::LoadFromFile(const std::string cFileName)
     {
         //  implementation to come because the file format is not decided yet

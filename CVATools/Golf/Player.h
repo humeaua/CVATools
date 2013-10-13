@@ -29,6 +29,8 @@ namespace Golf
         Player(const std::string & cFirstName, const std::string & cLastName);
         Player(const std::string & cCSVFile);
         
+        virtual ~Player();
+        
         virtual double Average() const;
         virtual void LoadFromFile(const std::string cFileName);
         

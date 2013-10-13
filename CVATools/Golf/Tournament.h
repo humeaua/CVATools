@@ -26,6 +26,7 @@ namespace Golf
         Utilities::Date::MyDate sDate_;
     public:
         Tournament(const TournamentResults & mResults_, const Utilities::Date::MyDate & sDate);
+        virtual ~Tournament();
         
         virtual void Add(const Player & sPlayer, double dResult);
         virtual void Add(const std::pair<std::string, std::string> & cPlayerName, double dResult);

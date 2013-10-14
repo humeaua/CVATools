@@ -39,6 +39,8 @@ namespace Utilities
                                    bool removeEmpty=false,
                                    bool fullMatch=false);
     
+    std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems);
+    
     std::string ToUpper(const std::string & s);
 }
 

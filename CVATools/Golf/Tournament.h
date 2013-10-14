@@ -26,11 +26,15 @@ namespace Golf
         Utilities::Date::MyDate sDate_;
     public:
         Tournament(const TournamentResults & mResults_, const Utilities::Date::MyDate & sDate);
+        Tournament(const std::string & cFileName);
         virtual ~Tournament();
         
         virtual void Add(const Player & sPlayer, double dResult);
         virtual void Add(const std::pair<std::string, std::string> & cPlayerName, double dResult);
         virtual TournamentResults GetResults() const;
+        
+        virtual void LoadFromFile(const std::string & cFileName);
+        virtual void Print(const std::ostream & cout = std::cout) const;
     };
 }
 

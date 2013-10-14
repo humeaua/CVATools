@@ -34,6 +34,7 @@
 #include "StochCorrel.h"
 #include <stack>
 #include "OfficialWorldGolfRankings.h"
+#include "Tournament.h"
 
 #define NUM_THREADS 5
 
@@ -601,6 +602,28 @@ int main()
         for (double dT = -2.5 ; dT < 1.0 ; dT += 0.041)
         {
             std::cout << dT << ";" << sOWGRDiscountCurve.Interp1D(dT) << ";" << sTennisDiscountCurve.Interp1D(dT) << std::endl;
+        }
+        
+    }
+    else if (iTest == 23)
+    {
+        try
+        {
+            Golf::Tournament sTourChampionship2013("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Tournaments/TourChampionship2013.csv");
+            
+            sTourChampionship2013.Print();
+        }
+        catch(Utilities::MyException & sException)
+        {
+            std::cout << "MyException caught : " << sException.what() << std::endl;
+        }
+        catch (std::exception & sException)
+        {
+            std::cout << "std::exception caught " << sException.what() << std::endl;
+        }
+        catch(...)
+        {
+            std::cout << "Unknown exception caught" << std::endl;
         }
         
     }

@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "StringUtilities.h"
+#include <sstream>
 
 namespace Utilities {
     
@@ -68,6 +69,16 @@ namespace Utilities {
     {
         std::string cMatch(1,match);
         return Split(s, cMatch, removeEmpty, fullMatch);
+    }
+    
+    std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems)
+    {
+        std::stringstream ss(s);
+        std::string item;
+        while (std::getline(ss, item, delim)) {
+            elems.push_back(item);
+        }
+        return elems;
     }
     
     std::string ToUpper(const std::string & s)

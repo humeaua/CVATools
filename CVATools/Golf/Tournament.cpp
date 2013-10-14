@@ -7,11 +7,20 @@
 //
 
 #include "Tournament.h"
+#include "Exception.h"
+#include <fstream>
+#include "StringUtilities.h"
+#include <sstream>
 
 namespace Golf {
     
     Tournament::Tournament(const TournamentResults & mResults, const Utilities::Date::MyDate & sDate) : mResults_(mResults), sDate_(sDate)
     {}
+    
+    Tournament::Tournament(const std::string & cFileName)
+    {
+        LoadFromFile(cFileName);
+    }
     
     Tournament::~Tournament()
     {
@@ -33,7 +42,7 @@ namespace Golf {
     
     void Tournament::Add(const std::pair<std::string, std::string> & cPlayerName, double dResult)
     {
-        if (mResults_.count(cPlayerName) != 0)
+        if (mResults_.count(cPlayerName) == 0)
         {
             mResults_[cPlayerName] = dResult;
         }
@@ -46,5 +55,42 @@ namespace Golf {
     TournamentResults Tournament::GetResults() const
     {
         return mResults_;
+    }
+    
+    void Tournament::LoadFromFile(const std::string &cFileName)
+    {
+        std::string line;
+        std::ifstream myfile(cFileName.c_str(), std::ios_base::in);
+        if (myfile.is_open())
+        {
+            while (!myfile.eof())
+            {
+                std::getline(myfile, line, '\r');
+                // The basic format of the file is
+                //  Position,FirstName,LastName,Points
+                
+                std::vector<std::string> cParams = Utilities::Split(line, ',');
+                std::stringstream ss;
+                ss << cParams.at(3);
+                double dPoints = 0.0;
+                ss >> dPoints;
+                
+                //  Add Player in Tournament results
+                Add(std::make_pair(cParams.at(1), cParams.at(2)), dPoints);
+            }
+            myfile.close();
+        }
+        else
+        {
+            throw Utilities::MyException("Unable to open file " + cFileName);
+        }
+    }
+    
+    void Tournament::Print(const std::ostream & scout) const
+    {
+        for (TournamentResults::const_iterator it = mResults_.begin() ; it != mResults_.end() ; ++it)
+        {
+            std::cout << it->first.first << " " << it->first.second << " " << it->second << std::endl;
+        }
     }
 }

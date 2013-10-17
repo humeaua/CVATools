@@ -118,6 +118,7 @@ int main()
     std::cout << "21- Map" << std::endl;
     std::cout << "22- Golf" << std::endl;
     std::cout << "23- Tournament writer" << std::endl;
+    std::cout << "24- Player Reader" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -626,7 +627,25 @@ int main()
         {
             std::cout << "Unknown exception caught" << std::endl;
         }
-        
+    }
+    else if (iTest == 24)
+    {
+        try
+        {
+            Golf::Player sTigerWoods("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/TigerWoods.rtfd");
+        }
+        catch(Utilities::MyException & sException)
+        {
+            std::cout << "MyException caught : " << sException.what() << std::endl;
+        }
+        catch (std::exception & sException)
+        {
+            std::cout << "std::exception caught " << sException.what() << std::endl;
+        }
+        catch(...)
+        {
+            std::cout << "Unknown exception caught" << std::endl;
+        }
     }
     std::cout << "Done !" << std::endl;
 }

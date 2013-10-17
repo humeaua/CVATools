@@ -11,11 +11,32 @@
 
 #include <iostream>
 #include "Tournament.h"
+#include "Date.h"
+#include <set>
 
 namespace Golf
 {
     class Tournament;
     
+    class PlayerResult
+    {
+    protected:
+        Utilities::Date::MyDate sTournamentDate_;
+        double dPoint_;
+    public:
+        PlayerResult(const Utilities::Date::MyDate & sTournamentDate, double dPoint);
+        virtual ~PlayerResult();
+        
+        bool operator==(const PlayerResult & sRight);
+        bool operator<(const PlayerResult & sRight) const;
+        
+        //static PlayerResult Make(const Utilities::Date::MyDate & sTournamentDate, double dPoint);
+    };
+    
+    PlayerResult MakePlayer(const Utilities::Date::MyDate &sTournamentDate, double dPoint);
+    
+    typedef std::set<PlayerResult> PlayerResultHandler;
+
     class Player
     {
     protected:
@@ -25,6 +46,8 @@ namespace Golf
         std::size_t iNTournamentsPlayed_;
         
         double dTotalPoints_;
+        
+        PlayerResultHandler mResults_;
     public:
         Player(const std::string & cFirstName, const std::string & cLastName);
         Player(const std::string & cCSVFile);

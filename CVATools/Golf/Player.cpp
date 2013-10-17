@@ -7,9 +7,39 @@
 //
 
 #include "Player.h"
+#include "Exception.h"
+#include <fstream>
+#include "StringUtilities.h"
+#include <sstream>
+#include <cmath>
 
 namespace Golf
 {
+    PlayerResult::PlayerResult(const Utilities::Date::MyDate & sTournamentDate, double dPoint): sTournamentDate_(sTournamentDate), dPoint_(dPoint)
+    {}
+    
+    PlayerResult::~PlayerResult()
+    {
+        sTournamentDate_.~MyDate();
+    }
+    
+    PlayerResult MakePlayer(const Utilities::Date::MyDate &sTournamentDate, double dPoint)
+    {
+        PlayerResult sPlayerResult(sTournamentDate, dPoint);
+        
+        return sPlayerResult;
+    }
+    
+    bool PlayerResult::operator==(const Golf::PlayerResult &sRight)
+    {
+        return fabs(sRight.dPoint_ - dPoint_) < 0.001 && sRight.sTournamentDate_ == sTournamentDate_;
+    }
+    
+    bool PlayerResult::operator<(const Golf::PlayerResult &sRight) const
+    {
+        return sTournamentDate_ < sRight.sTournamentDate_;
+    }
+    
     Player::Player(const std::string & cFirstName, const std::string & cLastName) : cFirstName_(cFirstName), cLastName_(cLastName)
     {}
     
@@ -27,6 +57,42 @@ namespace Golf
     void Player::LoadFromFile(const std::string cFileName)
     {
         //  implementation to come because the file format is not decided yet
+        std::string line;
+        std::ifstream myfile(cFileName.c_str(), std::ios_base::in);
+        if (myfile.is_open())
+        {
+            while (!myfile.eof())
+            {
+                std::getline(myfile, line, '\r');
+                // The basic format of the file is
+                //  Tournament, Week, Year, Position, Points
+                
+                std::vector<std::string> cParams = Utilities::Split(line, ',');
+                std::stringstream ss;
+                ss << cParams.at(4);
+                double dPoints = 0.0;
+                ss >> dPoints;
+                
+                int iYear, iWeek;
+                ss << cParams.at(1);
+                ss >> iWeek;
+                ss << cParams.at(2);
+                ss >> iYear;
+                
+                Utilities::Date::MyDate sTournamentDate(1,1,iYear);
+                sTournamentDate.Add(iWeek, Utilities::Date::WEEK);
+                
+                //  Add Player in Tournament results
+                //Add(std::make_pair(cParams.at(1), cParams.at(2)), dPoints);
+                std::string cTournamentName = cParams.at(0) + "_" + cParams.at(2);
+                mResults_.insert(PlayerResult(sTournamentDate, dPoints));//(sTournamentDate, dPoints);
+            }
+            myfile.close();
+        }
+        else
+        {
+            throw Utilities::MyException("Unable to open file " + cFileName);
+        }
     }
     
     double Player::Average() const

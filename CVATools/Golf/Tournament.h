@@ -34,7 +34,7 @@ namespace Golf
         virtual TournamentResults GetResults() const;
         
         virtual void LoadFromFile(const std::string & cFileName);
-        virtual void Print(const std::ostream & cout = std::cout) const;
+        virtual void Print(std::ostream & cout = std::cout) const;
     };
 }
 

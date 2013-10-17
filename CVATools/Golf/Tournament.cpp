@@ -86,11 +86,11 @@ namespace Golf {
         }
     }
     
-    void Tournament::Print(const std::ostream & scout) const
+    void Tournament::Print( std::ostream & os) const
     {
         for (TournamentResults::const_iterator it = mResults_.begin() ; it != mResults_.end() ; ++it)
         {
-            std::cout << it->first.first << " " << it->first.second << " " << it->second << std::endl;
+            os << it->first.first << " " << it->first.second << " " << it->second << std::endl;
         }
     }
 }

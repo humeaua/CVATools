@@ -117,6 +117,7 @@ int main()
     std::cout << "20- FileWriter" << std::endl;
     std::cout << "21- Map" << std::endl;
     std::cout << "22- Golf" << std::endl;
+    std::cout << "23- Tournament writer" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     

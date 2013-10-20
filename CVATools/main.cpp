@@ -632,7 +632,7 @@ int main()
     {
         try
         {
-            Golf::Player sTigerWoods("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/TigerWoods.csv");
+            Golf::Player sTigerWoods("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/Tiger_Woods.csv");
             sTigerWoods.Print();
         }
         catch(Utilities::MyException & sException)

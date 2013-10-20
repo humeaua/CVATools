@@ -25,8 +25,8 @@ namespace Golf
     
     Player::~Player()
     {
-        cFirstName_.~basic_string();
-        cLastName_.~basic_string();
+        //cFirstName_.~basic_string();
+        //cLastName_.~basic_string();
     }
     
     void Player::LoadFromFile(const std::string cFileName)
@@ -36,6 +36,22 @@ namespace Golf
         std::ifstream myfile(cFileName.c_str(), std::ios_base::in);
         if (myfile.is_open())
         {
+            // Get the player name
+            //  The player name should be the filename : path/FirstName_LastName.csv
+            std::vector<std::string> cNames = Utilities::Split(cFileName, '/');
+            std::vector<std::string> cNames0 = Utilities::Split(cNames.back(), '.');
+            std::vector<std::string> cNames1 = Utilities::Split(cNames0.front(), '_');
+            if (cNames1.size() == 2)
+            {
+                cFirstName_ = cNames1.front();
+                cLastName_  = cNames1.back();
+            }
+            else
+            {
+                throw Utilities::MyException("Player::LoadFromFile : File name is not correct");
+            }
+            
+            // Read the tournaments
             while (!myfile.eof())
             {
                 std::getline(myfile, line, '\r');

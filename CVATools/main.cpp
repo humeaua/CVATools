@@ -687,6 +687,7 @@ int main()
         std::cout << std::endl;
         
         std::sort(sPlayers.begin(), sPlayers.end());
+        std::reverse(sPlayers.begin(), sPlayers.end());
         
         for (std::size_t i = 0 ; i < sPlayers.size() ; ++i)
         {

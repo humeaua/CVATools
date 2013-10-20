@@ -126,7 +126,7 @@ namespace Golf
     
     void Player::PrintName(std::ostream &os) const
     {
-        os << cFirstName_ << " " << cLastName_ << std::endl;
+        os << cFirstName_ << " " << cLastName_ << " : " << Average() << std::endl;
     }
     
     bool Player::operator<(const Golf::Player &sRight) const

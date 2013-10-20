@@ -35,6 +35,7 @@
 #include <stack>
 #include "OfficialWorldGolfRankings.h"
 #include "Tournament.h"
+#include "dirent.h"
 
 #define NUM_THREADS 5
 
@@ -119,6 +120,7 @@ int main()
     std::cout << "22- Golf" << std::endl;
     std::cout << "23- Tournament writer" << std::endl;
     std::cout << "24- Player Reader" << std::endl;
+    std::cout << "25- Directory reader" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -646,6 +648,33 @@ int main()
         catch(...)
         {
             std::cout << "Unknown exception caught" << std::endl;
+        }
+    }
+    else if (iTest == 25)
+    {
+        DIR *dir;
+        struct dirent *ent;
+        std::string cDirectory = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players";
+        if ((dir = opendir (cDirectory.c_str())) != NULL)
+        {
+            /* print all the files and directories within directory */
+            while ((ent = readdir (dir)) != NULL)
+            {
+                std::string str = ent->d_name;
+                unsigned long found = str.find_last_of(".");
+                std::string cLastChar = str.substr(found+1, str.size());
+                if (cLastChar == "csv" || cLastChar == "CSV")
+                {
+                    printf ("%s\n", ent->d_name);
+                }
+            }
+            closedir (dir);
+        }
+        else
+        {
+            /* could not open directory */
+            perror ("");
+            return EXIT_FAILURE;
         }
     }
     std::cout << "Done !" << std::endl;

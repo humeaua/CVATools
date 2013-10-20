@@ -11,33 +11,13 @@
 
 #include <iostream>
 #include "Tournament.h"
-#include "Date.h"
+#include "PlayerResult.h"
 #include <set>
 
 namespace Golf
 {
     class Tournament;
-    
-    class PlayerResult
-    {
-    protected:
-        Utilities::Date::MyDate sTournamentDate_;
-        double dPoint_;
-    public:
-        PlayerResult(const Utilities::Date::MyDate & sTournamentDate, double dPoint);
-        virtual ~PlayerResult();
-        
-        bool operator==(const PlayerResult & sRight);
-        bool operator<(const PlayerResult & sRight) const;
-        
-        double GetPoint() const;
-        Utilities::Date::MyDate GetDate() const;
-        
-        //static PlayerResult Make(const Utilities::Date::MyDate & sTournamentDate, double dPoint);
-    };
-    
-    PlayerResult MakePlayer(const Utilities::Date::MyDate &sTournamentDate, double dPoint);
-    
+
     typedef std::set<PlayerResult> PlayerResultHandler;
 
     class Player

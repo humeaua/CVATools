@@ -15,41 +15,6 @@
 
 namespace Golf
 {
-    PlayerResult::PlayerResult(const Utilities::Date::MyDate & sTournamentDate, double dPoint): sTournamentDate_(sTournamentDate), dPoint_(dPoint)
-    {}
-    
-    PlayerResult::~PlayerResult()
-    {
-        sTournamentDate_.~MyDate();
-    }
-    
-    PlayerResult MakePlayer(const Utilities::Date::MyDate &sTournamentDate, double dPoint)
-    {
-        PlayerResult sPlayerResult(sTournamentDate, dPoint);
-        
-        return sPlayerResult;
-    }
-    
-    bool PlayerResult::operator==(const Golf::PlayerResult &sRight)
-    {
-        return fabs(sRight.dPoint_ - dPoint_) < 0.001 && sRight.sTournamentDate_ == sTournamentDate_;
-    }
-    
-    bool PlayerResult::operator<(const Golf::PlayerResult &sRight) const
-    {
-        return sTournamentDate_ < sRight.sTournamentDate_;
-    }
-    
-    Utilities::Date::MyDate PlayerResult::GetDate() const
-    {
-        return sTournamentDate_;
-    }
-    
-    double PlayerResult::GetPoint() const
-    {
-        return dPoint_;
-    }
-    
     Player::Player(const std::string & cFirstName, const std::string & cLastName) : cFirstName_(cFirstName), cLastName_(cLastName)
     {}
     
@@ -94,8 +59,8 @@ namespace Golf
                 
                 //  Add Player in Tournament results
                 //Add(std::make_pair(cParams.at(1), cParams.at(2)), dPoints);
-                std::string cTournamentName = cParams.at(0) + " " + cParams.at(2);
-                mResults_.insert(PlayerResult(sTournamentDate, dPoints));//(sTournamentDate, dPoints);
+                std::string cTournamentName = cParams.at(0) + cParams.at(2);
+                mResults_.insert(PlayerResult(cTournamentName, sTournamentDate, dPoints));//(sTournamentDate, dPoints);
             }
             myfile.close();
         }
@@ -127,7 +92,7 @@ namespace Golf
         for (std::set<PlayerResult>::iterator it = mResults_.begin() ; it != mResults_.end() ; ++it)
         {
             Utilities::Date::MyDate sDate = it->GetDate();
-            os << sDate.GetDay() << "/" << sDate.GetMonth() << "/" << sDate.GetYear() << " : " << it->GetPoint() << std::endl;
+            os << it->GetTournamentName() << " - " << sDate.GetDay() << "/" << sDate.GetMonth() << "/" << sDate.GetYear() << " : " << it->GetPoint() << std::endl;
         }
     }
 }

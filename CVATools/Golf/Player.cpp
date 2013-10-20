@@ -24,10 +24,7 @@ namespace Golf
     }
     
     Player::~Player()
-    {
-        //cFirstName_.~basic_string();
-        //cLastName_.~basic_string();
-    }
+    {}
     
     void Player::LoadFromFile(const std::string cFileName)
     {

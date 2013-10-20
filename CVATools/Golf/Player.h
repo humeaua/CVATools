@@ -32,12 +32,15 @@ namespace Golf
         
         PlayerResultHandler mResults_;
     public:
+        Player();
         Player(const std::string & cFirstName, const std::string & cLastName);
         Player(const std::string & cCSVFile);
         
         virtual ~Player();
         
         virtual double Average() const;
+        virtual void ComputeTotalPoints();
+        
         virtual void LoadFromFile(const std::string cFileName);
         
         virtual std::pair<std::string, std::string> GetName() const;
@@ -45,6 +48,9 @@ namespace Golf
         virtual bool HasPlayed(const Tournament & sTournament) const;
         
         virtual void Print(std::ostream & os = std::cout) const;
+        virtual void PrintName(std::ostream & os = std::cout) const;
+        
+        virtual bool operator<(const Player & sRight) const;
     };
 }
 

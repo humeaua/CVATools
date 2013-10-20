@@ -15,10 +15,13 @@
 
 namespace Golf
 {
-    Player::Player(const std::string & cFirstName, const std::string & cLastName) : cFirstName_(cFirstName), cLastName_(cLastName)
+    Player::Player() : dTotalPoints_(0.0), iNTournamentsPlayed_(0)
     {}
     
-    Player::Player(const std::string & cCSVFile)
+    Player::Player(const std::string & cFirstName, const std::string & cLastName) : cFirstName_(cFirstName), cLastName_(cLastName), dTotalPoints_(0.0), iNTournamentsPlayed_(0)
+    {}
+    
+    Player::Player(const std::string & cCSVFile) : dTotalPoints_(0.0), iNTournamentsPlayed_(0)
     {
         LoadFromFile(cCSVFile);
     }
@@ -76,6 +79,9 @@ namespace Golf
                 mResults_.insert(PlayerResult(cTournamentName, sTournamentDate, dPoints));//(sTournamentDate, dPoints);
             }
             myfile.close();
+            
+            // Compute the total number of points 
+            ComputeTotalPoints();
         }
         else
         {
@@ -86,6 +92,15 @@ namespace Golf
     double Player::Average() const
     {
         return iNTournamentsPlayed_ < 40 ? dTotalPoints_ / 40.0 : iNTournamentsPlayed_ > 52 ? dTotalPoints_ / 52 : dTotalPoints_ / iNTournamentsPlayed_;
+    }
+    
+    void Player::ComputeTotalPoints()
+    {
+        for (std::set<PlayerResult>::iterator it = mResults_.begin() ; it != mResults_.end() ; ++it)
+        {
+            dTotalPoints_ += it->GetPoint();
+            iNTournamentsPlayed_ ++;
+        }
     }
     
     std::pair<std::string, std::string> Player::GetName() const
@@ -107,5 +122,15 @@ namespace Golf
             Utilities::Date::MyDate sDate = it->GetDate();
             os << it->GetTournamentName() << " - " << sDate.GetDay() << "/" << sDate.GetMonth() << "/" << sDate.GetYear() << " : " << it->GetPoint() << std::endl;
         }
+    }
+    
+    void Player::PrintName(std::ostream &os) const
+    {
+        os << cFirstName_ << " " << cLastName_ << std::endl;
+    }
+    
+    bool Player::operator<(const Golf::Player &sRight) const
+    {
+        return Average() < sRight.Average();
     }
 }

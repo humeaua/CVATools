@@ -36,6 +36,7 @@
 #include "OfficialWorldGolfRankings.h"
 #include "Tournament.h"
 #include "dirent.h"
+#include "PlayerDataBase.h"
 
 #define NUM_THREADS 5
 
@@ -121,6 +122,7 @@ int main()
     std::cout << "23- Tournament writer" << std::endl;
     std::cout << "24- Player Reader" << std::endl;
     std::cout << "25- Directory reader" << std::endl;
+    std::cout << "26- Player Data Base" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -675,6 +677,20 @@ int main()
             /* could not open directory */
             perror ("");
             return EXIT_FAILURE;
+        }
+    }
+    else if (iTest == 26)
+    {
+        Golf::PlayerDataBase sDataBase ("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players");
+        std::vector<Golf::Player> sPlayers = sDataBase.GetDataBase();
+        
+        std::cout << std::endl;
+        
+        std::sort(sPlayers.begin(), sPlayers.end());
+        
+        for (std::size_t i = 0 ; i < sPlayers.size() ; ++i)
+        {
+            sPlayers[i].PrintName();
         }
     }
     std::cout << "Done !" << std::endl;

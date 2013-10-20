@@ -632,7 +632,8 @@ int main()
     {
         try
         {
-            Golf::Player sTigerWoods("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/TigerWoods.rtfd");
+            Golf::Player sTigerWoods("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/TigerWoods.csv");
+            sTigerWoods.Print();
         }
         catch(Utilities::MyException & sException)
         {

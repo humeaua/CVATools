@@ -30,6 +30,9 @@ namespace Golf
         bool operator==(const PlayerResult & sRight);
         bool operator<(const PlayerResult & sRight) const;
         
+        double GetPoint() const;
+        Utilities::Date::MyDate GetDate() const;
+        
         //static PlayerResult Make(const Utilities::Date::MyDate & sTournamentDate, double dPoint);
     };
     
@@ -60,6 +63,8 @@ namespace Golf
         virtual std::pair<std::string, std::string> GetName() const;
         
         virtual bool HasPlayed(const Tournament & sTournament) const;
+        
+        virtual void Print(std::ostream & os = std::cout) const;
     };
 }
 

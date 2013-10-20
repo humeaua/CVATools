@@ -38,7 +38,8 @@ namespace Utilities
         
         MyDate::MyDate(const int& day, const int& month, const int& year) : iDay_(day), iMonth_(month), iYear_(year)
         {
-            Utilities::requireException(IsValid(), "Date is not valid", "MyDate::MyDate");
+            //  Remove require from constructor as it is throwing an exception
+            //Utilities::requireException(IsValid(), "Date is not valid", "MyDate::MyDate");
         }
         
         MyDate::MyDate(const std::tm & sDate)

@@ -59,7 +59,11 @@ namespace Golf
     
     void PlayerDataBase::ComputeRanking()
     {
-        std::sort(sPlayers_.begin(), sPlayers_.end(), std::greater<Player>());    }
+        clock_t tic = clock();
+        std::sort(sPlayers_.begin(), sPlayers_.end(), std::greater<Player>());
+        std::cout << "Computation of ranking done in " << (double)(clock() - tic) / CLOCKS_PER_SEC << " seconds" << std::endl;
+        std::cout << std::endl;
+    }
     
     std::vector<Player> PlayerDataBase::GetDataBase() const
     {

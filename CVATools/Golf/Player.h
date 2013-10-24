@@ -51,6 +51,7 @@ namespace Golf
         virtual void PrintName(std::ostream & os = std::cout) const;
         
         virtual bool operator<(const Player & sRight) const;
+        virtual bool operator>(const Player & sRight) const;
     };
 }
 

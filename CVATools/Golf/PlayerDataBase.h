@@ -23,8 +23,10 @@ namespace Golf
         PlayerDataBase(const std::string & cDirectoryName);
         virtual ~PlayerDataBase();
 
-        virtual void LoadFromDirectory(const std::string cDirectoryName);
+        virtual void LoadFromDirectory(const std::string & cDirectoryName);
 
+        virtual void ComputeRanking();
+        
         virtual std::vector<Player> GetDataBase() const;
     };
 }

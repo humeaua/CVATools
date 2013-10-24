@@ -27,7 +27,7 @@ namespace Golf
         sPlayers_.clear();
     }
     
-    void PlayerDataBase::LoadFromDirectory(const std::string cDirectoryName)
+    void PlayerDataBase::LoadFromDirectory(const std::string & cDirectoryName)
     {
         DIR *dir;
         struct dirent *ent;
@@ -56,6 +56,10 @@ namespace Golf
             throw Utilities::MyException("PlayerDataBase::LoadFromDirectory : cannot open directory");
         }
     }
+    
+    void PlayerDataBase::ComputeRanking()
+    {
+        std::sort(sPlayers_.begin(), sPlayers_.end(), std::greater<Player>());    }
     
     std::vector<Player> PlayerDataBase::GetDataBase() const
     {

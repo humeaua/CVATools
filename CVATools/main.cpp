@@ -682,16 +682,14 @@ int main()
     else if (iTest == 26)
     {
         Golf::PlayerDataBase sDataBase ("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players");
-        std::vector<Golf::Player> sPlayers = sDataBase.GetDataBase();
         
         std::cout << std::endl;
         
-        std::sort(sPlayers.begin(), sPlayers.end());
-        std::reverse(sPlayers.begin(), sPlayers.end());
+        sDataBase.ComputeRanking();
         
-        for (std::size_t i = 0 ; i < sPlayers.size() ; ++i)
+        for (std::size_t i = 0 ; i < sDataBase.GetDataBase().size() ; ++i)
         {
-            sPlayers[i].PrintName();
+            sDataBase.GetDataBase()[i].PrintName();
         }
     }
     std::cout << "Done !" << std::endl;

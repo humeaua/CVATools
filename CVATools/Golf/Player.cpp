@@ -133,4 +133,9 @@ namespace Golf
     {
         return Average() < sRight.Average();
     }
+    
+    bool Player::operator>(const Golf::Player &sRight) const
+    {
+        return Average() > sRight.Average();
+    }
 }

@@ -13,6 +13,7 @@
 #include "Tournament.h"
 #include "PlayerResult.h"
 #include <set>
+#include "OfficialWorldGolfRankings.h"
 
 namespace Golf
 {
@@ -39,7 +40,7 @@ namespace Golf
         virtual ~Player();
         
         virtual double Average() const;
-        virtual void ComputeTotalPoints();
+        virtual void ComputeTotalPoints(DiscountType eDiscountType = OWGR, const Utilities::Date::MyDate & sObservationDate = Utilities::Date::MyDate());
         
         virtual void LoadFromFile(const std::string cFileName);
         

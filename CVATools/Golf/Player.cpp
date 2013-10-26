@@ -94,11 +94,15 @@ namespace Golf
         return iNTournamentsPlayed_ < 40 ? dTotalPoints_ / 40.0 : iNTournamentsPlayed_ > 52 ? dTotalPoints_ / 52 : dTotalPoints_ / iNTournamentsPlayed_;
     }
     
-    void Player::ComputeTotalPoints()
+    void Player::ComputeTotalPoints(DiscountType eDiscountType, const Utilities::Date::MyDate & sObservationDate)
     {
+        
+        Utilities::Interp::InterExtrapolation1D sDiscountCurve = OfficialWorldGolfRankings::GetDiscountCurve(eDiscountType);
         for (std::set<PlayerResult>::iterator it = mResults_.begin() ; it != mResults_.end() ; ++it)
         {
-            dTotalPoints_ += it->GetPoint();
+            Utilities::Date::MyDate sTournamentDate = it->GetDate();
+            double dTimeDiff = sTournamentDate.Diff(sObservationDate);
+            dTotalPoints_ += it->GetPoint() * sDiscountCurve.Interp1D(dTimeDiff);
             iNTournamentsPlayed_ ++;
         }
     }

@@ -13,11 +13,20 @@
 #include "InterExtrapolation.h"
 
 namespace Golf {
+    typedef enum
+    {
+        TENNIS,
+        GOLF,
+        OWGR
+    }DiscountType;
+    
     class OfficialWorldGolfRankings
     {
-    public:
+    private:
         virtual Utilities::Interp::InterExtrapolation1D GetOWGRDiscountCurve() const;
         virtual Utilities::Interp::InterExtrapolation1D GetTennisDiscountCurve() const;
+    public:
+        virtual Utilities::Interp::InterExtrapolation1D GetDiscountCurve(DiscountType eDiscountType = GOLF) const;
     };
 }
 

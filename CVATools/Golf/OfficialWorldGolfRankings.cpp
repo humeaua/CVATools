@@ -8,6 +8,7 @@
 
 #include "OfficialWorldGolfRankings.h"
 #include <vector>
+#include "Exception.h"
 
 namespace Golf
 {
@@ -39,5 +40,22 @@ namespace Golf
         dValues.at(3) = 1.0;
         
         return Utilities::Interp::InterExtrapolation1D(dVariables, dValues, Utilities::Interp::LIN);
+    }
+    
+    Utilities::Interp::InterExtrapolation1D OfficialWorldGolfRankings::GetDiscountCurve(DiscountType eDiscountType) const
+    {
+        switch (eDiscountType) {
+            case TENNIS:
+                return GetTennisDiscountCurve();
+                break;
+            case GOLF:
+            case OWGR:
+                return GetOWGRDiscountCurve();
+                break;
+                
+            default:
+                throw Utilities::MyException("OfficialWorldGolfRankings::GetDiscountCurve : discount curve not recognized. Must input a valid discount curve");
+                break;
+        }
     }
 }

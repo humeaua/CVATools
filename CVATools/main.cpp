@@ -601,15 +601,26 @@ int main()
     else if (iTest == 22)
     {
         // Golf
-        Golf::OfficialWorldGolfRankings sOGWR;
-        
-        Utilities::Interp::InterExtrapolation1D sOWGRDiscountCurve = sOGWR.GetOWGRDiscountCurve(), sTennisDiscountCurve = sOGWR.GetTennisDiscountCurve();
-        
-        for (double dT = -2.5 ; dT < 1.0 ; dT += 0.041)
+        try
         {
-            std::cout << dT << ";" << sOWGRDiscountCurve.Interp1D(dT) << ";" << sTennisDiscountCurve.Interp1D(dT) << std::endl;
+            Golf::OfficialWorldGolfRankings sOGWR;
+            
+            Utilities::Interp::InterExtrapolation1D sOWGRDiscountCurve = sOGWR.GetDiscountCurve(Golf::OWGR), sTennisDiscountCurve = sOGWR.GetDiscountCurve(Golf::TENNIS);
+            
+            for (double dT = -2.5 ; dT < 1.0 ; dT += 0.041)
+            {
+                std::cout << dT << ";" << sOWGRDiscountCurve.Interp1D(dT) << ";" << sTennisDiscountCurve.Interp1D(dT) << std::endl;
+            }
+            
         }
-        
+        catch (Utilities::MyException & sException)
+        {
+            std::cout << "MyException caught : " << sException.what() << std::endl;
+        }
+        catch (...)
+        {
+            std::cout << "Unknown exception caught" << std::endl;
+        }
     }
     else if (iTest == 23)
     {

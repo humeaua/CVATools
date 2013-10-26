@@ -42,7 +42,7 @@ namespace Golf
         virtual double Average() const;
         virtual void ComputeTotalPoints(DiscountType eDiscountType = OWGR, const Utilities::Date::MyDate & sObservationDate = Utilities::Date::MyDate());
         
-        virtual void LoadFromFile(const std::string cFileName);
+        virtual void LoadFromFile(const std::string cFileName, DiscountType eDiscountType = OWGR, const Utilities::Date::MyDate & sDate = Utilities::Date::MyDate());
         
         virtual std::pair<std::string, std::string> GetName() const;
         

@@ -13,9 +13,9 @@
 
 namespace Golf
 {
-    PlayerDataBase::PlayerDataBase(const std::string & cDirectoryName)
+    PlayerDataBase::PlayerDataBase(const std::string & cDirectoryName, DiscountType eDiscountType, const Utilities::Date::MyDate & sDate)
     {
-        LoadFromDirectory(cDirectoryName);
+        LoadFromDirectory(cDirectoryName, eDiscountType, sDate);
     }
     
     PlayerDataBase::~PlayerDataBase()
@@ -27,7 +27,7 @@ namespace Golf
         sPlayers_.clear();
     }
     
-    void PlayerDataBase::LoadFromDirectory(const std::string & cDirectoryName)
+    void PlayerDataBase::LoadFromDirectory(const std::string & cDirectoryName, DiscountType eDiscountType, const Utilities::Date::MyDate & sDate)
     {
         DIR *dir;
         struct dirent *ent;
@@ -44,7 +44,7 @@ namespace Golf
                 {
                     std::cout << "Loading " << str << std::endl;
                     sPlayers_.push_back(Player());
-                    sPlayers_.back().LoadFromFile(cDirectoryName + "/" + str);
+                    sPlayers_.back().LoadFromFile(cDirectoryName + "/" + str, eDiscountType, sDate);
                 }
             }
             std::cout << "Loading completed in " << (double)(clock() - tic) / CLOCKS_PER_SEC << " seconds" << std::endl;

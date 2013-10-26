@@ -29,7 +29,7 @@ namespace Golf
     Player::~Player()
     {}
     
-    void Player::LoadFromFile(const std::string cFileName)
+    void Player::LoadFromFile(const std::string cFileName, DiscountType eDiscountType, const Utilities::Date::MyDate & sDate)
     {
         //  implementation to come because the file format is not decided yet
         std::string line;
@@ -81,7 +81,7 @@ namespace Golf
             myfile.close();
             
             // Compute the total number of points 
-            ComputeTotalPoints();
+            ComputeTotalPoints(eDiscountType, sDate);
         }
         else
         {
@@ -96,7 +96,6 @@ namespace Golf
     
     void Player::ComputeTotalPoints(DiscountType eDiscountType, const Utilities::Date::MyDate & sObservationDate)
     {
-        
         Utilities::Interp::InterExtrapolation1D sDiscountCurve = OfficialWorldGolfRankings::GetDiscountCurve(eDiscountType);
         for (std::set<PlayerResult>::iterator it = mResults_.begin() ; it != mResults_.end() ; ++it)
         {

@@ -692,7 +692,7 @@ int main()
     }
     else if (iTest == 26)
     {
-        Golf::PlayerDataBase sDataBase ("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players");
+        Golf::PlayerDataBase sDataBase ("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players", Golf::TENNIS);
         
         std::cout << std::endl;
         

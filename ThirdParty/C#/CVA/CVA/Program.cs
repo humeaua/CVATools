@@ -20,6 +20,13 @@ namespace CVA
 			System.Console.WriteLine("Elasped time : " + (System.DateTime.Now - ss));
 			ss = System.DateTime.Now;
 
+			System.Console.WriteLine ("Deleting already existing files");
+			string cDirectoryHTM = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/PlayersHTM/";
+			CVA.FileDeleter sFiles = new CVA.FileDeleter(ref cDirectoryHTM);
+			sFiles.Delete ();
+			System.Console.WriteLine ("Deleting done in " + (System.DateTime.Now - ss));
+			ss = System.DateTime.Now;
+
 			string nameprefix = "name=", rankprefix = "&Rank=", totalpoint = "&TotalPt";
 			foreach (string c in sFileParser.FutureWebsiteToBeCalled) 
 			{
@@ -32,7 +39,7 @@ namespace CVA
 
 				string cFutureWebsiteToBeCalled = c;
 				string cFileNamePlayer = c.Substring (iFirstNamePlayer, iRankPlayerFirst - iFirstNamePlayer) + "_" + c.Substring (iRankPlayerLast, iTotalPointFirst - iRankPlayerLast);
-				string cPathToFileNamePlayer = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/PlayersHTM/" + cFileNamePlayer + ".htm";
+				string cPathToFileNamePlayer = cDirectoryHTM + cFileNamePlayer + ".htm";
 				sInternetPageReader.ToTextFile (ref cFutureWebsiteToBeCalled, ref cPathToFileNamePlayer);
 			}
 

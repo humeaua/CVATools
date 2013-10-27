@@ -7,7 +7,7 @@ namespace CVA
 			System.Console.WriteLine ("Welcome in the OWGR generator");
 
 			System.Console.WriteLine ("1- Get files from Internet");
-
+			System.Console.WriteLine ("2- Parse player files");
 			cChoice = System.Console.ReadLine ();
 		}
 
@@ -27,18 +27,16 @@ namespace CVA
 			{
 				string cChoice = "";
 				CVA.MainClass.DisplayContents (ref cChoice);
-				if (cChoice == "1") 
-				{
+				if (cChoice == "1") {
 					CVA.InternetPageReader sInternetPageReader = new CVA.InternetPageReader ();
 					System.DateTime ss = System.DateTime.Now;
 					CVA.FileParser sFileParser = new CVA.FileParser ();
 
-					for (int i = 1; i <= 2; ++i) 
-					{
+					for (int i = 1; i <= 2; ++i) {
 						string cWebsite = "http://www.officialworldgolfranking.com/rankings/default.sps?region=world&PageCount=" + i;
 						string cFileName = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/OfficialWorldGolfRankingHomePage" + i + ".htm";
 						sInternetPageReader.ToTextFile (ref cWebsite,
-						                               ref cFileName);
+						                                ref cFileName);
 
 						//	Parse file of WorldRanking
 						sFileParser.ParseWorldRanking (ref cFileName);
@@ -50,8 +48,7 @@ namespace CVA
 					string cDirectoryHTM = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/PlayersHTM/";
 					System.Console.WriteLine ("Do you want to delete existing files ?");
 					string cDelete = System.Console.ReadLine ();
-					if (cDelete == "Y" || cDelete == "y")
-					{
+					if (cDelete == "Y" || cDelete == "y") {
 						System.Console.WriteLine ("Deleting already existing files");
 						CVA.FileDeleter sFiles = new CVA.FileDeleter (ref cDirectoryHTM);
 						sFiles.Delete ();
@@ -60,8 +57,7 @@ namespace CVA
 					}
 
 					string nameprefix = "name=", rankprefix = "&Rank=", totalpoint = "&TotalPt";
-					foreach (string c in sFileParser.FutureWebsiteToBeCalled) 
-					{
+					foreach (string c in sFileParser.FutureWebsiteToBeCalled) {
 						// Find the player name to have the correct file name before parsing it
 
 						int iFirstNamePlayer = c.IndexOf (nameprefix) + nameprefix.Length,
@@ -79,6 +75,10 @@ namespace CVA
 					
 					bIsFinished = CVA.MainClass.IsFinish ();
 				} 
+				else if (cChoice = "2") 
+				{
+
+				}
 				else 
 				{
 					bIsFinished = true;

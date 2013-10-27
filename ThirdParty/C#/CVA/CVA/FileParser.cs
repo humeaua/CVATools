@@ -32,6 +32,11 @@ namespace CVA
 			}
 			System.Console.WriteLine ("Parse World Ranking file done");
 		}
+
+		public void ParsePlayer(ref string cFilePath)
+		{
+
+		}
 	}
 }
 

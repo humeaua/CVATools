@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <string>
 
-class HttpFetcher {
+/*class HttpFetcher {
 public:
     std::string simpleGetRequest(std::string url);
     
@@ -26,6 +26,6 @@ private:
     };
     static size_t WriteMemoryCallback(void *ptr, size_t size, size_t nmemb, void *data);
     
-};
+};*/
 
 #endif /* defined(__CVATools__HTTPFetcher__) */

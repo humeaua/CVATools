@@ -15,7 +15,7 @@
  *  Much of this is quite similar to examples on the libcURL site
  */
 
-#include "HttpFetcher.h"
+/*#include "HttpFetcher.h"
 #include "curl.h"
 #include "easy.h"
 #include <iostream>
@@ -71,3 +71,4 @@ std::string HttpFetcher::simpleGetRequest(std::string url)
     
     return toReturn;
 }
+*/

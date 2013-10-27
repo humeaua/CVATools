@@ -37,6 +37,7 @@
 #include "Tournament.h"
 #include "dirent.h"
 #include "PlayerDataBase.h"
+//#include "HTTPFetcher.h"
 
 #define NUM_THREADS 5
 
@@ -123,6 +124,7 @@ int main()
     std::cout << "24- Player Reader" << std::endl;
     std::cout << "25- Directory reader" << std::endl;
     std::cout << "26- Player Data Base" << std::endl;
+    std::cout << "27- HTTP Fetcher" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -702,6 +704,12 @@ int main()
         {
             sDataBase.GetDataBase()[i].PrintName();
         }
+    }
+    else if (iTest == 27)
+    {
+        //  HTTP Fetcher
+        /*HttpFetcher sHTTP;
+        sHTTP.simpleGetRequest("http://stackoverflow.com/questions/7168933/get-page-contents-in-c");*/
     }
     std::cout << "Done !" << std::endl;
 }

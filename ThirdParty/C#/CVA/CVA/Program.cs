@@ -12,12 +12,31 @@ namespace CVA
 			                                ref cFileName);
 
 			//	Parse file of WorldRanking
+			//System.Diagnostics.Stopwatch ss = new System.Diagnostics.Stopwatch { };
+			System.DateTime ss = System.DateTime.Now;
+
 			CVA.FileParser sFileParser = new CVA.FileParser ();
 			sFileParser.ParseWorldRanking (ref cFileName);
+			System.Console.WriteLine("Elasped time : " + (System.DateTime.Now - ss));
+			ss = System.DateTime.Now;
+
+			string nameprefix = "name=", rankprefix = "&Rank=", totalpoint = "&TotalPt";
 			foreach (string c in sFileParser.FutureWebsiteToBeCalled) 
 			{
-				System.Console.WriteLine (c);
+				// Find the player name to have the correct file name before parsing it
+
+				int iFirstNamePlayer = c.IndexOf (nameprefix) + nameprefix.Length,
+				iRankPlayerFirst = c.IndexOf (rankprefix),
+				iRankPlayerLast = iRankPlayerFirst + rankprefix.Length,
+				iTotalPointFirst = c.IndexOf (totalpoint);
+
+				string cFutureWebsiteToBeCalled = c;
+				string cFileNamePlayer = c.Substring (iFirstNamePlayer, iRankPlayerFirst - iFirstNamePlayer) + "_" + c.Substring (iRankPlayerLast, iTotalPointFirst - iRankPlayerLast);
+				string cPathToFileNamePlayer = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/PlayersHTM/" + cFileNamePlayer + ".htm";
+				sInternetPageReader.ToTextFile (ref cFutureWebsiteToBeCalled, ref cPathToFileNamePlayer);
 			}
+
+			System.Console.WriteLine("Elapsed time to get all files : " + (System.DateTime.Now - ss));
 
 			System.Console.WriteLine ("Good bye !");
 		}

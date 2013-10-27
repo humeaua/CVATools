@@ -20,12 +20,16 @@ namespace CVA
 			System.Console.WriteLine("Elasped time : " + (System.DateTime.Now - ss));
 			ss = System.DateTime.Now;
 
-			System.Console.WriteLine ("Deleting already existing files");
+			// Do not delete files any more
 			string cDirectoryHTM = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/PlayersHTM/";
-			CVA.FileDeleter sFiles = new CVA.FileDeleter(ref cDirectoryHTM);
-			sFiles.Delete ();
-			System.Console.WriteLine ("Deleting done in " + (System.DateTime.Now - ss));
-			ss = System.DateTime.Now;
+			if (false) 
+			{
+				System.Console.WriteLine ("Deleting already existing files");
+				CVA.FileDeleter sFiles = new CVA.FileDeleter (ref cDirectoryHTM);
+				sFiles.Delete ();
+				System.Console.WriteLine ("Deleting done in " + (System.DateTime.Now - ss));
+				ss = System.DateTime.Now;
+			}
 
 			string nameprefix = "name=", rankprefix = "&Rank=", totalpoint = "&TotalPt";
 			foreach (string c in sFileParser.FutureWebsiteToBeCalled) 

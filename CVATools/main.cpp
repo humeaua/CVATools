@@ -125,6 +125,7 @@ int main()
     std::cout << "25- Directory reader" << std::endl;
     std::cout << "26- Player Data Base" << std::endl;
     std::cout << "27- HTTP Fetcher" << std::endl;
+    std::cout << "28- Exo DM louis matrices" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -710,6 +711,22 @@ int main()
         //  HTTP Fetcher
         /*HttpFetcher sHTTP;
         sHTTP.simpleGetRequest("http://stackoverflow.com/questions/7168933/get-page-contents-in-c");*/
+    }
+    else if (iTest == 28)
+    {
+        int n = 3, nrot ;
+        Utilities::Matrix a (n,n,0.0), eigenvectors(4,4,0.0);
+        Utilities::MyVector<double> dEigenValues(0.0, n);
+        a(0,0) = a(n-1,0) = a(0,n-1) = a(n-1,n-1) = 2;
+        for (int i = 1 ; i < n - 1 ; ++i)
+        {
+            a(0,i) = a(i,0) = a(i,n-1) = a(n-1, i) = 1;
+        }
+        
+        Utilities::Eigendecomposition_jacobi(a, eigenvectors, dEigenValues, &nrot);
+        
+        for (int i = 0 ; i < n ; ++i)
+            std::cout << dEigenValues.at(i) << std::endl;
     }
     std::cout << "Done !" << std::endl;
 }

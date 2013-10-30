@@ -1,20 +1,22 @@
+using System; // for Console
+
 namespace CVA
 {
 	class MainClass
 	{
 		public static void DisplayContents(ref string cChoice)
 		{
-			System.Console.WriteLine ("Welcome in the OWGR generator");
+			Console.WriteLine ("Welcome in the OWGR generator");
 
-			System.Console.WriteLine ("1- Get files from Internet");
-			System.Console.WriteLine ("2- Parse player files");
-			cChoice = System.Console.ReadLine ();
+			Console.WriteLine ("1- Get files from Internet");
+			Console.WriteLine ("2- Parse player files");
+			cChoice = Console.ReadLine ();
 		}
 
 		public static bool IsFinish()
 		{
-			System.Console.WriteLine ("Do you wish to continue ? (Y/N)");
-			string cResult = System.Console.ReadLine ();
+			Console.WriteLine ("Do you wish to continue ? (Y/N)");
+			string cResult = Console.ReadLine ();
 
 			return !(cResult == "y" || cResult == "Y");
 		}
@@ -26,11 +28,11 @@ namespace CVA
 			while (!bIsFinished) 
 			{
 				string cChoice = "";
-				CVA.MainClass.DisplayContents (ref cChoice);
+				DisplayContents (ref cChoice);
 				if (cChoice == "1") {
-					CVA.InternetPageReader sInternetPageReader = new CVA.InternetPageReader ();
-					System.DateTime ss = System.DateTime.Now;
-					CVA.FileParser sFileParser = new CVA.FileParser ();
+					InternetPageReader sInternetPageReader = new CVA.InternetPageReader ();
+					DateTime ss = System.DateTime.Now;
+					FileParser sFileParser = new CVA.FileParser ();
 
 					for (int i = 1; i <= 2; ++i) {
 						string cWebsite = "http://www.officialworldgolfranking.com/rankings/default.sps?region=world&PageCount=" + i;
@@ -41,18 +43,18 @@ namespace CVA
 						//	Parse file of WorldRanking
 						sFileParser.ParseWorldRanking (ref cFileName);
 					}
-					System.Console.WriteLine ("Elasped time : " + (System.DateTime.Now - ss));
-					ss = System.DateTime.Now;
+					Console.WriteLine ("Elasped time : " + (System.DateTime.Now - ss));
+					ss = DateTime.Now;
 
 					// Do not delete files any more
 					string cDirectoryHTM = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/PlayersHTM/";
-					System.Console.WriteLine ("Do you want to delete existing files ?");
+					Console.WriteLine ("Do you want to delete existing files ?");
 					string cDelete = System.Console.ReadLine ();
 					if (cDelete == "Y" || cDelete == "y") {
-						System.Console.WriteLine ("Deleting already existing files");
-						CVA.FileDeleter sFiles = new CVA.FileDeleter (ref cDirectoryHTM);
+						Console.WriteLine ("Deleting already existing files");
+						FileDeleter sFiles = new FileDeleter (ref cDirectoryHTM);
 						sFiles.Delete ();
-						System.Console.WriteLine ("Deleting done in " + (System.DateTime.Now - ss));
+						System.Console.WriteLine ("Deleting done in " + (DateTime.Now - ss));
 						ss = System.DateTime.Now;
 					}
 
@@ -71,11 +73,11 @@ namespace CVA
 						sInternetPageReader.ToTextFile (ref cFutureWebsiteToBeCalled, ref cPathToFileNamePlayer);
 					}
 
-					System.Console.WriteLine ("Elapsed time to get all files : " + (System.DateTime.Now - ss));
+					Console.WriteLine ("Elapsed time to get all files : " + (DateTime.Now - ss));
 					
-					bIsFinished = CVA.MainClass.IsFinish ();
+					bIsFinished = IsFinish ();
 				} 
-				else if (cChoice = "2") 
+				else if (cChoice == "2") 
 				{
 
 				}
@@ -84,7 +86,8 @@ namespace CVA
 					bIsFinished = true;
 				}
 			}
-			System.Console.WriteLine ("Good bye !");
+
+			Console.WriteLine ("Good bye !");
 		}
 	}
 }

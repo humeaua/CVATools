@@ -1,4 +1,5 @@
 // Class to delete all files in directory
+using System.IO; // for DirectorInfo and FileInfo
 
 namespace CVA
 {
@@ -12,9 +13,9 @@ namespace CVA
 
 		private void DeleteAllFiles(ref string cDirectoryName)
 		{
-			System.IO.DirectoryInfo downloadedMessageInfo = new System.IO.DirectoryInfo(cDirectoryName);
+			DirectoryInfo downloadedMessageInfo = new DirectoryInfo(cDirectoryName);
 
-			foreach (System.IO.FileInfo file in downloadedMessageInfo.GetFiles())
+			foreach (FileInfo file in downloadedMessageInfo.GetFiles())
 			{
 				file.Delete(); 
 			}
@@ -22,9 +23,9 @@ namespace CVA
 
 		private void DeleteAllSubDirectories(ref string cDirectoryName)
 		{
-			System.IO.DirectoryInfo downloadedMessageInfo = new System.IO.DirectoryInfo(cDirectoryName);
+			DirectoryInfo downloadedMessageInfo = new DirectoryInfo(cDirectoryName);
 
-			foreach (System.IO.DirectoryInfo dir in downloadedMessageInfo.GetDirectories())
+			foreach (DirectoryInfo dir in downloadedMessageInfo.GetDirectories())
 			{
 				dir.Delete(true); 
 			}

@@ -39,6 +39,9 @@
     <Compile Include="InternetPageReader.cs" />
     <Compile Include="FileParser.cs" />
     <Compile Include="FileDeleter.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Tournament.cs" />
+    <Compile Include="PlayerResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

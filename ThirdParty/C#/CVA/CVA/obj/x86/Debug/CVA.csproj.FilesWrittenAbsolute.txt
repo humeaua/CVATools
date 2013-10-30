@@ -1,0 +1,5 @@
+/Users/alexhum49/Documents/Workspace/CVA/CVATools/ThirdParty/C#/CVA/CVA/obj/x86/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/Users/alexhum49/Documents/Workspace/CVA/CVATools/ThirdParty/C#/CVA/CVA/bin/Debug/CVA.exe.mdb
+/Users/alexhum49/Documents/Workspace/CVA/CVATools/ThirdParty/C#/CVA/CVA/bin/Debug/CVA.exe
+/Users/alexhum49/Documents/Workspace/CVA/CVATools/ThirdParty/C#/CVA/CVA/obj/x86/Debug/CVA.exe
+/Users/alexhum49/Documents/Workspace/CVA/CVATools/ThirdParty/C#/CVA/CVA/obj/x86/Debug/CVA.exe.mdb

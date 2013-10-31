@@ -1,11 +1,32 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/PlayerResult.cs">
     <Files>
-      <File FileName="CVA/Program.cs" Line="20" Column="4" />
-      <File FileName="CVA/FileParser.cs" Line="38" Column="4" />
-      <File FileName="CVA/FileDeleter.cs" Line="36" Column="33" />
+      <File FileName="CVA/Program.cs" Line="14" Column="4" />
+      <File FileName="CVA/FileParser.cs" Line="8" Column="10" />
+      <File FileName="CVA/FileDeleter.cs" Line="28" Column="13" />
+      <File FileName="CVA/Player.cs" Line="56" Column="79" />
+      <File FileName="CVA/Tournament.cs" Line="7" Column="33" />
+      <File FileName="CVA/PlayerResult.cs" Line="16" Column="4" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="CVA" expanded="True">
+            <Node name="PlayerResult.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="ConnectionManagerPad">
+        <State selected="True" />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

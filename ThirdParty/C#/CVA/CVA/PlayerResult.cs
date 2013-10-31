@@ -34,6 +34,11 @@ namespace CVA
 		{
 			return cTournamentName;
 		}
+
+		public DateTime GetTournamentDate()
+		{
+			return sTournamentDate;
+		}
 	}
 }
 

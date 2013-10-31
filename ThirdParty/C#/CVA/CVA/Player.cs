@@ -48,6 +48,16 @@ namespace CVA
 			Console.WriteLine ("{0} {1} : {2}", cFirstName, cLastName, Average ());
 		}
 
+		public string GetFirstName()
+		{
+			return cFirstName;
+		}
+
+		public string GetLastName()
+		{
+			return cLastName;
+		}
+
 		public void Print()
 		{
 			Console.WriteLine ("{0} {1}", cFirstName, cLastName);

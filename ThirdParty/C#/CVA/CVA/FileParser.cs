@@ -48,6 +48,26 @@ namespace CVA
 					string cTournamentName = line.Substring (iFirst, iLast - iFirst);
 				}
 			}
+			/*
+ static void Main(string[] args) {
+        String xml = @"
+            <transactions>
+                <transaction name=""Fred"" amount=""5,20"" />
+                <transaction name=""John"" amount=""10,00"" />
+                <transaction name=""Fred"" amount=""3,00"" />
+            </transactions>";
+
+        XDocument xmlDocument = XDocument.Parse(xml);
+
+        var query = from x in xmlDocument.Descendants("transaction")
+                    group x by x.Attribute("name").Value into g
+                    select new { Name = g.Key, Amount = g.Sum(t => Decimal.Parse(t.Attribute("amount").Value)) };
+
+        foreach (var item in query) {
+            Console.WriteLine("Name: {0}; Amount: {1:C};", item.Name, item.Amount);
+        }
+    }
+			 */
 		}
 	}
 }

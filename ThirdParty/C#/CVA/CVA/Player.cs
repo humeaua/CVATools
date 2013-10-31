@@ -66,6 +66,11 @@ namespace CVA
 		{
 			return sLeft.Average() > sRight.Average();
 		}
+
+		public bool HasPlayed(ref Tournament sTournament)
+		{
+			return sTournament.GetResults ().ContainsKey(new Tuple<string,string>(cFirstName, cLastName));
+		}
 	}
 }
 

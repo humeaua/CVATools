@@ -30,7 +30,10 @@ namespace Finance
             ACT365,
             _A5,
             ACT364,
-            _A4
+            _A4,
+            // Unitary coverage = always one
+            UNITARY,
+            NONE
             
         } MyBasis;
     }

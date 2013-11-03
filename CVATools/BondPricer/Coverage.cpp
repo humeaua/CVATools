@@ -106,6 +106,12 @@ namespace Finance
                     dCoverage = lCount / 252.0;
                     break;
                 }
+                case ::Finance::Base::NONE:
+                case ::Finance::Base::UNITARY:
+                {
+                    //  return 1
+                    return 1;
+                }
                 default:
                     break;
             }

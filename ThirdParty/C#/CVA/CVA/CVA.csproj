@@ -9,6 +9,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CVA</RootNamespace>
     <AssemblyName>CVA</AssemblyName>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -42,6 +47,9 @@
     <Compile Include="Player.cs" />
     <Compile Include="Tournament.cs" />
     <Compile Include="PlayerResult.cs" />
+    <Compile Include="Form1.cs" />
+    <Compile Include="HTMLParser.cs" />
+    <Compile Include="TextStyle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,20 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Tournament.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Form1.cs">
     <Files>
       <File FileName="CVA/Program.cs" Line="1" Column="1" />
-      <File FileName="CVA/FileParser.cs" Line="55" Column="20" />
-      <File FileName="CVA/Player.cs" Line="58" Column="21" />
+      <File FileName="CVA/FileParser.cs" Line="1" Column="1" />
+      <File FileName="CVA/Player.cs" Line="1" Column="1" />
       <File FileName="CVA/Tournament.cs" Line="50" Column="90" />
-      <File FileName="CVA/PlayerResult.cs" Line="17" Column="3" />
-      <File FileName="CVA/InternetPageReader.cs" Line="10" Column="9" />
+      <File FileName="CVA/PlayerResult.cs" Line="1" Column="1" />
+      <File FileName="CVA/InternetPageReader.cs" Line="1" Column="1" />
+      <File FileName="CVA/AssemblyInfo.cs" Line="1" Column="1" />
+      <File FileName="CVA/Form1.cs" Line="2" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="CVA" expanded="True">
-            <Node name="Tournament.cs" selected="True" />
-          </Node>
+          <Node name="CVA" expanded="True" selected="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">

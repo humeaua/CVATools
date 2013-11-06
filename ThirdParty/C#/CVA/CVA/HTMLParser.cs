@@ -24,9 +24,7 @@ namespace NameParser
 		}
 
 		public HTMLParser()
-		{
-			
-		}
+		{}
 
 		public static string QuoteAttributes(string input)
 		{
@@ -71,7 +69,7 @@ namespace NameParser
 
 			foreach(XmlNode node in xdf.ChildNodes[0].ChildNodes)
 			{
-					ParseNode(node, defaultStyle, tsc);
+				ParseNode(node, defaultStyle, tsc);
 			}
 
 			return tsc;
@@ -83,7 +81,7 @@ namespace NameParser
 
 			System.Diagnostics.Trace.WriteLine(node.Name);
 			System.Diagnostics.Trace.Indent();
-			
+
 			switch(node.Name.ToLower())
 			{
 				case "font":

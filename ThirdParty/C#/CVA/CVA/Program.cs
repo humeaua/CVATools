@@ -1,4 +1,5 @@
 using System; // for Console
+using NameParser; // for HTML Parser
 
 namespace CVA
 {
@@ -10,6 +11,7 @@ namespace CVA
 
 			Console.WriteLine ("1- Get files from Internet");
 			Console.WriteLine ("2- Parse player files");
+			Console.WriteLine ("3- Test HTML Parser");
 			cChoice = Console.ReadLine ();
 		}
 
@@ -77,9 +79,32 @@ namespace CVA
 					
 					bIsFinished = IsFinish ();
 				} 
-				else if (cChoice == "2") 
+				else if (cChoice == "2")
+			 	{
+					// do something
+					Console.WriteLine ("Not yet implemented");
+					bIsFinished = true;
+				} 
+				else if (cChoice == "3") 
 				{
+					Console.WriteLine ("Test of HTML Parser");
+					string cLine = "<b><i>blabla</i>  <u> blibli </u></b> bloblo";
+					TextStyle sDefaultStyle = new TextStyle ();
+					TextStyle.TextStyleCollection tsc = HTMLParser.ParseHTML (cLine, sDefaultStyle);
 
+					Console.WriteLine(tsc.ToString());
+					TextStyle[] sTextStyleArray = new TextStyle[16];
+					tsc.CopyTo(sTextStyleArray);
+					for (int i = 0; i < 16; i ++) {
+						if (sTextStyleArray [i] != null) {
+							Console.WriteLine ("i = " + i + " : ");
+							Console.WriteLine(sTextStyleArray [i].ToString ());
+						} else {
+							Console.WriteLine ("i = " + i + " : null");
+						}
+					}
+
+					bIsFinished = true;
 				}
 				else 
 				{

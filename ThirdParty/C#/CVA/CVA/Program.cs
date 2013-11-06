@@ -95,7 +95,7 @@ namespace CVA
 					Console.WriteLine(tsc.ToString());
 					TextStyle[] sTextStyleArray = new TextStyle[16];
 					tsc.CopyTo(sTextStyleArray);
-					for (int i = 0; i < 16; i ++) {
+					for (int i = 0; i < sTextStyleArray.Length ; i ++) {
 						if (sTextStyleArray [i] != null) {
 							Console.WriteLine ("i = " + i + " : ");
 							Console.WriteLine(sTextStyleArray [i].ToString ());

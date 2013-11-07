@@ -1,23 +1,24 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/HTMLParser.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Program.cs">
     <Files>
-      <File FileName="CVA/Program.cs" Line="1" Column="1" />
+      <File FileName="CVA/Program.cs" Line="98" Column="49" />
       <File FileName="CVA/FileParser.cs" Line="1" Column="1" />
       <File FileName="CVA/Player.cs" Line="1" Column="1" />
-      <File FileName="CVA/Tournament.cs" Line="50" Column="90" />
+      <File FileName="CVA/Tournament.cs" Line="1" Column="1" />
       <File FileName="CVA/PlayerResult.cs" Line="1" Column="1" />
       <File FileName="CVA/InternetPageReader.cs" Line="1" Column="1" />
       <File FileName="CVA/AssemblyInfo.cs" Line="1" Column="1" />
-      <File FileName="CVA/Form1.cs" Line="2" Column="22" />
-      <File FileName="CVA/HTMLParser.cs" Line="5" Column="18" />
-      <File FileName="CVA/Properties/AssemblyInfo.cs" Line="6" Column="12" />
+      <File FileName="CVA/Form1.cs" Line="1" Column="1" />
+      <File FileName="CVA/HTMLParser.cs" Line="61" Column="26" />
+      <File FileName="CVA/Properties/AssemblyInfo.cs" Line="1" Column="1" />
+      <File FileName="CVA/TextStyle.cs" Line="195" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="CVA" expanded="True">
-            <Node name="HTMLParser.cs" selected="True" />
+            <Node name="Program.cs" selected="True" />
           </Node>
         </State>
       </Pad>

@@ -5,11 +5,25 @@ namespace CVA
 {
 	public class FileParser
 	{
-		public List<string> FutureWebsiteToBeCalled;
+		#region Implementation
+		private List<string> FutureWebsiteToBeCalled;
+		#endregion
 
 		public FileParser ()
 		{
 			FutureWebsiteToBeCalled = new List<string> ();
+		}
+
+		public List<string> FutureWebsites
+		{
+			get
+			{ 
+				return FutureWebsiteToBeCalled;
+			}
+			set
+			{ 
+				FutureWebsiteToBeCalled = value;
+			}
 		}
 
 		public void ParseWorldRanking(ref string cFilePath)

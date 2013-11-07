@@ -25,19 +25,40 @@ namespace CVA
 			return sLeft.sTournamentDate > sRight.sTournamentDate;
 		}
 
-		public double GetPoint()
+		public double Point
 		{
-			return dPoint;
+			get 
+			{
+				return dPoint;
+			}
+			set 
+			{
+				dPoint = value;
+			}
 		}
 
-		public string GetName()
+		public string Name
 		{
-			return cTournamentName;
+			get 
+			{
+				return cTournamentName;
+			}
+			set 
+			{
+				cTournamentName = value;
+			}
 		}
 
-		public DateTime GetTournamentDate()
+		public DateTime Date
 		{
-			return sTournamentDate;
+			get 
+			{
+				return sTournamentDate;
+			}
+			set 
+			{
+				sTournamentDate = value;
+			}
 		}
 	}
 }

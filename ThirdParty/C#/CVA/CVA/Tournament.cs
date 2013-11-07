@@ -5,9 +5,11 @@ namespace CVA
 {
 	public class Tournament
 	{
+		#region Implementation
 		private string cTournamentName;
 		private DateTime sTournamentDate; 
 		private Dictionary<Tuple<string,string>, double> sResults;
+		#endregion
 
 		public Tournament (ref string cTournamentName0, ref DateTime sTournamentDate0)
 		{
@@ -20,19 +22,40 @@ namespace CVA
 			LoadFromFile (ref cFileName);
 		}
 
-		public string GetName()
+		public string Name
 		{
-			return cTournamentName;
+			get 
+			{
+				return cTournamentName;
+			}
+			set 
+			{
+				cTournamentName = value;
+			}
 		}
 
-		public DateTime GetDate()
+		public DateTime Date
 		{
-			return sTournamentDate;
+			get 
+			{
+				return sTournamentDate;
+			}
+			set 
+			{
+				sTournamentDate = value;
+			}
 		}
 
-		public Dictionary<Tuple<string,string>, double> GetResults()
+		public Dictionary<Tuple<string,string>, double> Results
 		{
-			return sResults;
+			get
+			{
+				return sResults;
+			}
+			set
+			{
+				sResults = value;
+			}
 		}
 
 		public void LoadFromFile(ref string cFileName)
@@ -47,7 +70,7 @@ namespace CVA
 
 		public void Add(ref Player sPlayer, double dResult)
 		{
-			sResults.Add (new Tuple<string, string> (sPlayer.GetFirstName(), sPlayer.GetLastName()), dResult);
+			sResults.Add (new Tuple<string, string> (sPlayer.FirstName, sPlayer.LastName), dResult);
 		}
 	}
 }

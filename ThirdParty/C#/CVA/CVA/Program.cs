@@ -61,7 +61,7 @@ namespace CVA
 					}
 
 					string nameprefix = "name=", rankprefix = "&Rank=", totalpoint = "&TotalPt";
-					foreach (string c in sFileParser.FutureWebsiteToBeCalled) {
+					foreach (string c in sFileParser.FutureWebsites) {
 						// Find the player name to have the correct file name before parsing it
 
 						int iFirstNamePlayer = c.IndexOf (nameprefix) + nameprefix.Length,

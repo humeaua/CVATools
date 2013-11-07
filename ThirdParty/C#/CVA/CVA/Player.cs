@@ -5,12 +5,14 @@ namespace CVA
 {
 	public class Player
 	{
+		#region Implementation
 		private string cFirstName, cLastName;
 		private int iRanking;
 		private int iNTournamentsPlayed;
 		private double dTotalPoints;
 
 		private List<PlayerResult> sResults;
+		#endregion
 
 		// Constructors
 		public Player (ref string cFirstName0, ref string cLastName0)
@@ -48,22 +50,36 @@ namespace CVA
 			Console.WriteLine ("{0} {1} : {2}", cFirstName, cLastName, Average ());
 		}
 
-		public string GetFirstName()
+		public string FirstName
 		{
-			return cFirstName;
+			get
+			{
+				return cFirstName;
+			}
+			set
+			{
+				cFirstName = value;
+			}
 		}
 
-		public string GetLastName()
+		public string LastName
 		{
-			return cLastName;
+			get 
+			{
+				return cLastName;
+			}
+			set
+			{
+				cLastName = value;
+			}
 		}
 
 		public void Print()
 		{
-			Console.WriteLine ("{0} {1}", cFirstName, cLastName);
+			Console.WriteLine ("{0} {1}", FirstName, LastName);
 			foreach (PlayerResult sTournament in sResults)
 			{
-				Console.WriteLine("{0} {1}", sTournament.GetName(), sTournament.GetPoint());
+				Console.WriteLine("{0} {1}", sTournament.Name, sTournament.Point);
 			}
 		}
 
@@ -79,7 +95,7 @@ namespace CVA
 
 		public bool HasPlayed(ref Tournament sTournament)
 		{
-			return sTournament.GetResults ().ContainsKey(new Tuple<string,string>(cFirstName, cLastName));
+			return sTournament.Results.ContainsKey(new Tuple<string,string>(FirstName, LastName));
 		}
 	}
 }

@@ -4,9 +4,14 @@ namespace CVA
 {
 	public class PlayerResult
 	{
+		#region Implementation
 		private string cTournamentName;
 		private DateTime sTournamentDate;
 		private double dPoint;
+		#endregion
+
+		public PlayerResult()
+		{}
 
 		public PlayerResult (ref string cTournamentName0, ref DateTime sTournamentDate0, ref double dPoint0)
 		{

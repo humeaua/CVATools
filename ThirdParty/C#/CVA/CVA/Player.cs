@@ -1,5 +1,7 @@
 using System.Collections.Generic; // for list
 using System; // for console
+using System.IO; // for file
+using System.Linq; // for select
 
 namespace CVA
 {
@@ -26,13 +28,29 @@ namespace CVA
 
 		public Player (ref string cFileName)
 		{
-			LoadFromFile (ref cFileName);
+			LoadFromCSVFile (ref cFileName);
 		}
 
-		public void LoadFromFile(ref string cFileName)
+		public void LoadFromCSVFile(ref string cFileName)
 		{
 			// to do
 			// copy the existing c++ file
+			var lines = File.ReadAllLines(cFileName).Select(a => a.Split(';'));
+			var csv = from line in lines
+				select (from piece in line
+				        select piece);
+
+			foreach (string[] element in csv) 
+			{
+				PlayerResult sPlayerResult = new PlayerResult();
+
+				sPlayerResult.Date = new DateTime (Convert.ToInt32(element  [2]), 1, 1);
+				sPlayerResult.Date.AddDays (Convert.ToInt32(element [3]) * 7);
+				sPlayerResult.Name = element [0];
+				sPlayerResult.Point = Convert.ToDouble(element [4]);
+			
+				sResults.Add (sPlayerResult);
+			}
 		}
 
 		public double Average()

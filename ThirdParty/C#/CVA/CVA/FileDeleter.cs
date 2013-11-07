@@ -5,7 +5,10 @@ namespace CVA
 {
 	public class FileDeleter
 	{
+		#region Implementation
 		private string cDirectoryName;
+		#endregion
+
 		public FileDeleter (ref string cDirectoryName0)
 		{
 			cDirectoryName = cDirectoryName0;

@@ -51,7 +51,7 @@ namespace CVA
 		{
 			string cSearchedString = "/events/events_scorecard.sps?EventID";
 			string cBegin = @"""newsdate"">";
-			string cEnd = "</a>&nbsp;</td>";
+			//string cEnd = "</a>&nbsp;</td>";
 			foreach (var line in System.IO.File.ReadAllLines(cFilePath)) 
 			{
 				if (line.Contains (cSearchedString)) 
@@ -60,6 +60,7 @@ namespace CVA
 					int iLast = line.IndexOf (cBegin);
 
 					string cTournamentName = line.Substring (iFirst, iLast - iFirst);
+
 				}
 			}
 			/*

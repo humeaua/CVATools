@@ -13,6 +13,7 @@ namespace CVA
 		private int iNTournamentsPlayed;
 		private double dTotalPoints;
 
+		private double dAverage;
 		private List<PlayerResult> sResults;
 		#endregion
 
@@ -28,6 +29,9 @@ namespace CVA
 
 		public Player (ref string cFileName)
 		{
+			iRanking = 0;
+			iNTournamentsPlayed = 0;
+			dTotalPoints = 0.0;
 			LoadFromCSVFile (ref cFileName);
 		}
 
@@ -50,22 +54,36 @@ namespace CVA
 				sPlayerResult.Point = Convert.ToDouble(element [4]);
 			
 				sResults.Add (sPlayerResult);
+
+				dTotalPoints += sPlayerResult.Point;
+				iNTournamentsPlayed += 1;
 			}
+
+
 		}
 
-		public double Average()
+		public double Average0()
 		{
 			if (iNTournamentsPlayed <= 40)
-				return dTotalPoints / 40.0;
+				dAverage = dTotalPoints / 40.0;
 			else if (iNTournamentsPlayed >= 52)
-				return dTotalPoints / 52.0;
+				dAverage = dTotalPoints / 52.0;
 			else
-				return dTotalPoints / iNTournamentsPlayed;
+				dAverage = dTotalPoints / iNTournamentsPlayed;
+			return dAverage;
+		}
+
+		public double Average
+		{
+			get
+			{
+				return dAverage;
+			}
 		}
 
 		public void PrintName()
 		{
-			Console.WriteLine ("{0} {1} : {2}", cFirstName, cLastName, Average ());
+			Console.WriteLine ("{0} {1} : {2}", cFirstName, cLastName, Average0 ());
 		}
 
 		public string FirstName
@@ -92,6 +110,18 @@ namespace CVA
 			}
 		}
 
+		public int Ranking
+		{
+			get
+			{ 
+				return iRanking;
+			}
+			set
+			{
+				iRanking = value; 
+			}
+		}
+
 		public void Print()
 		{
 			Console.WriteLine ("{0} {1}", FirstName, LastName);
@@ -103,12 +133,12 @@ namespace CVA
 
 		public static bool operator < (Player sLeft, Player sRight)
 		{
-			return sLeft.Average() < sRight.Average();
+			return sLeft.Average < sRight.Average;
 		}
 
 		public static bool operator > (Player sLeft, Player sRight)
 		{
-			return sLeft.Average() > sRight.Average();
+			return sLeft.Average > sRight.Average;
 		}
 
 		public bool HasPlayed(ref Tournament sTournament)

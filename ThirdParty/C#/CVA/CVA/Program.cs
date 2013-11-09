@@ -26,7 +26,24 @@ namespace CVA
 			return !(cResult == "y" || cResult == "Y");
 		}
 
-		public static void Main (string[] args)
+		public static void Main(string[] args)
+		{
+			try
+			{
+				MainContents(args);
+			}
+			catch (MyException exception) 
+			{
+				Console.WriteLine ("MyException caught : ");
+				Console.WriteLine (exception.Message);
+
+				Console.WriteLine ("Inner Exception : " + exception.InnerException);
+				Console.WriteLine ("Source : " + exception.Source);
+				Console.WriteLine ("TargetSite : " + exception.TargetSite);
+			}
+		}
+
+		public static void MainContents (string[] args)
 		{
 			bool bIsFinished = false;
 

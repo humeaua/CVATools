@@ -51,6 +51,7 @@
     <Compile Include="HTMLParser.cs" />
     <Compile Include="TextStyle.cs" />
     <Compile Include="Ranking.cs" />
+    <Compile Include="MyException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

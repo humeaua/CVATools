@@ -46,6 +46,10 @@ namespace CVA
 
 			foreach (string[] element in csv) 
 			{
+				if (element.Length != 4) 
+				{
+					throw new MyException ("Player::LoadFromCSVFile : Element does not have the correct length when reading from CSV file");
+				}
 				PlayerResult sPlayerResult = new PlayerResult();
 
 				sPlayerResult.Date = new DateTime (Convert.ToInt32(element  [2]), 1, 1);

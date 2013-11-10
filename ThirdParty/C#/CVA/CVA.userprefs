@@ -1,26 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/TextStyle.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/HTMLParser.cs">
     <Files>
-      <File FileName="CVA/Program.cs" Line="110" Column="6" />
-      <File FileName="CVA/FileParser.cs" Line="61" Column="6" />
-      <File FileName="CVA/Player.cs" Line="121" Column="22" />
-      <File FileName="CVA/Tournament.cs" Line="54" Column="5" />
-      <File FileName="CVA/PlayerResult.cs" Line="8" Column="3" />
-      <File FileName="CVA/InternetPageReader.cs" Line="2" Column="35" />
-      <File FileName="CVA/AssemblyInfo.cs" Line="1" Column="1" />
-      <File FileName="CVA/Form1.cs" Line="1" Column="1" />
-      <File FileName="CVA/HTMLParser.cs" Line="61" Column="26" />
-      <File FileName="CVA/Properties/AssemblyInfo.cs" Line="1" Column="1" />
-      <File FileName="CVA/TextStyle.cs" Line="195" Column="35" />
-      <File FileName="CVA/Ranking.cs" Line="27" Column="4" />
-      <File FileName="CVA/FileDeleter.cs" Line="11" Column="3" />
+      <File FileName="CVA/Player.cs" Line="51" Column="6" />
+      <File FileName="CVA/MyException.cs" Line="6" Column="2" />
+      <File FileName="CVA/Program.cs" Line="40" Column="73" />
+      <File FileName="CVA/HTMLParser.cs" Line="148" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="CVA" expanded="True">
-            <Node name="TextStyle.cs" selected="True" />
+            <Node name="HTMLParser.cs" selected="True" />
           </Node>
         </State>
       </Pad>

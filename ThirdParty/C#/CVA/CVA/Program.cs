@@ -2,6 +2,7 @@ using System; // for Console
 using System.IO; // for File
 using System.Linq; // for Select
 using NameParser; // for HTML Parser
+using System.Collections.Generic; // for list
 
 namespace CVA
 {
@@ -15,6 +16,7 @@ namespace CVA
 			Console.WriteLine ("2- Parse player files");
 			Console.WriteLine ("3- Test HTML Parser");
 			Console.WriteLine ("4- CSV File Reader");
+			Console.WriteLine ("5- Interpolator");
 			cChoice = Console.ReadLine ();
 		}
 
@@ -34,7 +36,7 @@ namespace CVA
 			}
 			catch (MyException exception) 
 			{
-				Console.WriteLine ("MyException caught : ");
+				Console.Write ("MyException caught : ");
 				Console.WriteLine (exception.Message);
 
 				Console.WriteLine ("Inner Exception : " + exception.InnerException);
@@ -121,24 +123,41 @@ namespace CVA
 					}
 
 					bIsFinished = true;
-				} 
-				else if (cChoice == "4") 
-				{
+				} else if (cChoice == "4") {
 					string cFileName = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/Adam_Scott.csv";
-					var lines = File.ReadAllLines(cFileName).Select(a => a.Split(';'));
+					var lines = File.ReadAllLines (cFileName).Select (a => a.Split (';'));
 					var csv = from line in lines
 						select (from piece in line
 						        select piece);
 
-					foreach (var element in csv) 
-					{
-						foreach (var element2 in element) 
-						{
-							Console.Write(element2 + " ; ");
+					foreach (var element in csv) {
+						foreach (var element2 in element) {
+							Console.Write (element2 + " ; ");
 						}
-						Console.WriteLine("");
+						Console.WriteLine ("");
 					}
 
+					bIsFinished = true;
+				} 
+				else if (cChoice == "5") 
+				{
+					List<double> X  = new List<double>(), Y = new List<double>();
+					X.Add (0);
+					X.Add (0);
+					X.Add (1);
+					X.Add (1);
+
+					Y.Add (0);
+					Y.Add (1);
+					Y.Add (1);
+					Y.Add (0);
+
+					Interpolator sInterp = new Interpolator (ref X, ref Y);
+					//double x = 1.1;
+					for (double x = -0.1; x < 1.2; x += 0.1) 
+					{
+						Console.WriteLine (x + " : " + sInterp.Interp(x));
+					}
 					bIsFinished = true;
 				}
 				else 

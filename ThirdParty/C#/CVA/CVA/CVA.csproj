@@ -53,6 +53,7 @@
     <Compile Include="Ranking.cs" />
     <Compile Include="MyException.cs" />
     <Compile Include="Interpolator.cs" />
+    <Compile Include="Weights.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

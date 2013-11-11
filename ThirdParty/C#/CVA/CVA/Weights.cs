@@ -9,11 +9,23 @@ namespace CVA
 		Interpolator sInterpolator;
 		#endregion
 
-		public Weights ()
-		{}
+		public Weights (Interpolator sInterpolator0)
+		{
+			sInterpolator = sInterpolator0;
+		}
 
-		public abstract double Weight (double t);
-		public abstract double Weight (DateTime sDate); 
+		public double Weight (double t)
+		{
+			return sInterpolator.Interp (t);
+		}
+
+		public double Weight (DateTime sDate)
+		{
+			//	needs to figure out why this is not working
+			//DateTime PreviousMonday = DateTime.Now.StartOfWeek (DayOfWeek.Monday);
+			return sInterpolator.Interp (/*PreviousMonday.LagInYear (sDate)*/0);
+		}
+		protected abstract Interpolator MakeInterpolator ();
 	}
 }
 

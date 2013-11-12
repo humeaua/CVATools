@@ -16,7 +16,18 @@ namespace CVA
 
 		public double Weight (double t)
 		{
-			return sInterpolator.Interp (t);
+			return Interpolator.Interp (t);
+		}
+
+		public Interpolator Interpolator
+		{
+			get
+			{ 
+				if (sInterpolator == null)
+					sInterpolator = new Interpolator ();
+				return sInterpolator;
+			}
+			set { sInterpolator = value; }
 		}
 
 		private double LagInYear(DateTime sDate1, DateTime sDate2)
@@ -41,8 +52,7 @@ namespace CVA
 			}
 
 			DateTime PreviousMonday = DateTime.Now.AddDays(-diff).Date;
-			//DateTime PreviousMonday = DateTime.Now.StartOfWeek (DayOfWeek.Monday);
-			return sInterpolator.Interp (LagInYear(sDate, PreviousMonday));
+			return Interpolator.Interp (LagInYear(sDate, PreviousMonday));
 		}
 
 		protected static Interpolator MakeInterpolator ()

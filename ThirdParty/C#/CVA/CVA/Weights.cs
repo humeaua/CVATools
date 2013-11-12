@@ -39,12 +39,12 @@ namespace CVA
 			dResult += (sDate1.Month - sDate2.Month) / 12.0;
 			dResult += (sDate1.Day - sDate2.Day) / 30.0;
 
-			return Math.Abs(dResult);
+			return dResult;
 		}
 
-		public double Weight (DateTime sDate)
+		private double LagInYearFromToday(DateTime sDate)
 		{
-			//	needs to figure out why this is not working
+			//	Get previous Monday -- date where the ranking has been published 
 			int diff = DateTime.Now.DayOfWeek - DayOfWeek.Monday;
 			if (diff < 0)
 			{
@@ -52,7 +52,12 @@ namespace CVA
 			}
 
 			DateTime PreviousMonday = DateTime.Now.AddDays(-diff).Date;
-			return Interpolator.Interp (LagInYear(sDate, PreviousMonday));
+			return LagInYear (PreviousMonday, sDate);
+		}
+
+		public double Weight (DateTime sDate)
+		{
+			return Interpolator.Interp (LagInYearFromToday(sDate));
 		}
 
 		protected static Interpolator MakeInterpolator ()

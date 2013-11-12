@@ -12,6 +12,32 @@ namespace CVA
 		private string cExtrapolationMethod;
 		#endregion
 
+		private void SetDefaultInterpolationMethod()
+		{
+			cInterpolationMethod = "LINEAR";
+		}
+
+		private void SetDefaultExtrapolationMethod()
+		{
+			cExtrapolationMethod = "NEAR";
+		}
+
+		public Interpolator()
+		{
+			X = new List<double> ();
+			Y = new List<double> ();
+			SetDefaultExtrapolationMethod ();
+			SetDefaultInterpolationMethod ();
+		}
+
+		public Interpolator( Interpolator sInterp0)
+		{
+			X = sInterp0.X;
+			Y = sInterp0.Y;
+			cInterpolationMethod = sInterp0.cInterpolationMethod;
+			cExtrapolationMethod = sInterp0.cExtrapolationMethod;
+		}
+
 		public Interpolator (ref List<double> X0, ref List<double> Y0)
 		{
 			if (X0.Count != Y0.Count) 
@@ -24,8 +50,8 @@ namespace CVA
 			}
 			X = X0;
 			Y = Y0;
-			cInterpolationMethod = "LINEAR";
-			cExtrapolationMethod = "NEAR";
+			SetDefaultExtrapolationMethod ();
+			SetDefaultInterpolationMethod ();
 		}
 
 		/*static List<double> Variables

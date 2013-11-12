@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace CVA
+namespace Extensions
 {
 	public static class DateTimeExtensions
 	{

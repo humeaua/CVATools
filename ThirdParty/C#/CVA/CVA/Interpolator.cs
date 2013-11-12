@@ -54,27 +54,49 @@ namespace CVA
 			SetDefaultInterpolationMethod ();
 		}
 
-		/*static List<double> Variables
+		public List<double> Variables
 		{
 			get
 			{
-				return &X; 
+				if (X == null)
+				{
+					X = new List<double>();
+				}
+				if (X.Count < 1)
+				{
+					X.Add(new double());
+				}
+				return X;
 			}
-			set
+			set { X = value; }
+		}
+
+		public List<double> Values
+		{
+			get
 			{
-				&X = value; 
+				if (Y == null)
+				{
+					Y = new List<double>();
+				}
+				if (Y.Count < 1)
+				{
+					Y.Add(new double());
+				}
+				return Y;
 			}
-		}*/
+			set { Y = value; }
+		}
 
 		public double Interp(double x)
 		{
 			switch (cExtrapolationMethod.ToUpper ()) 
 			{
 			case "NEAR":
-				if (x <= X [0])
-					return Y [0];
-				if (x >= X [X.Count - 1])
-					return Y [X.Count - 1];
+				if (x <= Variables [0])
+					return Values [0];
+				if (x >= Variables [Variables.Count - 1])
+					return Values [Variables.Count - 1];
 			default:
 				break;
 			}
@@ -90,15 +112,15 @@ namespace CVA
 
 		public Tuple<int,int> Indexes(double x)
 		{
-			if (x < X [0])
+			if (x < Variables [0])
 				return new Tuple<int,int> (0, 1);
-			else if (x > X [X.Count - 1])
-				return new Tuple<int,int> (X.Count - 2, X.Count - 1);
+			else if (x > Variables [Variables.Count - 1])
+				return new Tuple<int,int> (Variables.Count - 2, Variables.Count - 1);
 			else 
 			{
-				for (int i = 0; i < X.Count - 1; ++i) 
+				for (int i = 0; i < Variables.Count - 1; ++i) 
 				{
-					if (X [i] <= x && x <= X [i + 1]) {
+					if (Variables [i] <= x && x <= Variables [i + 1]) {
 						return new Tuple<int,int> (i, i + 1);
 					}
 				}
@@ -109,13 +131,13 @@ namespace CVA
 		private double InterpLin(double x)
 		{
 			Tuple<int,int> indexes = Indexes (x);
-			if (X [indexes.Item1] == X [indexes.Item2]) 
+			if (Variables [indexes.Item1] == Variables [indexes.Item2]) 
 			{
-				return (Y [indexes.Item1] + Y [indexes.Item2]) / 2.0;
+				return (Values [indexes.Item1] + Values [indexes.Item2]) / 2.0;
 			}
 			else
 			{
-				return Y [indexes.Item1] + (Y [indexes.Item2] - Y [indexes.Item1]) / (X [indexes.Item2] - X [indexes.Item1]) * (x - X [indexes.Item1]);
+				return Values [indexes.Item1] + (Values [indexes.Item2] - Values [indexes.Item1]) / (Variables [indexes.Item2] - Variables [indexes.Item1]) * (x - Variables [indexes.Item1]);
 			}
 		}
 	}

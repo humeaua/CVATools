@@ -17,6 +17,7 @@ namespace CVA
 			Console.WriteLine ("3- Test HTML Parser");
 			Console.WriteLine ("4- CSV File Reader");
 			Console.WriteLine ("5- Interpolator");
+			Console.WriteLine ("6- Coverage and Basis");
 			cChoice = Console.ReadLine ();
 		}
 
@@ -62,7 +63,7 @@ namespace CVA
 						string cWebsite = "http://www.officialworldgolfranking.com/rankings/default.sps?region=world&PageCount=" + i;
 						string cFileName = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/OfficialWorldGolfRankingHomePage" + i + ".htm";
 						sInternetPageReader.ToTextFile (ref cWebsite,
-						                                ref cFileName);
+							ref cFileName);
 
 						//	Parse file of WorldRanking
 						sFileParser.ParseWorldRanking (ref cFileName);
@@ -113,7 +114,7 @@ namespace CVA
 					Console.WriteLine (tsc.ToString ());
 					TextStyle[] sTextStyleArray = new TextStyle[16];
 					tsc.CopyTo (sTextStyleArray);
-					for (int i = 0; i < sTextStyleArray.Length; i ++) {
+					for (int i = 0; i < sTextStyleArray.Length; i++) {
 						if (sTextStyleArray [i] != null) {
 							Console.WriteLine ("i = " + i + " : ");
 							Console.WriteLine (sTextStyleArray [i].ToString ());
@@ -127,8 +128,8 @@ namespace CVA
 					string cFileName = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/Adam_Scott.csv";
 					var lines = File.ReadAllLines (cFileName).Select (a => a.Split (';'));
 					var csv = from line in lines
-						select (from piece in line
-						        select piece);
+					          select (from piece in line
+					         select piece);
 
 					foreach (var element in csv) {
 						foreach (var element2 in element) {
@@ -138,10 +139,8 @@ namespace CVA
 					}
 
 					bIsFinished = true;
-				} 
-				else if (cChoice == "5") 
-				{
-					List<double> X  = new List<double>(), Y = new List<double>();
+				} else if (cChoice == "5") {
+					List<double> X = new List<double> (), Y = new List<double> ();
 					X.Add (0);
 					X.Add (0);
 					X.Add (1);
@@ -154,10 +153,23 @@ namespace CVA
 
 					Interpolator sInterp = new Interpolator (ref X, ref Y);
 					//double x = 1.1;
-					for (double x = -0.1; x < 1.2; x += 0.1) 
-					{
-						Console.WriteLine (x + " : " + sInterp.Interp(x));
+					for (double x = -0.1; x < 1.2; x += 0.1) {
+						Console.WriteLine (x + " : " + sInterp.Interp (x));
 					}
+					bIsFinished = true;
+				} else if (cChoice == "6"){
+					DateTime start = DateTime.Today, end = DateTime.Today.AddDays(3);
+					EnumBasis ebasis = EnumBasis.ACT365FIXED;
+					Coverage sCoverage = new Coverage ( start, end, ebasis);
+
+					Console.WriteLine ("Start : " + start);
+					Console.WriteLine ("Start Ticks : " + start.Ticks);
+					Console.WriteLine ("End : " + end);
+
+					Console.WriteLine ("End Ticks : " + end.Ticks);
+					TimeSpan elapsedtime = new TimeSpan (end.Ticks - start.Ticks);
+					Console.WriteLine ("A la mano coverage : " + elapsedtime.Days / 365.0);
+					Console.WriteLine ("Coverage : " + sCoverage.GetCoverage ());
 					bIsFinished = true;
 				}
 				else 

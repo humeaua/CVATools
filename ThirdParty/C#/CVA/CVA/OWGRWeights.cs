@@ -4,11 +4,11 @@ namespace CVA
 {
 	public class OWGRWeights : Weights
 	{
-		public OWGRWeights () : base( new Interpolator(MakeInterpolator()))
+		public OWGRWeights () 
 		{
 		}
 
-		protected static /*override*/ Interpolator MakeInterpolator()
+		protected override Interpolator MakeInterpolator()
 		{
 			List<double> X = new List<double>(), Y = new List<double>();
 			X.Add (0.25);

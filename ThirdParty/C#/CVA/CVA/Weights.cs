@@ -9,6 +9,10 @@ namespace CVA
 		Interpolator sInterpolator;
 		#endregion
 
+		public Weights()
+		{
+		}
+
 		public Weights (Interpolator sInterpolator0) // passing by reference does not work --> need to investigate why
 		{
 			sInterpolator = sInterpolator0;
@@ -60,10 +64,7 @@ namespace CVA
 			return Interpolator.Interp (LagInYearFromToday(sDate));
 		}
 
-		protected static Interpolator MakeInterpolator ()
-		{
-			return new Interpolator();
-		}
+		protected abstract Interpolator MakeInterpolator ();
 	}
 }
 

@@ -1,6 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/DateTimeExtension.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Weights.cs">
     <Files>
       <File FileName="CVA/Player.cs" Line="1" Column="1" />
       <File FileName="CVA/MyException.cs" Line="1" Column="1" />
@@ -8,29 +8,12 @@
       <File FileName="CVA/HTMLParser.cs" Line="1" Column="1" />
       <File FileName="CVA/Interpolator.cs" Line="1" Column="1" />
       <File FileName="CVA/Ranking.cs" Line="1" Column="1" />
-      <File FileName="CVA/Weights.cs" Line="6" Column="19" />
+      <File FileName="CVA/Weights.cs" Line="52" Column="2" />
       <File FileName="CVA/PlayerResult.cs" Line="1" Column="1" />
-      <File FileName="CVA/OWGRWeights.cs" Line="20" Column="4" />
-      <File FileName="CVA/DateTimeExtension.cs" Line="8" Column="26" />
+      <File FileName="CVA/OWGRWeights.cs" Line="1" Column="1" />
+      <File FileName="CVA/DateTimeExtension.cs" Line="1" Column="1" />
+      <File FileName="CVA/Basis.cs" Line="27" Column="6" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="CVA" expanded="True">
-            <Node name="DateTimeExtension.cs" selected="True" />
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-      <Pad Id="ConnectionManagerPad">
-        <State selected="True" />
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

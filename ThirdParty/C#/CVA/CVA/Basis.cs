@@ -30,7 +30,6 @@ namespace CVA
 				eBasis = value;
 			}
 		}
-
 	}
 }
 

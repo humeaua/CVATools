@@ -1,11 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Coverage.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Program.cs">
     <Files>
       <File FileName="CVA/Player.cs" Line="1" Column="1" />
-      <File FileName="CVA/Program.cs" Line="163" Column="1" />
-      <File FileName="CVA/Basis.cs" Line="28" Column="7" />
-      <File FileName="CVA/Coverage.cs" Line="43" Column="1" />
+      <File FileName="CVA/Program.cs" Line="17" Column="46" />
+      <File FileName="CVA/Basis.cs" Line="1" Column="1" />
+      <File FileName="CVA/Coverage.cs" Line="78" Column="69" />
+      <File FileName="CVA/DateTimeExtension.cs" Line="46" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -29,6 +29,24 @@ namespace Extensions
 		}*/
 	}
 
+	class MoreDatesFunctions
+	{
+		public static bool IsLeapYear(long year)
+		{
+			/*if (year % 400 == 0)
+				return true;
+			else if (year % 4 == 0 && year % 100 != 0)
+				return true;
+			return false;*/
+
+			return (year % 400 == 0) || (year % 4 == 0&& year % 100 != 0);
+		}
+
+		public static DateTime ChangeDateToBondBasisConvention(DateTime date)
+		{
+			return new DateTime (date.Year, date.Month, Math.Min (30, date.Day), date.Hour, date.Minute, date.Second, date.Millisecond);
+		}
+	}
 	/*public DateTime FirstDayOfCurrentWeek()
 	{
 		return ;

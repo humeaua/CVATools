@@ -1,4 +1,5 @@
-using System;
+using Extensions; // for MoreDateFunctions
+using System; // for DateTime
 
 namespace CVA
 {
@@ -8,6 +9,9 @@ namespace CVA
 		DateTime sStart, sEnd;
 		EnumBasis eBasis;
 		#endregion
+
+		public Coverage()
+		{}
 
 		public Coverage (DateTime sStart0, DateTime sEnd0, EnumBasis eBasis0)
 		{
@@ -34,7 +38,7 @@ namespace CVA
 			set { eBasis = value; }
 		}
 
-		public double GetCoverage()
+		private double GetCoverage()
 		{
 			switch (eBasis) 
 			{
@@ -43,9 +47,41 @@ namespace CVA
 					TimeSpan elapsedtime = new TimeSpan (End.Ticks - Start.Ticks);
 					return elapsedtime.Days / 365.0;
 				}
+			case EnumBasis.ACTACT:
+				{
+					TimeSpan elapsedtime = new TimeSpan (End.Ticks - Start.Ticks);
+					double dRes = 0.0;
+					for (long i = Start.Year; i <= End.Year; i += 1) {
+						if (MoreDatesFunctions.IsLeapYear(i))
+						{
+							dRes += 366.0;
+						}
+						else 
+						{
+							dRes += 365.0;
+						}
+					}
+					dRes /= (End.Year - Start.Year + 1);
+					return elapsedtime.Days / dRes;
+				}
+			case EnumBasis.THIRTY360:
+				{
+					DateTime 	sStartCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (Start),
+								sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (End);
+					return (sEndCopy.Year - sStartCopy.Year) + (sEndCopy.Month - sStartCopy.Month) / 12.0 + (sEndCopy.Day - sStartCopy.Day) / 360.0;
+				}
 			default:
-				return 0;
+				throw new MyException ("Unknown basis");
 			}
+		}
+
+		public double YearFraction(ref DateTime Start0, ref DateTime End0, EnumBasis Basis0)
+		{
+			Start = Start0;
+			End = End0;
+			Basis = Basis0;
+
+			return GetCoverage ();
 		}
 	}
 }

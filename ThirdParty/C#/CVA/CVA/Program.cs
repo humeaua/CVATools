@@ -158,18 +158,17 @@ namespace CVA
 					}
 					bIsFinished = true;
 				} else if (cChoice == "6"){
-					DateTime start = DateTime.Today, end = DateTime.Today.AddDays(3);
-					EnumBasis ebasis = EnumBasis.ACT365FIXED;
-					Coverage sCoverage = new Coverage ( start, end, ebasis);
+					DateTime start = DateTime.Today, end = DateTime.Today.AddYears(3);
+					Coverage sCoverage = new Coverage ();
 
 					Console.WriteLine ("Start : " + start);
 					Console.WriteLine ("Start Ticks : " + start.Ticks);
 					Console.WriteLine ("End : " + end);
-
 					Console.WriteLine ("End Ticks : " + end.Ticks);
-					TimeSpan elapsedtime = new TimeSpan (end.Ticks - start.Ticks);
-					Console.WriteLine ("A la mano coverage : " + elapsedtime.Days / 365.0);
-					Console.WriteLine ("Coverage : " + sCoverage.GetCoverage ());
+
+					Console.WriteLine ("Coverage (ACT365FIXED) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.ACT365FIXED));
+					Console.WriteLine ("Coverage (BONDBASIS) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.THIRTY360));
+					Console.WriteLine ("Coverage (ACTACT) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.ACTACT));
 					bIsFinished = true;
 				}
 				else 

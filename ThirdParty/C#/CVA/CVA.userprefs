@@ -1,18 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Weights.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Coverage.cs">
     <Files>
       <File FileName="CVA/Player.cs" Line="1" Column="1" />
-      <File FileName="CVA/MyException.cs" Line="1" Column="1" />
-      <File FileName="CVA/Program.cs" Line="1" Column="1" />
-      <File FileName="CVA/HTMLParser.cs" Line="1" Column="1" />
-      <File FileName="CVA/Interpolator.cs" Line="1" Column="1" />
-      <File FileName="CVA/Ranking.cs" Line="1" Column="1" />
-      <File FileName="CVA/Weights.cs" Line="52" Column="2" />
-      <File FileName="CVA/PlayerResult.cs" Line="1" Column="1" />
-      <File FileName="CVA/OWGRWeights.cs" Line="1" Column="1" />
-      <File FileName="CVA/DateTimeExtension.cs" Line="1" Column="1" />
-      <File FileName="CVA/Basis.cs" Line="27" Column="6" />
+      <File FileName="CVA/Program.cs" Line="163" Column="1" />
+      <File FileName="CVA/Basis.cs" Line="28" Column="7" />
+      <File FileName="CVA/Coverage.cs" Line="43" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -38,6 +38,7 @@
 #include "dirent.h"
 #include "PlayerDataBase.h"
 //#include "HTTPFetcher.h"
+#include "linalg.h"
 
 #define NUM_THREADS 5
 
@@ -126,6 +127,7 @@ int main()
     std::cout << "26- Player Data Base" << std::endl;
     std::cout << "27- HTTP Fetcher" << std::endl;
     std::cout << "28- Exo DM louis matrices" << std::endl;
+    std::cout << "29- Alglib testing" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -727,6 +729,10 @@ int main()
         
         for (int i = 0 ; i < n ; ++i)
             std::cout << dEigenValues.at(i) << std::endl;
+    }
+    else if (iTest == 29)
+    {
+        alglib::sparsematrix sparsematrix;
     }
     std::cout << "Done !" << std::endl;
 }

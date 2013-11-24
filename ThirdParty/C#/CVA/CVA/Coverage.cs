@@ -70,6 +70,8 @@ namespace CVA
 								sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (End);
 					return (sEndCopy.Year - sStartCopy.Year) + (sEndCopy.Month - sStartCopy.Month) / 12.0 + (sEndCopy.Day - sStartCopy.Day) / 360.0;
 				}
+			case EnumBasis.UNITARY:
+				return 1.0;
 			default:
 				throw new MyException ("Unknown basis");
 			}

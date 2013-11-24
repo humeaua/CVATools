@@ -5,7 +5,8 @@ namespace CVA
 	public enum EnumBasis{
 		ACTACT,
 		THIRTY360,
-		ACT365FIXED
+		ACT365FIXED,
+		UNITARY
 	}
 
 	public class MyBasis

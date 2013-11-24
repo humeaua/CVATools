@@ -38,6 +38,11 @@ namespace CVA
 			set { eBasis = value; }
 		}
 
+		private static double Coverage30360 (ref DateTime Start0, ref DateTime End0)
+		{
+			return (End0.Year - Start0.Year) + (End0.Month - Start0.Month) / 12.0 + (End0.Day - Start0.Day) / 360.0;
+		}
+
 		private double GetCoverage()
 		{
 			switch (eBasis) 
@@ -68,7 +73,13 @@ namespace CVA
 				{
 					DateTime 	sStartCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (Start),
 								sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (End);
-					return (sEndCopy.Year - sStartCopy.Year) + (sEndCopy.Month - sStartCopy.Month) / 12.0 + (sEndCopy.Day - sStartCopy.Day) / 360.0;
+					return Coverage.Coverage30360 (ref sStartCopy, ref sEndCopy);
+				}
+			case EnumBasis.THIRTY360US:
+				{
+					DateTime sStartCopy = MoreDatesFunctions.ChangeDateToBondBasisUSConvention (Start),
+					sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisUSConvention (End);
+					return Coverage.Coverage30360 (ref sStartCopy, ref sEndCopy);
 				}
 			case EnumBasis.UNITARY:
 				return 1.0;

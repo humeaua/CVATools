@@ -46,6 +46,16 @@ namespace Extensions
 		{
 			return new DateTime (date.Year, date.Month, Math.Min (30, date.Day), date.Hour, date.Minute, date.Second, date.Millisecond);
 		}
+
+		public static DateTime ChangeDateToBondBasisUSConvention(DateTime date)
+		{
+			if (date.Month == 2 && date.Day == 29) {
+				// Change day to 30
+				return new DateTime (date.Year, date.Month, 30, date.Hour, date.Minute, date.Second, date.Millisecond);
+			} else {
+				return ChangeDateToBondBasisConvention (date);
+			}
+		}
 	}
 	/*public DateTime FirstDayOfCurrentWeek()
 	{

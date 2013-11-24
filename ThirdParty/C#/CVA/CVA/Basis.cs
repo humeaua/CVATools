@@ -5,6 +5,7 @@ namespace CVA
 	public enum EnumBasis{
 		ACTACT,
 		THIRTY360EURO,
+		THIRTY360US,
 		ACT365FIXED,
 		UNITARY
 	}

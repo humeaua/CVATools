@@ -64,7 +64,7 @@ namespace CVA
 					dRes /= (End.Year - Start.Year + 1);
 					return elapsedtime.Days / dRes;
 				}
-			case EnumBasis.THIRTY360:
+			case EnumBasis.THIRTY360EURO:
 				{
 					DateTime 	sStartCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (Start),
 								sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (End);

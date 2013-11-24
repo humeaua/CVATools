@@ -167,7 +167,7 @@ namespace CVA
 					Console.WriteLine ("End Ticks : " + end.Ticks);
 
 					Console.WriteLine ("Coverage (ACT365FIXED) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.ACT365FIXED));
-					Console.WriteLine ("Coverage (BONDBASIS) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.THIRTY360));
+					Console.WriteLine ("Coverage (BONDBASIS EURO) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.THIRTY360EURO));
 					Console.WriteLine ("Coverage (ACTACT) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.ACTACT));
 					bIsFinished = true;
 				}

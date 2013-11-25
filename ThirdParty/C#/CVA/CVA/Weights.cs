@@ -34,12 +34,12 @@ namespace CVA
 			set { sInterpolator = value; }
 		}
 
-		private double LagInYear(DateTime sDate1, DateTime sDate2)
+		private double LagInYear(ref DateTime sDate1, ref DateTime sDate2)
 		{
 			return new Coverage().YearFraction (ref sDate1, ref sDate2, EnumBasis.ACTACT);
 		}
 
-		private double LagInYearFromToday(DateTime sDate)
+		private double LagInYearFromToday(ref DateTime sDate)
 		{
 			//	Get previous Monday -- date where the ranking has been published 
 			int diff = DateTime.Now.DayOfWeek - DayOfWeek.Monday;
@@ -49,12 +49,12 @@ namespace CVA
 			}
 
 			DateTime PreviousMonday = DateTime.Now.AddDays(-diff).Date;
-			return LagInYear (PreviousMonday, sDate);
+			return LagInYear (ref PreviousMonday, ref sDate);
 		}
 
-		public double Weight (DateTime sDate)
+		public double Weight (ref DateTime sDate)
 		{
-			return Interpolator.Interp (LagInYearFromToday(sDate));
+			return Interpolator.Interp (LagInYearFromToday(ref sDate));
 		}
 
 		protected abstract Interpolator MakeInterpolator ();

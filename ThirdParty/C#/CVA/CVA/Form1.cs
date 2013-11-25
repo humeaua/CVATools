@@ -148,9 +148,10 @@ namespace NameParser
 
 			try
 			{
-				input = HTMLParser.QuoteAttributes(input);
+				input = HTMLParser.QuoteAttributes(ref input);
 			
-				tsc = HTMLParser.ParseHTML(input, new TextStyle());
+				TextStyle sTextStyle = new TextStyle();
+				tsc = HTMLParser.ParseHTML(ref input, ref sTextStyle);
 			}
 			catch
 			{

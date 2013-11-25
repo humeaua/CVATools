@@ -71,14 +71,14 @@ namespace CVA
 				}
 			case EnumBasis.THIRTY360EURO:
 				{
-					DateTime 	sStartCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (Start),
-								sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (End);
+					DateTime 	sStartCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (ref sStart),
+					sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisConvention (ref sEnd);
 					return Coverage.Coverage30360 (ref sStartCopy, ref sEndCopy);
 				}
 			case EnumBasis.THIRTY360US:
 				{
-					DateTime sStartCopy = MoreDatesFunctions.ChangeDateToBondBasisUSConvention (Start),
-					sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisUSConvention (End);
+					DateTime sStartCopy = MoreDatesFunctions.ChangeDateToBondBasisUSConvention (ref sStart),
+					sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisUSConvention (ref sEnd);
 					return Coverage.Coverage30360 (ref sStartCopy, ref sEndCopy);
 				}
 			case EnumBasis.UNITARY:

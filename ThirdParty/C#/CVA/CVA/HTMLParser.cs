@@ -26,7 +26,7 @@ namespace NameParser
 		public HTMLParser()
 		{}
 
-		public static string QuoteAttributes(string input)
+		public static string QuoteAttributes(ref string input)
 		{
 			int tagIndex = QuoteAttributesRE.GroupNumberFromName("tagName");
 			int nameIndex = QuoteAttributesRE.GroupNumberFromName("attributeName");
@@ -58,7 +58,7 @@ namespace NameParser
 		}
 
 
-		public static TextStyle.TextStyleCollection ParseHTML(string html, TextStyle defaultStyle)
+		public static TextStyle.TextStyleCollection ParseHTML(ref string html, ref TextStyle defaultStyle)
 		{
 			TextStyle.TextStyleCollection tsc = new TextStyle.TextStyleCollection();
 			string text = "<html>" + html + "</html>";
@@ -69,13 +69,13 @@ namespace NameParser
 
 			foreach(XmlNode node in xdf.ChildNodes[0].ChildNodes)
 			{
-				ParseNode(node, defaultStyle, tsc);
+				ParseNode(node, ref defaultStyle, ref tsc);
 			}
 
 			return tsc;
 		}
 
-		private static void ParseNode(XmlNode node, TextStyle defaultStyle, TextStyle.TextStyleCollection tsc)
+		private static void ParseNode(XmlNode node, ref TextStyle defaultStyle, ref TextStyle.TextStyleCollection tsc)
 		{
 			TextStyle style = new TextStyle(defaultStyle);
 
@@ -142,7 +142,7 @@ namespace NameParser
 			{
 				foreach(XmlNode childNode in node.ChildNodes)
 				{
-					ParseNode(childNode, style, tsc);
+					ParseNode(childNode, ref style, ref tsc);
 				}
 			}
 

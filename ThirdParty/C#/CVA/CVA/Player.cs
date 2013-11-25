@@ -62,8 +62,6 @@ namespace CVA
 				dTotalPoints += sPlayerResult.Point;
 				iNTournamentsPlayed += 1;
 			}
-
-
 		}
 
 		public double Average0()

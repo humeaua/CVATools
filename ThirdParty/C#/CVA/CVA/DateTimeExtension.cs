@@ -42,18 +42,18 @@ namespace Extensions
 			return (year % 400 == 0) || (year % 4 == 0&& year % 100 != 0);
 		}
 
-		public static DateTime ChangeDateToBondBasisConvention(DateTime date)
+		public static DateTime ChangeDateToBondBasisConvention(ref DateTime date)
 		{
 			return new DateTime (date.Year, date.Month, Math.Min (30, date.Day), date.Hour, date.Minute, date.Second, date.Millisecond);
 		}
 
-		public static DateTime ChangeDateToBondBasisUSConvention(DateTime date)
+		public static DateTime ChangeDateToBondBasisUSConvention(ref DateTime date)
 		{
 			if (date.Month == 2 && date.Day == 29) {
 				// Change day to 30
 				return new DateTime (date.Year, date.Month, 30, date.Hour, date.Minute, date.Second, date.Millisecond);
 			} else {
-				return ChangeDateToBondBasisConvention (date);
+				return ChangeDateToBondBasisConvention (ref date);
 			}
 		}
 	}

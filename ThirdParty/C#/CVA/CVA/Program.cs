@@ -109,7 +109,7 @@ namespace CVA
 					Console.WriteLine ("Test of HTML Parser");
 					string cLine = "<b><i>blabla</i>  <u> blibli </u></b> bloblo";
 					TextStyle sDefaultStyle = new TextStyle ();
-					TextStyle.TextStyleCollection tsc = HTMLParser.ParseHTML (cLine, sDefaultStyle);
+					TextStyle.TextStyleCollection tsc = HTMLParser.ParseHTML (ref cLine, ref sDefaultStyle);
 
 					Console.WriteLine (tsc.ToString ());
 					TextStyle[] sTextStyleArray = new TextStyle[16];

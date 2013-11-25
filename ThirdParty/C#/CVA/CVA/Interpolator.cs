@@ -30,7 +30,7 @@ namespace CVA
 			SetDefaultInterpolationMethod ();
 		}
 
-		public Interpolator( Interpolator sInterp0)
+		public Interpolator(ref Interpolator sInterp0)
 		{
 			X = sInterp0.X;
 			Y = sInterp0.Y;

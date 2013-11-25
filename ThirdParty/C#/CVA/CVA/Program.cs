@@ -129,7 +129,7 @@ namespace CVA
 					var lines = File.ReadAllLines (cFileName).Select (a => a.Split (';'));
 					var csv = from line in lines
 					          select (from piece in line
-					         select piece);
+					                  select piece);
 
 					foreach (var element in csv) {
 						foreach (var element2 in element) {
@@ -157,8 +157,8 @@ namespace CVA
 						Console.WriteLine (x + " : " + sInterp.Interp (x));
 					}
 					bIsFinished = true;
-				} else if (cChoice == "6"){
-					DateTime start = DateTime.Today, end = DateTime.Today.AddYears(3);
+				} else if (cChoice == "6") {
+					DateTime start = DateTime.Today, end = DateTime.Today.AddYears (3);
 					Coverage sCoverage = new Coverage ();
 
 					Console.WriteLine ("Start : " + start);
@@ -166,9 +166,9 @@ namespace CVA
 					Console.WriteLine ("End : " + end);
 					Console.WriteLine ("End Ticks : " + end.Ticks);
 
-					Console.WriteLine ("Coverage (ACT365FIXED) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.ACT365FIXED));
-					Console.WriteLine ("Coverage (BONDBASIS EURO) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.THIRTY360EURO));
-					Console.WriteLine ("Coverage (ACTACT) : " + sCoverage.YearFraction(ref start, ref end, EnumBasis.ACTACT));
+					Console.WriteLine ("Coverage (ACT365FIXED) : " + sCoverage.YearFraction (ref start, ref end, EnumBasis.ACT365FIXED));
+					Console.WriteLine ("Coverage (BONDBASIS EURO) : " + sCoverage.YearFraction (ref start, ref end, EnumBasis.THIRTY360EURO));
+					Console.WriteLine ("Coverage (ACTACT) : " + sCoverage.YearFraction (ref start, ref end, EnumBasis.ACTACT));
 					bIsFinished = true;
 				}
 				else 

@@ -36,14 +36,7 @@ namespace CVA
 
 		private double LagInYear(DateTime sDate1, DateTime sDate2)
 		{
-			double dResult;
-			//	Quick rule --> good for now 
-			// need to figure out exactly the ACTACT convention
-			dResult = sDate1.Year - sDate2.Year;
-			dResult += (sDate1.Month - sDate2.Month) / 12.0;
-			dResult += (sDate1.Day - sDate2.Day) / 30.0;
-
-			return dResult;
+			return new Coverage().YearFraction (ref sDate1, ref sDate2, EnumBasis.ACTACT);
 		}
 
 		private double LagInYearFromToday(DateTime sDate)

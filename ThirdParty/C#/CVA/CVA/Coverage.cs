@@ -81,6 +81,16 @@ namespace CVA
 					sEndCopy = MoreDatesFunctions.ChangeDateToBondBasisUSConvention (ref sEnd);
 					return Coverage.Coverage30360 (ref sStartCopy, ref sEndCopy);
 				}
+			case EnumBasis.ACT360:
+				{
+					TimeSpan elapsedtime = new TimeSpan (End.Ticks - Start.Ticks);
+					return elapsedtime.Days / 360.0;
+				}
+			case EnumBasis.ACT364:
+				{
+					TimeSpan elapsedtime = new TimeSpan (End.Ticks - Start.Ticks);
+					return elapsedtime.Days / 364.0;
+				}
 			case EnumBasis.UNITARY:
 				return 1.0;
 			default:

@@ -91,6 +91,11 @@ namespace CVA
 					TimeSpan elapsedtime = new TimeSpan (End.Ticks - Start.Ticks);
 					return elapsedtime.Days / 364.0;
 				}
+			case EnumBasis.ACT365L:
+				{
+					TimeSpan elapsedtime = new TimeSpan (End.Ticks - Start.Ticks);
+					return elapsedtime.Days / (MoreDatesFunctions.Has29thFebruaryBetweenDates (ref sStart, ref sEnd) ? 366.0 : 365.0);
+				}
 			case EnumBasis.UNITARY:
 				return 1.0;
 			default:

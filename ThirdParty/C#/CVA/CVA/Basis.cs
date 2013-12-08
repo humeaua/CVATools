@@ -9,6 +9,7 @@ namespace CVA
 		ACT365FIXED,
 		ACT360,
 		ACT364,
+		ACT365L,
 		UNITARY
 	}
 

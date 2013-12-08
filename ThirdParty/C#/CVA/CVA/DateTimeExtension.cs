@@ -52,9 +52,24 @@ namespace Extensions
 			if (date.Month == 2 && date.Day == 29) {
 				// Change day to 30
 				return new DateTime (date.Year, date.Month, 30, date.Hour, date.Minute, date.Second, date.Millisecond);
-			} else {
+			} 
+			else 
+			{
 				return ChangeDateToBondBasisConvention (ref date);
 			}
+		}
+
+		public static bool Has29thFebruaryBetweenDates(ref DateTime date0, ref DateTime date1)
+		{
+			if (date0 > date1)
+				return Has29thFebruaryBetweenDates (ref date1, ref date0);
+			for (int i = date0.Year + 1; i < date1.Year - 1; ++i) 
+			{
+				if (IsLeapYear (i))
+					return true;
+			}
+
+			return (IsLeapYear (date0.Year) && date0.Month <= 2) || (IsLeapYear (date1.Year) && (date1.Month >= 3 || (date1.Month == 2 && date1.Day == 29)));
 		}
 	}
 	/*public DateTime FirstDayOfCurrentWeek()

@@ -64,6 +64,13 @@ namespace CVA
 			}
 		}
 
+		public void LoadFromHTMLFile(ref string FileName)
+		{
+			//	take help from this 
+			//  http://stackoverflow.com/questions/7901435/creating-html-form-using-xml-to-define-layout-c-sharp
+
+		}
+
 		public double Average0()
 		{
 			if (iNTournamentsPlayed <= 40)

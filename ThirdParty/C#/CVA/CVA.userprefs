@@ -1,25 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Weights.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Element.cs">
     <Files>
-      <File FileName="CVA/Interpolator.cs" Line="89" Column="4" />
-      <File FileName="CVA/Basis.cs" Line="1" Column="1" />
-      <File FileName="CVA/Coverage.cs" Line="81" Column="76" />
-      <File FileName="CVA/DateTimeExtension.cs" Line="56" Column="49" />
-      <File FileName="CVA/FileDeleter.cs" Line="1" Column="1" />
-      <File FileName="CVA/FileParser.cs" Line="1" Column="1" />
-      <File FileName="CVA/Form1.cs" Line="154" Column="47" />
-      <File FileName="CVA/HTMLParser.cs" Line="145" Column="6" />
-      <File FileName="CVA/Program.cs" Line="112" Column="53" />
-      <File FileName="CVA/InternetPageReader.cs" Line="3" Column="29" />
-      <File FileName="CVA/MyException.cs" Line="14" Column="55" />
-      <File FileName="CVA/Player.cs" Line="64" Column="5" />
-      <File FileName="CVA/OWGRWeights.cs" Line="1" Column="1" />
-      <File FileName="CVA/PlayerResult.cs" Line="23" Column="34" />
-      <File FileName="CVA/Ranking.cs" Line="35" Column="70" />
-      <File FileName="CVA/TextStyle.cs" Line="1" Column="1" />
-      <File FileName="CVA/Tournament.cs" Line="1" Column="1" />
-      <File FileName="CVA/Weights.cs" Line="52" Column="46" />
+      <File FileName="CVA/Basis.cs" Line="12" Column="11" />
+      <File FileName="CVA/Coverage.cs" Line="97" Column="98" />
+      <File FileName="CVA/DateTimeExtension.cs" Line="65" Column="39" />
+      <File FileName="CVA/HTMLParser.cs" Line="146" Column="6" />
+      <File FileName="CVA/Player.cs" Line="71" Column="4" />
+      <File FileName="CVA/PlayerResult.cs" Line="1" Column="1" />
+      <File FileName="CVA/Tournament.cs" Line="64" Column="4" />
+      <File FileName="CVA/Element.cs" Line="94" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

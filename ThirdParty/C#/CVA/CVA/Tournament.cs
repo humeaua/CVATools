@@ -61,6 +61,7 @@ namespace CVA
 		public void LoadFromFile(ref string cFileName)
 		{
 			// to be written
+
 		}
 
 		public void Add(ref Tuple<string,string> cPlayerName, double dResult)

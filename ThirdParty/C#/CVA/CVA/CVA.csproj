@@ -62,6 +62,7 @@
     <Compile Include="DateTimeExtension.cs" />
     <Compile Include="Basis.cs" />
     <Compile Include="Coverage.cs" />
+    <Compile Include="Element.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

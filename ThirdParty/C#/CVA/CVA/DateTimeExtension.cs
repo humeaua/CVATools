@@ -42,6 +42,11 @@ namespace Extensions
 			return (year % 400 == 0) || (year % 4 == 0&& year % 100 != 0);
 		}
 
+		public static int NumberOfDaysInYear(long year)
+		{
+			return IsLeapYear (year) ? 366 : 365;
+		}
+
 		public static DateTime ChangeDateToBondBasisConvention(ref DateTime date)
 		{
 			return new DateTime (date.Year, date.Month, Math.Min (30, date.Day), date.Hour, date.Minute, date.Second, date.Millisecond);

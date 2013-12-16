@@ -54,7 +54,8 @@ namespace CVA
 				}
 			case EnumBasis.ACTACT:
 				{
-					TimeSpan elapsedtime = new TimeSpan (End.Ticks - Start.Ticks);
+					// Bugged implementation
+					/*TimeSpan elapsedtime = new TimeSpan (End.Ticks - Start.Ticks);
 					double dRes = 0.0;
 					for (long i = Start.Year; i <= End.Year; i += 1) {
 						if (MoreDatesFunctions.IsLeapYear(i))
@@ -67,7 +68,26 @@ namespace CVA
 						}
 					}
 					dRes /= (End.Year - Start.Year + 1);
-					return elapsedtime.Days / dRes;
+					return elapsedtime.Days / dRes;*/
+					// Correct implementation
+					double dRes = 0.0;
+					DateTime s31stDecemberStart = new DateTime (Start.Year, 12, 31), s1stJanuaryEnd = new DateTime (End.Year, 1, 1);
+					if (s31stDecemberStart < s1stJanuaryEnd) {
+						// Start and End are not in the same year
+						dRes += End.Year - 1 - Start.Year;
+						TimeSpan elapsedTimeStart = new TimeSpan (s31stDecemberStart.Ticks - Start.Ticks),
+						elapsedTimeEnd = new TimeSpan (End.Ticks - s1stJanuaryEnd.Ticks);
+						double NumberOfDaysStart = MoreDatesFunctions.NumberOfDaysInYear (Start.Year);
+						double NumberOfDaysEnd = MoreDatesFunctions.NumberOfDaysInYear (End.Year);
+						dRes += elapsedTimeStart.Days / NumberOfDaysStart;
+						dRes += elapsedTimeEnd.Days / NumberOfDaysEnd;
+
+						return dRes;
+					} else {
+						//	Start and End are in the same year
+						TimeSpan elaspedTime = new TimeSpan (Start.Ticks - End.Ticks);
+						return elaspedTime.Days / MoreDatesFunctions.NumberOfDaysInYear (Start.Year);
+					}
 				}
 			case EnumBasis.THIRTY360EURO:
 				{

@@ -47,6 +47,25 @@ namespace CVA
 			System.Console.WriteLine ("Parse World Ranking file done");
 		}
 
+		public void ParsePlayerNew(ref string cFilePath)
+		{
+			//	Open body
+
+			// 	Open big table 780 * 1218
+
+			//	Open table 780 * 1045
+
+			//	Open central table 485 * 1085
+
+			//	Open centrale table 465 * 1035
+
+			// 	Open table 465 * 728
+
+			//	Readlines one by one
+
+
+		}
+
 		public void ParsePlayer(ref string cFilePath)
 		{
 			string cSearchedString = "/events/events_scorecard.sps?EventID";

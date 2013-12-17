@@ -53,16 +53,20 @@ namespace CVA
 		{
 		}
 
+		private void ParseBody(ref XmlReader reader)
+		{
+		}
+
 		private void PrintXMLType(ref XmlReader reader)
 		{
-			System.IO.StreamWriter fileerror = new System.IO.StreamWriter("/Users/alexhum49/Desktop/OutputError.txt");
-			System.IO.StreamWriter fileoutput = new System.IO.StreamWriter ("/Users/alexhum49/Desktop/OutputType.xml");
+			//System.IO.StreamWriter fileerror = new System.IO.StreamWriter("/Users/alexhum49/Desktop/OutputError.txt");
+			//System.IO.StreamWriter fileoutput = new System.IO.StreamWriter ("/Users/alexhum49/Desktop/OutputType.xml");
 			while (true) {
 				try
 				{
 					if (reader.Read())
 					{
-						switch (reader.NodeType) 
+						/*switch (reader.NodeType) 
 						{
 						case XmlNodeType.Element: // The node is an element.
 							fileoutput.Write("<" + reader.Name);
@@ -78,8 +82,24 @@ namespace CVA
 							fileoutput.Write("</" + reader.Name);
 							fileoutput.WriteLine(">");
 							break;
+						}*/
+						switch (reader.NodeType)
+						{
+						case XmlNodeType.Element:
+							switch (reader.Name.ToUpper())
+							{
+							case "BODY":
+								ParseBody(ref reader);
+							default:
+								break;
 							}
+							break;
+
+						default:	
+							//	Do not do anything
+							break;
 						}
+					}
 
 					/*switch (reader.NodeType) {
 							case XmlNodeType.Attribute:
@@ -147,18 +167,19 @@ namespace CVA
 						}
 					}
 
-				catch (Exception excep)
+				finally
 				{
-					try
-					{
+					//try
+					//{
 						//fileoutput.WriteLine("Exception caught");
-						fileerror.WriteLine("Exception caught {0}", excep);
-					}
-					catch (System.StackOverflowException e) {
-						Console.WriteLine ("Process terminated due to StackOverFlow Exception {0} ", e);
-						break;
-					}
-					continue;
+					//	fileerror.WriteLine("Exception caught {0}", excep);
+					//}
+					//catch (System.StackOverflowException e) {
+					//	Console.WriteLine ("Process terminated due to StackOverFlow Exception {0} ", e);
+					//	break;
+					//}
+
+					//continue;
 				}
 			}
 		}

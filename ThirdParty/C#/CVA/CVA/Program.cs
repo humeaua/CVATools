@@ -18,6 +18,7 @@ namespace CVA
 			Console.WriteLine ("4- CSV File Reader");
 			Console.WriteLine ("5- Interpolator");
 			Console.WriteLine ("6- Coverage and Basis");
+			Console.WriteLine ("7- Player HTML Parser New method");
 			cChoice = Console.ReadLine ();
 		}
 
@@ -170,6 +171,12 @@ namespace CVA
 					Console.WriteLine ("Coverage (BONDBASIS EURO) : " + sCoverage.YearFraction (ref start, ref end, EnumBasis.THIRTY360EURO));
 					Console.WriteLine ("Coverage (ACTACT) : " + sCoverage.YearFraction (ref start, ref end, EnumBasis.ACTACT));
 					bIsFinished = true;
+				} else if (cChoice == "7") {
+					FileParser sFileParser = new FileParser();
+					string cFilePath = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/PlayersHTM/Adam_2.htm";
+
+					sFileParser.ParsePlayerNew (ref cFilePath);
+
 				}
 				else 
 				{

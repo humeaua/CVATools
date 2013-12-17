@@ -1,15 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Element.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/FileParser.cs">
     <Files>
-      <File FileName="CVA/Basis.cs" Line="12" Column="11" />
-      <File FileName="CVA/Coverage.cs" Line="97" Column="98" />
-      <File FileName="CVA/DateTimeExtension.cs" Line="65" Column="39" />
-      <File FileName="CVA/HTMLParser.cs" Line="146" Column="6" />
-      <File FileName="CVA/Player.cs" Line="71" Column="4" />
+      <File FileName="CVA/Basis.cs" Line="25" Column="4" />
+      <File FileName="CVA/Coverage.cs" Line="122" Column="25" />
+      <File FileName="CVA/DateTimeExtension.cs" Line="48" Column="1" />
+      <File FileName="CVA/HTMLParser.cs" Line="1" Column="1" />
+      <File FileName="CVA/Player.cs" Line="1" Column="1" />
       <File FileName="CVA/PlayerResult.cs" Line="1" Column="1" />
       <File FileName="CVA/Tournament.cs" Line="64" Column="4" />
-      <File FileName="CVA/Element.cs" Line="94" Column="27" />
+      <File FileName="CVA/Element.cs" Line="20" Column="25" />
+      <File FileName="CVA/Program.cs" Line="172" Column="6" />
+      <File FileName="CVA/MyException.cs" Line="1" Column="1" />
+      <File FileName="CVA/OWGRWeights.cs" Line="1" Column="1" />
+      <File FileName="CVA/FileParser.cs" Line="65" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

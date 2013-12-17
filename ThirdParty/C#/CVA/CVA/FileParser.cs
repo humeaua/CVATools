@@ -56,13 +56,32 @@ namespace CVA
 		private void PrintXMLType(ref XmlReader reader)
 		{
 			System.IO.StreamWriter fileerror = new System.IO.StreamWriter("/Users/alexhum49/Desktop/OutputError.txt");
-			System.IO.StreamWriter fileoutput = new System.IO.StreamWriter ("/Users/alexhum49/Desktop/OutputType.txt");
+			System.IO.StreamWriter fileoutput = new System.IO.StreamWriter ("/Users/alexhum49/Desktop/OutputType.xml");
 			while (true) {
 				try
 				{
 					if (reader.Read())
 					{
-						switch (reader.NodeType) {
+						switch (reader.NodeType) 
+						{
+						case XmlNodeType.Element: // The node is an element.
+							fileoutput.Write("<" + reader.Name);
+						
+							while (reader.MoveToNextAttribute()) // Read the attributes.
+								fileoutput.Write(" " + reader.Name + "='" + reader.Value + "'");
+							fileoutput.WriteLine(">");
+							break;
+						case XmlNodeType.Text: //Display the text in each element.
+							fileoutput.WriteLine (reader.Value);
+							break;
+						case XmlNodeType. EndElement: //Display the end of the element.
+							fileoutput.Write("</" + reader.Name);
+							fileoutput.WriteLine(">");
+							break;
+							}
+						}
+
+					/*switch (reader.NodeType) {
 							case XmlNodeType.Attribute:
 							fileoutput.WriteLine ("Attribute");
 								break;
@@ -121,7 +140,7 @@ namespace CVA
 								throw new MyException ("Should not get there");
 
 							}
-						}
+				}*/
 						else 
 						{
 							break;
@@ -132,7 +151,7 @@ namespace CVA
 				{
 					try
 					{
-						fileoutput.WriteLine("Exception caught");
+						//fileoutput.WriteLine("Exception caught");
 						fileerror.WriteLine("Exception caught {0}", excep);
 					}
 					catch (System.StackOverflowException e) {
@@ -160,7 +179,6 @@ namespace CVA
 				//	Open body
 				PrintXMLType (ref reader);
 				// 	Open big table 780 * 1218
-
 				//	Open table 780 * 1045
 
 				//	Open central table 485 * 1085

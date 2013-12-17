@@ -61,45 +61,78 @@ namespace CVA
 		{
 			//System.IO.StreamWriter fileerror = new System.IO.StreamWriter("/Users/alexhum49/Desktop/OutputError.txt");
 			//System.IO.StreamWriter fileoutput = new System.IO.StreamWriter ("/Users/alexhum49/Desktop/OutputType.xml");
-			while (true) {
-				try
+			try
+			{
+				while (reader.Read())					
 				{
-					if (reader.Read())
+					if (reader.NodeType == XmlNodeType.Element &&
+						 (reader.Name.ToUpper() == "HEAD" || 
+							reader.Name.ToUpper() == "SCRIPT" || 
+							reader.Name.ToUpper() == "LINK" ||
+							reader.Name.ToUpper() == "META"))
 					{
-						/*switch (reader.NodeType) 
-						{
-						case XmlNodeType.Element: // The node is an element.
-							fileoutput.Write("<" + reader.Name);
-						
-							while (reader.MoveToNextAttribute()) // Read the attributes.
-								fileoutput.Write(" " + reader.Name + "='" + reader.Value + "'");
-							fileoutput.WriteLine(">");
-							break;
-						case XmlNodeType.Text: //Display the text in each element.
-							fileoutput.WriteLine (reader.Value);
-							break;
-						case XmlNodeType. EndElement: //Display the end of the element.
-							fileoutput.Write("</" + reader.Name);
-							fileoutput.WriteLine(">");
-							break;
-						}*/
-						switch (reader.NodeType)
-						{
-						case XmlNodeType.Element:
-							switch (reader.Name.ToUpper())
+						continue;
+					}
+					if (reader.NodeType == XmlNodeType.EndElement && 
+						(reader.Name.ToUpper() == "HEAD" || 
+							reader.Name.ToUpper() == "SCRIPT" || 
+							reader.Name.ToUpper() == "LINK" ||
+							reader.Name.ToUpper() == "META"))
+					{
+						continue;
+					}
+					if (reader.NodeType == XmlNodeType.Whitespace
+						 || reader.NodeType == XmlNodeType.SignificantWhitespace)
+					{
+						continue;
+					}
+					if (reader.NodeType == XmlNodeType.Text && reader.Name == "")
+					{
+						continue;
+					}
+				/*switch (reader.NodeType) 
+					{
+					case XmlNodeType.Element: // The node is an element.
+						fileoutput.Write("<" + reader.Name);						
+						while (reader.MoveToNextAttribue())
+							// Read the attributes.
+							fileoutput.Write(" " + reader.Name + "='" + reader.Value + "'");
+						fileoutput.WriteLine(">");
+						break;
+					case XmlNodeType.Text: //Display the text in each element.
+						fileoutput.WriteLine (reader.Value);
+						break;
+					case XmlNodeType. EndElement: //Display the end of the element.
+						fileoutput.Write("</" + reader.Name);
+						fileoutput.WriteLine(">");
+						break;
+					}*/
+					switch (reader.NodeType)
+					{
+					case XmlNodeType.Element:
+						switch (reader.Name.ToUpper()){
+					case "BODY":
+							if (reader.AttributeCount == 4)
+							// 4 attributes : leftmargin, topmargin, marginheight, marginwidth 
 							{
-							case "BODY":
-								ParseBody(ref reader);
-							default:
-								break;
+								if (reader.GetAttribute(0) != "0" || reader.GetAttribute(1) != "0")
+								{									{
+									throw new MyException("Not correct attribute");
+								}
 							}
+							ParseBody(ref reader);
 							break;
+							}
 
-						default:	
-							//	Do not do anything
+						default:
 							break;
 						}
+					break;
+					default:	
+						//	Do not do anything
+						break;
 					}
+				}
 
 					/*switch (reader.NodeType) {
 							case XmlNodeType.Attribute:
@@ -161,26 +194,20 @@ namespace CVA
 
 							}
 				}*/
-						else 
-						{
-							break;
-						}
-					}
-
-				finally
-				{
-					//try
-					//{
-						//fileoutput.WriteLine("Exception caught");
-					//	fileerror.WriteLine("Exception caught {0}", excep);
-					//}
-					//catch (System.StackOverflowException e) {
-					//	Console.WriteLine ("Process terminated due to StackOverFlow Exception {0} ", e);
-					//	break;
-					//}
-
-					//continue;
-				}
+						
+			}
+			
+			catch (Exception excep)
+			{
+				//try
+				//{
+					//fileoutput.WriteLine("Exception caught");
+				//	fileerror.WriteLine("Exception caught {0}", excep);
+				//}
+				//catch (System.StackOverflowException e) {
+				//	Console.WriteLine ("Process terminated due to StackOverFlow Exception {0} ", e);
+				//	break;
+				//}
 			}
 		}
 

@@ -53,8 +53,39 @@ namespace CVA
 		{
 		}
 
-		private void ParseBody(ref XmlReader reader)
+		private string ParseBody(ref XmlReader reader)
 		{
+			//	Method to parse the body of the HTML file
+			try
+			{
+				while (true) 
+				{
+					if (reader.Read ()) 
+					{
+						//	The table has 6 attributes
+						if (reader.NodeType == XmlNodeType.Element && reader.AttributeCount == 6) {
+							//	Check the values of the attributes
+							if (reader.GetAttribute (0) != "780" || // width
+							    reader.GetAttribute (1) != "0" || // border
+						    	reader.GetAttribute (2) != "0" || // cellspacing
+						    	reader.GetAttribute (3) != "0" || // cellpadding
+							    reader.GetAttribute (4) != "100%" || // height
+							    reader.GetAttribute (5) != "#FFFFFF") {
+								throw new MyException ("One of the attributes is not correct");
+							}
+						}
+					}
+					else 
+					{
+						//	Reader.Read() has failed : do nothing for now
+						return "Reader.Read() has failed";
+					}
+				}
+			}
+			catch (Exception excep) {
+				throw new MyException ("Exception caught in ParseBody : " + excep);
+			}
+			return "";
 		}
 
 		private void PrintXMLType(ref XmlReader reader)
@@ -126,9 +157,13 @@ namespace CVA
 										reader.GetAttribute (2) != "0" || // margin height
 										reader.GetAttribute (3) != "0")   // margin width
 									{
-										throw new MyException ("Not correct attribute");
+										throw new MyException ("One of the attributes is not correct");
 									}
-									ParseBody (ref reader);
+									string cError = ParseBody (ref reader);
+									if (cError != "")
+									{
+										throw new Exception(cError);
+									}
 									break;
 								}
 
@@ -231,6 +266,8 @@ namespace CVA
 			}
 		}
 
+		//	may look at the following website for correct parsing of HTML file
+		// 	http://stackoverflow.com/questions/8194155/c-sharp-parse-xml-file
 		public void ParsePlayerNew(ref string cFilePath)
 		{
 			// 	Read file into string

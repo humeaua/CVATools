@@ -61,36 +61,41 @@ namespace CVA
 		{
 			//System.IO.StreamWriter fileerror = new System.IO.StreamWriter("/Users/alexhum49/Desktop/OutputError.txt");
 			//System.IO.StreamWriter fileoutput = new System.IO.StreamWriter ("/Users/alexhum49/Desktop/OutputType.xml");
-			try
-			{
-				while (reader.Read())					
-				{
-					if (reader.NodeType == XmlNodeType.Element &&
-						 (reader.Name.ToUpper() == "HEAD" || 
-							reader.Name.ToUpper() == "SCRIPT" || 
-							reader.Name.ToUpper() == "LINK" ||
-							reader.Name.ToUpper() == "META"))
-					{
-						continue;
-					}
-					if (reader.NodeType == XmlNodeType.EndElement && 
-						(reader.Name.ToUpper() == "HEAD" || 
-							reader.Name.ToUpper() == "SCRIPT" || 
-							reader.Name.ToUpper() == "LINK" ||
-							reader.Name.ToUpper() == "META"))
-					{
-						continue;
-					}
-					if (reader.NodeType == XmlNodeType.Whitespace
-						 || reader.NodeType == XmlNodeType.SignificantWhitespace)
-					{
-						continue;
-					}
-					if (reader.NodeType == XmlNodeType.Text && reader.Name == "")
-					{
-						continue;
-					}
-				/*switch (reader.NodeType) 
+			while (true) {
+				try {
+					if (reader.Read ()) {
+						if (reader.NodeType == XmlNodeType.Element &&
+							(	reader.Name.ToUpper () == "HEAD" ||
+						   		reader.Name.ToUpper () == "SCRIPT" ||
+						   		reader.Name.ToUpper () == "LINK" ||
+								reader.Name.ToUpper () == "META" ||
+								reader.Name.ToUpper() == "NOSCRIPT" ||
+								reader.Name.ToUpper() == "TITLE" ||
+								reader.Name.ToUpper() == "HTML")) {
+							continue;
+						}
+						if (reader.NodeType == XmlNodeType.EndElement &&
+							(	reader.Name.ToUpper () == "HEAD" ||
+						   		reader.Name.ToUpper () == "SCRIPT" ||
+						   		reader.Name.ToUpper () == "LINK" ||
+								reader.Name.ToUpper () == "META"||
+								reader.Name.ToUpper() == "NOSCRIPT" ||
+								reader.Name.ToUpper() == "TITLE")) {
+							continue;
+						}
+						if (reader.NodeType == XmlNodeType.EndElement && reader.Name.ToUpper() == "HTML")
+						{
+							//	end of html file
+							break;
+						}
+						if (reader.NodeType == XmlNodeType.Whitespace
+						   || reader.NodeType == XmlNodeType.SignificantWhitespace) {
+							continue;
+						}
+						if (reader.NodeType == XmlNodeType.Text && reader.Name == "") {
+							continue;
+						}
+						/*switch (reader.NodeType) 
 					{
 					case XmlNodeType.Element: // The node is an element.
 						fileoutput.Write("<" + reader.Name);						
@@ -107,32 +112,39 @@ namespace CVA
 						fileoutput.WriteLine(">");
 						break;
 					}*/
-					switch (reader.NodeType)
-					{
-					case XmlNodeType.Element:
-						switch (reader.Name.ToUpper()){
-					case "BODY":
-							if (reader.AttributeCount == 4)
-							// 4 attributes : leftmargin, topmargin, marginheight, marginwidth 
-							{
-								if (reader.GetAttribute(0) != "0" || reader.GetAttribute(1) != "0")
-								{									{
-									throw new MyException("Not correct attribute");
+						switch (reader.NodeType) {
+						case XmlNodeType.Element:
+						{
+							switch (reader.Name.ToUpper ()) {
+							case "BODY":
+								if (reader.AttributeCount == 4)
+ {							// 4 attributes : leftmargin, topmargin, marginheight, marginwidth 
+									if (reader.GetAttribute (0) != "0" || reader.GetAttribute (1) != "0") {
+										{
+											throw new MyException ("Not correct attribute");
+										}
+									}
+									ParseBody (ref reader);
+									break;
 								}
-							}
-							ParseBody(ref reader);
-							break;
-							}
 
-						default:
+							default:
+								break;
+							}
+						}
+							break;
+						default:	
+							//	Do not do anything
 							break;
 						}
-					break;
-					default:	
-						//	Do not do anything
+						//	Body has been parsed --> break reading
 						break;
 					}
-				}
+					else 
+					{
+						//	Reader.Read() has failed
+						continue;
+					}
 
 					/*switch (reader.NodeType) {
 							case XmlNodeType.Attribute:
@@ -195,19 +207,22 @@ namespace CVA
 							}
 				}*/
 						
-			}
-			
-			catch (Exception excep)
-			{
-				//try
-				//{
+				}
+				catch (MyException excep) {
+					// output error
+					Console.WriteLine ("MyException Caught {0}", excep);
+				}
+				catch (Exception excep) {
+					//try
+					//{
 					//fileoutput.WriteLine("Exception caught");
-				//	fileerror.WriteLine("Exception caught {0}", excep);
-				//}
-				//catch (System.StackOverflowException e) {
-				//	Console.WriteLine ("Process terminated due to StackOverFlow Exception {0} ", e);
-				//	break;
-				//}
+					//	fileerror.WriteLine("Exception caught {0}", excep);
+					//}
+					//catch (System.StackOverflowException e) {
+					//	Console.WriteLine ("Process terminated due to StackOverFlow Exception {0} ", e);
+					//	break;
+					//}
+				}
 			}
 		}
 

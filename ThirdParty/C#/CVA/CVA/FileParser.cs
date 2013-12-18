@@ -118,11 +118,15 @@ namespace CVA
 							switch (reader.Name.ToUpper ()) {
 							case "BODY":
 								if (reader.AttributeCount == 4)
- {							// 4 attributes : leftmargin, topmargin, marginheight, marginwidth 
-									if (reader.GetAttribute (0) != "0" || reader.GetAttribute (1) != "0") {
-										{
-											throw new MyException ("Not correct attribute");
-										}
+ 								{
+									// 4 attributes : leftmargin, topmargin, marginheight, marginwidth 
+									//	Check attributes
+									if (reader.GetAttribute (0) != "0" || // left margin
+										reader.GetAttribute (1) != "0" || // top margin
+										reader.GetAttribute (2) != "0" || // margin height
+										reader.GetAttribute (3) != "0")   // margin width
+									{
+										throw new MyException ("Not correct attribute");
 									}
 									ParseBody (ref reader);
 									break;
@@ -138,6 +142,7 @@ namespace CVA
 							break;
 						}
 						//	Body has been parsed --> break reading
+						//	All the first elements have been parsed by the first conditions checks done at the beginning of the method
 						break;
 					}
 					else 

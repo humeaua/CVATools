@@ -270,7 +270,24 @@ namespace CVA
 		// 	http://stackoverflow.com/questions/8194155/c-sharp-parse-xml-file
 		public void ParsePlayerNewNew(ref string cFilePath)
 		{
+			//	Load document
+			NameTable nametable = new NameTable();
+			object html = nametable.Add ("HTML");
+			object body = nametable.Add ("body");
 
+			// Create the reader.
+			XmlReaderSettings settings = new XmlReaderSettings();
+			settings.NameTable = nametable;
+			XmlReader reader = XmlReader.Create(cFilePath, settings);
+
+			reader.MoveToContent();
+			reader.Skip ();
+			reader.ReadToDescendant("body");
+
+			if (System.Object.ReferenceEquals (body, reader.Name)) {
+				string innerxml = reader.ReadInnerXml ();
+				Console.WriteLine (innerxml);
+			}
 		}
 
 		//	Old implementation : very dirty and too complicated

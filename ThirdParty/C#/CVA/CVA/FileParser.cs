@@ -268,6 +268,12 @@ namespace CVA
 
 		//	may look at the following website for correct parsing of HTML file
 		// 	http://stackoverflow.com/questions/8194155/c-sharp-parse-xml-file
+		public void ParsePlayerNewNew(ref string cFilePath)
+		{
+
+		}
+
+		//	Old implementation : very dirty and too complicated
 		public void ParsePlayerNew(ref string cFilePath)
 		{
 			// 	Read file into string

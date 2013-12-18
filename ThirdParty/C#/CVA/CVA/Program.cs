@@ -175,8 +175,8 @@ namespace CVA
 					FileParser sFileParser = new FileParser();
 					string cFilePath = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/PlayersHTM/Adam_2.htm";
 
-					sFileParser.ParsePlayerNew (ref cFilePath);
-
+					//sFileParser.ParsePlayerNew (ref cFilePath);
+					sFileParser.ParsePlayerNewNew (ref cFilePath);
 				}
 				else 
 				{

@@ -17,9 +17,6 @@ namespace Finance
     {
         class Market
         {
-        public:
-            Market(const std::string & cMarketName);
-            
         protected:
             virtual void Load(const std::string & cMarketName) = 0;
         };

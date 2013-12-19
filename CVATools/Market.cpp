@@ -12,9 +12,5 @@ namespace Finance
 {
     namespace Market
     {
-        Market::Market(const std::string & cMarketName)
-        {
-            //Load(cMarketName);
-        }
     }
 }

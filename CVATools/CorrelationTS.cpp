@@ -15,10 +15,5 @@ namespace Finance
         CorrelationTS::CorrelationTS(const std::vector<double> & dTime,
                                      const std::vector<double> & dCorrelations) : TermStructure<double, double>(dTime, dCorrelations)
         {}
-        
-        double CorrelationTS::operator()(double t) const
-        {
-            return Interpolate(t);
-        }
     }
 }

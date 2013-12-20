@@ -47,8 +47,6 @@ namespace Finance {
                 Utilities::require(TVariables.size() == UValues.size(), "Size of variables and values are not the same");
             }
             
-            virtual ~TermStructure()
-            {}
             
             virtual std::vector<T> GetVariables() const
             {
@@ -81,7 +79,7 @@ namespace Finance {
                 return (TVariables_.size() != 1) && (UValues_.size() != 1);
             }
             
-            virtual U Interpolate(const T& variable) const
+            virtual U operator ()(const T& variable) const
             {
                 //  Flat extrapolation on the left
                 if (variable < TVariables_[0])

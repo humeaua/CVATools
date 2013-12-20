@@ -21,8 +21,6 @@ namespace Finance
         public:
             CorrelationTS(const std::vector<double> & dTime,
                           const std::vector<double> & dCorrelations);
-            
-            virtual double operator() (double t) const;
         };
     }
 }

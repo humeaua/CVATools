@@ -12,6 +12,10 @@ namespace Finance
 {
     namespace Base
     {
+        //  Need default constructor for correlation market
+        CorrelationTS::CorrelationTS()
+        {}
+        
         CorrelationTS::CorrelationTS(const std::vector<double> & dTime,
                                      const std::vector<double> & dCorrelations) : TermStructure<double, double>(dTime, dCorrelations)
         {}

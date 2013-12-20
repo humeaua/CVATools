@@ -19,6 +19,9 @@ namespace Finance
         class CorrelationTS : public TermStructure<double,double>
         {
         public:
+            //  Need default constructor for Correlation market
+            CorrelationTS();
+            
             CorrelationTS(const std::vector<double> & dTime,
                           const std::vector<double> & dCorrelations);
         };

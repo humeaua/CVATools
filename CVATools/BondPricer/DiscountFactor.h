@@ -23,8 +23,8 @@ namespace Finance
             DF();
             DF(const YieldCurve & sInitialYieldCurve);
             virtual ~DF();
-            virtual double DiscountFactor(double dDate) const;
-            virtual double DiscountFactor(const Utilities::Date::MyDate & sDate) const;
+            virtual double operator()(double dDate) const;
+            virtual double operator()(const Utilities::Date::MyDate & sDate) const;
         private:	
         };
     }

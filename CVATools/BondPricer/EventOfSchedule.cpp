@@ -38,7 +38,7 @@ namespace Finance
         double EventOfSchedule::GetPayingDateDF(const YieldCurve & sYieldCurve) const
         {
             Instruments::DF sDF(sYieldCurve);
-            return sDF.DiscountFactor(sEnd_);
+            return sDF(sEnd_);
         }
         
         Utilities::Date::MyDate EventOfSchedule::GetEndDate() const

@@ -26,12 +26,12 @@ namespace Finance
         public:
             YieldCurve();
             YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC, Utilities::Interp::InterExtrapolationType eInterExtrapolationType = Utilities::Interp::RAW);
-            virtual ~YieldCurve();
             
             virtual std::string GetCurrency() const;
             virtual std::string GetName() const;
             
-            virtual double YC(double t) const;
+            virtual double operator()(double t) const;
+            virtual double operator()(const Utilities::Date::MyDate & sToday) const;
             
             virtual YieldCurve operator + (const YieldCurve & sYieldCurve);
             virtual YieldCurve operator = (double dValue);

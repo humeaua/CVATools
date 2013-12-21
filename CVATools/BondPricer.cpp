@@ -65,13 +65,13 @@ namespace Finance
             {
                 Utilities::Date::MyDate sEndDate = vCoupons_.at(iDate).GetEndDate();
                 double dCoverage = Finance::Base::GetCoverage(sToday_, sEndDate, vCoupons_.at(iDate).GetBasis());
-                dRes += vCoupons_.at(iDate).GetCoupon() * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sToday_)) + r, -dCoverage);
+                dRes += vCoupons_.at(iDate).GetCoupon() * pow(1. + sYieldCurve_(sEndDate.Diff(sToday_)) + r, -dCoverage);
             }
             if (bIsNotionalRepaidBack_)
             {
                 Utilities::Date::MyDate sEndDate = vCoupons_.back().GetEndDate();
                 double dCoverage = Finance::Base::GetCoverage(sToday_, sEndDate, vCoupons_.back().GetBasis());
-                dRes += dNotional_ * pow(1. + sYieldCurve_.YC(sEndDate.Diff(sToday_)) + r, -dCoverage);
+                dRes += dNotional_ * pow(1. + sYieldCurve_(sEndDate.Diff(sToday_)) + r, -dCoverage);
             }
             return dRes - dPrice_;
         }
@@ -114,7 +114,7 @@ namespace Finance
                 else
                 {
                     Finance::Instruments::DF sDF(sYieldCurve_);
-                    dPrice += vCoupons_.at(0).GetCoupon() * (sDF.DiscountFactor(sToday_) - vCoupons_.at(0).GetPayingDateDF(sYieldCurve_));
+                    dPrice += vCoupons_.at(0).GetCoupon() * (sDF(sToday_) - vCoupons_.at(0).GetPayingDateDF(sYieldCurve_));
                 }
                 for (std::size_t iDate = 1 ; iDate < vCoupons_.size() ; ++iDate)
                 {
@@ -165,7 +165,7 @@ namespace Finance
                         else
                         {
                             Finance::Instruments::DF sDF(sYieldCurve_);
-                            dPrice += vCoupons_.at(0).GetCoupon() * (sDF.DiscountFactor(sTodayDate) - vCoupons_.at(0).GetPayingDateDF(sYieldCurve_));
+                            dPrice += vCoupons_.at(0).GetCoupon() * (sDF(sTodayDate) - vCoupons_.at(0).GetPayingDateDF(sYieldCurve_));
                         }
                     }
                     for (std::size_t iDate = 1 ; iDate < vCoupons_.size() ; ++iDate)

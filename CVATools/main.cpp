@@ -323,7 +323,7 @@ int main()
         for (std::size_t i = 0 ; i < 400 ; ++i)
         {
             double dT = (double)i / 10.0;
-            std::cout << dT << ";" << sYieldCurve.YC(dT) << std::endl;
+            std::cout << dT << ";" << sYieldCurve(dT) << std::endl;
         }
     }
     else if (iTest == 7)

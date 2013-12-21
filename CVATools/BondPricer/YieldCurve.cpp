@@ -33,10 +33,7 @@ namespace Finance
             eInterpolationType_ = eInterExtrapolationType;
         }
         
-        YieldCurve::~YieldCurve()
-        {}
-        
-        double YieldCurve::YC(double t) const
+        double YieldCurve::operator()(double t) const
         {
 #ifndef EPSILON_YC
 #define EPSILON_YC 1e-03
@@ -53,6 +50,11 @@ namespace Finance
             {
                 throw std::runtime_error("t is not positive in YieldCurve::YC");
             }
+        }
+        
+        double YieldCurve::operator()(const Utilities::Date::MyDate & Date) const
+        {
+            return (*this)(Date.Diff(sToday_));
         }
         
         std::string YieldCurve::GetCurrency() const

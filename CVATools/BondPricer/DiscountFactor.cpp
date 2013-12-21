@@ -24,17 +24,17 @@ namespace Finance
         DF::~DF()
         {}
         
-        double DF::DiscountFactor(double dT) const
+        double DF::operator()(double dT) const
         {
-            return exp(-dT * YC(dT));
+            return exp(-dT * (*this)(dT));
         }
         
-        double DF::DiscountFactor(const Utilities::Date::MyDate &sDate) const
+        double DF::operator()(const Utilities::Date::MyDate &sDate) const
         {
             double dT = sDate.Diff(sToday_);
             
             Utilities::requireException(dT > 0, "DF::DiscountFactor : Date is before today","DF::DiscountFactor");
-            return DiscountFactor(dT);
+            return (*this)(dT);
         }
     }
 }

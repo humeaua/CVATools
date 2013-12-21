@@ -20,7 +20,6 @@ namespace Maths
         
         virtual void Fill(const std::vector<std::size_t> & dRegressionPower,
                           bool bCrossTerms);
-        virtual ~PolyRegPms();
     };
     
     class PolynomialRegression : public LinearRegression
@@ -31,7 +30,6 @@ namespace Maths
     public:
         PolynomialRegression(bool bAddConstantInRegression, const std::vector<std::size_t> & dRegressionPower, bool bCrossTerms);
         PolynomialRegression(bool bAddConstantInRegression, const std::string & cRegressionPower, char cDelimitor = ';');
-        virtual ~PolynomialRegression();
         
         virtual Utilities::Matrix ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const;
         

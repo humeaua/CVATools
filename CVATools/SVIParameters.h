@@ -31,7 +31,6 @@ namespace Finance
             double dSpot_;
         public:
             SVIParameters(double dSpot);
-            virtual ~SVIParameters();
             
             virtual double Volatility(double k, double t) const;
             virtual double Variance(double k, double t) const;

@@ -10,9 +10,6 @@
 
 namespace Maths
 {
-    ArchimedeanCopula::ArchimedeanCopula()
-    {}
-    
     ArchimedeanCopula::ArchimedeanCopula(CopulaType eCopulaType) : Copula(eCopulaType)
     {}
     

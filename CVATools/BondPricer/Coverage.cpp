@@ -13,7 +13,6 @@ namespace Finance
 {
     namespace Base
     {
-        using namespace std;
         Coverage::Coverage(::Finance::Base::MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd) : eBasis_(eBasis), sStart_(lStart), sEnd_(lEnd)
         {}
         

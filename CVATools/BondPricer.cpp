@@ -19,9 +19,6 @@ namespace Finance
         PriceToYieldNewton::PriceToYieldNewton(const Bond & sBond, const Utilities::Date::MyDate & sToday, double dPrice, std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : Bond(sBond), NewtonRaphson1D(iNIterMax, dTolerance, dEpsValueDeriv), sToday_(sToday),dPrice_(dPrice)
         {}
         
-        PriceToYieldNewton::~PriceToYieldNewton()
-        {}
-        
         double PriceToYieldNewton::f(double r) const
         {
             double dPrice = 0.0;
@@ -53,9 +50,6 @@ namespace Finance
         }
         
         ZSpreadNewton::ZSpreadNewton(const Bond & sBond, const Finance::Base::YieldCurve & sYieldCurve, const Utilities::Date::MyDate & sToday, double dPrice, std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : Bond(sBond), NewtonRaphson1D(iNIterMax, dTolerance, dEpsValueDeriv), sYieldCurve_(sYieldCurve), dPrice_(dPrice), sToday_(sToday)
-        {}
-        
-        ZSpreadNewton::~ZSpreadNewton()
         {}
         
         double ZSpreadNewton::f(double r) const
@@ -97,9 +91,6 @@ namespace Finance
         {
             Instruments::CreateBond(dCoupons, sStart, sEnd, eBasis, eFrequency, bIsFixedRate, vCoupons_);
         }
-        
-        BondPricer::~BondPricer()
-        {}
         
         double BondPricer::Price() const
         {

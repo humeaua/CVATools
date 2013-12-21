@@ -29,7 +29,6 @@ namespace Utilities
             
         public:
             LocalVolatility(double x0);
-            virtual ~LocalVolatility();
             
             virtual double SigmaLoc(double t, double dS) const = 0;
             

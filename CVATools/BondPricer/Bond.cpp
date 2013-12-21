@@ -62,10 +62,5 @@ namespace Finance
         
         Bond::Bond(double dNotional, bool bIsNotionalRepaidBack, const std::vector<Base::Coupon> & vCoupons) : bIsNotionalRepaidBack_(bIsNotionalRepaidBack), vCoupons_(vCoupons)
         {}
-        
-        Bond::~Bond()
-        {
-            vCoupons_.clear();
-        }
     }
 }

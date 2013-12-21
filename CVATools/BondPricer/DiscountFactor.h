@@ -22,7 +22,6 @@ namespace Finance
         public:
             DF();
             DF(const YieldCurve & sInitialYieldCurve);
-            virtual ~DF();
             virtual double operator()(double dDate) const;
             virtual double operator()(const Utilities::Date::MyDate & sDate) const;
         private:	

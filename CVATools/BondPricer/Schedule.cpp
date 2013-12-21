@@ -47,11 +47,6 @@ namespace Finance
             }
         }
         
-        Schedule::~Schedule()
-        {
-            sSchedule_.clear();
-        }
-        
         std::vector<EventOfSchedule> Schedule::GetSchedule() const
         {
             return sSchedule_;

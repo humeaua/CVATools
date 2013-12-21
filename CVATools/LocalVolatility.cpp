@@ -16,9 +16,6 @@ namespace Utilities
         LocalVolatility::LocalVolatility(double S0) : DiffusionProcess(S0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())
         {}
         
-        LocalVolatility::~LocalVolatility()
-        {}
-        
         //  return a simulation data of the simulated path for the diffusion process
         
         SimulationData LocalVolatility::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const

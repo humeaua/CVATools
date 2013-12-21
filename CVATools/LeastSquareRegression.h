@@ -18,7 +18,6 @@ namespace Maths {
     //  Base class for least square regression
     class LeastSquareRegression : public RegressionMethod
     {
-    protected:
     public:
         virtual Utilities::Matrix ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const = 0;
     

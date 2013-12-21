@@ -23,9 +23,6 @@ namespace Finance
         
         {}
         
-        Coupon::~Coupon()
-        {}
-        
         double Coupon::GetCoupon() const
         {
             return dCoupon_;

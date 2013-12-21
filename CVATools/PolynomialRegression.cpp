@@ -50,15 +50,6 @@ namespace Maths
         }
     }
     
-    PolyRegPms::~PolyRegPms()
-    {
-        for (std::size_t i = 0 ; i < sPowerAndRegVariables.size() ; ++i)
-        {
-            sPowerAndRegVariables.at(i).clear();
-        }
-        sPowerAndRegVariables.clear();
-    }
-    
     PolynomialRegression::PolynomialRegression(bool bAddConstantInRegression,
                                                const std::vector<std::size_t> & dRegressionPower,
                                                bool bCrossTerms) : LinearRegression(bAddConstantInRegression)
@@ -78,11 +69,6 @@ namespace Maths
             //  may pass this to a more relable c++ version of atoi
             iRegressionPower.at(i) = atoi(cString.at(i).c_str());
         }
-    }
-    
-    PolynomialRegression::~PolynomialRegression()
-    {
-        sPolyRegPms_.~PolyRegPms();
     }
     
     Utilities::Matrix PolynomialRegression::ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const

@@ -23,12 +23,6 @@ namespace Finance
         
         {}
         
-        EventOfSchedule::~EventOfSchedule()
-        {
-            sStart_.~MyDate();
-            sEnd_.~MyDate();
-        }
-        
         double EventOfSchedule::GetCoverage() const
         {
             class Coverage sCoverage(eBasis_,  sStart_, sEnd_);

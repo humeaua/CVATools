@@ -45,7 +45,6 @@ namespace Finance
         public:
             Bond(double dNotional, bool bIsNotionalRepaidBack);
             Bond(double dNotional, bool bIsNotionalRepaidBack, const std::vector<Base::Coupon> & vCoupons);
-            virtual ~Bond();
         };
     }
 }

@@ -14,13 +14,7 @@
 #include "VectorUtilities.h"
 
 namespace Maths
-{    
-    Statistics::Statistics()
-    {}
-    
-    Statistics::~Statistics()
-    {}
-    
+{
     double Statistics::Mean(const std::vector<double> &dData)
     {
         return dData.size() == 0 ? 0.0 : std::accumulate(dData.begin(), dData.end(), 0.0)/ dData.size();

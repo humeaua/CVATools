@@ -28,7 +28,6 @@ namespace Maths
     public:
         PCA(const Utilities::RegressionData & sRegressionData);
         PCA(const Utilities::Matrix & sCovarianceMatrix);
-        virtual ~PCA();
         
     };
 }

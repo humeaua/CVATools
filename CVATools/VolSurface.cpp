@@ -21,15 +21,6 @@ namespace Finance
             Calibrate(VolSurface_);
         }
         
-        VolatilitySurface::~VolatilitySurface()
-        {
-            for (std::map<long, std::map<double, double> >::iterator it = VolSurface_.begin() ; it != VolSurface_.end() ; ++it)
-            {
-                it->second.clear();
-            }
-            VolSurface_.clear();
-        }
-        
         double VolatilitySurface::Get(long lExpiry, double dStrike) const
         {
             if (VolSurface_.count(lExpiry))

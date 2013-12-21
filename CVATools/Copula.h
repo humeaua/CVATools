@@ -27,7 +27,6 @@ namespace Maths {
     protected:
         CopulaType eCopulaType_;
     public:
-        Copula();
         Copula(const CopulaType eCopulaType);
         
         virtual double CopulaFunction(const Utilities::MyVector<double> & dVariables) const = 0;

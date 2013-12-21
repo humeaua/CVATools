@@ -27,7 +27,6 @@ namespace Finance
             
         public:
             Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency);
-            virtual ~Schedule();
             
             virtual std::vector<EventOfSchedule> GetSchedule() const;
             virtual std::vector<double> GetCoverageFromToday() const;

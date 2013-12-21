@@ -17,7 +17,6 @@ namespace Maths
     class ArchimedeanCopula : public Copula
     {
     public:
-        ArchimedeanCopula();
         ArchimedeanCopula(CopulaType eCopulaType);
         
         virtual double Generator(double x) const = 0;

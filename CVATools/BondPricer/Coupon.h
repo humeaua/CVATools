@@ -24,7 +24,6 @@ namespace Finance
             
         public:
             Coupon(double dCoupon, bool bIsFixedRate, const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis);
-            virtual ~Coupon();
             
             double GetCoupon() const;
             bool IsFixedRateCoupon() const;

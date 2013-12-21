@@ -27,9 +27,7 @@ namespace Finance
             virtual double Get(long lExpiry, double dStrike) const;
             
         public:
-            VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface);
-            virtual ~VolatilitySurface();
-            
+            VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface);            
             virtual double Interpolate(long lExpiry, double dStrike) const;
         };
     }

@@ -17,9 +17,6 @@ namespace Finance
         BlackScholes::BlackScholes(double dDrift, double dVol, double dX0) : dDrift_(dDrift), dVol_(dVol), DiffusionProcess(dX0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())
         {}
         
-        BlackScholes::~BlackScholes()
-        {}
-        
         double BlackScholes::drift(double dt, double dx) const
         {
             return dDrift_ * dx;

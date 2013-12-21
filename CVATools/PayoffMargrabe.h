@@ -22,7 +22,6 @@ namespace Finance
             
         public:
             PayoffMargrabe(double dK);
-            virtual ~PayoffMargrabe();
             
             virtual double pay(double s1, double s2) const;
         };

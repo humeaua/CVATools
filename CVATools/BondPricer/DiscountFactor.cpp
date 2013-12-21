@@ -21,9 +21,6 @@ namespace Finance
         DF::DF(const YieldCurve & sInitialYieldCurve) : YieldCurve(sInitialYieldCurve)
         {}
         
-        DF::~DF()
-        {}
-        
         double DF::operator()(double dT) const
         {
             return exp(-dT * (*this)(dT));

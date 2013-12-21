@@ -30,7 +30,6 @@ namespace Finance
                                std::size_t iNIterMax = 100,
                                double dTolerance = 1e-06,
                                double dEpsValueDeriv = 1e-06);
-            virtual ~PriceToYieldNewton();
             virtual double f(double x) const;
             virtual double df(double x) const;
         };
@@ -49,7 +48,6 @@ namespace Finance
                           std::size_t iNIterMax = 100,
                           double dTolerance = 1e-06,
                           double dEpsValueDeriv = 1e-06);
-            virtual ~ZSpreadNewton();
             virtual double f(double x) const;
             virtual double df(double x) const;
         };
@@ -68,7 +66,6 @@ namespace Finance
             
         public:
             BondPricer(const Utilities::Date::MyDate & sToday, const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate, double dToleranceNewton = 1e-06, std::size_t iNIterMaxNewton = 100);
-            virtual ~BondPricer();
             
             virtual double Price() const;
             

@@ -18,9 +18,7 @@ namespace Finance
         class ForwardRate : public DF
         {
         public:
-            ForwardRate();
             ForwardRate(const YieldCurve & sInitialYieldCurve);
-            virtual ~ForwardRate();
             
             virtual double FwdRate(double dStart, double dEnd) const;
         };

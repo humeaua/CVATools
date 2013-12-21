@@ -31,8 +31,6 @@ namespace Finance
         public:
             OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0);
             
-            virtual ~OrnsteinUhlenbeck();
-            
             virtual double drift(double dt, double dx) const;
             virtual double diffusion(double dt, double dx) const;
             

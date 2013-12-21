@@ -14,13 +14,7 @@ namespace Finance
 {
     namespace Instruments
     {
-        ForwardRate::ForwardRate()
-        {}
-        
         ForwardRate::ForwardRate(const YieldCurve & sInitialYieldCurve) : DF(sInitialYieldCurve)
-        {}
-        
-        ForwardRate::~ForwardRate()
         {}
         
         double ForwardRate::FwdRate(double dStart, double dEnd) const

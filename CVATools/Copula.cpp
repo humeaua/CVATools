@@ -10,9 +10,6 @@
 
 namespace Maths
 {
-    Copula::Copula() : eCopulaType_(INDEPENDENT)
-    {}
-    
     Copula::Copula(const CopulaType eCopulaType) : eCopulaType_(eCopulaType)
     {}
 }

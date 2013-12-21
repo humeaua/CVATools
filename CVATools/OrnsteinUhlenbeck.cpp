@@ -17,9 +17,6 @@ namespace Finance
         OrnsteinUhlenbeck::OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0) : dA_(dA), dB_(dB), dSigma_(dSigma), DiffusionProcess(dX0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())
         {}
         
-        OrnsteinUhlenbeck::~OrnsteinUhlenbeck()
-        {}
-        
         double OrnsteinUhlenbeck::drift(double dt, double dx) const
         {
             return dA_ * (dB_ - dx);

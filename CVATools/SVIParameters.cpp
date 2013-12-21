@@ -18,9 +18,6 @@ namespace Finance
         SVIParameters::SVIParameters(double dSpot) : dSpot_(dSpot)
         {}
         
-        SVIParameters::~SVIParameters()
-        {}
-        
         double SVIParameters::Volatility(double k, double t) const
         {
             // interpolate linearly the factors in time

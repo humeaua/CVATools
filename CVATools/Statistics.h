@@ -19,8 +19,6 @@ namespace Maths
     private:
         static std::size_t Partition(const std::vector<double> & dData, std::size_t iPivot);
     public:
-        Statistics();
-        virtual ~Statistics();
         
         //  Method to compute the mean of data
         static double Mean(const std::vector<double> & dData);

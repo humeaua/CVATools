@@ -23,8 +23,6 @@ namespace Finance
         public:
             BlackScholes(double dDrift, double dVol, double dX0);
             
-            virtual ~BlackScholes();
-            
             virtual double drift(double dt, double dx) const;
             virtual double diffusion(double dt, double dx) const;
             

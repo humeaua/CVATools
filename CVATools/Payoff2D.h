@@ -16,9 +16,6 @@ namespace Finance
         class Payoff2D
         {
         public:
-            Payoff2D();
-            virtual ~Payoff2D();
-            
             virtual double pay(double s1, double s2) const = 0;
         };
     }

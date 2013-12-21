@@ -37,12 +37,6 @@ namespace Maths
         std::cout << "PCA succeeded in " << iNRotations << " rotations" << std::endl;
     }
     
-    PCA::~PCA()
-    {
-        sEigenVectors_.~Matrix();
-        dEigenValues_.clear();
-    }
-    
     void PCA::ComputeCovarianceMatrix(const Utilities::RegressionData &sRegressionData, Utilities::Matrix &sCovarianceMatrix) const
     {
         sCovarianceMatrix.Reallocate(sRegressionData.GetNbVariables(), sRegressionData.GetNbVariables());

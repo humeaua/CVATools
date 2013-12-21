@@ -12,10 +12,5 @@ namespace Finance
 {
     namespace Payoff
     {
-        Payoff2D::Payoff2D()
-        {}
-        
-        Payoff2D::~Payoff2D()
-        {}
     }
 }

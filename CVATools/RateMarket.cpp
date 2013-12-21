@@ -12,7 +12,8 @@ namespace Finance
 {
     namespace Market
     {
-        RateMarket::RateMarket(const std::string & cMarketName) : sDiscountCurve_()
+        //  Change Constructor of Rate Market to use a real date and not necessarily the date initialized by the computer
+        RateMarket::RateMarket(const std::string & cMarketName) : sDiscountCurve_(), Market(Utilities::Date::MyDate())
         {
             Load(cMarketName);
         }

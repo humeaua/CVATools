@@ -12,5 +12,12 @@ namespace Finance
 {
     namespace Market
     {
+        Market::Market(const Utilities::Date::MyDate & TodayDate) : TodayDate_(TodayDate)
+        {}
+        
+        Utilities::Date::MyDate Market::TodayDate() const
+        {
+            return TodayDate_;
+        }
     }
 }

@@ -19,12 +19,15 @@
 
 namespace Finance
 {
+    //  Forward declaration of Underlying class
+    class Underlying;
+    
     namespace Models
     {
         class ModelState
         {
         private:
-            std::vector<Finance::Underlyings::Underlying> Underlyings;
+            std::vector<Underlying> Underlyings;
         };
     }
 }

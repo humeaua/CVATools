@@ -69,11 +69,11 @@ namespace Finance
         
         YieldCurve YieldCurve::operator + (const YieldCurve & sYieldCurve)
         {
-            double dTolerance = 0.001;
+            const double dTolerance = 0.001;
             YieldCurve sResult;
             
             //  Test if the pillars in the yield curve are equal
-            bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_, dTolerance);
+            const bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_, dTolerance);
             Utilities::requireException(bPillarAreEqual, "Yield curve pillars are not the same. Should be the same for now", "YieldCurve::operator +");
             
             for (std::size_t iPillar = 0 ; iPillar < sYieldCurve.dVariables_.size() ; ++ iPillar)
@@ -87,8 +87,11 @@ namespace Finance
         
         YieldCurve YieldCurve::operator=(double dValue)
         {
+            //  Clear everything before filling anything
             eInterpolationType_ = Utilities::Interp::LIN;
-            for (std::size_t i = 0 ; i < 31 ; ++i)
+            dValues_.clear();
+            dVariables_.clear();
+            for (std::size_t i = 0 ; i < 2 ; ++i)
             {
                 if (i >= dVariables_.size())
                 {

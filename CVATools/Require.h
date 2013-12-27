@@ -26,7 +26,7 @@ namespace Utilities {
     
     inline void requireException(bool requirement,
                                  const std::string & msg,
-                                 const std::string & cFunctionName = "")
+                                 const std::string & cFunctionName)
     {
         std::string cMsg = cFunctionName + " : " + msg;
         if (!requirement)

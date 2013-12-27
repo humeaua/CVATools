@@ -128,6 +128,7 @@ int main()
     std::cout << "27- HTTP Fetcher" << std::endl;
     std::cout << "28- Exo DM louis matrices" << std::endl;
     std::cout << "29- Alglib testing" << std::endl;
+    std::cout << "30- Exception Testing" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     
@@ -733,6 +734,23 @@ int main()
     else if (iTest == 29)
     {
         alglib::sparsematrix sparsematrix;
+    }
+    else if (iTest == 30)
+    {
+        //  Old require exception
+        try {
+            int i = 0 ;
+            Utilities::requireException(i == 1, "i is not equal to 1", "main");
+        } catch (Utilities::MyException & excep) {
+            std::cout << "Old MyException caught : " << excep.what() << std::endl;
+        }
+        //  New require exception
+        try {
+            int i = 0 ;
+            Utilities::requireException(i == 1, "i is not equal to 1", __func__);
+        } catch (Utilities::MyException & excep) {
+            std::cout << "New MyException caught : " << excep.what() << std::endl;
+        }
     }
     std::cout << "Done !" << std::endl;
 }

@@ -85,7 +85,7 @@ namespace Finance
         dSigma1_(dSigma1),
         dSigma2_(dSigma2)
         {
-            Utilities::requireException(sSimulationParams.size() == 3, "Size of simulation parameters has to be 3", "MargrabeOptionStochasticRates");
+            Utilities::requireException(sSimulationParams.size() == 3, "Size of simulation parameters has to be 3", "MargrabeOptionStochasticRates::MargrabeOptionStochasticRates");
         }
         
         MargrabeOptionStochasticRates::MargrabeOptionStochasticRates(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams)
@@ -99,7 +99,7 @@ namespace Finance
         dSigma1_(dSigma1),
         dSigma2_(dSigma2)
         {
-            Utilities::requireException(sSimulationParams.size() == 3, "Size of simulation parameters has to be 3", "MargrabeOptionStochasticRates");
+            Utilities::requireException(sSimulationParams.size() == 3, "Size of simulation parameters has to be 3", "MargrabeOptionStochasticRates::MargrabeOptionStochasticRates");
             sCorrelationMatrix_.set(1, 2, dRho12);
             sCorrelationMatrix_.set(2, 1, dRho12);
             sCorrelationMatrix_.set(1, 3, dRhor1);

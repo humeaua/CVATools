@@ -298,7 +298,7 @@ namespace Utilities
 #ifndef EPSILON_RAW
 #define EPSILON_RAW 1e-07
 #endif
-                        Utilities::requireException(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small","InterExtrapolation1D::Interp1");
+                        Utilities::requireException(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small","InterExtrapolation1D::Interp1D");
                         dResult = 1.0 / dVariable * ((dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue2) * dVariables_.at(iValue2) + (dVariables_.at(iValue2) - dVariable) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue1) * dVariables_.at(iValue1) );
                         break;
                     }

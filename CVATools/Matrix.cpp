@@ -273,8 +273,8 @@ namespace Utilities
     //output, a is replaced by its matrix inverse, and b is replaced by the corresponding set of solution
     //vectors.
     {
-        Utilities::requireException(a.getcols() == a.getrows(), "a is not a square matrix", "Utilities::gaussj");
-        Utilities::requireException(a.getrows() == b.getrows(), "b must the same number of rows as a", "Utilities::gaussj");
+        Utilities::requireException(a.getcols() == a.getrows(), "a is not a square matrix", "gaussj");
+        Utilities::requireException(a.getrows() == b.getrows(), "b must the same number of rows as a", "gaussj");
         int i,icol,irow,j,k,l,ll,n=a.getcols(),m=b.getcols();
         double big,dum,pivinv,temp;
         //The integer arrays ipiv, indxr, and indxc are used for book-keeping on the pivoting

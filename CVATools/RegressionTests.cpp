@@ -43,7 +43,7 @@ void RegressionTest_BondPricing()
         dYC.push_back(std::make_pair(30.0, 0.0310));
         
         Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034), sToday(10, 5, 2013);
-        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::LIN);
+        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", dYC);
         
         Finance::Base::MyBasis eBasis = Finance::Base::BONDBASIS;
         Finance::Base::MyFrequency eFrequency = Finance::Base::MyFrequencyAnnual;

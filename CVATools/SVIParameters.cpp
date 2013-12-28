@@ -24,7 +24,7 @@ namespace Finance
             Utilities::Interp::InterExtrapolationType eInterpType = Utilities::Interp::LIN;
             Utilities::Interp::InterExtrapolation1D sInterpA(dExpiries_, dA_, eInterpType), sInterpB(dExpiries_, dB_, eInterpType), sInterpRho(dExpiries_, dRho_, eInterpType), sInterpM(dExpiries_, dM_, eInterpType), sInterpSigma(dExpiries_, dSigma_, eInterpType);
             
-            double dA = sInterpA.Interp1D(t), dB = sInterpB.Interp1D(t), dRho = sInterpRho.Interp1D(t), dM = sInterpM.Interp1D(t), dSigma = sInterpSigma.Interp1D(t);
+            double dA = sInterpA(t), dB = sInterpB(t), dRho = sInterpRho(t), dM = sInterpM(t), dSigma = sInterpSigma(t);
             
             return sqrt(dA + dB * (dRho * (k - dM) + sqrt((k - dM) * (k - dM) + dSigma * dSigma)));
         }

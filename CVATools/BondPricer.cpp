@@ -202,7 +202,7 @@ namespace Finance
         
         double BondPricer::I_Spread(double dPrice) const
         {
-            return PriceToYield(dPrice) - sYieldCurve_.Interp1D(vCoupons_.back().GetEndDate().Diff(sToday_));
+            return PriceToYield(dPrice) - sYieldCurve_(vCoupons_.back().GetEndDate().Diff(sToday_));
         }
         
         double BondPricer::Z_Spread(double dPrice) const

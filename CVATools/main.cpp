@@ -274,7 +274,7 @@ int main()
         dYC.push_back(std::make_pair(30.0, 0.0310));
 
         Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034), sToday;
-        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::LIN);
+        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", dYC);
         
         Finance::Base::MyBasis eBasis = Finance::Base::BONDBASIS;
         Finance::Base::MyFrequency eFrequency = Finance::Base::MyFrequencyAnnual;
@@ -319,7 +319,7 @@ int main()
         dYC.push_back(std::make_pair(20.0, 0.0270));
         dYC.push_back(std::make_pair(30.0, 0.0310));
         
-        Finance::Base::YieldCurve sYieldCurve(Utilities::Date::MyDate(), "USD", "USD_YC_10_05_2013", dYC, Utilities::Interp::RAW);
+        Finance::Base::YieldCurve sYieldCurve(Utilities::Date::MyDate(), "USD", "USD_YC_10_05_2013", dYC);
         
         for (std::size_t i = 0 ; i < 400 ; ++i)
         {
@@ -615,7 +615,7 @@ int main()
             
             for (double dT = -2.5 ; dT < 1.0 ; dT += 0.041)
             {
-                std::cout << dT << ";" << sOWGRDiscountCurve.Interp1D(dT) << ";" << sTennisDiscountCurve.Interp1D(dT) << std::endl;
+                std::cout << dT << ";" << sOWGRDiscountCurve(dT) << ";" << sTennisDiscountCurve(dT) << std::endl;
             }
             
         }

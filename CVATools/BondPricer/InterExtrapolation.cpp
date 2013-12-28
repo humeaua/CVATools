@@ -101,10 +101,7 @@ namespace Utilities
             }
         }
         
-        InterExtrapolation1D::~InterExtrapolation1D()
-        {}
-        
-        double InterExtrapolation1D::Interp1D(double dVariable) const
+        double InterExtrapolation1D::operator()(double dVariable) const
         {
             //  NEAR Extrapolation
             if (dVariable < dVariables_.front())
@@ -321,7 +318,7 @@ namespace Utilities
                         
                         double t = (dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1));
                         
-                        return (2 * t * t * t - 3 * t * t + 1) * dValues_.at(iValue1) + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1)) + (-2. * t * t * t + 3. * t * t) * dValues_.at(iValue2) + (t* t * t - t* t) * dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
+                        return (2 * t * t * t - 3 * t * t + 1) * dValues_.at(iValue1) + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1)) + (-2. * t * t * t + 3. * t * t) * dValues_.at(iValue2) + (t * t * t - t * t) * dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
                         break;
                     }
                         
@@ -333,9 +330,6 @@ namespace Utilities
                 return dResult;
 			}
         }
-        
-        InterExtrapolationnD::InterExtrapolationnD()
-        {}
         
         InterExtrapolationnD::InterExtrapolationnD(const std::map<std::size_t, std::vector<double> > & dVariables,
                                                    const std::map<std::size_t, std::vector<double> > & dValues,
@@ -350,7 +344,7 @@ namespace Utilities
             for (iter = dVariables_.begin() ; iter != dVariables_.end() ; ++iter)
             {
                 InterExtrapolation1D sInterp1D(iter->second, dVariables_.find(iter->first)->second, eInterpolationType_);
-                Result[iter->first] = sInterp1D.Interp1D(dValue.find(iter->first)->second);
+                Result[iter->first] = sInterp1D(dValue.find(iter->first)->second);
             }
             return Result;
         }

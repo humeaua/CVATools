@@ -44,9 +44,8 @@ namespace Utilities
             InterExtrapolation1D(const std::vector<double> & dVariables,
                                  const std::vector<double> & dValues,
                                  InterExtrapolationType eInterpolationType);
-            virtual ~InterExtrapolation1D();
             
-            double Interp1D(double dValue) const;
+            virtual double operator()(double dValue) const;
         };
         
         struct InterExtrapolationnD
@@ -59,7 +58,6 @@ namespace Utilities
             std::map<std::size_t, std::vector<double> > dValues_;
             
         public:
-            InterExtrapolationnD();
             InterExtrapolationnD(const std::map<std::size_t, std::vector<double> > & dVariables,
                                  const std::map<std::size_t, std::vector<double> > & dValues,
                                  InterExtrapolationType eInterpolationType);

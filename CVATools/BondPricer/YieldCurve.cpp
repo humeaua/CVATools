@@ -20,7 +20,7 @@ namespace Finance
             eInterpolationType_ = Utilities::Interp::RAW;
         }
         
-        YieldCurve::YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC, Utilities::Interp::InterExtrapolationType eInterExtrapolationType) :
+        YieldCurve::YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC) :
         
         cCCY_(cCCY),
         cName_(cName),
@@ -30,7 +30,7 @@ namespace Finance
             std::pair<std::vector<double>, std::vector<double> > YC0 = Utilities::GetPairOfVectorFromVectorOfPair(YC);
             dVariables_ = YC0.first;
             dValues_ = YC0.second;
-            eInterpolationType_ = eInterExtrapolationType;
+            eInterpolationType_ = Utilities::Interp::RAW;
         }
         
         double YieldCurve::operator()(double t) const
@@ -44,7 +44,7 @@ namespace Finance
             }
             if (t > 0)
             {
-                return Interp1D(t);
+                return (*this)(t);
             }
             else
             {

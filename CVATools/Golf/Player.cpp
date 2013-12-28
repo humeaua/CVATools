@@ -101,7 +101,7 @@ namespace Golf
         {
             Utilities::Date::MyDate sTournamentDate = it->GetDate();
             double dTimeDiff = sTournamentDate.Diff(sObservationDate),
-                    dDiscount = sDiscountCurve.Interp1D(dTimeDiff);
+                    dDiscount = sDiscountCurve(dTimeDiff);
             dTotalPoints_ += it->GetPoint() * dDiscount;
             //  Add one tournament when discount is strictly above 0.0
             if (fabs(dDiscount) > std::numeric_limits<double>::epsilon())

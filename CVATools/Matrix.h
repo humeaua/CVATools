@@ -29,17 +29,14 @@ namespace Utilities
         Matrix(double dData[][M], int N);
         virtual ~Matrix();
         
-        void Reallocate(int N, int M);
-        void Reallocate(std::size_t N, std::size_t M);
+        virtual void Reallocate(int N, int M);
+        virtual void Reallocate(std::size_t N, std::size_t M);
         
-        double& operator ()(int i, int j);
-        double& operator ()(int i, int j) const;
+        virtual double& operator ()(int i, int j);
+        virtual double& operator ()(int i, int j) const;
         
-        double& operator ()(std::size_t i, std::size_t j);
-        double& operator ()(std::size_t i, std::size_t j) const;
-        
-        virtual void set(int i, int j, double value);
-        virtual void set(std::size_t i, std::size_t j, double value);
+        virtual double& operator ()(std::size_t i, std::size_t j);
+        virtual double& operator ()(std::size_t i, std::size_t j) const;
         
         virtual int getrows() const;
         virtual int getcols() const;
@@ -49,7 +46,6 @@ namespace Utilities
     protected:
         int rowsize;
         int colsize;
-        //double* data;
         std::vector<double> data;
         
     };

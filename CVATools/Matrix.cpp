@@ -135,16 +135,6 @@ namespace Utilities
         return (double&)data.at(i + rowsize*j);
     }
     
-    void Matrix::set(int i, int j, double value)
-    {
-        data.at(i + rowsize*j) = value;
-    }
-    
-    void Matrix::set(std::size_t i, std::size_t j, double value)
-    {
-        data.at(i + rowsize*j) = value;
-    }
-    
     int Matrix::getrows() const
     {
         return rowsize;

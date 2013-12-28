@@ -56,15 +56,15 @@ namespace Finance
         dSigma1_(dSigma1),
         dSigma2_(dSigma2)
         {
-            sCorrelationMatrix_.set(1, 2, dRho12);
-            sCorrelationMatrix_.set(2, 1, dRho12);
-            sCorrelationMatrix_.set(1, 3, dRhor1);
-            sCorrelationMatrix_.set(3, 1, dRhor1);
-            sCorrelationMatrix_.set(2, 3, dRhor2);
-            sCorrelationMatrix_.set(3, 2, dRhor2);
-            sCorrelationMatrix_.set(1, 1, 1.0);
-            sCorrelationMatrix_.set(2, 2, 1.0);
-            sCorrelationMatrix_.set(3, 3, 1.0);
+            sCorrelationMatrix_(1, 2) = dRho12;
+            sCorrelationMatrix_(2, 1) = dRho12;
+            sCorrelationMatrix_(1, 3) = dRhor1;
+            sCorrelationMatrix_(3, 1) = dRhor1;
+            sCorrelationMatrix_(2, 3) = dRhor2;
+            sCorrelationMatrix_(3, 2) = dRhor2;
+            sCorrelationMatrix_(1, 1) = 1.0;
+            sCorrelationMatrix_(2, 2) = 1.0;
+            sCorrelationMatrix_(3, 3) = 1.0;
             
             Processes::StochProcessSimulation sFloored, sNonFloored;
             sFloored.SetFloor(0.0, true);
@@ -100,15 +100,15 @@ namespace Finance
         dSigma2_(dSigma2)
         {
             Utilities::requireException(sSimulationParams.size() == 3, "Size of simulation parameters has to be 3", "MargrabeOptionStochasticRates::MargrabeOptionStochasticRates");
-            sCorrelationMatrix_.set(1, 2, dRho12);
-            sCorrelationMatrix_.set(2, 1, dRho12);
-            sCorrelationMatrix_.set(1, 3, dRhor1);
-            sCorrelationMatrix_.set(3, 1, dRhor1);
-            sCorrelationMatrix_.set(2, 3, dRhor2);
-            sCorrelationMatrix_.set(3, 2, dRhor2);
-            sCorrelationMatrix_.set(1, 1, 1.0);
-            sCorrelationMatrix_.set(2, 2, 1.0);
-            sCorrelationMatrix_.set(3, 3, 1.0);
+            sCorrelationMatrix_(1, 2) = dRho12;
+            sCorrelationMatrix_(2, 1) = dRho12;
+            sCorrelationMatrix_(1, 3) = dRhor1;
+            sCorrelationMatrix_(3, 1) = dRhor1;
+            sCorrelationMatrix_(2, 3) = dRhor2;
+            sCorrelationMatrix_(3, 2) = dRhor2;
+            sCorrelationMatrix_(1, 1) = 1.0;
+            sCorrelationMatrix_(2, 2) = 1.0;
+            sCorrelationMatrix_(3, 3) = 1.0;
         }
     }
 }

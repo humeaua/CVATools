@@ -9,26 +9,16 @@
 #ifndef CVATools_TermStructure_h
 #define CVATools_TermStructure_h
 
-//
-//  TermStructure.h
-//  Seminaire
-//
-//  Created by Alexandre HUMEAU on 19/10/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
-#ifndef Seminaire_TermStructure_h
-#define Seminaire_TermStructure_h
-
 #include <vector>
 #include "Require.h"
+#include "Exception.h"
+#include "VectorUtilities.h"
 
 //  This file creates a termstructure template
 
 namespace Finance {
     namespace Base
     {
-        
         template<class T, class U>
         class TermStructure
         {
@@ -42,11 +32,11 @@ namespace Finance {
                 UValues_[0] = 0;
             }
             
-            TermStructure(const std::vector<T> & TVariables, const std::vector<U> & UValues) : TVariables_(TVariables), UValues_(UValues)
+            TermStructure(const std::vector<T> & TVariables, const std::vector<U> & UValues)
             {
-                Utilities::require(TVariables.size() == UValues.size(), "Size of variables and values are not the same");
+                Utilities::requireException(TVariables.size() == UValues.size(), "Size of variables and values are not the same", "TermStructure::TermStructure");
+                SetTermStructure(TVariables, UValues);
             }
-            
             
             virtual std::vector<T> GetVariables() const
             {
@@ -76,7 +66,7 @@ namespace Finance {
             
             virtual bool IsTermStructure() const
             {
-                return (TVariables_.size() != 1) && (UValues_.size() != 1);
+                return Size() > 1;
             }
             
             virtual U operator ()(const T& variable) const
@@ -100,20 +90,20 @@ namespace Finance {
                 {
                     return UValues_.back();
                 }
-                return 0.0;
+                throw Utilities::MyException("TermStructure<U,V>::operator(const T&) : error getting term-structure");
             }
             
             virtual void MergeTermStructure(TermStructure<T,U> & sTermStructure)
             {
                 if (!IsSameTermStructure(sTermStructure))
                 {
-                    size_t iSizeA = TVariables_.size(), iSizeB = sTermStructure.GetVariables().size();
+                    const size_t iSizeA = Size(), iSizeB = sTermStructure.Size();
                     
-                    std::vector<T> TVariablesA = TVariables_;
-                    std::vector<U> TVariablesB = sTermStructure.GetVariables();
+                    const std::vector<T> TVariablesA = TVariables_;
+                    const std::vector<U> TVariablesB = sTermStructure.GetVariables();
                     
-                    std::vector<T> UValuesA = UValues_;
-                    std::vector<U> UValuesB = sTermStructure.GetValues();
+                    const std::vector<T> UValuesA = UValues_;
+                    const std::vector<U> UValuesB = sTermStructure.GetValues();
                     
                     std::vector<T> TVariablesMerged;
                     std::vector<U> UValuesAMerged;
@@ -186,29 +176,23 @@ namespace Finance {
                 return *this;
             }
             
-            template<class V, class W>
-            bool IsSameTermStructure(const TermStructure<V, W> & sTermStructure) const
+            template<typename V>
+            bool IsSameTermStructure(const TermStructure<T, V> & sTermStructure) const
             {
-                std::vector<V> sTSVariables = sTermStructure.GetVariables();
-                if (sTSVariables.size() != TVariables_.size())
+                if (sTermStructure.Size() != Size())
                 {
                     return false;
                 }
                 else
                 {
-                    for (std::size_t i = 0 ; i < TVariables_.size() ; ++i)
-                    {
-                        if (TVariables_[i] != sTSVariables[i])
-                        {
-                            return false;
-                        }
-                    }
-                    return true;
+                    std::vector<T> sTSVariables = sTermStructure.GetVariables();
+                    return Utilities::AreEqual(TVariables_, sTSVariables, std::numeric_limits<T>::epsilon());
                 }
             }
             
-            std::size_t GetNbVariables() const
+            std::size_t Size() const
             {
+                Utilities::requireException(TVariables_.size() == UValues_.size(), "Size of variables and values are not the same", "TermStructure::Size");
                 return TVariables_.size();
             }
             
@@ -219,8 +203,5 @@ namespace Finance {
         
     }
 }
-
-#endif
-
 
 #endif

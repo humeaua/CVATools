@@ -28,9 +28,11 @@ namespace Utilities {
                                  const std::string & msg,
                                  const std::string & cFunctionName)
     {
-        std::string cMsg = cFunctionName + " : " + msg;
         if (!requirement)
+        {
+            std::string cMsg = cFunctionName + " : " + msg;
             throw MyException(cMsg);
+        }
     }
     
     inline void requireArgs(int argc, int args,

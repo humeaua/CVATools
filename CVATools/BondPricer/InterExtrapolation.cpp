@@ -325,29 +325,8 @@ namespace Utilities
                     default:
                         break;
                 }
-                
-                
                 return dResult;
 			}
         }
-        
-        InterExtrapolationnD::InterExtrapolationnD(const std::map<std::size_t, std::vector<double> > & dVariables,
-                                                   const std::map<std::size_t, std::vector<double> > & dValues,
-                                                   InterExtrapolationType eInterpolationType)
-        : dVariables_(dVariables), dValues_(dValues), eInterpolationType_(eInterpolationType)
-        {}
-        
-        std::map<std::size_t, double> InterExtrapolationnD::InterpnD(const std::map<size_t, double> &dValue)
-        {
-            std::map<std::size_t, double> Result;
-            std::map<std::size_t, std::vector<double> >::iterator iter;
-            for (iter = dVariables_.begin() ; iter != dVariables_.end() ; ++iter)
-            {
-                InterExtrapolation1D sInterp1D(iter->second, dVariables_.find(iter->first)->second, eInterpolationType_);
-                Result[iter->first] = sInterp1D(dValue.find(iter->first)->second);
-            }
-            return Result;
-        }
-
     }
 }

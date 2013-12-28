@@ -47,25 +47,7 @@ namespace Utilities
             
             virtual double operator()(double dValue) const;
         };
-        
-        struct InterExtrapolationnD
-        {
-        protected:
-            InterExtrapolationType eInterpolationType_;
-            std::size_t iNDimensions_;
-            std::size_t iNValues_;
-            std::map<std::size_t, std::vector<double> > dVariables_;
-            std::map<std::size_t, std::vector<double> > dValues_;
-            
-        public:
-            InterExtrapolationnD(const std::map<std::size_t, std::vector<double> > & dVariables,
-                                 const std::map<std::size_t, std::vector<double> > & dValues,
-                                 InterExtrapolationType eInterpolationType);
-            
-            std::map<std::size_t, double> InterpnD(const std::map<size_t, double> & dValue);
-        };
     }
 }
-
 
 #endif

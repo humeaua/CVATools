@@ -59,5 +59,9 @@ namespace Finance
                 sMarket[std::make_pair(sElmt1, sElmt2)] = sCorrelTS;
             }
         }
+        
+        //  To be implemented
+        void CorrelationMarket::Load(const std::string &cMarketName)
+        {}
     }
 }

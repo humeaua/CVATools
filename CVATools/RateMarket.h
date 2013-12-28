@@ -21,10 +21,10 @@ namespace Finance
         {
         protected:
             Finance::Base::YieldCurve sDiscountCurve_;
-        public:
-            RateMarket(const std::string & cMarketName);
             
             virtual void Load(const std::string & cMarketName);
+        public:
+            RateMarket(const std::string & cMarketName);
         };
     }
 }

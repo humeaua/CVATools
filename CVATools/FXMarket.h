@@ -17,7 +17,6 @@ namespace Finance
 {
     namespace Market
     {
-        
         class FXMarket : public Market
         {
         private:
@@ -25,7 +24,7 @@ namespace Finance
             std::vector<RateMarket> ForeignRateMarkets;
         public:
             FXMarket(const std::string & cMarketName);
-            
+        protected:
             virtual void Load(const std::string & cMarketName);
         };
     }

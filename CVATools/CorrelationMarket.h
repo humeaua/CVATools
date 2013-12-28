@@ -55,6 +55,8 @@ namespace Finance
         {
             std::map<std::pair<CorrelationKey, CorrelationKey>, Finance::Base::CorrelationTS> sMarket;
             
+        protected:
+            virtual void Load(const std::string & cMarketName);
         public:
             virtual void Add(const CorrelationKey & sElmt1, const CorrelationKey & sElmt2, const Finance::Base::CorrelationTS & sCorrelTS);
         };

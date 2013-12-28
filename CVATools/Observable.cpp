@@ -12,7 +12,7 @@ namespace Finance
 {
     namespace Observables
     {
-        Observable::Observable(const std::string & cType, const std::string & cDomCCY, const std::string & cForCCY) : cType_(cType), cForCCY_(cForCCY), cDomCCY_(cDomCCY)
+        Observable::Observable(const std::string & cType) : cType_(cType)
         {}
     }
 }

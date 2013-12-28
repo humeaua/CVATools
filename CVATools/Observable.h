@@ -23,9 +23,9 @@ namespace Finance
         class Observable
         {
         protected:
-            std::string cType_, cDomCCY_, cForCCY_;
+            std::string cType_;
         public:
-            Observable(const std::string & cType, const std::string & cDomCCY, const std::string & cForCCY);
+            Observable(const std::string & cType);
     
             virtual double Observe(const long & lDate) const = 0;
             virtual std::vector<double> Observe(const std::vector<long>& lDates) const = 0;

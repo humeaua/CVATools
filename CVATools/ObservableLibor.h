@@ -23,6 +23,7 @@ namespace Finance
             int iLag_;
             int iTenor_;
             Finance::Base::YieldCurve sYC_;
+            std::string cCurrency_;
         public:
             ObservableLibor(const std::string & cCCY,
                             const Finance::Base::YieldCurve & sYC,

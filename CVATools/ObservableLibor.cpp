@@ -15,7 +15,7 @@ namespace Finance
         ObservableLibor::ObservableLibor(const std::string & cCCY,
                                          const Finance::Base::YieldCurve & sYC,
                                          int iLag,
-                                         int iTenor) : Observable("LIBOR",cCCY,""), sYC_(sYC), iLag_(iLag), iTenor_(iTenor)
+                                         int iTenor) : Observable("LIBOR"), sYC_(sYC), iLag_(iLag), iTenor_(iTenor), cCurrency_(cCCY)
         {}
     }
 }

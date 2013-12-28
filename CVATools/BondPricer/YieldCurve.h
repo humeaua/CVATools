@@ -30,8 +30,13 @@ namespace Finance
             virtual std::string GetCurrency() const;
             virtual std::string GetName() const;
             
+            //  Spot operators
             virtual double operator()(double t) const;
             virtual double operator()(const Utilities::Date::MyDate & sToday) const;
+            
+            //  Forward Operators
+            virtual double operator()(double t1, double t2) const;
+            virtual double operator()(const Utilities::Date::MyDate & Date1, const Utilities::Date::MyDate & Date2) const;
             
             virtual YieldCurve operator + (const YieldCurve & sYieldCurve);
             virtual YieldCurve operator = (double dValue);

@@ -57,6 +57,22 @@ namespace Finance
             return (*this)(Date.Diff(sToday_));
         }
         
+        double YieldCurve::operator()(double t1, double t2) const
+        {
+            Utilities::requireException(t1 <= t2, "t1 is after t2", "YieldCurve::operator(double, double)");
+            Utilities::requireException(t1 >= 0, "t1 is negative", "YieldCurve::operator(double, double)");
+            return ((*this)(t2) * t2 -  (*this)(t1) * t1) / (t2 - t1);
+        }
+        
+        double YieldCurve::operator()(const Utilities::Date::MyDate &Date1, const Utilities::Date::MyDate &Date2) const
+        {
+            Utilities::requireException(Date1 >= sToday_, "Date1 is before today", "YieldCurve::operator(MyDate, MyDate)");
+            Utilities::requireException(Date2 >= Date1, "Date2 is before Date1", "YieldCurve::operator(MyDate, MyDate)");
+            
+            const double t1 = Date1.Diff(sToday_), t2 = Date2.Diff(sToday_);
+            return (*this)(t1, t2);
+        }
+        
         std::string YieldCurve::GetCurrency() const
         {
             return cCCY_;

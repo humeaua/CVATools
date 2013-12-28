@@ -13,78 +13,19 @@
 
 namespace Utilities {
     
-    inline void require(bool requirement,
-                        const char* msg = "Requirement failed")
-    {
-        if(!requirement)
-        {
-            fputs(msg, stderr);
-            fputs("\n", stderr);
-            exit(EXIT_FAILURE);
-        }
-    }
+    inline void require(bool requirement, const char* msg = "Requirement failed");
     
-    inline void requireException(bool requirement,
-                                 const std::string & msg,
-                                 const std::string & cFunctionName)
-    {
-        if (!requirement)
-        {
-            std::string cMsg = cFunctionName + " : " + msg;
-            throw MyException(cMsg);
-        }
-    }
+    //  Remove inline as it breaks the build : 28/12/13
+    void requireException(bool requirement, const std::string & msg, const std::string & cFunctionName);
     
-    inline void requireArgs(int argc, int args,
-                            const char* msg = "Must use %d arguments")
-    {
-        if(argc != args + 1)
-        {
-            fprintf(stderr, msg, args);
-            fputs("\n", stderr);
-            exit(EXIT_FAILURE);
-        }
-    }
+    inline void requireArgs(int argc, int args, const char* msg = "Must use %d arguments");
     
-    inline void requireMinArgs(int argc, int minArgs,
-                               const char* msg = "Must use at least %d arguments")
-    {
-        if(argc < minArgs + 1)
-        {
-            fprintf(stderr, msg, minArgs);
-            fputs("\n", stderr);
-            exit(EXIT_FAILURE);
-        }
-    }
+    inline void requireMinArgs(int argc, int minArgs, const char* msg = "Must use at least %d arguments");
     
-    inline void assure(std::ifstream& in,
-                       const char* filename = "")
-    {
-        if(!in)
-        {
-            fprintf(stderr, "Could not open file %s\n", filename);
-            exit(EXIT_FAILURE);
-        }
-    }
+    inline void assure(std::ifstream& in, const char* filename = "");
     
-    inline void assure(std::ofstream& in,
-                       const char* filename = "")
-    {
-        if(!in)
-        {
-            fprintf(stderr, "Could not open file %s\n", filename);
-            exit(EXIT_FAILURE);
-        }
-    }
+    inline void assure(std::ofstream& in, const char* filename = "");
     
-    inline void assure(std::fstream& in,
-                       const char* filename = "")
-    {
-        if(!in)
-        {
-            fprintf(stderr, "Could not open file %s\n", filename);
-            exit(EXIT_FAILURE);
-        }
-    }
+    inline void assure(std::fstream& in, const char* filename = "");
 }
 #endif

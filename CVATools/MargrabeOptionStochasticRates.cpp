@@ -110,11 +110,5 @@ namespace Finance
             sCorrelationMatrix_.set(2, 2, 1.0);
             sCorrelationMatrix_.set(3, 3, 1.0);
         }
-        
-        MargrabeOptionStochasticRates::~MargrabeOptionStochasticRates()
-        {
-            if (!sSimulationParams_.empty())
-                sSimulationParams_.clear();
-        }
     }
 }

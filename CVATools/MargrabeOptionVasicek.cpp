@@ -83,9 +83,6 @@ namespace Finance
         dSigma_(dSigma)
         {}
         
-        MargrabeOptionVasicek::~MargrabeOptionVasicek()
-        {}
-        
         DVector MargrabeOptionVasicek::MultiDrift(double dt, DVector dx) const
         {
             DVector dResult(3);

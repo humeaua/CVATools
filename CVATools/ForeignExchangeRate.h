@@ -30,7 +30,9 @@ namespace Finance
                                    const Utilities::Date::MyDate & SettleDate,
                                    const Finance::Market::Market & Market) const
             {
-                return dSpot * ForeignDiscountCurve(FixingDate) / DomesticDiscountCurve(FixingDate);
+                //  default rule : add 2 business days to get the spot date from today
+                Utilities::Date::MyDate SpotDate = DomesticDiscountCurve.Today().Add(2, Utilities::Date::BUSINESSDAY);
+                return dSpot * DomesticDiscountCurve(SpotDate) / ForeignDiscountCurve(SpotDate) * ForeignDiscountCurve(SettleDate) / DomesticDiscountCurve(SettleDate);
             }
             
             virtual double Spot(const Utilities::Date::MyDate & SpotDate,

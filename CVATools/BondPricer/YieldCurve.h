@@ -30,7 +30,7 @@ namespace Finance
             virtual std::string GetCurrency() const;
             virtual std::string GetName() const;
             
-            //  Spot operators
+            //  Cash operators : cash rates
             virtual double operator()(double t) const;
             virtual double operator()(const Utilities::Date::MyDate & sToday) const;
             

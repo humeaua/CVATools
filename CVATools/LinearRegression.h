@@ -20,7 +20,7 @@ namespace Maths
         bool bAddConstantInRegression_;
     public:
         LinearRegression(bool bAddConstantInRegression);
-        virtual Utilities::Matrix ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const;
+        virtual Utilities::Matrix<double> ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const;
         
         virtual std::vector<double> GetPredictedValues(const Utilities::RegressionData & sRegressionData,
                                                        const std::vector<double> & sResponse) const;

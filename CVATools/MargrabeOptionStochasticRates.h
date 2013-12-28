@@ -36,9 +36,9 @@ namespace Finance
             
             double dSigma1_, dSigma2_;
         public:
-            MargrabeOptionStochasticRates(double dT, double dK, const Utilities::Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2);
+            MargrabeOptionStochasticRates(double dT, double dK, const Utilities::Matrix<double> & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2);
             MargrabeOptionStochasticRates(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2);
-            MargrabeOptionStochasticRates(double dT, double dK, const Utilities::Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams);
+            MargrabeOptionStochasticRates(double dT, double dK, const Utilities::Matrix<double> & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams);
             MargrabeOptionStochasticRates(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams);
             
             virtual double alpha(double t, double r_t) const = 0;

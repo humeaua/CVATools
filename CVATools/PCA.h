@@ -19,15 +19,15 @@ namespace Maths
     class PCA
     {
     private:
-        virtual void ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData, Utilities::Matrix & sCovarianceMatrix) const;
+        virtual void ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData, Utilities::Matrix<double> & sCovarianceMatrix) const;
         
     protected:
-        Utilities::Matrix sEigenVectors_;
+        Utilities::Matrix<double> sEigenVectors_;
         Utilities::MyVector<double> dEigenValues_;
         
     public:
         PCA(const Utilities::RegressionData & sRegressionData);
-        PCA(const Utilities::Matrix & sCovarianceMatrix);
+        PCA(const Utilities::Matrix<double> & sCovarianceMatrix);
         
     };
 }

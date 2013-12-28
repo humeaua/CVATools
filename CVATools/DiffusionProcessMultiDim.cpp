@@ -14,7 +14,7 @@ namespace Finance
 {
     namespace Processes
     {
-        DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Utilities::Matrix & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation> & sSimulationParams) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix), dX0_(dX0)
+        DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Utilities::Matrix<double> & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation> & sSimulationParams) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix), dX0_(dX0)
         {
             assert(iNDimensions_ == sCorrelationMatrix_.getrows());
             assert(iNDimensions_ == sCorrelationMatrix_.getcols());
@@ -42,10 +42,10 @@ namespace Finance
         }
         
         //  MultiDimensional Variance
-        Utilities::Matrix DiffusionProcessMultiDim::MultiVariance(double t0, DVector dx, double dt) const
+        Utilities::Matrix<double> DiffusionProcessMultiDim::MultiVariance(double t0, DVector dx, double dt) const
         {
             assert(dx.size() == iNDimensions_);
-            Utilities::Matrix dResult(iNDimensions_, iNDimensions_);
+            Utilities::Matrix<double> dResult(iNDimensions_, iNDimensions_);
             DVector dMultiVol = MultiVol(dt, dx);
             for (std::size_t iRow = 0 ; iRow < iNDimensions_ ; ++iRow)
             {
@@ -88,7 +88,7 @@ namespace Finance
                     {
                         dOldValues = dX0_;
                     }
-                    Utilities::Matrix sCovarMatrix = MultiVariance(t0, dOldValues, dt), sSquareRoot(iNDimensions_, iNDimensions_);
+                    Utilities::Matrix<double> sCovarMatrix = MultiVariance(t0, dOldValues, dt), sSquareRoot(iNDimensions_, iNDimensions_);
                     
                     //  Choleski decomposition
                     CholeskiDecomposition(sCovarMatrix, sSquareRoot);

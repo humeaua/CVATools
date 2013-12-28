@@ -30,9 +30,9 @@ namespace Finance
         protected:
             double dA_, dB_, dSigma_;
         public:
-            MargrabeOptionVasicek(double dT, double dK, const Utilities::Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
+            MargrabeOptionVasicek(double dT, double dK, const Utilities::Matrix<double> & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
             MargrabeOptionVasicek(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2);
-            MargrabeOptionVasicek(double dT, double dK, const Utilities::Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams);
+            MargrabeOptionVasicek(double dT, double dK, const Utilities::Matrix<double> & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams);
             MargrabeOptionVasicek(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams);
             
             //  MultiDimensional Drift drift

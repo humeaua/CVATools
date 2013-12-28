@@ -24,11 +24,11 @@ namespace Finance
         {
         protected:
             std::size_t iNDimensions_;
-            Utilities::Matrix sCorrelationMatrix_;
+            Utilities::Matrix<double> sCorrelationMatrix_;
             DVector dX0_;
             std::vector<StochProcessSimulation> sSimulationParams_;
         public:
-            DiffusionProcessMultiDim(std::size_t iNDimension, const Utilities::Matrix & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation>& sSimulationParams);
+            DiffusionProcessMultiDim(std::size_t iNDimension, const Utilities::Matrix<double> & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation>& sSimulationParams);
             template <size_t iDim>
             DiffusionProcessMultiDim(double dCorrelationMatrix[iDim][iDim], const DVector & dX0);
             
@@ -44,7 +44,7 @@ namespace Finance
             virtual DVector MultiExpectation(double t0, DVector dx, double dt) const;
             
             //  MultiDimensional Variance
-            virtual Utilities::Matrix MultiVariance(double t0, DVector dx, double dt) const;
+            virtual Utilities::Matrix<double> MultiVariance(double t0, DVector dx, double dt) const;
             
             //  Simulation method
             virtual Utilities::SimulationDataMultiDim simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;

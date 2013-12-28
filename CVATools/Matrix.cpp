@@ -14,179 +14,7 @@
 
 namespace Utilities
 {
-    Matrix::Matrix(int N, int M)
-    {
-        rowsize = N;
-        colsize = M;
-        data.resize(rowsize*colsize);
-    }
-    
-    Matrix::Matrix(std::size_t N, std::size_t M)
-    {
-        rowsize = static_cast<int>(N);
-        colsize = static_cast<int>(M);
-        data.resize(rowsize*colsize);
-    }
-    
-    Matrix::Matrix(int N, int M, double value)
-    {
-        rowsize = N;
-        colsize = M;
-        data.resize(rowsize*colsize, value);
-    }
-    
-    Matrix::Matrix(int N, bool bIsIdentity)
-    {
-        rowsize = N;
-        colsize = N;
-        data.resize(rowsize*colsize, 0.0);
-        for (std::size_t i = 0 ; i < N ; ++i)
-        {
-            (*this)(i,i) = 1.0;
-        }
-    }
-    
-    Matrix::Matrix(std::size_t N, bool bIsIdentity)
-    {
-        rowsize = (int)N;
-        colsize = (int)N;
-        data.resize(rowsize*colsize, 0.0);
-        for (std::size_t i = 0 ; i < N ; ++i)
-        {
-            (*this)(i,i) = 1.0;
-        }
-    }
-    
-    Matrix::Matrix(std::size_t N, std::size_t M, double value)
-    {
-        rowsize = static_cast<int>(N);
-        colsize = static_cast<int>(M);
-        data.resize(rowsize*colsize, value);
-    }
-    
-    Matrix::Matrix(const Matrix& m)
-    {
-        rowsize = m.rowsize;
-        colsize = m.colsize;
-        data.resize(rowsize*colsize);
-        for (std::size_t i = 0 ; i < rowsize ; ++i)
-        {
-            for (std::size_t j = 0 ; j < colsize ; ++j)
-            {
-                data[i + j * rowsize] = m(i,j);
-            }
-        }
-    }
-    
-    template <size_t M>
-    Matrix::Matrix(double dData[][M], int N)
-    {
-        rowsize = N;
-        colsize = M;
-        data.resize(rowsize*colsize);
-        for (std::size_t i = 0 ; i < rowsize; ++i)
-        {
-            for (std::size_t j = 0 ; j < colsize; ++j)
-            {
-                data[i + j * rowsize] = dData[i][j];
-            }
-        }
-    }
-    
-    Matrix::~Matrix()
-    {
-        if (!data.empty())
-            data.clear();
-    }
-    
-    void Matrix::Reallocate(int N, int M)
-    {
-        data.clear();
-        rowsize = N;
-        colsize = M;
-        data.resize(rowsize * colsize, 0.0);
-    }
-    
-    void Matrix::Reallocate(std::size_t N, std::size_t M)
-    {
-        data.clear();
-        rowsize = (int)N;
-        colsize = (int)M;
-        data.resize(rowsize * colsize);
-    }
-    
-    double& Matrix::operator ()(int i, int j)
-    {
-        return data.at(i + rowsize*j);
-    }
-    
-    double& Matrix::operator ()(int i, int j) const
-    {
-        return (double&)data.at(i + rowsize*j);
-    }
-    
-    double& Matrix::operator ()(std::size_t i, std::size_t j)
-    {
-        return data.at(i + rowsize*j);
-    }
-    
-    double& Matrix::operator ()(std::size_t i, std::size_t j) const
-    {
-        return (double&)data.at(i + rowsize*j);
-    }
-    
-    int Matrix::getrows() const
-    {
-        return rowsize;
-    }
-    int Matrix::getcols() const
-    {
-        return colsize;
-    }
-    
-    void Matrix::print()
-    {
-        for (int i=0; i<rowsize; i++)
-        {
-            for (int j=0; j<colsize; j++)
-            {
-                std::cout << (*this)(i,j) << '\t';
-            }
-            std::cout << std::endl;
-        }
-    }
-    
-    void addmatrix(Matrix& New, const Matrix& One, const Matrix& Two)
-    {
-        for (int i=0;i<One.getrows();i++)
-            for (int j=0;j<One.getcols();j++)
-                New(i,j) = One(i,j) + Two(i,j);
-    }
-    
-    void transpose(Matrix& T, const Matrix& mat)
-    {
-        for (int i=0; i<mat.getcols(); i++)
-            for (int j=0; j<mat.getrows(); j++)
-                T(i,j) = mat(j,i);
-    }
-    
-    void multmatrix(Matrix& New1, const Matrix& one, const Matrix& two)
-    {
-        for (int i=0; i<one.getrows();i++)
-        {
-            for (int j=0; j<two.getcols();j++)
-            {
-                double dValue = 0;
-                for (int k=0; k<one.getcols();k++)
-                {
-                    dValue += one(i,k)*two(k,j);
-                }
-                New1(i,j) = dValue;
-            }
-        }
-    }
-    
-    void mult(DVector & New, const Matrix & matrix, const DVector & Old)
+    void mult(DVector & New, const Matrix<double> & matrix, const DVector & Old)
     {
         assert(matrix.getcols() == Old.size());
         New.resize(matrix.getrows());
@@ -201,7 +29,7 @@ namespace Utilities
         }
     }
     
-    void matrixinverse(Matrix& hi, const Matrix& mat)
+    void matrixinverse(Matrix<double>& hi, const Matrix<double>& mat)
     {
         //  Check the size of the matrix first
         if (mat.getcols() == 2)
@@ -250,14 +78,14 @@ namespace Utilities
             // local copy
             hi = mat;
             //  define dummy matrix b to apply gauss jordan inverse algorithm
-            Matrix b(hi.getcols(), true);
+            Matrix<double> b(hi.getcols(), true);
             gaussj(hi, b);
         }
     }
     
 #define SWAP(a,b) {temp=(a);(a)=(b);(b)=temp;}
     //  Numerical Recipes in C p63-64
-    void gaussj(Matrix & a, Matrix & b)
+    void gaussj(Matrix<double> & a, Matrix<double> & b)
     //Linear equation solution by Gauss-Jordan elimination, equation (2.1.1) above. a[1..n][1..n]
     //is the input matrix. b[1..n][1..m] is input containing the m right-hand side vectors. On
     //output, a is replaced by its matrix inverse, and b is replaced by the corresponding set of solution
@@ -362,7 +190,7 @@ namespace Utilities
         //And we are done.
     }
     
-    void matrixLU(Matrix& L, Matrix& U, const Matrix& mat)
+    void matrixLU(Matrix<double>& L, Matrix<double>& U, const Matrix<double>& mat)
     {
         double J[mat.getrows()][2*mat.getrows()];
         
@@ -437,9 +265,9 @@ namespace Utilities
     }
     
     void CholeskiDecomposition(//   Input
-                               const Matrix & dMatrix,
+                               const Matrix<double> & dMatrix,
                                //   Output
-                               Matrix & dSquareRoot)
+                               Matrix<double> & dSquareRoot)
     {
         int iNRows = dMatrix.getrows();
         dSquareRoot.Reallocate(iNRows, iNRows);
@@ -481,9 +309,9 @@ namespace Utilities
 #define ROTATE_CPP(a,i,j,k,l) g=a(i,j);h=a(k,l);a(i,j)=g-s*(h+g*tau); a(k,l)=h+s*(g-h*tau);
     
     void Eigendecomposition_jacobi(// Input
-                                   const Matrix & dMatrix,
+                                   const Matrix<double> & dMatrix,
                                    // Output
-                                   Matrix & Eigenvectors,
+                                   Matrix<double> & Eigenvectors,
                                    Utilities::MyVector<double> & EigenValues,
                                    int * nrot)
     {
@@ -599,10 +427,10 @@ namespace Utilities
                 z.at(ip)=0.0; //and reinitialize z.
             }
         }
-        throw std::runtime_error("Too many iterations in routine jacobi");
+        throw Utilities::MyException("Too many iterations in routine jacobi");
     }
     
-    void eigsrt(MyVector<double>& d, Matrix & v)
+    void eigsrt(MyVector<double>& d, Matrix<double> & v)
     //Given the eigenvalues d[1..n] and eigenvectors v[1..n][1..n] as output from jacobi
     //(§11.1) or tqli (§11.3), this routine sorts the eigenvalues into descending order, and rearranges
     //the columns of v correspondingly. The method is straight insertion.

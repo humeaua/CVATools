@@ -19,7 +19,7 @@ namespace Maths {
     class LeastSquareRegression : public RegressionMethod
     {
     public:
-        virtual Utilities::Matrix ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const = 0;
+        virtual Utilities::Matrix<double> ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const = 0;
     
         virtual Utilities::MyVector<double> ComputeRegCoefs(const Utilities::RegressionData & sRegressionData,
                                                             const Utilities::MyVector<double> & sResponse) const;

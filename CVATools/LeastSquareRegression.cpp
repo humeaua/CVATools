@@ -16,9 +16,9 @@ namespace Maths
     Utilities::MyVector<double> LeastSquareRegression::ComputeRegCoefs(const Utilities::RegressionData & sRegressionData,
                                                                        const Utilities::MyVector<double> & sResponse) const
     {
-        Utilities::Matrix sCovarianceMatrix = ComputeCovarianceMatrix(sRegressionData);
+        Utilities::Matrix<double> sCovarianceMatrix = ComputeCovarianceMatrix(sRegressionData);
         std::size_t iNVars = sRegressionData.GetNbVariables(), iNObservations = sRegressionData.GetNbObservations();
-        Utilities::Matrix sInverse(iNVars, iNVars);
+        Utilities::Matrix<double> sInverse(iNVars, iNVars);
         Utilities::matrixinverse(sInverse, sCovarianceMatrix);
         
         Utilities::MyVector<double> dProjResponse(iNVars, 0.0);
@@ -44,10 +44,10 @@ namespace Maths
     std::vector<double> LeastSquareRegression::ComputeRegCoefs(const Utilities::RegressionData & sRegressionData,
                                                                const std::vector<double> & sResponse) const
     {
-        Utilities::Matrix sCovarianceMatrix = ComputeCovarianceMatrix(sRegressionData);
+        Utilities::Matrix<double> sCovarianceMatrix = ComputeCovarianceMatrix(sRegressionData);
         std::size_t iNObservations = sRegressionData.GetNbObservations(), iNVars = sCovarianceMatrix.getcols();
         std::size_t iNVarsReg = sRegressionData.GetNbVariables();
-        Utilities::Matrix sInverse(iNVars, iNVars);
+        Utilities::Matrix<double> sInverse(iNVars, iNVars);
         Utilities::matrixinverse(sInverse, sCovarianceMatrix);
         
         std::vector<double> dProjResponse(iNVars, 0.0);

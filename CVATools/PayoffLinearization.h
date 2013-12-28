@@ -21,7 +21,7 @@ namespace Maths
     {
         std::size_t iNPaths_;
         
-        virtual Utilities::Matrix ComputeCovarianceMatrix(const std::vector<double> & dFinalUnderlying) const;
+        virtual Utilities::Matrix<double> ComputeCovarianceMatrix(const std::vector<double> & dFinalUnderlying) const;
         virtual std::pair<double, double> ComputeRegCoefs(const std::vector<double> & dPayoff,
                                                           const std::vector<double> & dFinalUnderlying) const;
     public:

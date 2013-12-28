@@ -199,7 +199,7 @@ int main()
     else if (iTest == 4)
     {
         //  Definition of 3x3 correlation matrix
-        Utilities::Matrix sCorrelMatrix(3,3);
+        Utilities::Matrix<double> sCorrelMatrix(3,3);
         sCorrelMatrix(0,0) = 1.0;
         sCorrelMatrix(1,1) = 1.0;
         sCorrelMatrix(2,2) = 1.0;
@@ -210,7 +210,7 @@ int main()
         sCorrelMatrix(0,2) = dRho13;
         sCorrelMatrix(2,1) = dRho23;
         sCorrelMatrix(1,2) = dRho23;
-        Utilities::Matrix sCholDec(3,3);
+        Utilities::Matrix<double> sCholDec(3,3);
         //CholeskiDecomposition(sCorrelMatrix, sCholDec);
         
         //std::cout << sCholDec(0,0) << " " << sCholDec(0,1) << " " << sCholDec(0,2) << std::endl;
@@ -718,7 +718,7 @@ int main()
     else if (iTest == 28)
     {
         int n = 3, nrot ;
-        Utilities::Matrix a (n,n,0.0), eigenvectors(4,4,0.0);
+        Utilities::Matrix<double> a (n,n), eigenvectors(4,4);
         Utilities::MyVector<double> dEigenValues(0.0, n);
         a(0,0) = a(n-1,0) = a(0,n-1) = a(n-1,n-1) = 2;
         for (int i = 1 ; i < n - 1 ; ++i)

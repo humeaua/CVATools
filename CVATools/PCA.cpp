@@ -10,7 +10,7 @@
 
 namespace Maths
 {
-    PCA::PCA(const Utilities::Matrix & sCovarianceMatrix) : sEigenVectors_(sCovarianceMatrix.getrows(), sCovarianceMatrix.getcols()), dEigenValues_(sCovarianceMatrix.getrows())
+    PCA::PCA(const Utilities::Matrix<double> & sCovarianceMatrix) : sEigenVectors_(sCovarianceMatrix.getrows(), sCovarianceMatrix.getcols()), dEigenValues_(sCovarianceMatrix.getrows())
     {
         Utilities::requireException(sCovarianceMatrix.getcols() == sCovarianceMatrix.getrows(), "Covariance must be a square matrix", "PCA::PCA(const Utilities::Matrix & sCovarianceMatrix)");
         
@@ -25,7 +25,7 @@ namespace Maths
     
     PCA::PCA(const Utilities::RegressionData & sRegressionData) : sEigenVectors_(sRegressionData.GetNbVariables(), sRegressionData.GetNbVariables()), dEigenValues_(sRegressionData.GetNbVariables())
     {
-        Utilities::Matrix sCovarianceMatrix(sRegressionData.GetNbVariables(), sRegressionData.GetNbVariables());
+        Utilities::Matrix<double> sCovarianceMatrix(sRegressionData.GetNbVariables(), sRegressionData.GetNbVariables());
         ComputeCovarianceMatrix(sRegressionData, sCovarianceMatrix);
         
         // Eigen decomposition of the covariance matrix
@@ -37,7 +37,7 @@ namespace Maths
         std::cout << "PCA succeeded in " << iNRotations << " rotations" << std::endl;
     }
     
-    void PCA::ComputeCovarianceMatrix(const Utilities::RegressionData &sRegressionData, Utilities::Matrix &sCovarianceMatrix) const
+    void PCA::ComputeCovarianceMatrix(const Utilities::RegressionData &sRegressionData, Utilities::Matrix<double> &sCovarianceMatrix) const
     {
         sCovarianceMatrix.Reallocate(sRegressionData.GetNbVariables(), sRegressionData.GetNbVariables());
         

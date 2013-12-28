@@ -13,9 +13,9 @@ namespace Maths
     PayoffLinearization::PayoffLinearization(std::size_t iNPaths) : iNPaths_(iNPaths), Maths::LinearRegression(true)
     {}
     
-    Utilities::Matrix PayoffLinearization::ComputeCovarianceMatrix(const std::vector<double> & dFinalUnderlying) const
+    Utilities::Matrix<double> PayoffLinearization::ComputeCovarianceMatrix(const std::vector<double> & dFinalUnderlying) const
     {
-        Utilities::Matrix sCovarMatrix(2,2);
+        Utilities::Matrix<double> sCovarMatrix(2,2);
         double dtemp = 0.0, dX = 0.0, dX2 = 0.0;
         for (std::size_t iPath = 0 ; iPath < iNPaths_ ; ++iPath)
         {
@@ -36,7 +36,7 @@ namespace Maths
     std::pair<double, double> PayoffLinearization::ComputeRegCoefs(const std::vector<double> & dPayoff,
                                                                    const std::vector<double> & dFinalUnderlying) const
     {
-        Utilities::Matrix sCovarianceMatrix = ComputeCovarianceMatrix(dFinalUnderlying), sInverse(2,2);
+        Utilities::Matrix<double> sCovarianceMatrix = ComputeCovarianceMatrix(dFinalUnderlying), sInverse(2,2);
         Utilities::matrixinverse(sInverse, sCovarianceMatrix);
         std::pair<double, double> dRegCoefs;
         double dY = 0.0, dXY = 0.0, dtemp = 0.0;

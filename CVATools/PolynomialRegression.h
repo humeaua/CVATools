@@ -31,7 +31,7 @@ namespace Maths
         PolynomialRegression(bool bAddConstantInRegression, const std::vector<std::size_t> & dRegressionPower, bool bCrossTerms);
         PolynomialRegression(bool bAddConstantInRegression, const std::string & cRegressionPower, char cDelimitor = ';');
         
-        virtual Utilities::Matrix ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const;
+        virtual Utilities::Matrix<double> ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const;
         
         //  Update Predicted Values method as the variables are not any more the same
         virtual std::vector<double> GetPredictedValues(const Utilities::RegressionData & sRegressionData,

@@ -16,7 +16,7 @@ namespace Finance
     {
         MargrabeOptionStochasticRates::MargrabeOptionStochasticRates(double dT,
                                                                      double dK,
-                                                                     const Utilities::Matrix & sCorrelationMatrix,
+                                                                     const Utilities::Matrix<double> & sCorrelationMatrix,
                                                                      const std::vector<double>& dInitialValues,
                                                                      double dSigma1,
                                                                      double dSigma2)
@@ -49,7 +49,7 @@ namespace Finance
         :
         PayoffMargrabe(dK),
         dT_(dT),
-        DiffusionProcessMultiDim(3, Utilities::Matrix(3, 3), dInitialValues, std::vector<Processes::StochProcessSimulation>(3, Processes::StochProcessSimulation())),
+        DiffusionProcessMultiDim(3, Utilities::Matrix<double>(3, 3), dInitialValues, std::vector<Processes::StochProcessSimulation>(3, Processes::StochProcessSimulation())),
         dS1_(dInitialValues.at(0)),
         dS2_(dInitialValues.at(1)),
         dR0_(dInitialValues.at(2)),
@@ -74,7 +74,7 @@ namespace Finance
             sSimulationParams_.at(2) = sNonFloored; // r
         }
         
-        MargrabeOptionStochasticRates::MargrabeOptionStochasticRates(double dT, double dK, const Utilities::Matrix & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams)
+        MargrabeOptionStochasticRates::MargrabeOptionStochasticRates(double dT, double dK, const Utilities::Matrix<double> & sCorrelationMatrix, const std::vector<double>& dInitialValues, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams)
         :
         PayoffMargrabe(dK),
         dT_(dT),
@@ -92,7 +92,7 @@ namespace Finance
         :
         PayoffMargrabe(dK),
         dT_(dT),
-        DiffusionProcessMultiDim(3, Utilities::Matrix(3, 3), dInitialValues, sSimulationParams),
+        DiffusionProcessMultiDim(3, Utilities::Matrix<double>(3, 3), dInitialValues, sSimulationParams),
         dS1_(dInitialValues.at(0)),
         dS2_(dInitialValues.at(1)),
         dR0_(dInitialValues.at(2)),

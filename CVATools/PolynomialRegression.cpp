@@ -71,10 +71,10 @@ namespace Maths
         }
     }
     
-    Utilities::Matrix PolynomialRegression::ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const
+    Utilities::Matrix<double> PolynomialRegression::ComputeCovarianceMatrix(const Utilities::RegressionData & sRegressionData) const
     {
         std::size_t iNVars = sPolyRegPms_.sPowerAndRegVariables.size(), iNVarsLoc = iNVars + (bAddConstantInRegression_ ? 1 : 0), iNObservations = sRegressionData.GetNbObservations();
-        Utilities::Matrix sCovarianceMatrix(iNVarsLoc, iNVarsLoc);
+        Utilities::Matrix<double> sCovarianceMatrix(iNVarsLoc, iNVarsLoc);
         
         double ** dMatrix = new double*[iNVarsLoc];
         for (std::size_t i = 0 ; i < iNVarsLoc ; ++i)

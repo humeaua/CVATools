@@ -13,10 +13,10 @@ namespace Maths
     LinearRegression::LinearRegression(bool bAddConstantInRegression) : bAddConstantInRegression_(bAddConstantInRegression)
     {}
     
-    Utilities::Matrix LinearRegression::ComputeCovarianceMatrix(const Utilities::RegressionData &sRegressionData) const
+    Utilities::Matrix<double> LinearRegression::ComputeCovarianceMatrix(const Utilities::RegressionData &sRegressionData) const
     {
         std::size_t iNVars = sRegressionData.GetNbVariables(), iNVarsLoc = iNVars + (bAddConstantInRegression_ ? 1 : 0), iNObservations = sRegressionData.GetNbObservations();
-        Utilities::Matrix sCovarianceMatrix(iNVarsLoc, iNVarsLoc);
+        Utilities::Matrix<double> sCovarianceMatrix(iNVarsLoc, iNVarsLoc);
         
         if (bAddConstantInRegression_)
         {

@@ -15,7 +15,7 @@ namespace Finance
     {
         MargrabeOptionVasicek::MargrabeOptionVasicek(double dT,
                                                      double dK,
-                                                     const Utilities::Matrix & sCorrelationMatrix,
+                                                     const Utilities::Matrix<double> & sCorrelationMatrix,
                                                      const std::vector<double>& dInitialValues,
                                                      double dA,
                                                      double dB,
@@ -49,7 +49,7 @@ namespace Finance
         
         MargrabeOptionVasicek::MargrabeOptionVasicek(double dT,
                                                      double dK,
-                                                     const Utilities::Matrix & sCorrelationMatrix,
+                                                     const Utilities::Matrix<double> & sCorrelationMatrix,
                                                      const std::vector<double>& dInitialValues,
                                                      double dA,
                                                      double dB,
@@ -129,7 +129,7 @@ namespace Finance
             }
             
             // Choleski Decomposition of correlation matrix
-            Utilities::Matrix sCholDec(3,3);
+            Utilities::Matrix<double> sCholDec(3,3);
             CholeskiDecomposition(sCorrelationMatrix_, sCholDec);
             DVector dRandomNumbers(3,0.0), dCorrelatedRN(3,0.0);
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)

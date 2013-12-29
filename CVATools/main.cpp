@@ -752,5 +752,20 @@ int main()
             std::cout << "New MyException caught : " << excep.what() << std::endl;
         }
     }
+    else if (iTest == 31)
+    {
+        std::vector<double> dStrikes(3,0.0), dVols(3, 0.0);
+        dStrikes.at(0) = 0.75;
+        dStrikes.at(1) = 1;
+        dStrikes.at(2) = 1.25;
+        
+        dVols.at(0) = 0.25;
+        dVols.at(1) = 0.20;
+        dVols.at(2) = 0.23;
+        Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
+        
+        for (double dStrike = 0.5 ; dStrike < 1.5 ; dStrike += 0.05)
+            std::cout << dStrike << ";" << Interp(dStrike) << std::endl;
+    }
     std::cout << "Done !" << std::endl;
 }

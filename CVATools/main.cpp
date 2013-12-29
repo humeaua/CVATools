@@ -129,6 +129,7 @@ int main()
     std::cout << "28- Exo DM louis matrices" << std::endl;
     std::cout << "29- Alglib testing" << std::endl;
     std::cout << "30- Exception Testing" << std::endl;
+    std::cout << "31- Smile Interpolation by splines" << std::endl;
     std::size_t iTest = 1;
     std::cin >> iTest;
     

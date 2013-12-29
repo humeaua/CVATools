@@ -101,16 +101,79 @@ namespace Utilities
             }
         }
         
+        double InterExtrapolation1D::ExtrapolateLocal(double dVariable, size_t iIndex0, size_t iIndex1) const
+        {
+            switch (eInterpolationType_) {
+                case LIN:
+                case HERMITE_SPLINE_CUBIC:
+                case SPLINE_CUBIC:
+                    return dValues_.at(iIndex0) + (dValues_.at(iIndex1) - dValues_.at(iIndex0)) * (dVariable - dVariables_.at(iIndex1)) / (dVariables_.at(iIndex1) - dVariables_.at(iIndex0));
+                    break;
+                case NEAR:
+                case RIGHT_CONTINUOUS:
+                case LEFT_CONTINUOUS:
+                    if (dVariable < dVariables_.front())
+                    {
+                        return dValues_.front();
+                    }
+                    else
+                    {
+                        return dValues_.back();
+                    }
+                    break;
+                default:
+                    throw MyException("InterExtrapolation1D::ExtrapolateLocal : Extrapolation Type not understood");
+                    break;
+            }
+        }
+        
+        double InterExtrapolation1D::ExtrapolateLeft(double dVariable) const
+        {
+            Utilities::requireException(dValues_.size() > 1, "Size of values is below 1 : Extrapolation is not possible", "InterExtrapolation1D::ExtrapolateLeft(double)");
+            std::size_t iIndex0 = 0, iIndex1 = 1;
+            
+            return ExtrapolateLocal(dVariable, iIndex0, iIndex1);
+        }
+        
+        double InterExtrapolation1D::ExtrapolateRight(double dVariable) const
+        {
+            Utilities::requireException(dValues_.size() > 1, "Size of values is below 1 : Extrapolation is not possible", "InterExtrapolation1D::ExtrapolateLeft(double)");
+            std::size_t iIndex0 = dValues_.size() - 2, iIndex1 = dValues_.size() - 1;
+            
+            return ExtrapolateLocal(dVariable, iIndex0, iIndex1);
+        }
+        
+        double InterExtrapolation1D::Extrapolate(double dVariable) const
+        {
+            if (dVariable < dVariables_.front())
+            {
+                return ExtrapolateLeft(dVariable);
+            }
+            else if (dVariable > dVariables_.back())
+            {
+                return ExtrapolateRight(dVariable);
+            }
+            else
+            {
+                throw Utilities::MyException("Extrapolation problem : should not get there");
+            }
+        }
+        
         double InterExtrapolation1D::operator()(double dVariable) const
         {
             //  NEAR Extrapolation
-            if (dVariable < dVariables_.front())
+            /*if (dVariable < dVariables_.front())
             {
                 return dValues_.front();
             }
             else if (dVariable > dVariables_.back())
             {
                 return dValues_.back();
+            }*/
+            if ((dVariable < dVariables_.front() || dVariable > dVariables_.back()))
+            {
+                //  Cubic spline : linear interpolation
+                return Extrapolate(dVariable);
             }
 			if (eInterpolationType_ == LIN)
             {
@@ -179,7 +242,7 @@ namespace Utilities
                 double dResult = 0.0;
                 int iValue, iValue1, iValue2;
                 
-                // if the variable hasn't been found, iValue=exc value
+                // if the variable hasn't been found, iValue= value
                 if (!IsFound(dVariables_, dVariable, (std::size_t*)&iValue))
                 {
                     iValue = Utilities::FindInVector(dVariables_, dVariable);

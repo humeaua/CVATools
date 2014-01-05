@@ -61,7 +61,7 @@ namespace Finance
                 
                 int iIndex = Utilities::FindInVector(lExpiries, lExpiry);
                 
-                if (iIndex != 1)
+                if (iIndex != -1)
                 {
                     //  lExpiry is between lExpiries[iIndex] and lExpiries[iIndex + 1]
                     const std::map<double,double> VolSmile0 = VolSurface_.find(lExpiries[iIndex])->second;
@@ -76,8 +76,8 @@ namespace Finance
                     std::vector<double>::iterator iterVol = dVols.begin();
                     for (std::vector<double>::iterator iterStrike = dStrikes.begin() ; iterStrike != dStrikes.end() ; ++iterStrike, ++iter0, ++iterVol)
                     {
-                        REQUIREEXCEPTION(iter0->first, "Strike is negative");
-                        *iterStrike = log(iter0->first);
+                        REQUIREEXCEPTION(iter0->first > 0.0, "Strike is negative");
+                        *iterStrike = log(iter0->first / dSpot_);
                         *iterVol = iter0->second * iter0->second * (lExpiry - lExpiries[iIndex]) + iter1->second * iter1->second * (lExpiries[iIndex + 1] - lExpiry) ;
                         *iterVol /= (lExpiries[iIndex + 1] - lExpiries[iIndex]);
                         *iterVol *= lExpiry / 365.0; // ACT365FIXED day count convention

@@ -14,7 +14,7 @@ namespace Maths
 {
     ClaytonCopula::ClaytonCopula(double dAlpha) : ArchimedeanCopula(CLAYTON), dAlpha_(dAlpha)
     {
-        Utilities::requireException(dAlpha_ > -1, "Alpha has to be higher than -1", "ClaytonCopula::ClaytonCopula");
+        REQUIREEXCEPTION(dAlpha_ > -1, "Alpha has to be higher than -1");
     }
     
     double ClaytonCopula::Generator(double dX) const

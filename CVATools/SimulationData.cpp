@@ -28,16 +28,16 @@ namespace Utilities
     
     double& SimulationData::operator ()(size_t i, size_t j)
     {
-        requireException(i < iNObservations_, "Observation index is out of bounds", "SimulationData::operator (size_t,size_t)");
-        requireException(j < iNVars_, "Variable index is out of bounds", "SimulationData::operator (size_t,size_t)");
+        REQUIREEXCEPTION(i < iNObservations_, "Observation index is out of bounds");
+        REQUIREEXCEPTION(j < iNVars_, "Variable index is out of bounds");
         
         return dData_.at(i + j * iNObservations_);
     }
     
     double& SimulationData::operator ()(size_t i, size_t j) const
     {
-        requireException(i < iNObservations_, "Observation index is out of bounds", "SimulationData::operator (size_t,size_t)");
-        requireException(j < iNVars_, "Variable index is out of bounds", "SimulationData::operator (size_t,size_t)");
+        REQUIREEXCEPTION(i < iNObservations_, "Observation index is out of bounds");
+        REQUIREEXCEPTION(j < iNVars_, "Variable index is out of bounds");
         
         return (double&)dData_.at(i + j * iNObservations_);
     }
@@ -45,7 +45,7 @@ namespace Utilities
     std::vector<double> SimulationData::Get(double dDate) const
     {
         std::size_t iIndex = Utilities::GetIndex(dDates_, dDate);
-        requireException(iIndex != -1, "Date not found", "SimulationData::Get(double dDate)");
+        REQUIREEXCEPTION(iIndex != -1, "Date not found");
         
         return Subset(dData_, iIndex * iNObservations_, (iIndex + 1) * iNObservations_ - 1);
     }

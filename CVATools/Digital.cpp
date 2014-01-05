@@ -15,9 +15,9 @@ namespace Finance
     {
         Digital::Digital(double dStrike, double dLeftSpread, double dRightSpread, VanillaOptionType eOptionType) : dStrike_(dStrike), dLeftSpread_(dLeftSpread), dRightSpread_(dRightSpread), eOptionType_(eOptionType)
         {
-            Utilities::requireException(dLeftSpread_ >= 0.0, "Left spread has to be positive", "Digital::Digital");
-            Utilities::requireException(dRightSpread_ >= 0.0, "Right spread has to be positive", "Digital::Digital");
-            Utilities::requireException(eOptionType_ == CALL || eOptionType_ == PUT, "Option Type has to be CALL or PUT", "Digital::Digital");
+            REQUIREEXCEPTION(dLeftSpread_ >= 0.0, "Left spread has to be positive");
+            REQUIREEXCEPTION(dRightSpread_ >= 0.0, "Right spread has to be positive");
+            REQUIREEXCEPTION(eOptionType_ == CALL || eOptionType_ == PUT, "Option Type has to be CALL or PUT");
         }
         
         double Digital::pay(double s1) const

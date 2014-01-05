@@ -15,8 +15,8 @@ namespace Finance
     {
         PutSpread::PutSpread(double dStrike, double dLeftSpread, double dRightSpread) : dStrike_(dStrike), dLeftSpread_(dLeftSpread), dRightSpread_(dRightSpread)
         {
-            Utilities::requireException(dLeftSpread_ >= 0.0, "Left spread has to be positive", "PutSpread::PutSpread");
-            Utilities::requireException(dRightSpread_ >= 0.0, "Right spread has to be positive", "PutSpread::PutSpread");
+            REQUIREEXCEPTION(dLeftSpread_ >= 0.0, "Left spread has to be positive");
+            REQUIREEXCEPTION(dRightSpread_ >= 0.0, "Right spread has to be positive");
         }
         
         double PutSpread::pay(double s1) const

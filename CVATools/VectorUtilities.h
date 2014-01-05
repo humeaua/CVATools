@@ -106,9 +106,9 @@ namespace Utilities {
     template<class T> std::vector<T> Subset(const std::vector<T> & vect, std::size_t iBegin, std::size_t iEnd)
     {
         std::size_t iN = vect.size();
-        Utilities::requireException(iBegin < iN, "Begin is out of the data", "Subset");
-        Utilities::requireException(iEnd < iN, "End is out of the data", "Subset");
-        Utilities::requireException(iBegin <= iEnd, "End is before beginning of data", "Subset");
+        REQUIREEXCEPTION(iBegin < iN, "Begin is out of the data");
+        REQUIREEXCEPTION(iEnd < iN, "End is out of the data");
+        REQUIREEXCEPTION(iBegin <= iEnd, "End is before beginning of data");
         
         std::vector<T> result;
         for (std::size_t i = iBegin ; i <= iEnd ; ++i)

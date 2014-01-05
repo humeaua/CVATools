@@ -36,7 +36,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator+(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator+(MyVector<C,Alloc> &)");
+            REQUIREEXCEPTION((*this).size() == v.size(), "Vectors are not the same size");
             std::vector<C> result;
             result.reserve(v.size());
             
@@ -46,7 +46,7 @@ namespace Utilities
 
         virtual MyVector<C,Alloc> operator-(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator-(MyVector<C,Alloc> &)");
+            REQUIREEXCEPTION((*this).size() == v.size(), "Vectors are not the same size");
             std::vector<C> result;
             result.reserve(v.size());
             
@@ -56,7 +56,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator*(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator* (MyVector<C,Alloc> &)");
+            REQUIREEXCEPTION((*this).size() == v.size(), "Vectors are not the same size");
             std::vector<C> result;
             result.reserve(v.size());
             
@@ -66,7 +66,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator/(MyVector<C,Alloc> &v)
         {
-            Utilities::requireException((*this).size() == v.size(), "Vectors are not the same size", "MyVector<C,Alloc> operator/(MyVector<C,Alloc> &)");
+            REQUIREEXCEPTION((*this).size() == v.size(), "Vectors are not the same size");
             std::vector<C> result;
             result.reserve(v.size());
             
@@ -94,7 +94,7 @@ namespace Utilities
         
         virtual MyVector<C,Alloc> operator/(C value)
         {
-            Utilities::requireException(value != 0.0, "value is 0", "MyVector<C,Alloc> operator/(C value)");
+            REQUIREEXCEPTION(value != 0.0, "value is 0");
             std::transform(this->begin(), this->end(), this->begin(), bind2nd(std::divides<C>(), value));
             return *this;
         };
@@ -114,7 +114,7 @@ namespace Utilities
     template <typename T>
     std::vector<T> Diff(const std::vector<T> & vect1, const std::vector<T> & vect2)
     {
-        Utilities::requireException(vect1.size() == vect2.size(), "Cannot compute diff, vectors do not have same size","Diff");
+        REQUIREEXCEPTION(vect1.size() == vect2.size(), "Cannot compute diff, vectors do not have same size");
         std::vector<T> result(vect1.size());
         
         std::transform(vect1.begin(), vect1.end(), vect2.begin(), std::back_inserter(result), std::minus<T>());

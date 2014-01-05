@@ -14,8 +14,8 @@ namespace Maths
 {
     NewtonRaphson1D::NewtonRaphson1D(std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : iNIterMax_(iNIterMax), dTolerance_(dTolerance), dEpsValueDeriv_(dEpsValueDeriv)
     {
-        Utilities::requireException(dEpsValueDeriv > 0, "Epsilon value for derivative should be positive", "NewtonRaphson1D::NewtonRaphson1D");
-        Utilities::requireException(dTolerance > 0, "Tolerance should be positive", "NewtonRaphson1D::NewtonRaphson1D");
+        REQUIREEXCEPTION(dEpsValueDeriv > 0, "Epsilon value for derivative should be positive");
+        REQUIREEXCEPTION(dTolerance > 0, "Tolerance should be positive");
     }
     
     double NewtonRaphson1D::algo_root_finder(double dInitialGuess) const

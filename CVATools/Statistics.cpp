@@ -60,7 +60,7 @@ namespace Maths
          return storeIndex
          */
         
-        Utilities::requireException(iPivot < dData.size(), "Pivot is over the size of the data", "Statistics::Partition");
+        REQUIREEXCEPTION(iPivot < dData.size(), "Pivot is over the size of the data");
         double dPivotValue = dData.at(iPivot);
         std::size_t iN = dData.size();
         std::vector<double> dCopy = dData;

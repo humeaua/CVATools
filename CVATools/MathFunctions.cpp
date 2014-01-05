@@ -75,8 +75,8 @@ namespace Maths
 #endif
         
         // Check for exception values
-        Utilities::requireException(k < 3, "Cannot compute Debye function for k >= 2", "DebyeFunction");
-        Utilities::requireException(fabs(x) > EPSILON, "x is too small", "DebyeFunction");
+        REQUIREEXCEPTION(k < 3, "Cannot compute Debye function for k >= 2");
+        REQUIREEXCEPTION(fabs(x) > EPSILON, "x is too small");
         
 #ifndef NBSTEPINT
 #define NBSTEPINT 0.001
@@ -103,7 +103,7 @@ namespace Maths
 #define ERROR 1e-10
 #endif
             
-            Utilities::requireException(fabs(k - (int)k) > ERROR,  "Power has to be an integer when computing Debye function for negative value", "DebyeFunction");
+            REQUIREEXCEPTION(fabs(k - (int)k) > ERROR,  "Power has to be an integer when computing Debye function for negative value");
             // case i = 0
             dRes -= pow(EPSILON,k-1.0);
             double dx = EPSILON;

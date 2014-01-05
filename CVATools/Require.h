@@ -18,6 +18,10 @@ namespace Utilities {
     //  Remove inline as it breaks the build : 28/12/13
     void requireException(bool requirement, const std::string & msg, const std::string & cFunctionName);
     
+#ifndef REQUIREEXCEPTION
+#define REQUIREEXCEPTION(condition, msg) Utilities::requireException(condition, msg, __FUNCTION__)
+#endif
+    
     inline void requireArgs(int argc, int args, const char* msg = "Must use %d arguments");
     
     inline void requireMinArgs(int argc, int minArgs, const char* msg = "Must use at least %d arguments");

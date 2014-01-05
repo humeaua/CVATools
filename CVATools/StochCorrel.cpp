@@ -16,8 +16,8 @@ namespace Finance
     {
         StochCorrel::StochCorrel(double dLambda, double dRhoInfty, double dSigma, double dRho0) : dSigma_(dSigma), dLambda_(dLambda), dRhoInfty_(dRhoInfty), DiffusionProcess(dRho0, true, true, true, true, 1.0, -1.0)
         {
-            Utilities::requireException(dX0_ >= -1.0 && dX0_ <= 1.0, "Stochastic Correlation initial value has to be between -1 and 1", "StochCorrel::StochCorrel");
-            Utilities::requireException(dRhoInfty_ >= -1.0 && dRhoInfty_ <= 1.0, "Stochastic Correlation initial value has to be between -1 and 1", "StochCorrel::StochCorrel");
+            REQUIREEXCEPTION(dX0_ >= -1.0 && dX0_ <= 1.0, "Stochastic Correlation initial value has to be between -1 and 1");
+            REQUIREEXCEPTION(dRhoInfty_ >= -1.0 && dRhoInfty_ <= 1.0, "Stochastic Correlation initial value has to be between -1 and 1");
         }
         
         double StochCorrel::drift(double dt, double dx) const

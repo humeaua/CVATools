@@ -34,7 +34,7 @@ namespace Finance {
             
             TermStructure(const std::vector<T> & TVariables, const std::vector<U> & UValues)
             {
-                Utilities::requireException(TVariables.size() == UValues.size(), "Size of variables and values are not the same", "TermStructure::TermStructure");
+                REQUIREEXCEPTION(TVariables.size() == UValues.size(), "Size of variables and values are not the same");
                 SetTermStructure(TVariables, UValues);
             }
             
@@ -192,7 +192,7 @@ namespace Finance {
             
             std::size_t Size() const
             {
-                Utilities::requireException(TVariables_.size() == UValues_.size(), "Size of variables and values are not the same", "TermStructure::Size");
+                REQUIREEXCEPTION(TVariables_.size() == UValues_.size(), "Size of variables and values are not the same");
                 return TVariables_.size();
             }
             

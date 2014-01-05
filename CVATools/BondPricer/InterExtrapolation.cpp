@@ -29,7 +29,7 @@ namespace Utilities
         eInterpolationType_(eInterpolationType)
         
         {
-            Utilities::requireException(dValues_.size() == dVariables_.size(), "Variables and values are not the same size","InterExtrapolation1D::InterExtrapolation1D");
+            REQUIREEXCEPTION(dValues_.size() == dVariables_.size(), "Variables and values are not the same size");
             if (eInterpolationType_ == SPLINE_CUBIC)
             {
                 //  Compute the second derivative
@@ -129,7 +129,7 @@ namespace Utilities
         
         double InterExtrapolation1D::ExtrapolateLeft(double dVariable) const
         {
-            Utilities::requireException(dValues_.size() > 1, "Size of values is below 1 : Extrapolation is not possible", "InterExtrapolation1D::ExtrapolateLeft(double)");
+            REQUIREEXCEPTION(dValues_.size() > 1, "Size of values is below 1 : Extrapolation is not possible");
             std::size_t iIndex0 = 0, iIndex1 = 1;
             
             return ExtrapolateLocal(dVariable, iIndex0, iIndex1);
@@ -137,7 +137,7 @@ namespace Utilities
         
         double InterExtrapolation1D::ExtrapolateRight(double dVariable) const
         {
-            Utilities::requireException(dValues_.size() > 1, "Size of values is below 1 : Extrapolation is not possible", "InterExtrapolation1D::ExtrapolateLeft(double)");
+            REQUIREEXCEPTION(dValues_.size() > 1, "Size of values is below 1 : Extrapolation is not possible");
             std::size_t iIndex0 = dValues_.size() - 2, iIndex1 = dValues_.size() - 1;
             
             return ExtrapolateLocal(dVariable, iIndex0, iIndex1);
@@ -358,7 +358,7 @@ namespace Utilities
 #ifndef EPSILON_RAW
 #define EPSILON_RAW 1e-07
 #endif
-                        Utilities::requireException(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small","InterExtrapolation1D::Interp1D");
+                        REQUIREEXCEPTION(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small");
                         dResult = 1.0 / dVariable * ((dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue2) * dVariables_.at(iValue2) + (dVariables_.at(iValue2) - dVariable) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue1) * dVariables_.at(iValue1) );
                         break;
                     }

@@ -13,12 +13,12 @@ namespace Maths
 {
     GumbelCopula::GumbelCopula(double dTheta) : dTheta_(dTheta), ArchimedeanCopula(GUMBEL)
     {
-        Utilities::requireException(dTheta > 1.0, "Theta has to be higher than 1", "GumbelCopula::GumbelCopula");
+        REQUIREEXCEPTION(dTheta > 1.0, "Theta has to be higher than 1");
     }
     
     double GumbelCopula::Generator(double x) const
     {
-        Utilities::requireException(x > 0.0 && x < 1.0, "x has to be between 0.0 and 1.0", "GumbelCopula::Generator");
+       REQUIREEXCEPTION(x > 0.0 && x < 1.0, "x has to be between 0.0 and 1.0");
         return pow(-log(x), dTheta_);
     }
     

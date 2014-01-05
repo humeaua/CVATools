@@ -59,15 +59,15 @@ namespace Finance
         
         double YieldCurve::operator()(double t1, double t2) const
         {
-            Utilities::requireException(t1 <= t2, "t1 is after t2", "YieldCurve::operator(double, double)");
-            Utilities::requireException(t1 >= 0, "t1 is negative", "YieldCurve::operator(double, double)");
+            REQUIREEXCEPTION(t1 <= t2, "t1 is after t2");
+            REQUIREEXCEPTION(t1 >= 0, "t1 is negative");
             return ((*this)(t2) * t2 -  (*this)(t1) * t1) / (t2 - t1);
         }
         
         double YieldCurve::operator()(const Utilities::Date::MyDate &Date1, const Utilities::Date::MyDate &Date2) const
         {
-            Utilities::requireException(Date1 >= sToday_, "Date1 is before today", "YieldCurve::operator(MyDate, MyDate)");
-            Utilities::requireException(Date2 >= Date1, "Date2 is before Date1", "YieldCurve::operator(MyDate, MyDate)");
+            REQUIREEXCEPTION(Date1 >= sToday_, "Date1 is before today");
+            REQUIREEXCEPTION(Date2 >= Date1, "Date2 is before Date1");
             
             const double t1 = Date1.Diff(sToday_), t2 = Date2.Diff(sToday_);
             return (*this)(t1, t2);
@@ -90,7 +90,7 @@ namespace Finance
             
             //  Test if the pillars in the yield curve are equal
             const bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_, dTolerance);
-            Utilities::requireException(bPillarAreEqual, "Yield curve pillars are not the same. Should be the same for now", "YieldCurve::operator +");
+            REQUIREEXCEPTION(bPillarAreEqual, "Yield curve pillars are not the same. Should be the same for now");
             
             for (std::size_t iPillar = 0 ; iPillar < sYieldCurve.dVariables_.size() ; ++ iPillar)
             {

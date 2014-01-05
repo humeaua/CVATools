@@ -748,7 +748,7 @@ int main()
         //  New require exception
         try {
             int i = 0 ;
-            Utilities::requireException(i == 1, "i is not equal to 1", __func__);
+            REQUIREEXCEPTION(i==1, "i is not equal to 1");
         } catch (Utilities::MyException & excep) {
             std::cout << "New MyException caught : " << excep.what() << std::endl;
         }

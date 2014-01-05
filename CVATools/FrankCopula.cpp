@@ -14,7 +14,7 @@ namespace Maths
 {
     FrankCopula::FrankCopula(double dTheta) : dTheta_(dTheta), ArchimedeanCopula(FRANK)
     {
-        Utilities::requireException(dTheta_ < EPSILON_FRANK_COPULA, "Frank copula parameter is too small", "FrankCopula::FrankCopula");
+        REQUIREEXCEPTION(dTheta_ < EPSILON_FRANK_COPULA, "Frank copula parameter is too small");
     }
     
     double FrankCopula::IntExp(double x) const

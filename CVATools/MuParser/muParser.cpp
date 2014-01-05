@@ -81,8 +81,8 @@ namespace mu
     
   value_type Parser::BS(value_type Forward, value_type Strike, value_type Maturity, value_type Volatility, string_type CallPut)
   {
-      Utilities::requireException(Forward > 0.0, "Forward is negative", "Parser::BS");
-      Utilities::requireException(Strike > 0.0, "Strike is negative", "Parser::BS");
+      REQUIREEXCEPTION(Forward > 0.0, "Forward is negative");
+      REQUIREEXCEPTION(Strike > 0.0, "Strike is negative");
       value_type StdDev = Volatility * sqrt(Maturity);
       
       int iCallPut = CallPut == "Call" || CallPut == "CALL" ? 1 : -1;
@@ -102,7 +102,7 @@ namespace mu
     value_type Parser::CallSpread(value_type x, value_type k, value_type epsilon, string_type BuySell)
     {
         // Conservative solution
-        Utilities::requireException(epsilon > 0, "Epsilon is negative", "Parser::CallSpread");
+        REQUIREEXCEPTION(epsilon > 0, "Epsilon is negative");
         if (BuySell == "SELL")
         {
             if (x < k)

@@ -19,7 +19,7 @@ namespace Finance
         
         double ForwardRate::FwdRate(double dStart, double dEnd) const
         {
-            Utilities::requireException(dStart < dEnd, "Start is after End","ForwardRate::FwdRate");
+            REQUIREEXCEPTION(dStart < dEnd, "Start is after End");
             return 1.0 / (dEnd - dStart) * ((*this)(dStart) / (*this)(dEnd) - 1.0);
         }
     }

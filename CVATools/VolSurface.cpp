@@ -19,7 +19,7 @@ namespace Finance
     {
         VolatilitySurface::VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface) : dSpot_(dSpot), VolSurface_(VolSurface), Finance::Volatility::SVIParameters(dSpot)
         {
-            Utilities::requireException(dSpot > 0.0, "Spot is negative", "VolatilitySurface::VolatilitySurface");
+            REQUIREEXCEPTION(dSpot > 0.0, "Spot is negative");
             Calibrate(VolSurface_);
         }
         
@@ -70,13 +70,13 @@ namespace Finance
                     const std::map<double, double> VolSmile1 = VolSurface_.find(lExpiries[iIndex])->second;
                     std::map<double, double>::const_iterator iter1 = VolSmile1.begin();
                     
-                    Utilities::requireException(VolSmile0.size() == VolSmile1.size(), "Vol Smiles are not the same size", "VolatilitySurface::Get(long, double)");
+                    REQUIREEXCEPTION(VolSmile0.size() == VolSmile1.size(), "Vol Smiles are not the same size");
                     
                     std::vector<double> dStrikes(VolSmile0.size(), 0.0), dVols(VolSmile0.size(), 0.0);
                     std::vector<double>::iterator iterVol = dVols.begin();
                     for (std::vector<double>::iterator iterStrike = dStrikes.begin() ; iterStrike != dStrikes.end() ; ++iterStrike, ++iter0, ++iterVol)
                     {
-                        Utilities::requireException(iter0->first, "Strike is negative", "VolatilitySurface::Get(long, double)");
+                        REQUIREEXCEPTION(iter0->first, "Strike is negative");
                         *iterStrike = log(iter0->first);
                         *iterVol = iter0->second * iter0->second * (lExpiry - lExpiries[iIndex]) + iter1->second * iter1->second * (lExpiries[iIndex + 1] - lExpiry) ;
                         *iterVol /= (lExpiries[iIndex + 1] - lExpiries[iIndex]);

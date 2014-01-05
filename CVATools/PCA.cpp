@@ -12,7 +12,7 @@ namespace Maths
 {
     PCA::PCA(const Utilities::Matrix<double> & sCovarianceMatrix) : sEigenVectors_(sCovarianceMatrix.getrows(), sCovarianceMatrix.getcols()), dEigenValues_(sCovarianceMatrix.getrows())
     {
-        Utilities::requireException(sCovarianceMatrix.getcols() == sCovarianceMatrix.getrows(), "Covariance must be a square matrix", "PCA::PCA(const Utilities::Matrix & sCovarianceMatrix)");
+        REQUIREEXCEPTION(sCovarianceMatrix.getcols() == sCovarianceMatrix.getrows(), "Covariance must be a square matrix");
         
         // Eigen decomposition of the covariance matrix
         int iNRotations = 0;

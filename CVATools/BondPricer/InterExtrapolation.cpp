@@ -105,13 +105,13 @@ namespace Utilities
         {
             switch (eInterpolationType_) {
                 case LIN:
-                case HERMITE_SPLINE_CUBIC:
                 case SPLINE_CUBIC:
                     return dValues_.at(iIndex0) + (dValues_.at(iIndex1) - dValues_.at(iIndex0)) * (dVariable - dVariables_.at(iIndex1)) / (dVariables_.at(iIndex1) - dVariables_.at(iIndex0));
                     break;
                 case NEAR:
                 case RIGHT_CONTINUOUS:
                 case LEFT_CONTINUOUS:
+                case HERMITE_SPLINE_CUBIC:
                     if (dVariable < dVariables_.front())
                     {
                         return dValues_.front();

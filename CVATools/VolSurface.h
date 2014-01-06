@@ -21,14 +21,18 @@ namespace Finance
         protected:
             //    Expiry in days    Strike  Volatility
             std::map<long, std::map<double, double> > VolSurface_;
-            double dSpot_;
             
         private:
             virtual double Get(long lExpiry, double dStrike) const;
             
+            virtual bool CheckButterflySpreadArbitrage() const;
+            virtual bool CheckCalendarSpreadArbitrage() const;
+            
         public:
             VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface);            
             virtual double Interpolate(long lExpiry, double dStrike) const;
+            
+            virtual bool IsArbitrageFree() const;
         };
     }
 }

@@ -17,7 +17,7 @@ namespace Finance
 {
     namespace Volatility
     {
-        VolatilitySurface::VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface) : dSpot_(dSpot), VolSurface_(VolSurface), Finance::Volatility::SVIParameters(dSpot)
+        VolatilitySurface::VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface) : VolSurface_(VolSurface), Finance::Volatility::SVIParameters(dSpot)
         {
             REQUIREEXCEPTION(dSpot > 0.0, "Spot is negative");
             Calibrate(VolSurface_);
@@ -81,13 +81,13 @@ namespace Finance
                         *iterVol = iter0->second * iter0->second * (lExpiry - lExpiries[iIndex]) + iter1->second * iter1->second * (lExpiries[iIndex + 1] - lExpiry) ;
                         *iterVol /= (lExpiries[iIndex + 1] - lExpiries[iIndex]);
                         *iterVol *= lExpiry / 365.0; // ACT365FIXED day count convention
-                        if (*iterVol < 0.0)
-                        {
-                            std::stringstream Expiry, Strike;
-                            Expiry << lExpiry;
-                            Strike << *iterStrike;
-                            throw Utilities::MyException("Volatility is negative : Expiry : " + Expiry.str() + " Strike : " + Strike.str());
-                        }
+                        
+                        // Build error message just in case
+                        std::stringstream Expiry, Strike;
+                        Expiry << lExpiry;
+                        Strike << dSpot_ * exp(*iterStrike);
+                        
+                        REQUIREEXCEPTION(*iterVol >= 0.0, "Volatility is negative : Expiry : " + Expiry.str() + " Strike : " + Strike.str());
                     }
                     
                     Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
@@ -111,6 +111,27 @@ namespace Finance
             {
                 throw Utilities::MyException("VolatilitySurface::Interpolate : Strike is negative");
             }
+        }
+        
+        bool VolatilitySurface::IsArbitrageFree() const
+        {
+            return CheckButterflySpreadArbitrage() && CheckCalendarSpreadArbitrage();
+        }
+        
+        bool VolatilitySurface::CheckButterflySpreadArbitrage() const
+        {
+            //  Call price convex function of strike for all expiries
+            for (std::map<long, std::map<double, double> >::const_iterator itExpiry = VolSurface_.begin() ; itExpiry != VolSurface_.end() ; ++itExpiry)
+            {
+                
+            }
+            return true;
+        }
+        
+        bool VolatilitySurface::CheckCalendarSpreadArbitrage() const
+        {
+            //  Variance increasing function of maturity
+            return true;
         }
     }
 }

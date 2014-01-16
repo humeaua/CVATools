@@ -42,7 +42,7 @@ namespace Finance
         }
         
         //  MultiDimensional Variance
-        Utilities::Matrix<double> DiffusionProcessMultiDim::MultiVariance(double t0, DVector dx, double dt) const
+        Utilities::Matrix<double> DiffusionProcessMultiDim::MultiVariance(double t0, const DVector & dx, double dt) const
         {
             assert(dx.size() == iNDimensions_);
             Utilities::Matrix<double> dResult(iNDimensions_, iNDimensions_);
@@ -65,7 +65,7 @@ namespace Finance
         }
         
         //  Simulation method
-        Utilities::SimulationDataMultiDim DiffusionProcessMultiDim::simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const
+        Utilities::SimulationDataMultiDim DiffusionProcessMultiDim::simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const
         {
             Utilities::SimulationDataMultiDim sResult;
             std::size_t iNDates = dDates.size();

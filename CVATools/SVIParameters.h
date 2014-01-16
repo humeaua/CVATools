@@ -23,8 +23,8 @@ namespace Finance
                                             const std::map<long, std::map<double, double> > & sVolSurface,
                                             long lExpiry,
                                             //outputs
-                                            std::vector<double> dStrikes,
-                                            std::vector<double> dVols) const;
+                                            std::vector<double> & dStrikes,
+                                            std::vector<double> & dVols) const;
         protected:
             std::vector<double> dA_, dB_, dRho_, dM_, dSigma_;
             std::vector<double> dExpiries_;

@@ -47,7 +47,7 @@ namespace Finance
             virtual double variance(double t0, double x0, double dt) const;
             
             //  Simulation method
-            virtual Utilities::SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
+            virtual Utilities::SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
         };
     }
 }

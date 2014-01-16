@@ -29,7 +29,7 @@ namespace Finance
             virtual bool CheckCalendarSpreadArbitrage() const;
             
         public:
-            VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface);            
+            VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> >& VolSurface);
             virtual double Interpolate(long lExpiry, double dStrike) const;
             
             virtual bool IsArbitrageFree() const;

@@ -17,7 +17,7 @@ namespace Finance
 {
     namespace Volatility
     {
-        VolatilitySurface::VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> > VolSurface) : VolSurface_(VolSurface), Finance::Volatility::SVIParameters(dSpot)
+        VolatilitySurface::VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> >&  VolSurface) : VolSurface_(VolSurface), Finance::Volatility::SVIParameters(dSpot)
         {
             REQUIREEXCEPTION(dSpot > 0.0, "Spot is negative");
             Calibrate(VolSurface_);

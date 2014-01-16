@@ -96,7 +96,7 @@ namespace Finance
                 else
                 {
                     //  Extrapolation Error ?
-                    throw Utilities::MyException("Index not found in Volatility surface");
+                    throw EXCEPTION("Index not found in Volatility surface");
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace Finance
             }
             else
             {
-                throw Utilities::MyException("VolatilitySurface::Interpolate : Strike is negative");
+                throw EXCEPTION("VolatilitySurface::Interpolate : Strike is negative");
             }
         }
         

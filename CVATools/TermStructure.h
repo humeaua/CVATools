@@ -90,7 +90,7 @@ namespace Finance {
                 {
                     return UValues_.back();
                 }
-                throw Utilities::MyException("TermStructure<U,V>::operator(const T&) : error getting term-structure");
+                throw EXCEPTION("TermStructure<U,V>::operator(const T&) : error getting term-structure");
             }
             
             virtual void MergeTermStructure(TermStructure<T,U> & sTermStructure)

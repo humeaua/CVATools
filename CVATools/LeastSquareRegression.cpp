@@ -78,7 +78,7 @@ namespace Maths
         }
         else
         {
-            throw Utilities::MyException("LeastSquareRegression::ComputeRegCoefs : Could not check the number of variables : must input a valid number of variables");
+            throw EXCEPTION("Could not check the number of variables : must input a valid number of variables");
         }
         
         std::vector<double> dRegCoefs(iNVars, 0.0);

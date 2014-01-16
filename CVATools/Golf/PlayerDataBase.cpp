@@ -53,7 +53,7 @@ namespace Golf
         else
         {
             /* could not open directory */
-            throw Utilities::MyException("PlayerDataBase::LoadFromDirectory : cannot open directory");
+            throw EXCEPTION("cannot open directory");
         }
     }
     

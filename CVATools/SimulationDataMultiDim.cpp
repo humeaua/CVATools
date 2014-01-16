@@ -97,12 +97,12 @@ namespace Utilities
             }
             else
             {
-                throw Utilities::MyException("SimulationDataMultiDim::GetData : Could not find Path");
+                throw EXCEPTION("SimulationDataMultiDim::GetData : Could not find Path");
             }
         }
         else
         {
-            throw Utilities::MyException("SimulationDataMultiDim::GetData : Could not find Date");
+            throw EXCEPTION("SimulationDataMultiDim::GetData : Could not find Date");
         }
     }
     

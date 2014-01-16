@@ -35,7 +35,7 @@ namespace Maths
             }
             else
             {
-                throw Utilities::MyException("NewtonRaphson1D::algo_root_finder : Derivative is too small.");
+                throw EXCEPTION("NewtonRaphson1D::algo_root_finder : Derivative is too small.");
             }
             df0 = f(dx);
             
@@ -45,7 +45,7 @@ namespace Maths
         
         if (iNIter >= iNIterMax_)
         {
-            throw Utilities::MyException("NewtonRaphson1D::algo_root_finder : Newton Algorithm has not converged");
+            throw EXCEPTION("NewtonRaphson1D::algo_root_finder : Newton Algorithm has not converged");
         }
         return dx;
     }

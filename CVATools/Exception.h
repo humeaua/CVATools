@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <stdlib.h>
 
 namespace Utilities
 {
@@ -19,9 +20,14 @@ namespace Utilities
     public:
         explicit MyException(const std::string & cMessage);
     };
+   
+#define S(x) #x
+#define S_(x) S(x)
+#define S__LINE__ S_(__LINE__)
     
+    /* use S__LINE__ instead of __LINE__ */
 #ifndef EXCEPTION
-#define EXCEPTION(x) Utilities::MyException(x + "function : " + __FUNCTION__ + "(line " + __LINE__ + ")")
+#define EXCEPTION(x) Utilities::MyException(std::string(x) + "function : " + __FUNCTION__ + "(line " + S__LINE__ + ")")
 #endif
 }
 

@@ -427,7 +427,7 @@ namespace Utilities
                 z.at(ip)=0.0; //and reinitialize z.
             }
         }
-        throw Utilities::MyException("Too many iterations in routine jacobi");
+        throw EXCEPTION("Too many iterations in routine jacobi");
     }
     
     void eigsrt(MyVector<double>& d, Matrix<double> & v)

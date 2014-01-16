@@ -155,7 +155,7 @@ namespace Utilities
             }
             else
             {
-                throw Utilities::MyException("Extrapolation problem : should not get there");
+                throw EXCEPTION("Extrapolation problem : should not get there");
             }
         }
         

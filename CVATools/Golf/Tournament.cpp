@@ -82,7 +82,7 @@ namespace Golf {
         }
         else
         {
-            throw Utilities::MyException("Unable to open file " + cFileName);
+            throw EXCEPTION("Unable to open file " + cFileName);
         }
     }
     

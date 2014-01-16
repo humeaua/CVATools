@@ -54,7 +54,7 @@ namespace Golf
                 break;
                 
             default:
-                throw Utilities::MyException("OfficialWorldGolfRankings::GetDiscountCurve : discount curve not recognized. Must input a valid discount curve");
+                throw EXCEPTION("discount curve not recognized. Must input a valid discount curve");
                 break;
         }
     }

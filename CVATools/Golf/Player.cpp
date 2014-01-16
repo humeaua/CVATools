@@ -48,7 +48,7 @@ namespace Golf
             }
             else
             {
-                throw Utilities::MyException("Player::LoadFromFile : File name is not correct");
+                throw EXCEPTION("File name is not correct");
             }
             
             // Read the tournaments
@@ -85,7 +85,7 @@ namespace Golf
         }
         else
         {
-            throw Utilities::MyException("Unable to open file " + cFileName);
+            throw EXCEPTION("Unable to open file " + cFileName);
         }
     }
     

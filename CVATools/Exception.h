@@ -19,6 +19,10 @@ namespace Utilities
     public:
         explicit MyException(const std::string & cMessage);
     };
+    
+#ifndef EXCEPTION
+#define EXCEPTION(x) Utilities::MyException(x + "function : " + __FUNCTION__ + "(line " + __LINE__ + ")")
+#endif
 }
 
 #endif /* defined(__CVATools__Exception__) */

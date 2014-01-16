@@ -322,7 +322,7 @@ namespace Utilities
             return iYear_ - sDate.GetYear() + (iMonth_ - sDate.GetMonth()) / 12.0 + (iDay_ - sDate.GetDay()) / 360.0;
         }
         
-        void MyDate::Add(long iUnit, const TimeUnits eTimeUnit)
+        void MyDate::Add(long iUnit, const TimeUnits& eTimeUnit)
         {
             int iDay;
             if (eTimeUnit == WEEK)
@@ -399,9 +399,9 @@ namespace Utilities
         MyDate::~MyDate()
         {}
         
-        void MyDate::Print() const
+        void MyDate::Print(std::ostream & out) const
         {
-            std::cout << "Date : " << iDay_ << "/" << iMonth_ << "/" << iYear_ << std::endl;
+            out << "Date : " << iDay_ << "/" << iMonth_ << "/" << iYear_ << std::endl;
         }
         
         long GetDate(const MyDate & sDate)

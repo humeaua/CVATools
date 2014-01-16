@@ -30,7 +30,7 @@ namespace Utilities
         std::tm GetTime(long lDate);
         long GetDate(const std::tm & sTime);
         
-        tm CorrectTime(const tm& sTime);
+        std::tm CorrectTime(const std::tm& sTime);
         
         class MyDate
         {
@@ -67,9 +67,9 @@ namespace Utilities
             virtual MyDate operator --(); // prefix
             virtual MyDate operator --(int); // postfix
             
-            virtual void Add(long iUnit, const TimeUnits eTimeUnit);
+            virtual void Add(long iUnit, const TimeUnits& eTimeUnit);
             
-            virtual void Print() const;
+            virtual void Print(std::ostream & out = std::cout) const;
             
             virtual double Diff(const MyDate & sDate) const;
             virtual void SetLocalDate();

@@ -41,6 +41,22 @@ namespace Utilities
         
         //  Apply functions
         virtual void Apply(double (*func)(double));
+        template<typename T>
+        void Apply(const T& t)
+        {
+            std::map<double, std::map<std::size_t, DVector> >::iterator itDates = dData_.begin();
+            for ( ; itDates != dData_.end() ; ++itDates)
+            {
+                std::map<std::size_t, DVector>::iterator itPaths = itDates->second.begin();
+                for ( ; itPaths != itDates->second.end() ; ++itPaths)
+                {
+                    for (std::size_t iDim = 0 ; iDim < itPaths->second.size() ; ++iDim)
+                    {
+                        itPaths->second.at(iDim) = t(itPaths->second.at(iDim));
+                    }
+                }
+            }
+        }
     };
 }
 

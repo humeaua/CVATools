@@ -11,7 +11,7 @@
 namespace Utilities {
     
     void require(bool requirement,
-                        const char* msg)
+                 const char* msg)
     {
         if(!requirement)
         {
@@ -22,8 +22,8 @@ namespace Utilities {
     }
     
     void requireException(bool requirement,
-                                 const std::string & msg,
-                                 const std::string & cFunctionName)
+                          const std::string & msg,
+                          const std::string & cFunctionName)
     {
         if (!requirement)
         {

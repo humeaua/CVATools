@@ -52,9 +52,12 @@ namespace Utilities
             rowsize = static_cast<int>(N);
             colsize = static_cast<int>(N);
             data.resize(rowsize*colsize, T());
-            for (std::size_t i = 0 ; i < N ; ++i)
+            if (bIsIdentity)
             {
-                (*this)(i,i) = 1.0;
+                for (std::size_t i = 0 ; i < N ; ++i)
+                {
+                    (*this)(i,i) = 1.0;
+                }
             }
         }
         
@@ -63,9 +66,12 @@ namespace Utilities
             rowsize = N;
             colsize = N;
             data.resize(rowsize*colsize, T());
-            for (std::size_t i = 0 ; i < N ; ++i)
+            if (bIsIdentity)
             {
-                (*this)(i,i) = 1.0;
+                for (std::size_t i = 0 ; i < N ; ++i)
+                {
+                    (*this)(i,i) = 1.0;
+                }
             }
         }
         
@@ -132,6 +138,7 @@ namespace Utilities
         {
             return rowsize;
         }
+        
         virtual int getcols() const
         {
             return colsize;
@@ -206,6 +213,7 @@ namespace Utilities
                                    Matrix<double> & Eigenvectors,
                                    Utilities::MyVector<double> & EigenValues,
                                    int * nrot);
+    
     void eigsrt(MyVector<double>& d, Matrix<double> & v);
 }
 #endif

@@ -48,7 +48,7 @@ namespace Finance
             }
             else
             {
-                throw std::runtime_error("t is not positive in YieldCurve::YC");
+                throw EXCEPTION("t is not positive");
             }
         }
         

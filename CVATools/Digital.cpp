@@ -32,7 +32,7 @@ namespace Finance
                     break;
                 case STRADDLE:
                 default:
-                    throw std::runtime_error("Option type not handled");
+                    throw EXCEPTION("Option type not handled");
                     break;
             }
             return 0.0;

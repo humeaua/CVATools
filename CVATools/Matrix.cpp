@@ -146,7 +146,7 @@ namespace Utilities
             indxr.at(i)=irow; //We are now ready to divide the pivot row by the
             indxc.at(i)=icol; //pivot element, located at irow and icol.
             if (a(icol,icol) == 0.0)
-                throw std::runtime_error("gaussj: Singular Matrix");
+                throw EXCEPTION("Singular Matrix");
             pivinv=1.0/a(icol,icol);
             a(icol,icol)=1.0;
             for (l=0;l<n;l++)

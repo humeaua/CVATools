@@ -370,7 +370,7 @@ namespace Utilities
                     iYear_ += iUnit;
                     if (iYear_ < 0)
                     {
-                        throw std::runtime_error("MyDate::Add : Year cannot be negative");
+                        throw EXCEPTION("Year cannot be negative");
                     }
                     break;
                     
@@ -391,7 +391,7 @@ namespace Utilities
                     }
                     break;
                 default:
-                    throw std::runtime_error("MyDate::Add : Could not interpret unit");
+                    throw EXCEPTION("Could not interpret unit");
                     break;
             }
         }

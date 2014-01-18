@@ -95,7 +95,8 @@ public:
     }
 };
 
-int main()
+void DisplayChoices(size_t & iTest);
+void DisplayChoices(size_t & iTest)
 {
     std::cout << "Choose the test : " << std::endl;
     std::cout << "0- Regression Tests" << std::endl;
@@ -130,8 +131,13 @@ int main()
     std::cout << "29- Alglib testing" << std::endl;
     std::cout << "30- Exception Testing" << std::endl;
     std::cout << "31- Smile Interpolation by splines" << std::endl;
+   std::cin >> iTest;
+}
+
+int _main()
+{
     std::size_t iTest = 1;
-    std::cin >> iTest;
+    DisplayChoices(iTest);
     
     if (iTest == 0)
     {
@@ -768,5 +774,27 @@ int main()
         for (double dStrike = 0.5 ; dStrike < 1.5 ; dStrike += 0.05)
             std::cout << dStrike << ";" << Interp(dStrike) << std::endl;
     }
+    return 0;
+}
+
+int main()
+{
+    try
+    {
+        _main();
+    }
+    catch (Utilities::MyException & excep)
+    {
+        std::cout << "MyException caught : " << excep.what() << std::endl;
+    }
+    catch (std::exception & excep)
+    {
+        std::cout << "std::exception caught : " << excep.what() << std::endl;
+    }
+    catch (...)
+    {
+        std::cout << "Unknown exception caught !" << std::endl;
+    }
     std::cout << "Done !" << std::endl;
+    return 0;
 }

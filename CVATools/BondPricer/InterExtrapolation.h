@@ -52,6 +52,36 @@ namespace Utilities
             
             virtual double operator()(double dValue) const;
         };
+        
+        class Interpolator
+        {
+        protected:
+            std::vector<double> dVariables_;
+            std::vector<double> dValues_;
+            
+        public:
+            Interpolator(const std::vector<double> & dVariables,
+                         const std::vector<double> & dValues);
+            virtual double operator()(double dVariable) const = 0;
+            
+            virtual void FindIndex(double dVariable, int & iValue1, int& iValue2) const;
+        };
+        
+        class LinearInterpolator : public Interpolator
+        {
+        public:
+            LinearInterpolator(const std::vector<double> & dVariables,
+                               const std::vector<double> & dValues);
+            virtual double operator()(double dVariable) const;
+        };
+        
+        class LogLinDFInterpolator : public Interpolator
+        {
+        public:
+            LogLinDFInterpolator(const std::vector<double> & dVariables,
+                                 const std::vector<double> & dValues);
+            virtual double operator()(double dVariable) const;
+        };
     }
 }
 

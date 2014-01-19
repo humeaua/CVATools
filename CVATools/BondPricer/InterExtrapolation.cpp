@@ -391,5 +391,121 @@ namespace Utilities
                 return dResult;
 			}
         }
+        
+        
+        Interpolator::Interpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : dVariables_(dVariables), dValues_(dValues)
+        {
+            REQUIREEXCEPTION(dValues_.size() == dVariables_.size(), "Values and Variables are not the same size");
+        }
+        
+        void Interpolator::FindIndex(double dVariable, int & iValue1, int& iValue2) const
+        {
+            int iValue;
+            std::size_t iNValues = dValues_.size();
+            // if the variable hasn't been found, iValue= value
+            if (!IsFound(dVariables_, dVariable, (std::size_t*)&iValue))
+            {
+                iValue = Utilities::FindInVector(dVariables_, dVariable);
+            }
+            //iValue = 1;
+            iValue1 = iValue;
+            iValue2 = iValue + 1;
+            
+            if (iValue == -1)
+            {
+                // Extrapolation
+                if (dVariable > dVariables_.back())
+                {
+                    iValue1 = static_cast<int>(iNValues - 2);
+                    iValue2 = static_cast<int>(iNValues - 1);
+                }
+                else
+                {
+                    // dVariable < dVariables[0]
+                    iValue1 = 0;
+                    iValue2 = 1;
+                }
+            }
+        }
+        
+        LinearInterpolator::LinearInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
+        {}
+        
+        double LinearInterpolator::operator()(double dVariable) const
+        {
+            // BEGINNING OF LINEAR CASE
+            double dResult = 0.0 ;
+            std::size_t iUpperIndex = 0, iLowerIndex = 0;
+            bool bUpper = false, bLower = false ;
+            
+            for (std::size_t iRunningIndex = 0; iRunningIndex < dVariables_.size(); ++iRunningIndex)
+            {
+                double dRunningVariable = dVariables_.at(iRunningIndex) ;
+                if (dRunningVariable > dVariable)
+                {
+                    if (bUpper)
+                    {
+                        if (dRunningVariable < dVariables_.at(iUpperIndex))
+                        {
+                            iUpperIndex = iRunningIndex ;
+                        }
+                    }
+                    else
+                    {
+                        bUpper = true ;
+                        iUpperIndex = iRunningIndex ;
+                    }
+                    if (!bLower && dRunningVariable > dVariables_.at(iLowerIndex))
+                    {
+                        iLowerIndex = iRunningIndex ;
+                    }
+                }
+                if (dRunningVariable <= dVariable)
+                {
+                    if (bLower)
+                    {
+                        if (dRunningVariable > dVariables_.at(iLowerIndex))
+                        {
+                            iLowerIndex = iRunningIndex ;
+                        }
+                    }
+                    else
+                    {
+                        bLower = true ;
+                        iLowerIndex = iRunningIndex ;
+                    }
+                    if (!bUpper && dRunningVariable <= dVariables_.at(iUpperIndex))
+                    {
+                        iUpperIndex = iRunningIndex ;
+                    }
+                }
+            }
+            
+            if (dVariables_.at(iUpperIndex) == dVariables_.at(iLowerIndex))
+            {
+                return dValues_.at(iUpperIndex);
+            }
+            else
+            {
+                dResult = dValues_.at(iLowerIndex) + (dValues_.at(iUpperIndex) - dValues_.at(iLowerIndex)) * (dVariable - dVariables_.at(iLowerIndex)) / (dVariables_.at(iUpperIndex) - dVariables_.at(iLowerIndex)) ;
+                return dResult ;
+            }
+        }
+        
+        LogLinDFInterpolator::LogLinDFInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
+        {}
+
+        double LogLinDFInterpolator::operator()(double dVariable) const
+        {
+            int iValue1, iValue2;
+            FindIndex(dVariable, iValue1, iValue2);
+            //  raw interpolation as described in http://www.math.ku.dk/~rolf/HaganWest.pdf by Hagan and West.
+            //  Linear interpolation in the log of the discount factors
+#ifndef EPSILON_RAW
+#define EPSILON_RAW 1e-07
+#endif
+            REQUIREEXCEPTION(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small");
+            return 1.0 / dVariable * ((dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue2) * dVariables_.at(iValue2) + (dVariables_.at(iValue2) - dVariable) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue1) * dVariables_.at(iValue1) );
+        }
     }
 }

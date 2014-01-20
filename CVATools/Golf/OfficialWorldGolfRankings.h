@@ -23,10 +23,10 @@ namespace Golf {
     class OfficialWorldGolfRankings
     {
     private:
-        static Utilities::Interp::InterExtrapolation1D GetOWGRDiscountCurve();
-        static Utilities::Interp::InterExtrapolation1D GetTennisDiscountCurve();
+        static Utilities::Interp::LinearInterpolator GetOWGRDiscountCurve();
+        static Utilities::Interp::LinearInterpolator GetTennisDiscountCurve();
     public:
-        static Utilities::Interp::InterExtrapolation1D GetDiscountCurve(DiscountType eDiscountType = GOLF) ;
+        static Utilities::Interp::LinearInterpolator GetDiscountCurve(DiscountType eDiscountType = GOLF) ;
     };
 }
 

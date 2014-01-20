@@ -21,8 +21,9 @@ namespace Finance
         double SVIParameters::Volatility(double k, double t) const
         {
             // interpolate linearly the factors in time
-            Utilities::Interp::InterExtrapolationType eInterpType = Utilities::Interp::LIN;
-            Utilities::Interp::InterExtrapolation1D sInterpA(dExpiries_, dA_, eInterpType), sInterpB(dExpiries_, dB_, eInterpType), sInterpRho(dExpiries_, dRho_, eInterpType), sInterpM(dExpiries_, dM_, eInterpType), sInterpSigma(dExpiries_, dSigma_, eInterpType);
+            //Utilities::Interp::InterExtrapolationType eInterpType = Utilities::Interp::LIN;
+            //Utilities::Interp::InterExtrapolation1D sInterpA(dExpiries_, dA_, eInterpType), sInterpB(dExpiries_, dB_, eInterpType), sInterpRho(dExpiries_, dRho_, eInterpType), sInterpM(dExpiries_, dM_, eInterpType), sInterpSigma(dExpiries_, dSigma_, eInterpType);
+            Utilities::Interp::LinearInterpolator sInterpA(dExpiries_, dA_), sInterpB(dExpiries_, dB_), sInterpRho(dExpiries_, dRho_), sInterpM(dExpiries_, dM_), sInterpSigma(dExpiries_, dSigma_);
             
             double dA = sInterpA(t), dB = sInterpB(t), dRho = sInterpRho(t), dM = sInterpM(t), dSigma = sInterpSigma(t);
             

@@ -39,6 +39,7 @@
 #include "PlayerDataBase.h"
 //#include "HTTPFetcher.h"
 #include "linalg.h"
+#include "VectorUtilities.h"
 
 #define NUM_THREADS 5
 
@@ -281,7 +282,7 @@ int _main()
         dYC.push_back(std::make_pair(30.0, 0.0310));
 
         Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034), sToday;
-        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", dYC);
+        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", Utilities::GetPairOfVectorFromVectorOfPair(dYC));
         
         Finance::Base::MyBasis eBasis = Finance::Base::BONDBASIS;
         Finance::Base::MyFrequency eFrequency = Finance::Base::MyFrequencyAnnual;
@@ -326,7 +327,7 @@ int _main()
         dYC.push_back(std::make_pair(20.0, 0.0270));
         dYC.push_back(std::make_pair(30.0, 0.0310));
         
-        Finance::Base::YieldCurve sYieldCurve(Utilities::Date::MyDate(), "USD", "USD_YC_10_05_2013", dYC);
+        Finance::Base::YieldCurve sYieldCurve(Utilities::Date::MyDate(), "USD", "USD_YC_10_05_2013", Utilities::GetPairOfVectorFromVectorOfPair(dYC));
         
         for (std::size_t i = 0 ; i < 400 ; ++i)
         {
@@ -618,7 +619,7 @@ int _main()
         {
             Golf::OfficialWorldGolfRankings sOGWR;
             
-            Utilities::Interp::InterExtrapolation1D sOWGRDiscountCurve = sOGWR.GetDiscountCurve(Golf::OWGR), sTennisDiscountCurve = sOGWR.GetDiscountCurve(Golf::TENNIS);
+            Utilities::Interp::LinearInterpolator sOWGRDiscountCurve = sOGWR.GetDiscountCurve(Golf::OWGR), sTennisDiscountCurve = sOGWR.GetDiscountCurve(Golf::TENNIS);
             
             for (double dT = -2.5 ; dT < 1.0 ; dT += 0.041)
             {
@@ -769,7 +770,7 @@ int _main()
         dVols.at(0) = 0.25;
         dVols.at(1) = 0.20;
         dVols.at(2) = 0.23;
-        Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
+        Utilities::Interp::HermiteSplineCubicInterpolator Interp(dStrikes, dVols);
         
         for (double dStrike = 0.5 ; dStrike < 1.5 ; dStrike += 0.05)
             std::cout << dStrike << ";" << Interp(dStrike) << std::endl;

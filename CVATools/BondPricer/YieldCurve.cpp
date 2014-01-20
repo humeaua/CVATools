@@ -15,22 +15,20 @@ namespace Finance
 {
     namespace Base
     {
-        YieldCurve::YieldCurve()
-        {
-            eInterpolationType_ = Utilities::Interp::RAW;
-        }
+        YieldCurve::YieldCurve() : Utilities::Interp::LogLinDFInterpolator(std::vector<double>(), std::vector<double>())
+        {}
         
-        YieldCurve::YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC) :
+        YieldCurve::YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName,const std::pair<std::vector<double>, std::vector<double> > & YC) :
         
         cCCY_(cCCY),
         cName_(cName),
-        sToday_(sToday)
+        sToday_(sToday),
+        Utilities::Interp::LogLinDFInterpolator(YC.first, YC.second)
         
         {
-            std::pair<std::vector<double>, std::vector<double> > YC0 = Utilities::GetPairOfVectorFromVectorOfPair(YC);
-            dVariables_ = YC0.first;
-            dValues_ = YC0.second;
-            eInterpolationType_ = Utilities::Interp::RAW;
+            //std::pair<std::vector<double>, std::vector<double> > YC0 = Utilities::GetPairOfVectorFromVectorOfPair(YC);
+            //dVariables_ = YC0.first;
+            //dValues_ = YC0.second;
         }
         
         double YieldCurve::operator()(double t) const
@@ -104,7 +102,7 @@ namespace Finance
         YieldCurve YieldCurve::operator=(double dValue)
         {
             //  Clear everything before filling anything
-            eInterpolationType_ = Utilities::Interp::LIN;
+            //eInterpolationType_ = Utilities::Interp::LIN;
             dValues_.clear();
             dVariables_.clear();
             for (std::size_t i = 0 ; i < 2 ; ++i)

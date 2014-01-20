@@ -17,7 +17,7 @@ namespace Finance
 {
     namespace Base
     {
-        class YieldCurve : public Utilities::Interp::InterExtrapolation1D
+        class YieldCurve : public Utilities::Interp::LogLinDFInterpolator
         {
         protected:
             std::string cCCY_;
@@ -25,7 +25,7 @@ namespace Finance
             Utilities::Date::MyDate sToday_;
         public:
             YieldCurve();
-            YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName, const std::vector<std::pair<double, double> > & YC);
+            YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName, const std::pair<std::vector<double>, std::vector<double> > & YC);
             
             virtual std::string GetCurrency() const;
             virtual std::string GetName() const;

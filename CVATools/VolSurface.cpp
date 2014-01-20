@@ -45,7 +45,8 @@ namespace Finance
                         *iterVol = iter0->second;
                     }
                     
-                    Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
+                    //Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
+                    Utilities::Interp::HermiteSplineCubicInterpolator Interp(dStrikes, dVols);
                     return Interp(dStrike);
                 }
             }
@@ -90,7 +91,8 @@ namespace Finance
                         REQUIREEXCEPTION(*iterVol >= 0.0, "Volatility is negative : Expiry : " + Expiry.str() + " Strike : " + Strike.str());
                     }
                     
-                    Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
+                    //Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
+                    Utilities::Interp::HermiteSplineCubicInterpolator Interp(dStrikes, dVols);
                     return sqrt(Interp(dStrike) * 365.0 / lExpiry); // return the volatility, not the variance
                 }
                 else

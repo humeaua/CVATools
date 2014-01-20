@@ -12,7 +12,7 @@
 
 namespace Golf
 {
-    Utilities::Interp::InterExtrapolation1D OfficialWorldGolfRankings::GetOWGRDiscountCurve()
+    Utilities::Interp::LinearInterpolator OfficialWorldGolfRankings::GetOWGRDiscountCurve()
     {
         std::vector<double> dVariables(4), dValues(4);
         dVariables.at(0) = -2.01;
@@ -24,10 +24,10 @@ namespace Golf
         dVariables.at(3) = 0.0;
         dValues.at(3) = 1.0;
         
-        return Utilities::Interp::InterExtrapolation1D(dVariables, dValues, Utilities::Interp::LIN);
+        return Utilities::Interp::LinearInterpolator(dVariables, dValues);
     }
     
-    Utilities::Interp::InterExtrapolation1D OfficialWorldGolfRankings::GetTennisDiscountCurve()
+    Utilities::Interp::LinearInterpolator OfficialWorldGolfRankings::GetTennisDiscountCurve()
     {
         std::vector<double> dVariables(4), dValues(4);
         dVariables.at(0) = -1.01;
@@ -39,10 +39,10 @@ namespace Golf
         dVariables.at(3) = 0.0;
         dValues.at(3) = 1.0;
         
-        return Utilities::Interp::InterExtrapolation1D(dVariables, dValues, Utilities::Interp::LIN);
+        return Utilities::Interp::LinearInterpolator(dVariables, dValues);
     }
     
-    Utilities::Interp::InterExtrapolation1D OfficialWorldGolfRankings::GetDiscountCurve(DiscountType eDiscountType)
+    Utilities::Interp::LinearInterpolator OfficialWorldGolfRankings::GetDiscountCurve(DiscountType eDiscountType)
     {
         switch (eDiscountType) {
             case TENNIS:

@@ -82,6 +82,51 @@ namespace Utilities
                                  const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const;
         };
+        
+        class NearInterpolator : public Interpolator
+        {
+        public:
+            NearInterpolator(const std::vector<double> & dVariables,
+                             const std::vector<double> & dValues);
+            virtual double operator()(double dVariable) const;
+            virtual void FindIndex(double dVariable, int & iValue1, int& iValue2) const;
+        };
+        
+        class LeftContinuousInterpolator : public Interpolator
+        {
+        public:
+            LeftContinuousInterpolator(const std::vector<double> & dVariables,
+                                       const std::vector<double> & dValues);
+            virtual double operator()(double dVariable) const;
+            virtual void FindIndex(double dVariable, int & iValue1, int& iValue2) const;
+        };
+        
+        class RightContinuousInterpolator : public Interpolator
+        {
+        public:
+            RightContinuousInterpolator(const std::vector<double> & dVariables,
+                                        const std::vector<double> & dValues);
+            virtual double operator()(double dVariable) const;
+            virtual void FindIndex(double dVariable, int & iValue1, int& iValue2) const;
+        };
+        
+        class SplineCubicInterpolator : public Interpolator
+        {
+        protected:
+            std::vector<double> dSecondDerivativeValues_;
+        public:
+            SplineCubicInterpolator(const std::vector<double> & dVariables,
+                                    const std::vector<double> & dValues);
+            virtual double operator()(double dVariable) const;
+        };
+        
+        class HermiteSplineCubicInterpolator : public Interpolator
+        {
+        public:
+            HermiteSplineCubicInterpolator(const std::vector<double> & dVariables,
+                                           const std::vector<double> & dValues);
+            virtual double operator()(double dVariable) const;
+        };
     }
 }
 

@@ -59,8 +59,7 @@ namespace Finance
         }
         
         //  return a simulation data of the simulated path for the diffusion process
-        
-        Utilities::SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const
+        Utilities::SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long & lSeed) const
         {
             std::size_t iNDates = dDates.size();
             Utilities::SimulationData sResult(iNPaths,iNDates);
@@ -102,6 +101,43 @@ namespace Finance
                 }
             }
             return sResult;
+        }
+        
+        std::vector<double> DiffusionProcess::Generate1Path(std::vector<double> &dDates, long long & lSeed) const
+        {
+            std::size_t iNDates = dDates.size();
+            std::vector<double> dResult(iNDates, dX0_);
+            std::tr1::ranlux64_base_01 eng; // core engine class
+            eng.seed(lSeed);
+            std::tr1::normal_distribution<double> dist(0.0,1.0);
+            
+            double dOldValue = dX0_;
+            for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
+            {
+                double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
+                dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
+                if (bFloorSimulation_ && dOldValue < dFloor_)
+                {
+                    dResult[iDate] = dFloor_;
+                    if (bStartFromFloor_)
+                    {
+                        dOldValue = dFloor_;
+                    }
+                }
+                else if (bCapSimulation_ && dOldValue > dCap_)
+                {
+                    dResult[iDate] = dCap_;
+                    if (bStartFromCap_)
+                    {
+                        dOldValue = dCap_;
+                    }
+                }
+                else
+                {
+                    dResult[iDate] = dOldValue;
+                }
+            }
+            return dResult;
         }
         
         std::vector<double> DiffusionProcess::Generate1Step(double t0, double x0, double dt,

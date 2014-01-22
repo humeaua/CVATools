@@ -53,10 +53,13 @@ namespace Finance
             // sigma(t_0, x_0) sqrt(\Delta t) .
             virtual double stdev(double t0, double x0, double dt) const;
             
-            virtual Utilities::SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
+            virtual Utilities::SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long& lSeed) const;
+            
+            virtual std::vector<double> Generate1Path(std::vector<double> & dDates, long long& lSeed) const;
             
             virtual std::vector<double> Generate1Step(double t0, double x0, double dt,
                                                       std::size_t iNPaths, long long & lSeed) const;
+            
             virtual double Generate1(double t0, double x0, double dt, long long & lSeed) const;
             
         protected:

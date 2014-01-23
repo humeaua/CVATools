@@ -15,6 +15,7 @@
 #include "PayoffVanillaOption.h"
 #include "BlackScholes.h"
 #include "VectorUtilities.h"
+#include "InterExtrapolation.h"
 
 void RegressionTest_BondPricing()
 {
@@ -206,4 +207,30 @@ void RegressionTest_PayoffLinearization()
     
     std::cout << "beta_1 : " << dRegCoefs.first << std::endl;
     std::cout << "beta_2 : " << dRegCoefs.second << std::endl;
+}
+
+void RegressionTest_Interpolation()
+{
+    double variables[] = {-1.0, 0.0, 1.0, 1.5}, values[] = {1.0, 0.0, 1.0, 1.0};
+    std::vector<double> vectvar(variables, variables + 4), vectvalues(values, values + 4);
+    
+    Utilities::Interp::LinearInterpolator interplin(vectvar, vectvalues);
+    double valuesreflin[] = {1,1,1,1,1,1,1,1,1,1,1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1,6.38378e-16,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1,1,1,1,1,1,1,1,1};
+    double dErrorlin = 0;
+    int i = 0;
+    for (double var = -2.0 ; var < 2.0 ; var += 0.1, i++)
+    {
+        dErrorlin += std::abs(interplin(var) - valuesreflin[i]);
+    }
+    
+    double dTolerance = 1e-5;
+    std::cout << "Linear interpolation : ";
+    if (dErrorlin < dTolerance)
+    {
+        std::cout << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        std::cout << "FAILED" << std::endl;
+    }
 }

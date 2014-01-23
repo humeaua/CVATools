@@ -142,11 +142,13 @@ int _main()
     
     if (iTest == 0)
     {
-        RegressionTest_BondPricing();
+        //RegressionTest_BondPricing();
         std::cout << std::endl;
         RegressionTest_TimeStatistics();
         std::cout << std::endl;
         RegressionTest_PayoffLinearization();
+        std::cout << std::endl;
+        RegressionTest_Interpolation();
     }
     if (iTest == 1)
     {

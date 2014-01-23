@@ -23,7 +23,7 @@ namespace Finance
         
         double DF::operator()(double dT) const
         {
-            return exp(-dT * (*this)(dT));
+            return exp(-dT * Base::YieldCurve::operator()(dT));
         }
         
         double DF::operator()(const Utilities::Date::MyDate &sDate) const

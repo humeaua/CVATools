@@ -42,7 +42,7 @@ namespace Finance
             }
             if (t > 0)
             {
-                return (*this)(t);
+                return Utilities::Interp::LogLinDFInterpolator::operator()(t);
             }
             else
             {

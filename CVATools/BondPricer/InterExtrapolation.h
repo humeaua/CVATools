@@ -27,7 +27,7 @@ namespace Utilities
                          const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const = 0;
             
-            virtual void FindIndex(double dVariable, int & iValue1, int& iValue2) const;
+            virtual void FindIndex(double dVariable, int* iValue1, int* iValue2) const;
         };
         
         class LinearInterpolator : public Interpolator

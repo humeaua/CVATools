@@ -21,33 +21,41 @@ namespace Utilities
             REQUIREEXCEPTION(dValues_.size() == dVariables_.size(), "Values and Variables are not the same size");
         }
         
-        void Interpolator::FindIndex(double dVariable, int & iValue1, int& iValue2) const
+        void Interpolator::FindIndex(double dVariable, int * iValue1, int* iValue2) const
         {
             int iValue;
             std::size_t iNValues = dValues_.size();
+            
+            if (iValue1 == NULL || iValue2 == NULL)
+            {
+                throw EXCEPTION("Must initialise value1 or value2");
+            }
             // if the variable hasn't been found, iValue= value
             if (!IsFound(dVariables_, dVariable, (std::size_t*)&iValue))
             {
                 iValue = Utilities::FindInVector(dVariables_, dVariable);
             }
             //iValue = 1;
-            iValue1 = iValue;
-            iValue2 = iValue + 1;
             
-            if (iValue == -1)
+            if (iValue == -1 || iValue == iNValues - 1)
             {
                 // Extrapolation
                 if (dVariable > dVariables_.back())
                 {
-                    iValue1 = static_cast<int>(iNValues - 2);
-                    iValue2 = static_cast<int>(iNValues - 1);
+                    *iValue1 = static_cast<int>(iNValues - 2);
+                    *iValue2 = static_cast<int>(iNValues - 1);
                 }
                 else
                 {
                     // dVariable < dVariables[0]
-                    iValue1 = 0;
-                    iValue2 = 1;
+                    *iValue1 = 0;
+                    *iValue2 = 1;
                 }
+            }
+            else
+            {
+                *iValue1 = iValue;
+                *iValue2 = iValue + 1;
             }
         }
         
@@ -120,8 +128,8 @@ namespace Utilities
 
         double LogLinDFInterpolator::operator()(double dVariable) const
         {
-            int iValue1, iValue2;
-            FindIndex(dVariable, iValue1, iValue2);
+            int iValue1 = 0, iValue2 = 0;
+            FindIndex(dVariable, &iValue1, &iValue2);
             //  raw interpolation as described in http://www.math.ku.dk/~rolf/HaganWest.pdf by Hagan and West.
             //  Linear interpolation in the log of the discount factors
 #ifndef EPSILON_RAW
@@ -143,7 +151,7 @@ namespace Utilities
         
         void NearInterpolator::FindIndex(double dVariable, int &iValue1, int &iValue2) const
         {
-            Interpolator::FindIndex(dVariable, iValue1, iValue2);
+            Interpolator::FindIndex(dVariable, &iValue1, &iValue2);
             
             //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
             if (iValue1 == -1)
@@ -173,7 +181,7 @@ namespace Utilities
         
         void LeftContinuousInterpolator::FindIndex(double dVariable, int &iValue1, int &iValue2) const
         {
-            Interpolator::FindIndex(dVariable, iValue1, iValue2);
+            Interpolator::FindIndex(dVariable, &iValue1, &iValue2);
             
             //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
             if (iValue1 == -1)
@@ -203,7 +211,7 @@ namespace Utilities
         
         void RightContinuousInterpolator::FindIndex(double dVariable, int &iValue1, int &iValue2) const
         {
-            Interpolator::FindIndex(dVariable, iValue1, iValue2);
+            Interpolator::FindIndex(dVariable, &iValue1, &iValue2);
             
             //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
             if (iValue1 == -1)
@@ -294,7 +302,7 @@ namespace Utilities
         double SplineCubicInterpolator::operator()(double dVariable) const
         {
             int iValue1, iValue2;
-            FindIndex(dVariable, iValue1, iValue2);
+            FindIndex(dVariable, &iValue1, &iValue2);
             double dResult = 0.;
             //Given the arrays xa[1..n] and ya[1..n], which tabulate a function (with the xai’s in order),
             //and given the array y2a[1..n], which is the output from spline above, and given a value of
@@ -346,7 +354,7 @@ namespace Utilities
         double HermiteSplineCubicInterpolator::operator()(double dVariable) const
         {
             int iValue1, iValue2;
-            FindIndex(dVariable, iValue1, iValue2);
+            FindIndex(dVariable, &iValue1, &iValue2);
             
             double dm_1 = 0.0, dm_2 = 0.0;
             if (iValue2 == dVariables_.size() - 1)

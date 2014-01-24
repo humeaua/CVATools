@@ -47,7 +47,7 @@ namespace Finance
             virtual Utilities::Matrix<double> MultiVariance(double t0, const DVector &dx, double dt) const;
             
             //  Simulation method
-            virtual Utilities::SimulationDataMultiDim simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
+            virtual Utilities::SimulationDataMultiDim simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long& lSeed) const;
             
             //  Add a simulation method for homogeneous processes
         };

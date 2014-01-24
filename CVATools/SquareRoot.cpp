@@ -51,7 +51,7 @@ namespace Finance
             return 4.0 * dA_ * exp(-dA_ * dt) / (dSigma_ * dSigma_ * (1.0 - exp(-dA_ * dt)));
         }
         
-        Utilities::SimulationData SquareRoot::simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const
+        Utilities::SimulationData SquareRoot::simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long& lSeed) const
         {
             // simulation according to http://www.awdz65.dsl.pipex.com/eqf013_009.pdf
             

@@ -32,7 +32,7 @@ namespace Utilities
             
             virtual double SigmaLoc(double t, double dS) const = 0;
             
-            virtual SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const;
+            virtual SimulationData simulate(std::vector<double> & dDates, std::size_t iNPaths, long long& lSeed) const;
         };
     }
 }

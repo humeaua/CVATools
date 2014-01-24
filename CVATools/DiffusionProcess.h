@@ -64,13 +64,6 @@ namespace Finance
             
         protected:
             double dX0_;
-            bool bFloorSimulation_;
-            bool bStartFromFloor_;
-            bool bCapSimulation_;
-            bool bStartFromCap_;
-            
-            double dCap_;
-            double dFloor_;
         };
     }
 }

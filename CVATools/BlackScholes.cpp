@@ -39,7 +39,7 @@ namespace Finance
         
         //  return a simulation data of the simulated path for the diffusion process
         
-        Utilities::SimulationData BlackScholes::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long lSeed) const
+        Utilities::SimulationData BlackScholes::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long& lSeed) const
         {
             std::size_t iNDates = dDates.size();
             Utilities::SimulationData sResult(iNPaths, iNDates);

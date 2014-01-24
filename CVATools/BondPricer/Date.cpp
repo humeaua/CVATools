@@ -89,7 +89,7 @@ namespace Utilities
         {
             std::size_t iWhere = 0;
             long lDate = GetDate(*this);
-            return !IsWeekendDay() || Utilities::IsFound(Holidays, lDate, &iWhere);
+            return !IsWeekendDay() || Utilities::IsFound(Holidays, lDate, iWhere);
         }
         
         MyDate MyDate::NextBusinessDay() const

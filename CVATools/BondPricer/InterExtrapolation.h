@@ -27,7 +27,7 @@ namespace Utilities
                          const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const = 0;
             
-            virtual void FindIndex(double dVariable, int* iValue1, int* iValue2) const;
+            virtual void FindIndex(double dVariable, int& iValue1) const;
         };
         
         class LinearInterpolator : public Interpolator
@@ -52,7 +52,7 @@ namespace Utilities
             NearInterpolator(const std::vector<double> & dVariables,
                              const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const;
-            virtual void FindIndex(double dVariable, int & iValue1, int& iValue2) const;
+            virtual void FindIndex(double dVariable, int & iValue1) const;
         };
         
         class LeftContinuousInterpolator : public Interpolator
@@ -61,7 +61,7 @@ namespace Utilities
             LeftContinuousInterpolator(const std::vector<double> & dVariables,
                                        const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const;
-            virtual void FindIndex(double dVariable, int & iValue1, int& iValue2) const;
+            virtual void FindIndex(double dVariable, int& iValue1) const;
         };
         
         class RightContinuousInterpolator : public Interpolator
@@ -70,7 +70,7 @@ namespace Utilities
             RightContinuousInterpolator(const std::vector<double> & dVariables,
                                         const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const;
-            virtual void FindIndex(double dVariable, int & iValue1, int& iValue2) const;
+            virtual void FindIndex(double dVariable, int& iValue1) const;
         };
         
         class SplineCubicInterpolator : public Interpolator

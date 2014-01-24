@@ -70,19 +70,19 @@ namespace Utilities {
         return PairOfVector;
     };
     
-    template<class T> bool IsFound(const std::vector<T> & vect, T & value, std::size_t * iWhere)
+    template<class T> bool IsFound(const std::vector<T> & vect, T & value, std::size_t & iWhere)
     {
         //  Check if the value is in the vector
         for (std::size_t i = 0 ; i < vect.size(); ++i)
         {
             if (vect.at(i) == value)
             {
-                *iWhere = i;
+                iWhere = i;
                 return true;
             }
         }
         //  If not found return the size of the vector
-        *iWhere = vect.size();
+        iWhere = vect.size();
         return false;
     };
     

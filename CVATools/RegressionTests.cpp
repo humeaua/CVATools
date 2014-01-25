@@ -44,20 +44,20 @@ void RegressionTest_BondPricing()
         dYC.push_back(std::make_pair(20.0, 0.0270));
         dYC.push_back(std::make_pair(30.0, 0.0310));
         
-        Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034), sToday(10, 5, 2013);
-        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", Utilities::GetPairOfVectorFromVectorOfPair(dYC));
+        const Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034), sToday(10, 5, 2013);
+        const Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", Utilities::GetPairOfVectorFromVectorOfPair(dYC));
         
-        Finance::Base::MyBasis eBasis = Finance::Base::BONDBASIS;
-        Finance::Base::MyFrequency eFrequency = Finance::Base::MyFrequencyAnnual;
-        double dNotional = 1.;
+        const Finance::Base::MyBasis eBasis = Finance::Base::BONDBASIS;
+        const Finance::Base::MyFrequency eFrequency = Finance::Base::MyFrequencyAnnual;
+        const double dNotional = 1.;
         
-        std::vector<double> dCoupons(20, 0.01);
-        bool bIsFixedRate = true;
-        
-        Finance::Pricers::BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
-        double dBondPrice = sBondPricer.Price();
-        double dRefBondPrice = 0.720238, dRefYield = 0.0270136, dRefISpread = -0.000399764, dRefZSpread = 0.000403147;
-        double dError = 1.0e-5;
+        const std::vector<double> dCoupons(20, 0.01);
+        const bool bIsFixedRate = true;
+         
+        const Finance::Pricers::BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
+        const double dBondPrice = sBondPricer.Price();
+        const double dRefBondPrice = 0.730468208690114;
+        const double dError = 1.0e-5;
         
         std::size_t iError = 0;
         
@@ -73,7 +73,8 @@ void RegressionTest_BondPricing()
         }
         
         std::cout << "Test Bond Yield : ";
-        double dPriceToYield = sBondPricer.PriceToYield(dBondPrice);
+        const double dPriceToYield = sBondPricer.PriceToYield(dBondPrice);
+        const double dRefYield = 0.0262459982515766;
         if (fabs(dPriceToYield - dRefYield) < dError)
         {
             std::cout << "SUCCEEDED" << std::endl;
@@ -85,7 +86,8 @@ void RegressionTest_BondPricing()
         }
         
         std::cout << "Test Bond I-Spread : ";
-        double dISpread = sBondPricer.I_Spread(dBondPrice);
+        const double dISpread = sBondPricer.I_Spread(dBondPrice);
+        const double dRefISpread =-0.000759355581875055;
         if (fabs(dISpread - dRefISpread) < dError)
         {
             std::cout << "SUCCEEDED" << std::endl;
@@ -97,7 +99,8 @@ void RegressionTest_BondPricing()
         }
         
         std::cout << "Test Bond Z-Spread : ";
-        double dZSpread = sBondPricer.Z_Spread(dBondPrice);
+        const double dZSpread = sBondPricer.Z_Spread(dBondPrice);
+        const double dRefZSpread = 0.000343415391374062;
         if (fabs(dZSpread - dRefZSpread) < dError)
         {
             std::cout << "SUCCEEDED" << std::endl;

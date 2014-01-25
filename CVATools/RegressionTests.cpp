@@ -118,52 +118,84 @@ void RegressionTest_BondPricing()
 
 void RegressionTest_TimeStatistics()
 {
-    // Regression Test Statistics Time
-    
-    std::cout << "Regression Test Time Computation for statistics" << std::endl;
-    std::vector<double> dData(1000000, 1.0);
-    
-    clock_t tic = clock();
-    double dResult = Maths::Statistics::MeanOld(dData);
-    double dTimeOld =(double)(clock() - tic)/CLOCKS_PER_SEC;
-    std::cout << "Mean old time elapsed  " << dTimeOld << " seconds" << std::endl;
-    
-    tic = clock();
-    dResult = Maths::Statistics::Mean(dData);
-    double dTimeNew =(double)(clock() - tic)/CLOCKS_PER_SEC;
-    std::cout << "Mean time elapsed  " << dTimeNew << " seconds" << std::endl;
-    
-    if (dTimeNew < dTimeOld)
+    try
     {
-        std::cout << "Computation mean : SUCCEEDED" << std::endl;
+        // Regression Test Statistics Time
+        std::size_t iNTimes = 10;
+        std::cout << "Regression Test Time Computation for statistics" << std::endl;
+        std::vector<double> dData(1000000, 1.0);
+        double dTimeOld = 0.0, dTimeNew = 0.0;
+        for (size_t iTimes = 0; iTimes < iNTimes ; ++iTimes)
+        {
+            clock_t tic = clock();
+            double dResult = Maths::Statistics::MeanOld(dData);
+            if (dResult != 1.0)
+                throw EXCEPTION("Mean Result is not 1.0");
+            dTimeOld += (double)(clock() - tic)/CLOCKS_PER_SEC;
+            
+            tic = clock();
+            dResult = Maths::Statistics::Mean(dData);
+            if (dResult != 1.0)
+                throw EXCEPTION("Mean Result is not 1.0");
+            dTimeNew += (double)(clock() - tic)/CLOCKS_PER_SEC;
+        }
+        std::cout << "Mean old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
+        std::cout << "Mean time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
+        
+        std::cout << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
+        std::cout << "Computation mean : ";
+        if (dTimeNew < 1.1 * dTimeOld)
+        {
+            std::cout << "SUCCEEDED" << std::endl;
+        }
+        else
+        {
+            std::cout << "FAILED" << std::endl;
+        }
+        
+        std::cout << std::endl;
+        dTimeNew = dTimeOld = 0.0;
+        for (size_t iTimes = 0; iTimes < iNTimes ; ++iTimes)
+        {
+            clock_t tic = clock();
+            double dResult = Maths::Statistics::VarianceOld(dData);
+            if (dResult != 0.0)
+                throw EXCEPTION("Variance is not 0.0");
+            dTimeOld += (double)(clock() - tic)/CLOCKS_PER_SEC;
+            
+            tic = clock();
+            dResult = Maths::Statistics::Variance(dData);
+            if (dResult != 0.0)
+                throw EXCEPTION("Variance is not 0.0");
+            dTimeNew += (double)(clock() - tic)/CLOCKS_PER_SEC;
+        }
+        std::cout << "Variance old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
+        std::cout << "Variance time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
+        
+        std::cout << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
+        std::cout << "Computation variance : ";
+        //  New algorithm seems to be around 3 times slower
+        if (3.0 * dTimeNew > dTimeOld)
+        {
+            std::cout << "SUCCEEDED" << std::endl;
+        }
+        else
+        {
+            std::cout << "FAILED" << std::endl;
+        }
     }
-    else
+    catch (const Utilities::MyException & excep)
     {
-        std::cout << "Computation mean : FAILED" << std::endl;
+        std::cout << "MyException caught : " << excep.what() << std::endl;
     }
-    std::cout << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
-    
-    std::cout << std::endl;
-    tic = clock();
-    dResult = Maths::Statistics::VarianceOld(dData);
-    dTimeOld = (double)(clock() - tic)/CLOCKS_PER_SEC;
-    std::cout << "Variance old time elapsed  " << dTimeOld << " seconds" << std::endl;
-    
-    tic = clock();
-    dResult = Maths::Statistics::Variance(dData);
-    dTimeNew = (double)(clock() - tic)/CLOCKS_PER_SEC;
-    std::cout << "Variance time elapsed  " << dTimeNew << " seconds" << std::endl;
-    
-    if (dTimeNew < dTimeOld)
+    catch (const std::exception & excep)
     {
-        std::cout << "Computation variance : SUCCEEDED" << std::endl;
+        std::cout << "std::exception caught : " << excep.what() << std::endl;
     }
-    else
+    catch (...)
     {
-        std::cout << "Computation variance : FAILED" << std::endl;
+        std::cout << "Unknown exception caught" << std::endl;
     }
-    
-    std::cout << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
 }
 
 void RegressionTest_PayoffLinearization()

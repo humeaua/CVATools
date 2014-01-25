@@ -122,9 +122,13 @@ namespace Maths
     
     double Statistics::Variance(const std::vector<double> &v)
     {
+        size_t size = v.size();
         double mean = Mean(v);
-        std::vector<double> diff(v.size());
-        return v.size() == 1 || v.size() == 0 ? 0.0 : (std::inner_product(v.begin(), v.end(), v.begin(), 0.0) - mean * mean) / (v.size() - 1);
+        std::vector<double> diff(size);
+        if (size <= 1)
+            return 0.0;
+        else
+            return std::inner_product(v.begin(), v.end(), v.begin(), 0.0) / (size - 1) - mean * mean * size / (size - 1);
     }
     
     double Statistics::VarianceOld(const std::vector<double> &v)

@@ -59,8 +59,6 @@ void RegressionTest_BondPricing()
         const double dRefBondPrice = 0.730468208690114;
         const double dError = 1.0e-5;
         
-        std::size_t iError = 0;
-        
         std::cout << "Test Bond Price : ";
         if (fabs(dBondPrice - dRefBondPrice) < dError)
         {
@@ -69,7 +67,6 @@ void RegressionTest_BondPricing()
         else
         {
             std::cout << "FAILED" << std::endl;
-            iError++;
         }
         
         std::cout << "Test Bond Yield : ";
@@ -82,7 +79,6 @@ void RegressionTest_BondPricing()
         else
         {
             std::cout << "FAILED" << std::endl;
-            iError++;
         }
         
         std::cout << "Test Bond I-Spread : ";
@@ -95,7 +91,6 @@ void RegressionTest_BondPricing()
         else
         {
             std::cout << "FAILED" << std::endl;
-            iError++;
         }
         
         std::cout << "Test Bond Z-Spread : ";
@@ -108,12 +103,6 @@ void RegressionTest_BondPricing()
         else
         {
             std::cout << "FAILED" << std::endl;
-            iError++;
-        }
-        
-        if (iError > 0)
-        {
-            std::cout << "You must either correct the code or update the regresssion test" << std::endl;
         }
     }
     catch( std::exception & e)

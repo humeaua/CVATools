@@ -26,37 +26,16 @@ namespace Utilities
             size_t iValue = 0;
             std::size_t iNValues = dValues_.size();
             
-            // if the variable is not in the variable vector, we find the index
+            // if the variable is not in the variable vector, we find the index s.t. variables[index] < variable <= variables[index + 1]
             if (!IsFound(dVariables_, dVariable, iValue))
             {
-                iValue = Utilities::FindInVector(dVariables_, dVariable);
+                iValue1 = Utilities::FindInVector(dVariables_, dVariable);
             }
-            //iValue = 1;
             
             if (dVariable < dVariables_.front())
-                iValue = 0;
+                iValue1 = 0;
             else if (dVariable > dVariables_.back())
-                iValue = static_cast<int>(iNValues - 2);
-            /*if (iValue == -1 || iValue == iNValues - 1)
-            {
-                // Extrapolation
-                if (dVariable > dVariables_.back())
-                {
-                    iValue1 = static_cast<int>(iNValues - 2);
-                    //*iValue2 = static_cast<int>(iNValues - 1);
-                }
-                else
-                {
-                    // dVariable < dVariables[0]
-                    iValue1 = 0;
-                    //*iValue2 = 1;
-                }
-            }
-            else
-            {
-                iValue1 = static_cast<int>(iValue);
-                //*iValue2 = iValue + 1;
-            }*/
+                iValue1 = static_cast<int>(iNValues - 2);
         }
         
         LinearInterpolator::LinearInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
@@ -158,16 +137,7 @@ namespace Utilities
             //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
             if (iValue1 == -1)
             {
-                //if (iValue2 == static_cast<int>(dVariables_.size() - 1))
-                //{
-                    //iValue2++;
-                    (iValue1)++;
-                //}
-                //else
-                //{
-                //    iValue2--;
-                //    iValue1--;
-                //}
+                (iValue1)++;
             }
         }
         
@@ -198,18 +168,7 @@ namespace Utilities
             
             //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
             if (iValue1 == -1)
-            //{
-            //    if (iValue2 == static_cast<int>(dVariables_.size() - 1))
-            //    {
-            //        iValue2++;
-                    (iValue1)++;
-            //    }
-            //    else
-            //    {
-            //        iValue2--;
-            //        iValue1--;
-            //    }
-            //}
+                (iValue1)++;
         }
         
         SplineCubicInterpolator::SplineCubicInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)

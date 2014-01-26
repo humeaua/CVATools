@@ -260,7 +260,7 @@ void RegressionTest_Interpolation(std::ostream & os)
     {
         dErrorlin += std::abs(interplin(var) - valuesreflin[i]);
         dErrorloglindf += std::abs(interloglindf(var) - valuesrefloglindf[i]);
-        os << std::setprecision(9) << interloglindf(var) << std::endl;
+        os << std::setprecision(9) << interpleftcontinuous(var) << std::endl;
     }
     
     const double dTolerance = 1e-5;

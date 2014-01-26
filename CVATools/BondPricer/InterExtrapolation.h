@@ -61,6 +61,7 @@ namespace Utilities
             LeftContinuousInterpolator(const std::vector<double> & dVariables,
                                        const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const;
+            virtual void FindIndex(double dVariables, int& iValues1) const;
         };
         
         class RightContinuousInterpolator : public Interpolator

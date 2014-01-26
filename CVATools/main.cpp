@@ -81,6 +81,15 @@ int main ()
     pthread_exit(NULL);
 }*/
 
+//////////////////////////////////
+//  Forward Declaration
+//////////////////////////////////
+int _main();
+void DisplayChoices(size_t & iTest);
+
+//////////////////////////////////
+//  Class declaration
+//////////////////////////////////
 class FileWriter : public std::vector<std::string>
 {
 public:
@@ -96,7 +105,9 @@ public:
     }
 };
 
-void DisplayChoices(size_t & iTest);
+///////////////////////////////////
+//  Main functions
+///////////////////////////////////
 void DisplayChoices(size_t & iTest)
 {
     std::cout << "Choose the test : " << std::endl;

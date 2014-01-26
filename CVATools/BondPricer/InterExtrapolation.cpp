@@ -151,6 +151,22 @@ namespace Utilities
             return iValue1 == (int)dVariables_.size() ? dValues_.at(iValue1 - 1) : dValues_.at(iValue1);
         }
         
+        void LeftContinuousInterpolator::FindIndex(double dVariable, int &iValue1) const
+        {
+            size_t iValue = 0;
+            
+            // if the variable is not in the variable vector, we find the index s.t. variables[index] < variable <= variables[index + 1]
+            if (!IsFound(dVariables_, dVariable, iValue))
+            {
+                iValue1 = Utilities::FindInVector(dVariables_, dVariable);
+            }
+            
+            if (dVariable < dVariables_.front())
+                iValue1 = 0;
+            else 
+                iValue1++;
+        }
+        
         RightContinuousInterpolator::RightContinuousInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
         {}
         

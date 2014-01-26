@@ -249,10 +249,10 @@ void RegressionTest_Interpolation(std::ostream & os)
     double variables[] = {1.0, 2.0, 3.0, 3.5}, values[] = {1.0, 0.0, 1.0, 1.0};
     std::vector<double> vectvar(variables, variables + 4), vectvalues(values, values + 4);
     
-    Utilities::Interp::LinearInterpolator interplin(vectvar, vectvalues);
-    Utilities::Interp::LogLinDFInterpolator interloglindf(vectvar, vectvalues);
-    Utilities::Interp::LeftContinuousInterpolator interpleftcontinuous(vectvar, vectvalues);
-    Utilities::Interp::RightContinuousInterpolator interprightcontinuous(vectvar, vectvalues);
+    Utilities::Interp::LinearInterpolator lin(vectvar, vectvalues);
+    Utilities::Interp::LogLinDFInterpolator loglindf(vectvar, vectvalues);
+    Utilities::Interp::LeftContinuousInterpolator leftcontinuous(vectvar, vectvalues);
+    Utilities::Interp::RightContinuousInterpolator rightcontinuous(vectvar, vectvalues);
     double valuesreflin[] = {1,1,1,1,1,1,1,1,1,1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1,6.38378e-16,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1,1,1,1,1,1,1,1,1};
     double valuesrefloglindf[] = {19,9,5.66666667,4,3,2.33333333,1.85714286,1.5,1.22222222,1,0.818181818,0.666666667,0.5384615,0.428571429,0.333333333,0.25,0.176470588,0.111111111,0.0526315789,6.66133815e-16,0.142857143,0.272727273,0.391304348,0.5,0.6,0.692307692,0.777777778,0.857142857,0.931034483,1,1,1,1,1,1,1,1,1,1};
     double valuesrefleftcontinuous[] = {1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
@@ -261,10 +261,10 @@ void RegressionTest_Interpolation(std::ostream & os)
     int i = 0;
     for (double var = 0.1 ; var < 4.0 ; var += 0.1, i++)
     {
-        dErrorlin               += std::abs(interplin(var) - valuesreflin[i]);
-        dErrorloglindf          += std::abs(interloglindf(var) - valuesrefloglindf[i]);
-        dErrorleftcontinuous    += std::abs(interpleftcontinuous(var) - valuesrefleftcontinuous[i]);
-        dErrorrightcontinuous   += std::abs(interprightcontinuous(var) - valuesrefrightcontinuous[i]);
+        dErrorlin               += std::abs(lin(var) - valuesreflin[i]);
+        dErrorloglindf          += std::abs(loglindf(var) - valuesrefloglindf[i]);
+        dErrorleftcontinuous    += std::abs(leftcontinuous(var) - valuesrefleftcontinuous[i]);
+        dErrorrightcontinuous   += std::abs(rightcontinuous(var) - valuesrefrightcontinuous[i]);
         //os << std::setprecision(9) << interprightcontinuous(var) << std::endl;
     }
     

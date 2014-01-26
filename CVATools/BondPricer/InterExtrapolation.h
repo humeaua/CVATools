@@ -72,16 +72,6 @@ namespace Utilities
             virtual double operator()(double dVariable) const;
         };
         
-        class SplineCubicInterpolator : public Interpolator
-        {
-        protected:
-            std::vector<double> dSecondDerivativeValues_;
-        public:
-            SplineCubicInterpolator(const std::vector<double> & dVariables,
-                                    const std::vector<double> & dValues);
-            virtual double operator()(double dVariable) const;
-        };
-        
         class HermiteSplineCubicInterpolator : public Interpolator
         {
         public:

@@ -16,8 +16,9 @@
 #include "BlackScholes.h"
 #include "VectorUtilities.h"
 #include "InterExtrapolation.h"
+#include <iomanip>
 
-void RegressionTest_BondPricing()
+void RegressionTest_BondPricing(std::ostream & os)
 {
     //////////////////////////////////////////////////////////////
     //                                                          //
@@ -26,7 +27,7 @@ void RegressionTest_BondPricing()
     //////////////////////////////////////////////////////////////
     try
     {
-        std::cout << "Regression Test for Bond Pricing" << std::endl;
+        os << "Regression Test for Bond Pricing" << std::endl;
         
         // Yield curve as of 10th May, 2013
         //          1 Mo	3 Mo	6 Mo	1 Yr	2 Yr	3 Yr	5 Yr	7 Yr	10 Yr	20 Yr	30 Yr
@@ -59,70 +60,76 @@ void RegressionTest_BondPricing()
         const double dRefBondPrice = 0.730468208690114;
         const double dError = 1.0e-5;
         
-        std::cout << "Test Bond Price : ";
+        os << "Test Bond Price : ";
         if (fabs(dBondPrice - dRefBondPrice) < dError)
         {
-            std::cout << "SUCCEEDED" << std::endl;
+            os << "SUCCEEDED" << std::endl;
         }
         else
         {
-            std::cout << "FAILED" << std::endl;
+            os << "FAILED" << std::endl;
         }
         
-        std::cout << "Test Bond Yield : ";
+        os << "Test Bond Yield : ";
         const double dPriceToYield = sBondPricer.PriceToYield(dBondPrice);
         const double dRefYield = 0.0262459982515766;
         if (fabs(dPriceToYield - dRefYield) < dError)
         {
-            std::cout << "SUCCEEDED" << std::endl;
+            os << "SUCCEEDED" << std::endl;
         }
         else
         {
-            std::cout << "FAILED" << std::endl;
+            os << "FAILED" << std::endl;
         }
         
-        std::cout << "Test Bond I-Spread : ";
+        os << "Test Bond I-Spread : ";
         const double dISpread = sBondPricer.I_Spread(dBondPrice);
         const double dRefISpread =-0.000759355581875055;
         if (fabs(dISpread - dRefISpread) < dError)
         {
-            std::cout << "SUCCEEDED" << std::endl;
+            os << "SUCCEEDED" << std::endl;
         }
         else
         {
-            std::cout << "FAILED" << std::endl;
+            os << "FAILED" << std::endl;
         }
         
-        std::cout << "Test Bond Z-Spread : ";
+        os << "Test Bond Z-Spread : ";
         const double dZSpread = sBondPricer.Z_Spread(dBondPrice);
         const double dRefZSpread = 0.000343415391374062;
         if (fabs(dZSpread - dRefZSpread) < dError)
         {
-            std::cout << "SUCCEEDED" << std::endl;
+            os << "SUCCEEDED" << std::endl;
         }
         else
         {
-            std::cout << "FAILED" << std::endl;
+            os << "FAILED" << std::endl;
         }
     }
-    catch( std::exception & e)
+    catch( const Utilities::MyException & e)
     {
-        std::cout << "Exception caught : " << std::endl;
-        std::cout << e.what() << std::endl;
+        os << "MyException caught : " << std::endl;
+        os << e.what() << std::endl;
+    }
+    catch( const std::exception & e)
+    {
+        os << "Exception caught : " << std::endl;
+        os << e.what() << std::endl;
     }
     catch(...)
     {
-        std::cout << "Unknown exception caught" << std::endl;
+        os << "Unknown exception caught" << std::endl;
     }
 }
 
-void RegressionTest_TimeStatistics()
+void RegressionTest_TimeStatistics(std::ostream & os)
 {
     try
     {
         // Regression Test Statistics Time
         std::size_t iNTimes = 10;
-        std::cout << "Regression Test Time Computation for statistics" << std::endl;
+        os << "Regression Test Time Computation for statistics" << std::endl;
+        os << std::endl;
         std::vector<double> dData(1000000, 1.0);
         double dTimeOld = 0.0, dTimeNew = 0.0;
         for (size_t iTimes = 0; iTimes < iNTimes ; ++iTimes)
@@ -139,18 +146,18 @@ void RegressionTest_TimeStatistics()
                 throw EXCEPTION("Mean Result is not 1.0");
             dTimeNew += (double)(clock() - tic)/CLOCKS_PER_SEC;
         }
-        std::cout << "Mean old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
-        std::cout << "Mean time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
+        os << "Mean old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
+        os << "Mean time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
         
-        std::cout << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
-        std::cout << "Computation mean : ";
+        os << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
+        os << "Computation mean : ";
         if (dTimeNew < 1.1 * dTimeOld)
         {
-            std::cout << "SUCCEEDED" << std::endl;
+            os << "SUCCEEDED" << std::endl;
         }
         else
         {
-            std::cout << "FAILED" << std::endl;
+            os << "FAILED" << std::endl;
         }
         
         std::cout << std::endl;
@@ -169,37 +176,39 @@ void RegressionTest_TimeStatistics()
                 throw EXCEPTION("Variance is not 0.0");
             dTimeNew += (double)(clock() - tic)/CLOCKS_PER_SEC;
         }
-        std::cout << "Variance old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
-        std::cout << "Variance time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
+        os << "Variance old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
+        os << "Variance time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
         
-        std::cout << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
-        std::cout << "Computation variance : ";
+        os << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
+        os << "Computation variance : ";
         //  New algorithm seems to be around 3 times slower
         if (3.0 * dTimeNew > dTimeOld)
         {
-            std::cout << "SUCCEEDED" << std::endl;
+            os << "SUCCEEDED" << std::endl;
         }
         else
         {
-            std::cout << "FAILED" << std::endl;
+            os << "FAILED" << std::endl;
         }
     }
     catch (const Utilities::MyException & excep)
     {
-        std::cout << "MyException caught : " << excep.what() << std::endl;
+        os << "MyException caught : " << excep.what() << std::endl;
     }
     catch (const std::exception & excep)
     {
-        std::cout << "std::exception caught : " << excep.what() << std::endl;
+        os << "std::exception caught : " << excep.what() << std::endl;
     }
     catch (...)
     {
-        std::cout << "Unknown exception caught" << std::endl;
+        os << "Unknown exception caught" << std::endl;
     }
 }
 
-void RegressionTest_PayoffLinearization()
+void RegressionTest_PayoffLinearization(std::ostream & os)
 {
+    os << "Regression Test Payoff Linearization" << std::endl;
+    os << std::endl;
     // Payoff Linearisation
     Finance::Payoff::PayoffVanillaOption sPayoff(1.0, ::Finance::Payoff::CALL);
     Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0);
@@ -219,42 +228,58 @@ void RegressionTest_PayoffLinearization()
     
     std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
     double dEpsilon = 1e-10;
-    std::cout << "Payoff linearization : " ;
+    os << "Payoff linearization : " ;
     if (fabs(dRegCoefs.first - dRefCoefStock) < dEpsilon && fabs(dRegCoefs.second - dRefConstant) < dEpsilon)
     {
-        std::cout << "SUCCEDEED" << std::endl;
+        os << "SUCCEDEED" << std::endl;
     }
     else
     {
-        std::cout << "FAILED" << std::endl;
+        os << "FAILED" << std::endl;
     }
     
-    std::cout << "beta_1 : " << dRegCoefs.first << std::endl;
-    std::cout << "beta_2 : " << dRegCoefs.second << std::endl;
+    os << "beta_1 : " << dRegCoefs.first << std::endl;
+    os << "beta_2 : " << dRegCoefs.second << std::endl;
 }
 
-void RegressionTest_Interpolation()
+void RegressionTest_Interpolation(std::ostream & os)
 {
-    double variables[] = {-1.0, 0.0, 1.0, 1.5}, values[] = {1.0, 0.0, 1.0, 1.0};
+    os << "Regression Test Interpolation " << std::endl;
+    os << std::endl;
+    double variables[] = {1.0, 2.0, 3.0, 3.5}, values[] = {1.0, 0.0, 1.0, 1.0};
     std::vector<double> vectvar(variables, variables + 4), vectvalues(values, values + 4);
     
     Utilities::Interp::LinearInterpolator interplin(vectvar, vectvalues);
-    double valuesreflin[] = {1,1,1,1,1,1,1,1,1,1,1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1,6.38378e-16,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1,1,1,1,1,1,1,1,1};
-    double dErrorlin = 0;
+    Utilities::Interp::LogLinDFInterpolator interloglindf(vectvar, vectvalues);
+    Utilities::Interp::LeftContinuousInterpolator interpleftcontinuous(vectvar, vectvalues);
+    double valuesreflin[] = {1,1,1,1,1,1,1,1,1,1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1,6.38378e-16,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1,1,1,1,1,1,1,1,1};
+    double valuesrefloglindf[] = {19,9,5.66666667,4,3,2.33333333,1.85714286,1.5,1.22222222,1,0.818181818,0.666666667,0.5384615,0.428571429,0.333333333,0.25,0.176470588,0.111111111,0.0526315789,6.66133815e-16,0.142857143,0.272727273,0.391304348,0.5,0.6,0.692307692,0.777777778,0.857142857,0.931034483,1,1,1,1,1,1,1,1,1,1};
+    double dErrorlin = 0.0, dErrorloglindf = 0.0;
     int i = 0;
-    for (double var = -2.0 ; var < 2.0 ; var += 0.1, i++)
+    for (double var = 0.1 ; var < 4.0 ; var += 0.1, i++)
     {
         dErrorlin += std::abs(interplin(var) - valuesreflin[i]);
+        dErrorloglindf += std::abs(interloglindf(var) - valuesrefloglindf[i]);
+        os << std::setprecision(9) << interloglindf(var) << std::endl;
     }
     
-    double dTolerance = 1e-5;
-    std::cout << "Linear interpolation : ";
+    const double dTolerance = 1e-5;
+    os << "Linear interpolation : ";
     if (dErrorlin < dTolerance)
     {
-        std::cout << "SUCCEEDED" << std::endl;
+        os << "SUCCEEDED" << std::endl;
     }
     else
     {
-        std::cout << "FAILED" << std::endl;
+        os << "FAILED" << std::endl;
+    }
+    os << "Log-lin DF interpolation : ";
+    if (dErrorloglindf < dTolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
     }
 }

@@ -26,14 +26,18 @@ namespace Utilities
             size_t iValue = 0;
             std::size_t iNValues = dValues_.size();
             
-            // if the variable hasn't been found, iValue= value
-            if (IsFound(dVariables_, dVariable, iValue) != dVariables_.size())
+            // if the variable is not in the variable vector, we find the index
+            if (!IsFound(dVariables_, dVariable, iValue))
             {
                 iValue = Utilities::FindInVector(dVariables_, dVariable);
             }
             //iValue = 1;
             
-            if (iValue == -1 || iValue == iNValues - 1)
+            if (dVariable < dVariables_.front())
+                iValue = 0;
+            else if (dVariable > dVariables_.back())
+                iValue = static_cast<int>(iNValues - 2);
+            /*if (iValue == -1 || iValue == iNValues - 1)
             {
                 // Extrapolation
                 if (dVariable > dVariables_.back())
@@ -52,7 +56,7 @@ namespace Utilities
             {
                 iValue1 = static_cast<int>(iValue);
                 //*iValue2 = iValue + 1;
-            }
+            }*/
         }
         
         LinearInterpolator::LinearInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
@@ -126,6 +130,7 @@ namespace Utilities
         {
             int iValue1 = 0, iValue2 = 0;
             FindIndex(dVariable, iValue1);
+            iValue2 = iValue1 + 1;
             //  raw interpolation as described in http://www.math.ku.dk/~rolf/HaganWest.pdf by Hagan and West.
             //  Linear interpolation in the log of the discount factors
 #ifndef EPSILON_RAW
@@ -173,27 +178,7 @@ namespace Utilities
         {
             int iValue1 = 0;
             FindIndex(dVariable, iValue1);
-            return iValue1 == (int)dVariables_.size() ? dValues_.at(iValue1) : dValues_.at(iValue1 - 1);
-        }
-        
-        void LeftContinuousInterpolator::FindIndex(double dVariable, int& iValue1) const
-        {
-            Interpolator::FindIndex(dVariable, iValue1);
-            
-            //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
-            if (iValue1 == -1)
-            {
-                //if (iValue2 == static_cast<int>(dVariables_.size() - 1))
-                //{
-                //    iValue2++;
-                    (iValue1)++;
-                //}
-                //else
-                //{
-                //    iValue2--;
-                //    iValue1--;
-                //}
-            }
+            return iValue1 == (int)dVariables_.size() ? dValues_.at(iValue1 - 1) : dValues_.at(iValue1);
         }
         
         RightContinuousInterpolator::RightContinuousInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)

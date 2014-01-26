@@ -149,6 +149,7 @@ int _main()
         RegressionTest_PayoffLinearization();
         std::cout << std::endl;
         RegressionTest_Interpolation();
+        std::cout << std::endl;
     }
     if (iTest == 1)
     {

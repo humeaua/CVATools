@@ -11,9 +11,9 @@
 
 #include <iostream>
 
-void RegressionTest_BondPricing();
-void RegressionTest_TimeStatistics();
-void RegressionTest_PayoffLinearization();
-void RegressionTest_Interpolation();
+void RegressionTest_BondPricing(std::ostream & os = std::cout);
+void RegressionTest_TimeStatistics(std::ostream & os = std::cout);
+void RegressionTest_PayoffLinearization(std::ostream & os = std::cout);
+void RegressionTest_Interpolation(std::ostream & os = std::cout);
 
 #endif /* defined(__CVATools__RegressionTests__) */

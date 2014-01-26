@@ -153,10 +153,8 @@ namespace Utilities
         
         void LeftContinuousInterpolator::FindIndex(double dVariable, int &iValue1) const
         {
-            size_t iValue = 0;
-            
             // if the variable is not in the variable vector, we find the index s.t. variables[index] < variable <= variables[index + 1]
-            if (!IsFound(dVariables_, dVariable, iValue))
+            if (!IsFound(dVariables_, dVariable, (std::size_t&)iValue1))
             {
                 iValue1 = Utilities::FindInVector(dVariables_, dVariable);
             }
@@ -172,19 +170,9 @@ namespace Utilities
         
         double RightContinuousInterpolator::operator()(double dVariable) const
         {
-            int iValue1 = 0, iValue2;
+            int iValue1 = 0;
             FindIndex(dVariable, iValue1);
-            iValue2 = iValue1 + 1;
             return iValue1 == -1 ? dValues_.at(0) : dValues_.at(iValue1);
-        }
-        
-        void RightContinuousInterpolator::FindIndex(double dVariable, int &iValue1) const
-        {
-            Interpolator::FindIndex(dVariable, iValue1);
-            
-            //  Adapts the iValue for RIGHT_CONTINUOUS and LEFT_CONTINUOUS interpolation types
-            if (iValue1 == -1)
-                (iValue1)++;
         }
         
         SplineCubicInterpolator::SplineCubicInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)

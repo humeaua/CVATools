@@ -317,3 +317,15 @@ void RegressionTest_Interpolation(std::ostream & os)
         os << "FAILED" << std::endl;
     }
 }
+
+void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
+{
+    os << "Volatility Surface Interpolation" << std::endl;
+    os << "Not yet implemented !!" << std::endl;
+}
+
+void RegressionTest_ProcessPathSimulation(std::ostream & os)
+{
+    os << "Process Path Simulation" << std::endl;
+    os << "Not yet implemented !!" << std::endl;
+}

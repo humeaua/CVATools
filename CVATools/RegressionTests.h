@@ -15,5 +15,7 @@ void RegressionTest_BondPricing(std::ostream & os = std::cout);
 void RegressionTest_TimeStatistics(std::ostream & os = std::cout);
 void RegressionTest_PayoffLinearization(std::ostream & os = std::cout);
 void RegressionTest_Interpolation(std::ostream & os = std::cout);
+void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os = std::cout);
+void RegressionTest_ProcessPathSimulation(std::ostream & os = std::cout);
 
 #endif /* defined(__CVATools__RegressionTests__) */

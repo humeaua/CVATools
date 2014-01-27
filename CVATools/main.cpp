@@ -161,6 +161,10 @@ int _main()
         std::cout << std::endl;
         RegressionTest_Interpolation();
         std::cout << std::endl;
+        RegressionTest_VolatilitySurfaceInterpolation();
+        std::cout << std::endl;
+        RegressionTest_ProcessPathSimulation();
+        std::cout << std::endl;
     }
     if (iTest == 1)
     {

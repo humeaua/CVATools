@@ -18,6 +18,8 @@
 #include "InterExtrapolation.h"
 #include <iomanip>
 
+#include "SquareRoot.h"
+
 void RegressionTest_BondPricing(std::ostream & os)
 {
     //////////////////////////////////////////////////////////////
@@ -327,5 +329,29 @@ void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
 void RegressionTest_ProcessPathSimulation(std::ostream & os)
 {
     os << "Process Path Simulation" << std::endl;
-    os << "Not yet implemented !!" << std::endl;
+    const double dX0 = 1.0;
+    Finance::Processes::SquareRoot squareRoot(0.1, 1.0, 0.1, dX0);
+    const double dDates[] = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0};
+    std::vector<double> DatesVec(dDates, dDates + 21);
+    long long lSeed = 0;
+    const double dTolerance = 1e-6;
+    
+    std::vector<double> Results = squareRoot.simulate1path(DatesVec, lSeed);
+    const double dRefValuesSquareRoot[] = {1,1.01533189,1.00218429,0.980863849,0.951722112,0.926746364,0.915307718,0.945391067,0.887362489,0.896643275,0.940587215,0.940422193,0.961310737,0.920984543,0.977360754,0.961919216,0.984237052,0.98193395,1.04122305,1.0258744,1.02188529};
+    
+    double dDiffSquareRoot = 0.0;
+    for (std::size_t iDate = 0 ; iDate < Results.size() ; ++iDate)
+    {
+        dDiffSquareRoot += std::abs(dRefValuesSquareRoot[iDate] - Results[iDate]);
+    }
+    
+    os << "Square Root process Simulation : ";
+    if (dDiffSquareRoot < dTolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+    }
 }

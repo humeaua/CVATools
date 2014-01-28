@@ -65,7 +65,7 @@ namespace Finance
             //  initial values
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
-                sResult(iPath, 0) = 0.0;
+                sResult(iPath, 0) = dX0_;
             }
             
             double dD = 4 * dA_ * dB_ / (dSigma_ * dSigma_);
@@ -90,5 +90,36 @@ namespace Finance
             }
             return sResult;
         }
+        
+        std::vector<double> SquareRoot::simulate1path(const std::vector<double> & dDates, long long& lSeed) const
+        {
+            // simulation according to http://www.awdz65.dsl.pipex.com/eqf013_009.pdf
+            
+            std::size_t iNDates = dDates.size();
+            std::vector<double> sResult(iNDates, 0.0);
+            
+            std::tr1::ranlux64_base_01 eng; // core engine class
+            eng.seed(lSeed);
+            
+            sResult.front() = dX0_;
+            
+            double dD = 4 * dA_ * dB_ / (dSigma_ * dSigma_);
+            double dOldValue, dNewValue;
+            for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
+            {
+                double t0 = dDates.at(iDate - 1), dt = dDates.at(iDate) - t0;
+                dOldValue = sResult[iDate - 1];
+                std::tr1::poisson_distribution<double> poisson(0.5 * NonCentralityParameter(dt) * dOldValue);
+                
+                double dNbOfFreedom = poisson(eng);
+                // 2.0 * gamma_distribution(0.5 * number of degree of freedom) is a chi-squared distribution with the wanted number of degree of freedom
+                std::tr1::gamma_distribution<double> gamma(dNbOfFreedom + 0.5 * dD);
+                dNewValue = 2.0 * gamma(eng) * exp(-dA_ * dt) / NonCentralityParameter(dt);
+                
+                sResult[iDate] = dNewValue;
+            }
+            return sResult;
+        }
+
     }
 }

@@ -48,6 +48,7 @@ namespace Finance
             
             //  Simulation method
             virtual Utilities::SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long& lSeed) const;
+            virtual std::vector<double> simulate1path(const std::vector<double> & dDates, long long& lSeed) const;
         };
     }
 }

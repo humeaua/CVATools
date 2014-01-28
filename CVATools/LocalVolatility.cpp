@@ -18,7 +18,7 @@ namespace Utilities
         
         //  return a simulation data of the simulated path for the diffusion process
         
-        SimulationData LocalVolatility::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long& lSeed) const
+        SimulationData LocalVolatility::simulate(const std::vector<double> &dDates, std::size_t iNPaths, long long& lSeed) const
         {
             std::size_t iNDates = dDates.size();
             SimulationData sResult(iNPaths, iNDates);

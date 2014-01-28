@@ -59,7 +59,7 @@ namespace Finance
         }
         
         //  return a simulation data of the simulated path for the diffusion process
-        Utilities::SimulationData DiffusionProcess::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long & lSeed) const
+        Utilities::SimulationData DiffusionProcess::simulate(const std::vector<double> &dDates, std::size_t iNPaths, long long & lSeed) const
         {
             std::size_t iNDates = dDates.size();
             Utilities::SimulationData sResult(iNPaths,iNDates);
@@ -103,7 +103,7 @@ namespace Finance
             return sResult;
         }
         
-        std::vector<double> DiffusionProcess::Generate1Path(std::vector<double> &dDates, long long & lSeed) const
+        std::vector<double> DiffusionProcess::simulate1path(const std::vector<double> &dDates, long long & lSeed) const
         {
             std::size_t iNDates = dDates.size();
             std::vector<double> dResult(iNDates, dX0_);

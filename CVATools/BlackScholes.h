@@ -15,7 +15,7 @@ namespace Finance
 {
     namespace Processes
     {
-        class BlackScholes : public Finance::Processes::DiffusionProcess
+        class BlackScholes : public DiffusionProcess
         {
         protected:
             double dDrift_, dVol_;

@@ -55,12 +55,13 @@ namespace Finance
                 
                 // (a,b,rho,m,sigma) = argmin sum_i=1^n (vol^2 - a - b(rho(k-m) + sqrt((k-m)^2 + sigma^2)))
                 
-                // â = 1/n \sum_i=1^n vol_i^2
-                double dA = std::inner_product(dStrikes.begin(), dStrikes.end(), dStrikes.begin(), 0.0);
-                dA_.push_back(dA / dStrikes.size());
+                // see http://www.zeliade.com/whitepapers/zwp-0005.pdf for an example of implementation method
                 
+                //  1st step : find \nabla f = 0 everywhere
+                //  if minimum \in domain (arbitrage free domain) then OK
+                //  Else look for minimum in border of domain
                 
-                
+                //  We need at least the volatility to be quoted on 3 strikes (see above paper)
             }
         }
         

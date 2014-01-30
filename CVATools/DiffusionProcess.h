@@ -13,12 +13,13 @@
 #include <vector>
 #include "SimulationData.h"
 #include "StochProcessSimulation.h"
+#include "SimulatedProcess.h"
 
 namespace Finance
 {
     namespace Processes
     {
-        class DiffusionProcess : public StochProcessSimulation
+        class DiffusionProcess : public StochProcessSimulation, public SimulatedProcess
         {
         public:
             DiffusionProcess(double x0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor);

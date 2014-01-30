@@ -12,6 +12,7 @@
 #include <iostream>
 #include <tr1/random>
 #include "SimulationDataMultiDim.h"
+#include <memory>
 
 namespace Finance
 {
@@ -22,7 +23,7 @@ namespace Finance
         protected:
             //  make the engine mutable because the methods are marked const
             //  Actually not very great, would need a proper fix
-            mutable std::tr1::ranlux64_base_01 m_eng;
+            mutable std::auto_ptr<std::tr1::ranlux64_base_01> m_eng;
         public:
             SimulatedProcessMultiDim(long long & lSeed);
             virtual Utilities::SimulationDataMultiDim simulate(const std::vector<double> & dDates,

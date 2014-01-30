@@ -56,7 +56,7 @@ namespace Finance
                 for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
                 {
                     double t0 = dDates.at(iDate - 1), dt = dDates.at(iDate) - t0;
-                    dOldValue *= exp((dDrift_ - dVol_ * dVol_ * 0.5) * dt + dVol_ * sqrt(dt) * dist(m_eng));
+                    dOldValue *= exp((dDrift_ - dVol_ * dVol_ * 0.5) * dt + dVol_ * sqrt(dt) * dist(*m_eng));
                     if (bFloorSimulation_ && dOldValue < 0.0)
                     {
                         sResult(iPath, iDate) = 0.0;

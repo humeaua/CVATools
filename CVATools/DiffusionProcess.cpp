@@ -74,7 +74,7 @@ namespace Finance
                 {
                     double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
                     sResult.AddDate(dDates[iDate]);
-                    dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(m_eng);
+                    dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(*m_eng);
                     if (bFloorSimulation_ && dOldValue < dFloor_)
                     {
                         sResult(iPath, iDate) = dFloor_; 
@@ -110,7 +110,7 @@ namespace Finance
             for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
             {
                 double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
-                dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(m_eng);
+                dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(*m_eng);
                 if (bFloorSimulation_ && dOldValue < dFloor_)
                 {
                     dResult[iDate] = dFloor_;
@@ -149,7 +149,7 @@ namespace Finance
         double DiffusionProcess::Generate1(double t0, double x0, double dt) const
         {
             std::tr1::normal_distribution<double> dist(expectation(t0, x0, dt),stdev(t0, x0, dt));
-            return dist(m_eng);
+            return dist(*m_eng);
         }
     }
 }

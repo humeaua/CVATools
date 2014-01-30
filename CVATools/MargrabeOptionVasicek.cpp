@@ -142,7 +142,7 @@ namespace Finance
                     double dt = dDates[iDate] - dDates[iDate - 1];
                     for (std::size_t i = 0 ; i < 3 ; ++i)
                     {
-                        dRandomNumbers.at(i) = dist(m_eng);
+                        dRandomNumbers.at(i) = dist(*m_eng);
                     }
                     mult(dCorrelatedRN, sCholDec, dRandomNumbers);
                     

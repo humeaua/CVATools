@@ -12,9 +12,9 @@ namespace Finance
 {
     namespace Processes
     {
-        SimulatedProcess::SimulatedProcess(long long & lSeed)
+        SimulatedProcess::SimulatedProcess(long long & lSeed) : m_eng(new std::tr1::ranlux64_base_01)
         {
-            m_eng.seed(lSeed);
+            m_eng->seed(lSeed);
         }
     }
 }

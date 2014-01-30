@@ -77,10 +77,10 @@ namespace Finance
                     dOldValue = sResult(iPath,iDate - 1);
                     std::tr1::poisson_distribution<double> poisson(0.5 * NonCentralityParameter(dt) * dOldValue);
                     
-                    double dNbOfFreedom = poisson(m_eng);
+                    double dNbOfFreedom = poisson(*m_eng);
                     // 2.0 * gamma_distribution(0.5 * number of degree of freedom) is a chi-squared distribution with the wanted number of degree of freedom
                     std::tr1::gamma_distribution<double> gamma(dNbOfFreedom + 0.5 * dD);
-                    dNewValue = 2.0 * gamma(m_eng) * exp(-dA_ * dt) / NonCentralityParameter(dt);
+                    dNewValue = 2.0 * gamma(*m_eng) * exp(-dA_ * dt) / NonCentralityParameter(dt);
                     
                     sResult(iPath, iDate) = dNewValue;
                 }
@@ -105,10 +105,10 @@ namespace Finance
                 dOldValue = sResult[iDate - 1];
                 std::tr1::poisson_distribution<double> poisson(0.5 * NonCentralityParameter(dt) * dOldValue);
                 
-                double dNbOfFreedom = poisson(m_eng);
+                double dNbOfFreedom = poisson(*m_eng);
                 // 2.0 * gamma_distribution(0.5 * number of degree of freedom) is a chi-squared distribution with the wanted number of degree of freedom
                 std::tr1::gamma_distribution<double> gamma(dNbOfFreedom + 0.5 * dD);
-                dNewValue = 2.0 * gamma(m_eng) * exp(-dA_ * dt) / NonCentralityParameter(dt);
+                dNewValue = 2.0 * gamma(*m_eng) * exp(-dA_ * dt) / NonCentralityParameter(dt);
                 
                 sResult[iDate] = dNewValue;
             }

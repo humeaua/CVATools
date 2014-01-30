@@ -12,6 +12,7 @@
 #include <iostream>
 #include "SimulationData.h"
 #include <tr1/random>
+#include <memory>
 
 namespace Finance
 {
@@ -23,7 +24,7 @@ namespace Finance
         protected:
             //  make the engine mutable because the methods are marked const
             //  Actually not very great, would need a proper fix
-            mutable std::tr1::ranlux64_base_01 m_eng;
+            mutable std::auto_ptr<std::tr1::ranlux64_base_01> m_eng;
         public:
             SimulatedProcess(long long & lSeed);
             virtual Utilities::SimulationData simulate(const std::vector<double> & dDates,

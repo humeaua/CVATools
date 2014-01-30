@@ -40,7 +40,7 @@ namespace Utilities
                     dt = dDates.at(iDate) - t0;
                     dDrift = drift(t0, dOldValue);
                     dVol = SigmaLoc(t0, dOldValue);
-                    dOldValue *= exp((dDrift - dVol  * dVol * 0.5) * dt + dVol * sqrt(dt) * dist(m_eng));
+                    dOldValue *= exp((dDrift - dVol  * dVol * 0.5) * dt + dVol * sqrt(dt) * dist(*m_eng));
                     
                     sResult(iPath, iDate) = dOldValue;
                 }

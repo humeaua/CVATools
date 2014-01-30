@@ -96,7 +96,7 @@ namespace Finance
                     //  Generate the random numbers
                     for (std::size_t i = 0 ; i < iNDimensions_ ; ++i)
                     {
-                        dRandomNumbers.at(i) = dist(m_eng);
+                        dRandomNumbers.at(i) = dist(*m_eng);
                     }
                     
                     DVector dCorrelatedNumbers;

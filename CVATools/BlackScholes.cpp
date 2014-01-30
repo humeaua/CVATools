@@ -14,7 +14,7 @@ namespace Finance
 {
     namespace Processes
     {
-        BlackScholes::BlackScholes(double dDrift, double dVol, double dX0) : dDrift_(dDrift), dVol_(dVol), DiffusionProcess(dX0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())
+        BlackScholes::BlackScholes(double dDrift, double dVol, double dX0, long long & lSeed) : dDrift_(dDrift), dVol_(dVol), DiffusionProcess(dX0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), lSeed)
         {}
         
         double BlackScholes::drift(double dt, double dx) const
@@ -39,13 +39,11 @@ namespace Finance
         
         //  return a simulation data of the simulated path for the diffusion process
         
-        Utilities::SimulationData BlackScholes::simulate(std::vector<double> &dDates, std::size_t iNPaths, long long& lSeed) const
+        Utilities::SimulationData BlackScholes::simulate(const std::vector<double> &dDates, std::size_t iNPaths) const
         {
             std::size_t iNDates = dDates.size();
             Utilities::SimulationData sResult(iNPaths, iNDates);
             
-            std::tr1::ranlux64_base_01 eng; // core engine class
-            eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
             {
@@ -58,7 +56,7 @@ namespace Finance
                 for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
                 {
                     double t0 = dDates.at(iDate - 1), dt = dDates.at(iDate) - t0;
-                    dOldValue *= exp((dDrift_ - dVol_ * dVol_ * 0.5) * dt + dVol_ * sqrt(dt) * dist(eng));
+                    dOldValue *= exp((dDrift_ - dVol_ * dVol_ * 0.5) * dt + dVol_ * sqrt(dt) * dist(m_eng));
                     if (bFloorSimulation_ && dOldValue < 0.0)
                     {
                         sResult(iPath, iDate) = 0.0;

@@ -7,7 +7,6 @@
 //
 
 #include "DiffusionProcess.h"
-#include <tr1/random>
 
 /**********************************************************************************
  General diffusion process classes
@@ -19,7 +18,7 @@ namespace Finance
 {
     namespace Processes
     {
-        DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor) : dX0_(dX0), StochProcessSimulation(bFloorSimulation, bStartFromFloor, bCapSimulation, bStartFromCap, dCap, dFloor)
+        DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor, long long & lSeed) : dX0_(dX0), StochProcessSimulation(bFloorSimulation, bStartFromFloor, bCapSimulation, bStartFromCap, dCap, dFloor), SimulatedProcess(lSeed)
         {}
         
         double DiffusionProcess::getx0() const
@@ -59,13 +58,11 @@ namespace Finance
         }
         
         //  return a simulation data of the simulated path for the diffusion process
-        Utilities::SimulationData DiffusionProcess::simulate(const std::vector<double> &dDates, std::size_t iNPaths, long long & lSeed) const
+        Utilities::SimulationData DiffusionProcess::simulate(const std::vector<double> &dDates, std::size_t iNPaths) const
         {
             std::size_t iNDates = dDates.size();
             Utilities::SimulationData sResult(iNPaths,iNDates);
             
-            std::tr1::ranlux64_base_01 eng; // core engine class
-            eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             double dDate0 = dDates.at(0);
             sResult.AddDate(dDate0);
@@ -77,7 +74,7 @@ namespace Finance
                 {
                     double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
                     sResult.AddDate(dDates[iDate]);
-                    dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
+                    dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(m_eng);
                     if (bFloorSimulation_ && dOldValue < dFloor_)
                     {
                         sResult(iPath, iDate) = dFloor_; 
@@ -103,19 +100,17 @@ namespace Finance
             return sResult;
         }
         
-        std::vector<double> DiffusionProcess::simulate1path(const std::vector<double> &dDates, long long & lSeed) const
+        std::vector<double> DiffusionProcess::simulate1path(const std::vector<double> &dDates) const
         {
             std::size_t iNDates = dDates.size();
             std::vector<double> dResult(iNDates, dX0_);
-            std::tr1::ranlux64_base_01 eng; // core engine class
-            eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             
             double dOldValue = dX0_;
             for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
             {
                 double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
-                dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(eng);
+                dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(m_eng);
                 if (bFloorSimulation_ && dOldValue < dFloor_)
                 {
                     dResult[iDate] = dFloor_;
@@ -141,23 +136,20 @@ namespace Finance
         }
         
         std::vector<double> DiffusionProcess::Generate1Step(double t0, double x0, double dt,
-                                          std::size_t iNPaths, long long & lSeed) const
+                                          std::size_t iNPaths) const
         {
             std::vector<double> dResults;
             for (std::size_t i = 0 ; i < iNPaths ; ++i)
             {
-                dResults.push_back(Generate1(t0, x0, dt, lSeed));
+                dResults.push_back(Generate1(t0, x0, dt));
             }
             return dResults;
         }
         
-        double DiffusionProcess::Generate1(double t0, double x0, double dt, long long & lSeed) const
+        double DiffusionProcess::Generate1(double t0, double x0, double dt) const
         {
-            std::tr1::ranlux64_base_01 eng(lSeed); // core engine class
             std::tr1::normal_distribution<double> dist(expectation(t0, x0, dt),stdev(t0, x0, dt));
-            double dResult = dist(eng);
-            lSeed = (long long)((dResult - x0) * powl(2, 64));
-            return dResult;
+            return dist(m_eng);
         }
     }
 }

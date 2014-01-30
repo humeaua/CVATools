@@ -28,11 +28,11 @@ namespace Utilities
         protected:
             
         public:
-            LocalVolatility(double x0);
+            LocalVolatility(double x0, long long & lSeed);
             
             virtual double SigmaLoc(double t, double dS) const = 0;
             
-            virtual SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long& lSeed) const;
+            virtual SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths) const;
         };
     }
 }

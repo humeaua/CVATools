@@ -7,3 +7,14 @@
 //
 
 #include "SimulatedProcess.h"
+
+namespace Finance
+{
+    namespace Processes
+    {
+        SimulatedProcess::SimulatedProcess(long long & lSeed)
+        {
+            m_eng.seed(lSeed);
+        }
+    }
+}

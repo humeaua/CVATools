@@ -21,7 +21,7 @@ namespace Finance
             double dDrift_, dVol_;
             
         public:
-            BlackScholes(double dDrift, double dVol, double dX0);
+            BlackScholes(double dDrift, double dVol, double dX0, long long & lSeed);
             
             virtual double drift(double dt, double dx) const;
             virtual double diffusion(double dt, double dx) const;
@@ -38,7 +38,7 @@ namespace Finance
             // no term-structure
             virtual double variance(double t0, double x0, double dt) const;
             
-            virtual Utilities::SimulationData simulate(std::vector<double> &dDates, std::size_t iNPaths, long long& lSeed) const;
+            virtual Utilities::SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths) const;
         };
     }
 }

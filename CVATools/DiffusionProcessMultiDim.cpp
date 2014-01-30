@@ -14,7 +14,7 @@ namespace Finance
 {
     namespace Processes
     {
-        DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Utilities::Matrix<double> & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation> & sSimulationParams) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix), dX0_(dX0)
+        DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Utilities::Matrix<double> & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation> & sSimulationParams, long long & lSeed) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix), dX0_(dX0), sSimulationParams_(sSimulationParams), SimulatedProcessMultiDim(lSeed)
         {
             assert(iNDimensions_ == sCorrelationMatrix_.getrows());
             assert(iNDimensions_ == sCorrelationMatrix_.getcols());
@@ -70,8 +70,6 @@ namespace Finance
             Utilities::SimulationDataMultiDim sResult;
             std::size_t iNDates = dDates.size();
             
-            std::tr1::ranlux64_base_01 eng; // core engine class
-            eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             
             DVector dOldValues, dRandomNumbers(iNDimensions_);
@@ -98,7 +96,7 @@ namespace Finance
                     //  Generate the random numbers
                     for (std::size_t i = 0 ; i < iNDimensions_ ; ++i)
                     {
-                        dRandomNumbers.at(i) = dist(eng);
+                        dRandomNumbers.at(i) = dist(m_eng);
                     }
                     
                     DVector dCorrelatedNumbers;

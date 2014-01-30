@@ -29,7 +29,7 @@ namespace Finance
             double dA_, dB_, dSigma_;
             
         public:
-            OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0);
+            OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0, long long & lSeed);
             
             virtual double drift(double dt, double dx) const;
             virtual double diffusion(double dt, double dx) const;

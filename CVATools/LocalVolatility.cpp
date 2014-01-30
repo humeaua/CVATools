@@ -13,18 +13,16 @@ namespace Utilities
 {
     namespace Processes
     {
-        LocalVolatility::LocalVolatility(double S0) : DiffusionProcess(S0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())
+        LocalVolatility::LocalVolatility(double S0, long long & lSeed) : DiffusionProcess(S0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), lSeed)
         {}
         
         //  return a simulation data of the simulated path for the diffusion process
         
-        SimulationData LocalVolatility::simulate(const std::vector<double> &dDates, std::size_t iNPaths, long long& lSeed) const
+        SimulationData LocalVolatility::simulate(const std::vector<double> &dDates, std::size_t iNPaths) const
         {
             std::size_t iNDates = dDates.size();
             SimulationData sResult(iNPaths, iNDates);
             
-            std::tr1::ranlux64_base_01 eng; // core engine class
-            eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             double dOldValue, dDrift, t0, dt, dVol;
             // Add dates first because path-by-path simulations (don't know why)
@@ -42,7 +40,7 @@ namespace Utilities
                     dt = dDates.at(iDate) - t0;
                     dDrift = drift(t0, dOldValue);
                     dVol = SigmaLoc(t0, dOldValue);
-                    dOldValue *= exp((dDrift - dVol  * dVol * 0.5) * dt + dVol * sqrt(dt) * dist(eng));
+                    dOldValue *= exp((dDrift - dVol  * dVol * 0.5) * dt + dVol * sqrt(dt) * dist(m_eng));
                     
                     sResult(iPath, iDate) = dOldValue;
                 }

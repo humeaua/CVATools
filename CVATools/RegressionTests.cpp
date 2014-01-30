@@ -214,7 +214,8 @@ void RegressionTest_PayoffLinearization(std::ostream & os)
     os << std::endl;
     // Payoff Linearisation
     Finance::Payoff::PayoffVanillaOption sPayoff(1.0, ::Finance::Payoff::CALL);
-    Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0);
+    long long lSeed = 0;
+    Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0, lSeed);
     
     Maths::PayoffLinearization sPayoffLinearization(1000);
     
@@ -332,14 +333,15 @@ void RegressionTest_ProcessPathSimulation(std::ostream & os)
 {
     os << "Process Path Simulation" << std::endl;
     const double dX0 = 1.0;
-    const Finance::Processes::SquareRoot squareRoot(0.1, 1.0, 0.1, dX0);
-    const Finance::Processes::OrnsteinUhlenbeck ornsteinUhlenbeck(0.1, 1.0, 0.1, dX0);
+    
+    long long lSeed = 0;
+    const Finance::Processes::SquareRoot squareRoot(0.1, 1.0, 0.1, dX0, lSeed);
+    const Finance::Processes::OrnsteinUhlenbeck ornsteinUhlenbeck(0.1, 1.0, 0.1, dX0, lSeed);
     const double dDates[] = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0};
     std::vector<double> DatesVec(dDates, dDates + 21);
-    long long lSeed = 0;
     const double dTolerance = 1e-6;
     
-    std::vector<double> ResultsSR = squareRoot.simulate1path(DatesVec, lSeed), ResultsOU = ornsteinUhlenbeck.simulate1path(DatesVec, lSeed);
+    std::vector<double> ResultsSR = squareRoot.simulate1path(DatesVec), ResultsOU = ornsteinUhlenbeck.simulate1path(DatesVec);
     
     const double dRefValuesSquareRoot[] = {1,1.01533189,1.00218429,0.980863849,0.951722112,0.926746364,0.915307718,0.945391067,0.887362489,0.896643275,0.940587215,0.940422193,0.961310737,0.920984543,0.977360754,0.961919216,0.984237052,0.98193395,1.04122305,1.0258744,1.02188529};
     const double dRefValuesOU[] = {1,0.999208646,1.01024586,1.04327062,1.0151356,1.03420104,1.02086556,1.04054557,1.05788609,1.06227928,1.01526912,0.952106248,0.976487794,1.01307013,1.02616416,1.0676393,1.07698467,1.08466054,1.16087981,1.16508758,1.11629776};

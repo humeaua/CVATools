@@ -14,7 +14,7 @@ namespace Finance
 {
     namespace Processes
     {
-        OrnsteinUhlenbeck::OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0) : dA_(dA), dB_(dB), dSigma_(dSigma), DiffusionProcess(dX0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity())
+        OrnsteinUhlenbeck::OrnsteinUhlenbeck(double dA, double dB, double dSigma, double dX0, long long & lSeed) : dA_(dA), dB_(dB), dSigma_(dSigma), DiffusionProcess(dX0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), lSeed)
         {}
         
         double OrnsteinUhlenbeck::drift(double dt, double dx) const

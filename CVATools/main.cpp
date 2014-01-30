@@ -168,31 +168,31 @@ int _main()
     }
     if (iTest == 1)
     {
-        Finance::Processes::OrnsteinUhlenbeck sOU(0.05, 0.2, 0.1, 0.2);
-        std::size_t iNDates = 100, iNPaths = 10;
         long long lSeed = 0;
+        Finance::Processes::OrnsteinUhlenbeck sOU(0.05, 0.2, 0.1, 0.2, lSeed);
+        std::size_t iNDates = 100, iNPaths = 10;
         std::vector<double> dDates;
         double dT = 1;
         for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
         {
             dDates.push_back(dT * iDate / iNDates);
         }
-        Utilities::SimulationData sResult = sOU.simulate(dDates, iNPaths, lSeed);
+        Utilities::SimulationData sResult = sOU.simulate(dDates, iNPaths);
         Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/OrnsteinUlhenbeck.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 2)
     {
-        Finance::Processes::SquareRoot sSquareRoot(0.2, 0.2, 0.2, 0.2);
-        std::size_t iNDates = 1000, iNPaths = 10;
         long long lSeed = 0;
+        Finance::Processes::SquareRoot sSquareRoot(0.2, 0.2, 0.2, 0.2, lSeed);
+        std::size_t iNDates = 1000, iNPaths = 10;
         std::vector<double> dDates;
         double dT = 10;
         for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
         {
             dDates.push_back(dT * iDate / iNDates);
         }
-        Utilities::SimulationData sResult = sSquareRoot.simulate(dDates, iNPaths, lSeed);
+        Utilities::SimulationData sResult = sSquareRoot.simulate(dDates, iNPaths);
         Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/SquareRoot.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
@@ -200,16 +200,16 @@ int _main()
     {
         try
         {
-            Finance::Processes::BlackScholes sBS(0.08, 0.4, 10);
-            std::size_t iNDates = 10, iNPaths = 10;
             long long lSeed = 1;
+            Finance::Processes::BlackScholes sBS(0.08, 0.4, 10, lSeed);
+            std::size_t iNDates = 10, iNPaths = 10;
             std::vector<double> dDates;
             double dT = 10;
             for (std::size_t iDate = 0 ; iDate <= iNDates ; ++iDate)
             {
                 dDates.push_back(dT * iDate / iNDates);
             }
-            Utilities::SimulationData sResult = sBS.simulate(dDates, iNPaths, lSeed);
+            Utilities::SimulationData sResult = sBS.simulate(dDates, iNPaths);
             Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/BlackScholes.csv", false, 10);
             sPrint.PrintInFile(sResult.GetData());
         }
@@ -249,19 +249,19 @@ int _main()
         dInitialValues.at(0) = log(100);
         dInitialValues.at(1) = log(100);
         dInitialValues.at(2) = 0.02; // value for initial short rate
+        long long lSeed = 0;
         
-        Finance::Option::MargrabeOptionVasicek sOption(1.0, 1, sCorrelMatrix, dInitialValues, 0.05, 0.03, 0.01, 0.2, 0.3);
+        Finance::Option::MargrabeOptionVasicek sOption(1.0, 1, sCorrelMatrix, dInitialValues, 0.05, 0.03, 0.01, 0.2, 0.3, lSeed);
         
         //  Simulation Values
         std::vector<double> dDates;
         std::size_t iNDates = 100, iNPaths = 10;
-        long long lSeed = 0;
         for (std::size_t i = 0 ; i < iNDates; ++i)
         {
             dDates.push_back((double)i /iNDates);
         }
         
-        Utilities::SimulationDataMultiDim sData = sOption.simulate(dDates, iNPaths, lSeed);
+        Utilities::SimulationDataMultiDim sData = sOption.simulate(dDates, iNPaths);
         std::map<double, std::map<std::size_t, DVector> > sDatamap = sData.GetData();
         for (std::size_t i = 0 ; i < 4 ; ++i)
         {
@@ -483,8 +483,9 @@ int _main()
     else if (iTest == 13)
     {
         // Payoff Linearisation
+        long long lSeed = 0;
         Finance::Payoff::PayoffVanillaOption sPayoff(1.0, Finance::Payoff::CALL);
-        Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0);
+        Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0, lSeed);
         
         Maths::PayoffLinearization sPayoffLinearization(1000);
         
@@ -586,30 +587,29 @@ int _main()
     }
     else if (iTest == 18)
     {
-        Finance::Processes::StochCorrel sStochCorrel(1.0, 1.0, 0.2, 0.5);
-        std::size_t iNDates = 500, iNPaths = 10;
         long long lSeed = 0;
+        Finance::Processes::StochCorrel sStochCorrel(1.0, 1.0, 0.2, 0.5, lSeed);
+        std::size_t iNDates = 500, iNPaths = 10;
         std::vector<double> dDates;
         double dT = 10;
         for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
         {
             dDates.push_back(dT * iDate / iNDates);
         }
-        Utilities::SimulationData sResult = sStochCorrel.simulate(dDates, iNPaths, lSeed);
+        Utilities::SimulationData sResult = sStochCorrel.simulate(dDates, iNPaths);
         Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/StochCorrel.csv", false, 10);
         sPrint.PrintInFile(sResult.GetData());
     }
     else if (iTest == 19)
     {
         // Test for random numbers
-        Finance::Processes::BlackScholes sBS(0.08, 0.4, 1);
         long long lSeed = 1;
+        Finance::Processes::BlackScholes sBS(0.08, 0.4, 1, lSeed);
         for (std::size_t i = 0 ; i < 10 ; ++i)
         {
-            double sResult = sBS.Generate1(0.0, 1.0, 0.1, lSeed);
+            double sResult = sBS.Generate1(0.0, 1.0, 0.1);
             std::cout << "Step " << i << " : " << std::endl;
             std::cout << "Result : " << sResult << std::endl;
-            std::cout << "Seed : " << lSeed << std::endl;
             
             std::cout << " " << std::endl;
         }

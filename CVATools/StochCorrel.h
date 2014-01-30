@@ -31,7 +31,7 @@ namespace Finance
             double dSigma_;
             
         public:
-            StochCorrel(double dLambda, double dRhoInfty, double dSigma, double dRho0);
+            StochCorrel(double dLambda, double dRhoInfty, double dSigma, double dRho0, long long & lSeed);
             
             // returns the drift part of the equation, i.e. mu(t, x_t)
             virtual double drift(double dt, double dx) const;

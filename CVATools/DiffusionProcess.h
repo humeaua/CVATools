@@ -22,7 +22,7 @@ namespace Finance
         class DiffusionProcess : public StochProcessSimulation, public SimulatedProcess
         {
         public:
-            DiffusionProcess(double x0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor);
+            DiffusionProcess(double x0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor, long long & lSeed);
             
             double getx0() const;
             
@@ -54,14 +54,14 @@ namespace Finance
             // sigma(t_0, x_0) sqrt(\Delta t) .
             virtual double stdev(double t0, double x0, double dt) const;
             
-            virtual Utilities::SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long& lSeed) const;
+            virtual Utilities::SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths) const;
             
-            virtual std::vector<double> simulate1path(const std::vector<double> & dDates, long long& lSeed) const;
+            virtual std::vector<double> simulate1path(const std::vector<double> & dDates) const;
             
             virtual std::vector<double> Generate1Step(double t0, double x0, double dt,
-                                                      std::size_t iNPaths, long long & lSeed) const;
+                                                      std::size_t iNPaths) const;
             
-            virtual double Generate1(double t0, double x0, double dt, long long & lSeed) const;
+            virtual double Generate1(double t0, double x0, double dt) const;
             
         protected:
             double dX0_;

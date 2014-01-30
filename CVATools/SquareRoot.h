@@ -29,7 +29,7 @@ namespace Finance
             virtual double NonCentralityParameter(double dt) const;
             
         public:
-            SquareRoot(double dA, double dB, double dSigma, double dX0);
+            SquareRoot(double dA, double dB, double dSigma, double dX0, long long & lSeed);
             
             virtual double drift(double dt, double dx) const;
             virtual double diffusion(double dt, double dx) const;
@@ -47,8 +47,8 @@ namespace Finance
             virtual double variance(double t0, double x0, double dt) const;
             
             //  Simulation method
-            virtual Utilities::SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths, long long& lSeed) const;
-            virtual std::vector<double> simulate1path(const std::vector<double> & dDates, long long& lSeed) const;
+            virtual Utilities::SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths) const;
+            virtual std::vector<double> simulate1path(const std::vector<double> & dDates) const;
         };
     }
 }

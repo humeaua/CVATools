@@ -60,8 +60,7 @@ namespace Maths
                                                              std::vector<double> &dSimulationDates) const
     {
         //  Simulate the stock price
-        long long lSeed = 0;
-        Utilities::SimulationData sSimulatedData = sDiffusionProcess.simulate(dSimulationDates, iNPaths_, lSeed); // taking a reference now
+        Utilities::SimulationData sSimulatedData = sDiffusionProcess.simulate(dSimulationDates, iNPaths_);
         
         std::vector<double> dPayoff(iNPaths_, 0.0);
         

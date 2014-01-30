@@ -21,9 +21,10 @@ namespace Finance
                                                      double dB,
                                                      double dSigma,
                                                      double dSigma1,
-                                                     double dSigma2)
+                                                     double dSigma2,
+                                                     long long & lSeed)
         :
-        MargrabeOptionStochasticRates(dT, dK, sCorrelationMatrix, dInitialValues, dSigma1, dSigma2),
+        MargrabeOptionStochasticRates(dT, dK, sCorrelationMatrix, dInitialValues, dSigma1, dSigma2, lSeed),
         dA_(dA),
         dB_(dB),
         dSigma_(dSigma)
@@ -39,9 +40,10 @@ namespace Finance
                                                      double dB,
                                                      double dSigma,
                                                      double dSigma1,
-                                                     double dSigma2)
+                                                     double dSigma2,
+                                                     long long & lSeed)
         :
-        MargrabeOptionStochasticRates(dT, dK, dRho12, dRhor1, dRhor2, dInitialValues, dSigma1, dSigma2),
+        MargrabeOptionStochasticRates(dT, dK, dRho12, dRhor1, dRhor2, dInitialValues, dSigma1, dSigma2, lSeed),
         dA_(dA),
         dB_(dB),
         dSigma_(dSigma)
@@ -56,9 +58,10 @@ namespace Finance
                                                      double dSigma,
                                                      double dSigma1,
                                                      double dSigma2,
-                                                     const std::vector<Processes::StochProcessSimulation> & sSimulationParams)
+                                                     const std::vector<Processes::StochProcessSimulation> & sSimulationParams,
+                                                     long long & lSeed)
         :
-        MargrabeOptionStochasticRates(dT, dK, sCorrelationMatrix, dInitialValues, dSigma1, dSigma2, sSimulationParams),
+        MargrabeOptionStochasticRates(dT, dK, sCorrelationMatrix, dInitialValues, dSigma1, dSigma2, sSimulationParams, lSeed),
         dA_(dA),
         dB_(dB),
         dSigma_(dSigma)
@@ -75,9 +78,10 @@ namespace Finance
                                                      double dSigma,
                                                      double dSigma1,
                                                      double dSigma2,
-                                                     const std::vector<Processes::StochProcessSimulation> & sSimulationParams)
+                                                     const std::vector<Processes::StochProcessSimulation> & sSimulationParams,
+                                                     long long & lSeed)
         :
-        MargrabeOptionStochasticRates(dT, dK, dRho12, dRhor1, dRhor2, dInitialValues, dSigma1, dSigma2, sSimulationParams),
+        MargrabeOptionStochasticRates(dT, dK, dRho12, dRhor1, dRhor2, dInitialValues, dSigma1, dSigma2, sSimulationParams, lSeed),
         dA_(dA),
         dB_(dB),
         dSigma_(dSigma)
@@ -107,14 +111,12 @@ namespace Finance
         }
         
         //  Simulation method
-        Utilities::SimulationDataMultiDim MargrabeOptionVasicek::simulate(std::vector<double> & dDates, std::size_t iNPaths, long long lSeed) const
+        Utilities::SimulationDataMultiDim MargrabeOptionVasicek::simulate(std::vector<double> & dDates, std::size_t iNPaths) const
         {
             //  we need to store the two asset prices, the integral of the short rate and the short rate itself
             Utilities::SimulationDataMultiDim sResult(dDates, iNPaths, 4);
             
             //  Set random number simulator engine
-            std::tr1::ranlux64_base_01 eng; // core engine class
-            eng.seed(lSeed);
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             
             //   store values for initial time step
@@ -140,7 +142,7 @@ namespace Finance
                     double dt = dDates[iDate] - dDates[iDate - 1];
                     for (std::size_t i = 0 ; i < 3 ; ++i)
                     {
-                        dRandomNumbers.at(i) = dist(eng);
+                        dRandomNumbers.at(i) = dist(m_eng);
                     }
                     mult(dCorrelatedRN, sCholDec, dRandomNumbers);
                     

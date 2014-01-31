@@ -1,0 +1,64 @@
+//
+//  VolSmile.cpp
+//  CVATools
+//
+//  Created by Alexandre HUMEAU on 31/01/14.
+//
+//
+
+#include "VolSmile.h"
+#include <cmath>
+#include "Require.h"
+#include "MathFunctions.h"
+
+namespace Finance
+{
+    namespace Volatility
+    {
+        VolSmile::VolSmile(const std::vector<double> & dStrikes,
+                           const std::vector<double> & dVolatilities,
+                           double dFwdRef,
+                           double T) : Utilities::Interp::HermiteSplineCubicInterpolator(dStrikes, dVolatilities), dFwdRef_(dFwdRef), dMaturity_(T)
+        {
+            REQUIREEXCEPTION(T >= 0.0, "Maturity is negative");
+            std::transform(dVariables_.begin(), dVariables_.end(), dVariables_.begin(), bind2nd(std::divides<double>(), dFwdRef));
+            std::for_each(dVariables_.begin(), dVariables_.end(), log);
+        }
+        
+        bool VolSmile::CheckButterflySpreadArbitrage() const
+        {
+            double dOldStrike0 = dFwdRef_ * exp(dVariables_[0]), dOldStrike1 = dFwdRef_ * exp(dVariables_[1]);
+            for (std::size_t i = 1 ; i < dVariables_.size() - 1 ; ++i)
+            {
+                double Strike = dFwdRef_ * exp(dVariables_[i+1]);
+                
+                if (CallPrice(dOldStrike0) + CallPrice(Strike) - 2.0 * CallPrice(dOldStrike1) < 0.0)
+                {
+                    return false;
+                }
+                dOldStrike0 = dOldStrike1;
+                dOldStrike1 = Strike;
+            }
+            return true;
+        }
+        
+        double VolSmile::CallPrice(double K) const
+        {
+            REQUIREEXCEPTION(K > 0, "Strike is negative");
+            const double logFwdOverStrike = log(dFwdRef_ / K);
+            const double volatility = (*this)(-logFwdOverStrike);
+            if (volatility == 0.0)
+            {
+                return std::max(dFwdRef_ - K, 0.0);
+            }
+            const double d1 = logFwdOverStrike / (volatility * sqrt(dMaturity_)) + 0.5 * volatility * sqrt(dMaturity_), d2 = d1 - volatility * sqrt(dMaturity_);
+            
+            return dFwdRef_ * Maths::AccCumNorm(d1) - K * Maths::AccCumNorm(d2);
+        }
+        
+        bool VolSmile::IsArbitrageFree() const
+        {
+            return CheckButterflySpreadArbitrage();
+        }
+    }
+}

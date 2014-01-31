@@ -13,7 +13,7 @@ namespace Utilities
 {
     namespace Processes
     {
-        LocalVolatility::LocalVolatility(double S0, long long & lSeed) : DiffusionProcess(S0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), lSeed)
+        LocalVolatility::LocalVolatility(double S0, long long & lSeed) : DiffusionProcess(S0, false, false, false, false, std::numeric_limits<double>::infinity(), -std::numeric_limits<double>::infinity(), lSeed)//, SigmaLoc(zero)
         {}
         
         //  return a simulation data of the simulated path for the diffusion process

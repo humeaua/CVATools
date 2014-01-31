@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "DiffusionProcess.h"
+#include <functional>
 
 /*
  Implementation of a local volatility class
@@ -23,10 +24,13 @@ namespace Utilities
 {
     namespace Processes
     {
+        double zero(double, double);
+        double zero(double, double) {return 0.0;};
+        
         class LocalVolatility : public Finance::Processes::DiffusionProcess
         {
         protected:
-            
+            //std::tr1::function<double (double, double)> SigmaLoc0;
         public:
             LocalVolatility(double x0, long long & lSeed);
             

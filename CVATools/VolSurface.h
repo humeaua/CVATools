@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "SVIParameters.h"
+#include "VolSmile.h"
 
 namespace Finance
 {

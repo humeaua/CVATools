@@ -9,7 +9,7 @@
 #include "KernelFunction.h"
 #include "Require.h"
 #include <cmath>
-#include "Vector.h"
+#include "VectorUtilities.h"
 
 namespace Maths
 {

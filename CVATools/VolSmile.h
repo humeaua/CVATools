@@ -28,6 +28,11 @@ namespace Finance
             VolSmile(const std::vector<double> & dStrikes, const std::vector<double> & dVols, double dFwdRef, double T);
             
             virtual bool IsArbitrageFree() const;
+            
+            virtual double GetFirstStrike() const;
+            virtual double GetLastStrike() const;
+            virtual double GetMeanStrike() const;
+            virtual double GetStdDevStrike() const; // TEST : to get the parameter sigma in SVI ?
         };
     }
 }

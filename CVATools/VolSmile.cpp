@@ -10,6 +10,7 @@
 #include <cmath>
 #include "Require.h"
 #include "MathFunctions.h"
+#include "VectorUtilities.h"
 
 namespace Finance
 {
@@ -59,6 +60,26 @@ namespace Finance
         bool VolSmile::IsArbitrageFree() const
         {
             return CheckButterflySpreadArbitrage();
+        }
+        
+        double VolSmile::GetFirstStrike() const
+        {
+            return dVariables_.front();
+        }
+        
+        double VolSmile::GetLastStrike() const
+        {
+            return dVariables_.back();
+        }
+        
+        double VolSmile::GetMeanStrike() const
+        {
+            return Utilities::Mean<double, double>(dVariables_);
+        }
+        
+        double VolSmile::GetStdDevStrike() const
+        {
+            return Utilities::StdDev<double, double>(dVariables_);
         }
     }
 }

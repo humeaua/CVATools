@@ -13,7 +13,6 @@
 #include <stdexcept>
 #include "Require.h"
 #include <numeric>
-#include <algorithm>
 
 namespace Utilities
 {
@@ -105,22 +104,6 @@ namespace Utilities
             return std::accumulate(this->begin(), this->end(), 0);
         };
     };
-    
-    template <typename T>
-    T norm_2(const std::vector<T> & vect)
-    {
-        return sqrt(std::inner_product(vect.begin(), vect.end(), vect.begin(), 0.0));
-    }
-    
-    template <typename T>
-    std::vector<T> Diff(const std::vector<T> & vect1, const std::vector<T> & vect2)
-    {
-        REQUIREEXCEPTION(vect1.size() == vect2.size(), "Cannot compute diff, vectors do not have same size");
-        std::vector<T> result(vect1.size());
-        
-        std::transform(vect1.begin(), vect1.end(), vect2.begin(), std::back_inserter(result), std::minus<T>());
-        return result;
-    }
 }
 
 #endif

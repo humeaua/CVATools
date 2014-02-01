@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <cmath>
 #include "Require.h"
+#include <numeric>
 
 namespace Utilities {
     
@@ -144,6 +145,48 @@ namespace Utilities {
             return it - vect.begin();
         else
             return -1;
+    }
+
+    //  Function to return the norm2 of a vector
+    template <typename T>
+    T norm_2(const std::vector<T> & vect)
+    {
+        return sqrt(std::inner_product(vect.begin(), vect.end(), vect.begin(), 0.0));
+    }
+    
+    template <typename T>
+    std::vector<T> Diff(const std::vector<T> & vect1, const std::vector<T> & vect2)
+    {
+        REQUIREEXCEPTION(vect1.size() == vect2.size(), "Cannot compute diff, vectors do not have same size");
+        std::vector<T> result(vect1.size());
+        
+        std::transform(vect1.begin(), vect1.end(), vect2.begin(), std::back_inserter(result), std::minus<T>());
+        return result;
+    }
+    
+    //  Function to return the mean of a vector
+    template<typename InputType, typename ReturnType>
+    ReturnType Mean(const std::vector<InputType> & vect)
+    {
+        REQUIREEXCEPTION(vect.size() > 0, "Size of vector is 0");
+        return (ReturnType)(std::accumulate(vect.begin(), vect.end(), 0.0)) / vect.size();
+    }
+    
+    //  Function to return the mean of a vector
+    template<typename InputType, typename ReturnType>
+    ReturnType Variance(const std::vector<InputType> & vect)
+    {
+        REQUIREEXCEPTION(vect.size() > 1, "Size of vector must be above 1");
+        std::size_t size = vect.size();
+        ReturnType mean = Mean<InputType, ReturnType>(vect);
+        return (ReturnType)(std::inner_product(vect.begin(), vect.end(), vect.begin(), 0.0)) / (size - 1) - mean * mean * size / (size - 1);
+    }
+    
+    //  Function to return the mean of a vector
+    template<typename InputType, typename ReturnType>
+    ReturnType StdDev(const std::vector<InputType> & vect)
+    {
+        return sqrt(Variance<InputType, ReturnType>(vect));
     }
 };
 

@@ -24,18 +24,12 @@ namespace Utilities
         RegressionData(const std::vector<double> & dData);
         
         //  Getters
-        std::size_t GetNbObservations() const
-        {
-            return iNObservations_;
-        }
-        std::size_t GetNbVariables() const
-        {
-            return iNVars_;
-        }
+        virtual std::size_t GetNbObservations() const;
+        virtual std::size_t GetNbVariables() const;
         
         //  Access operators
-        double& operator ()(int i, int j);
-        double& operator ()(int i, int j) const;
+        virtual double& operator ()(int i, int j);
+        virtual double& operator ()(int i, int j) const;
         virtual double& operator ()(size_t i, size_t j);
         virtual double& operator ()(size_t i, size_t j) const;
     };

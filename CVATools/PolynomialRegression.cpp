@@ -76,11 +76,7 @@ namespace Maths
         std::size_t iNVars = sPolyRegPms_.sPowerAndRegVariables.size(), iNVarsLoc = iNVars + (bAddConstantInRegression_ ? 1 : 0), iNObservations = sRegressionData.GetNbObservations();
         Utilities::Matrix<double> sCovarianceMatrix(iNVarsLoc, iNVarsLoc);
         
-        double ** dMatrix = new double*[iNVarsLoc];
-        for (std::size_t i = 0 ; i < iNVarsLoc ; ++i)
-        {
-            dMatrix[i] = new double[iNVarsLoc];
-        }
+        std::vector<std::vector<double> > dMatrix(iNVarsLoc, std::vector<double>(iNVarsLoc, 0.0));
         
         if (bAddConstantInRegression_)
         {
@@ -124,13 +120,6 @@ namespace Maths
                 dMatrix[jVar][iVar] = dMatrix[iVar][jVar];
             }
         }
-        
-    FREE_RETURN:
-        for (std::size_t i = 0 ; i < iNVars ; ++i)
-        {
-            delete[] dMatrix[i];
-        }
-        delete[] dMatrix;
         
         return sCovarianceMatrix;
     }

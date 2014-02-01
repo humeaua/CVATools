@@ -49,7 +49,10 @@ namespace Utilities {
             // null strings always match in string::find, but
             // a skip of 0 causes infinite loops. pretend that
             // no tokens were found and extract the whole string
-            if (skip == 0) end = std::string::npos;
+            if (skip == 0)
+            {
+                end = std::string::npos;
+            }
             std::string token = s.substr(start, end - start);
             if (!(removeEmpty && token.empty()))
             {
@@ -57,7 +60,10 @@ namespace Utilities {
                 result.push_back(token);
             }
             // start the next range
-            if ((start = end) != std::string::npos) start += skip;
+            if ((start = end) != std::string::npos)
+            {
+                start += skip;
+            }
         }
         return result;
     }
@@ -75,7 +81,8 @@ namespace Utilities {
     {
         std::stringstream ss(s);
         std::string item;
-        while (std::getline(ss, item, delim)) {
+        while (std::getline(ss, item, delim))
+        {
             elems.push_back(item);
         }
         return elems;
@@ -85,7 +92,9 @@ namespace Utilities {
     {
         std::string res(s);
         for (std::string::iterator it = res.begin() ; it !=res.end() ; ++it)
+        {
             toupper(*it);
+        }
         return res;
     }
 }

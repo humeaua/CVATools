@@ -9,6 +9,7 @@
 #include "PayoffVanillaOption.h"
 #include <iostream>
 #include <cmath>
+#include "Exception.h"
 
 namespace Finance
 {
@@ -22,20 +23,24 @@ namespace Finance
         
         double PayoffVanillaOption::pay(double dS) const
         {
-            switch (eOptionType_) {
+            switch (eOptionType_)
+            {
                 case CALL:
+                {
                     return std::max(dS - dStrike_, 0.0);
-                    break;
-                    
+                }
                 case PUT:
+                {
                     return std::max(dStrike_ - dS, 0.0);
-                    break;
-                    
+                }
                 case STRADDLE:
+                {
                     return fabs(dStrike_ - dS);
-                    
+                }
                 default:
-                    break;
+                {
+                    throw EXCEPTION("Option Type not understood");
+                }
             }
         }
     }

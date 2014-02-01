@@ -19,16 +19,16 @@ namespace Finance
         class Coverage
         {
         public:
-            Coverage(::Finance::Base::MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd);
+            Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd);
             virtual ~Coverage();
             
-            virtual ::Finance::Base::MyBasis GetBasis() const;
+            virtual MyBasis GetBasis() const;
             virtual Utilities::Date::MyDate GetStartDate() const;
             virtual Utilities::Date::MyDate GetEndDate() const;
             
             virtual double ComputeCoverage();
         private:
-            ::Finance::Base::MyBasis eBasis_;
+            MyBasis eBasis_;
             
             Utilities::Date::MyDate sStart_, sEnd_;
             

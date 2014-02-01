@@ -57,9 +57,6 @@ namespace Maths
                 sCovarianceMatrix(jVar,iVar) = sCovarianceMatrix(iVar,jVar);
             }
         }
-        
-    FREE_RETURN:
-        
         return sCovarianceMatrix;
     }
     

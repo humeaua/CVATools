@@ -111,33 +111,39 @@ namespace Finance {
                     
                     int iIndexA = 0, iIndexB = 0;
                     
-                    while (iIndexA <= (long)iSizeA && iIndexB <= (long)iSizeB && iIndexA + iIndexB < (long)(iSizeA + iSizeB)) {
-                        if (iIndexA == (long)iSizeA) {
+                    while (iIndexA <= (long)iSizeA && iIndexB <= (long)iSizeB && iIndexA + iIndexB < (long)(iSizeA + iSizeB))
+                    {
+                        if (iIndexA == (long)iSizeA)
+                        {
                             TVariablesMerged.push_back(TVariablesB[iIndexB]);
                             UValuesAMerged.push_back(UValuesA[std::max(0,iIndexA-1)]);
                             UValuesBMerged.push_back(UValuesB[iIndexB]);
                             ++iIndexB;
                         }
-                        else if (iIndexB == (long)iSizeB) {
+                        else if (iIndexB == (long)iSizeB)
+                        {
                             TVariablesMerged.push_back(TVariablesA[iIndexA]);
                             UValuesAMerged.push_back(UValuesA[iIndexA]);
                             UValuesBMerged.push_back(UValuesB[std::max(0,iIndexB-1)]);
                             ++iIndexA;
                         }
-                        else if (TVariablesA[iIndexA] < TVariablesB[iIndexB]) {
+                        else if (TVariablesA[iIndexA] < TVariablesB[iIndexB])
+                        {
                             TVariablesMerged.push_back(TVariablesA[iIndexA]);
                             UValuesAMerged.push_back(UValuesA[iIndexA]);
                             UValuesBMerged.push_back(UValuesB[std::max(0,iIndexB-1)]);
                             ++iIndexA;
                         }
-                        else if (TVariablesA[iIndexA] == TVariablesB[iIndexB]) {
+                        else if (TVariablesA[iIndexA] == TVariablesB[iIndexB])
+                        {
                             TVariablesMerged.push_back(TVariablesA[iIndexA]);
                             UValuesAMerged.push_back(UValuesA[iIndexA]);
                             UValuesBMerged.push_back(UValuesB[std::max(0,iIndexB-1)]);
                             ++iIndexA;
                             ++iIndexB;
                         }
-                        else if (TVariablesA[iIndexA] > TVariablesB[iIndexB]) {
+                        else if (TVariablesA[iIndexA] > TVariablesB[iIndexB])
+                        {
                             TVariablesMerged.push_back(TVariablesB[iIndexB]);
                             UValuesAMerged.push_back(UValuesA[std::max(0,iIndexA-1)]);
                             UValuesBMerged.push_back(UValuesB[iIndexB]);

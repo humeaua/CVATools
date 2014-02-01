@@ -8,18 +8,19 @@
 
 #include <iostream>
 #include "Coverage.h"
+#include "Exception.h"
 
 namespace Finance
 {
     namespace Base
     {
-        Coverage::Coverage(::Finance::Base::MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd) : eBasis_(eBasis), sStart_(lStart), sEnd_(lEnd)
+        Coverage::Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd) : eBasis_(eBasis), sStart_(lStart), sEnd_(lEnd)
         {}
         
         Coverage::~Coverage()
         {}
         
-        ::Finance::Base::MyBasis Coverage::GetBasis() const
+        MyBasis Coverage::GetBasis() const
         {
             return eBasis_;
         }
@@ -47,10 +48,10 @@ namespace Finance
             
             switch (eBasis)
             {
-                case ::Finance::Base::BONDBASIS:
-                case ::Finance::Base::THIRTY360:
-                case ::Finance::Base::_BB:
-                case ::Finance::Base::_30360:
+                case BONDBASIS:
+                case THIRTY360:
+                case _BB:
+                case _30360:
                 {
                     dCoverage += (sEnd.GetYear() - sStart.GetYear());
                     dCoverage += (sEnd.GetMonth() - sStart.GetMonth()) / 12.0;
@@ -65,33 +66,33 @@ namespace Finance
                     dCoverage += (sEnd.GetDay() - sStart.GetDay()) / 360.0;
                     break;
                 }
-                case ::Finance::Base::MONEYMARKET:
-                case ::Finance::Base::ACT360:
-                case ::Finance::Base::_A0:
-                case ::Finance::Base::_MM:
+                case MONEYMARKET:
+                case ACT360:
+                case _A0:
+                case _MM:
                 {
                     dCoverage = (lEnd - lStart) / 360.0;
                     break;
                 }
-                case ::Finance::Base::ACT365FIXED:
+                case ACT365FIXED:
                 {
                     dCoverage = (lEnd - lStart) / 365.0;
                     break;
                 }
-                case ::Finance::Base::ACT365:
-                case ::Finance::Base::_A5:
+                case ACT365:
+                case _A5:
                 {
-                    dCoverage = (lEnd - lStart) / (Utilities::Date::IsLeapYear(sStart.GetYear()) ? 366.0 : 365.0);
+                    dCoverage = (lEnd - lStart) / (sStart.IsLeapYear() ? 366.0 : 365.0);
                     break;
                 }
-                case ::Finance::Base::ACT364:
-                case ::Finance::Base::_A4:
+                case ACT364:
+                case _A4:
                 {
                     dCoverage = (lEnd - lStart) / 364.0;
                     break;
                 }
-                case ::Finance::Base::BUS252:
-                case ::Finance::Base::_B2:
+                case BUS252:
+                case _B2:
                 {
                     long lCount = 0;
                     while (sStart <= sEnd)
@@ -105,14 +106,17 @@ namespace Finance
                     dCoverage = lCount / 252.0;
                     break;
                 }
-                case ::Finance::Base::NONE:
-                case ::Finance::Base::UNITARY:
+                case NONE:
+                case UNITARY:
                 {
                     //  return 1
                     return 1;
                 }
                 default:
+                {
+                    throw EXCEPTION("Basis not understood");
                     break;
+                }
             }
             return dCoverage;
         }

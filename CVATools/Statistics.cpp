@@ -29,7 +29,15 @@ namespace Maths
         {
             dResult += dData.at(i);
         }
-        return n == 0 ? 0.0 : dResult / n;
+        
+        if (n == 0)
+        {
+            return 0.0;
+        }
+        else
+        {
+            return dResult / n;
+        }
     }
     
     double Statistics::Median(const std::vector<double> &dData)
@@ -102,12 +110,16 @@ namespace Maths
          */
         std::size_t iN = dData.size();
         if (iN == 1)
+        {
             return dData.back();
+        }
         std::size_t iPivotIndex = iN / 2;
         std::size_t iPivotNewIndex = Partition(dData, iPivotIndex), iPivotDist = iPivotNewIndex + 1;
         
         if (iPivotDist == k)
+        {
             return dData[k];
+        }
         else if (k < iPivotDist)
         {
             std::vector<double> dNewData = Utilities::Subset(dData, 0, iPivotNewIndex - 1);
@@ -126,9 +138,13 @@ namespace Maths
         double mean = Mean(v);
         std::vector<double> diff(size);
         if (size <= 1)
+        {
             return 0.0;
+        }
         else
+        {
             return std::inner_product(v.begin(), v.end(), v.begin(), 0.0) / (size - 1) - mean * mean * size / (size - 1);
+        }
     }
     
     double Statistics::VarianceOld(const std::vector<double> &v)

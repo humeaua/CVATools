@@ -160,23 +160,30 @@ namespace Utilities
         int rowsize;
         int colsize;
         std::vector<T> data;
-        
     };
     
     template<typename T>
     void addmatrix(Matrix<T>& New, const Matrix<T>& One, const Matrix<T>& Two)
     {
         for (int i=0;i<One.getrows();i++)
+        {
             for (int j=0;j<One.getcols();j++)
+            {
                 New(i,j) = One(i,j) + Two(i,j);
+            }
+        }
     };
     
     template<typename T>
     void transpose(Matrix<T>& Transpose, const Matrix<T>& mat)
     {
         for (int i=0; i<mat.getcols(); i++)
+        {
             for (int j=0; j<mat.getrows(); j++)
+            {
                 T(i,j) = mat(j,i);
+            }
+        }
     };
     
     template<typename T>

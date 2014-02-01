@@ -28,7 +28,8 @@ namespace Utilities {
         }
         for (std::size_t i = 0 ; i < copy.size() - 1 ; ++i)
         {
-            if ((value >= copy.at(i)) && (value < copy.at(i + 1))) {
+            if ((value >= copy.at(i)) && (value < copy.at(i + 1)))
+            {
                 return static_cast<int>(i);
 			}
         }
@@ -125,26 +126,28 @@ namespace Utilities {
     template<typename T> T* GetPointer(std::vector<T> & vect)
     {
         if (vect.empty())
+        {
             return NULL;
+        }
         else
+        {
             return &(vect.at(0));
+        }
     }
 
     //  Function to get the index of a variable in a vector
     //  Return -1 if not found
     template<typename T> std::size_t GetIndex(const std::vector<T> & vect, const T & value)
     {
-        //for (std::size_t i = 0 ; i < vect.size() ; ++i)
-        //{
-        //    if (vect.at(i) == value)
-        //        return i;
-        //}
-        //return -1;
         typename std::vector<T>::const_iterator it = std::find(vect.begin(), vect.end(), value);
         if (it != vect.end() || (it == vect.end() && value == vect.back()))
+        {
             return it - vect.begin();
+        }
         else
+        {
             return -1;
+        }
     }
 
     //  Function to return the norm2 of a vector

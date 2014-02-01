@@ -54,12 +54,14 @@ namespace Utilities
             std::cout<<"Nothing to display";
         }
         else
+        {
             if(t != NULL)
             {
                 std::cout<<t->info<<" ";
                 pretrav(t->Left);
                 pretrav(t->Right);
             }
+        }
     }
     
     void Binary_tree::intrav(tree *t)
@@ -69,12 +71,14 @@ namespace Utilities
             std::cout<<"Nothing to display";
         }
         else
+        {
             if(t!=NULL)
             {
                 intrav(t->Left);
                 std::cout<<t->info<<" ";
                 intrav(t->Right);
             }
+        }
     }
     void Binary_tree::posttrav(tree *t)
     {
@@ -83,12 +87,14 @@ namespace Utilities
             std::cout<<"Nothing to display";
         }
         else
+        {
             if(t!=NULL)
             {
                 posttrav(t->Left);
                 posttrav(t->Right);
                 std::cout<<t->info<<" ";
             }
+        }
     }
     void Binary_tree::Delete(int key)
     {
@@ -113,7 +119,9 @@ namespace Utilities
         
         marker=temp;
         if(temp==NULL)
+        {
             std::cout<<"No node present";
+        }
         else if(temp==root)
         {
             if(temp->Right==NULL && temp->Left==NULL)
@@ -151,23 +159,35 @@ namespace Utilities
             if(temp->Right==NULL && temp->Left==NULL)
             {
                 if(parent->Right==temp)
+                {
                     parent->Right=NULL;
+                }
                 else
+                {
                     parent->Left=NULL;
+                }
             }
             else if(temp->Left==NULL)
             {
                 if(parent->Right==temp)
+                {
                     parent->Right=temp->Right;
+                }
                 else
+                {
                     parent->Left=temp->Right;
+                }
             }
             else if(temp->Right==NULL)
             {
                 if(parent->Right==temp)
+                {
                     parent->Right=temp->Left;
+                }
                 else
+                {
                     parent->Left=temp->Left;
+                }
             }
             else
             {

@@ -94,7 +94,6 @@ namespace Maths
             }
             dx -= NBSTEPINT;
             dRes += pow(dx, k) / (exp(dx)-1.0) * (x - dx);
-
         }
         else
         {

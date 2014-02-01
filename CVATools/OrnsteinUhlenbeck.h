@@ -23,7 +23,8 @@ namespace Finance
 #define MEANREVERSIONTHRESHOLD 1e-07
 #endif
         
-        class OrnsteinUhlenbeck : public DiffusionProcess {
+        class OrnsteinUhlenbeck : public DiffusionProcess
+        {
         protected:
             
             double dA_, dB_, dSigma_;

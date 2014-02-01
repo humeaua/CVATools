@@ -25,7 +25,7 @@ namespace Utilities
         {
             SetLocalDate();
             //  Bond Basis (30/360) convention
-            int iYear = (int)dDate, iMonth = (int)((dDate - iYear) * 12), iDay = (int)((dDate - iYear - (double)iMonth / 12) * 30);
+            const int iYear = (int)dDate, iMonth = (int)((dDate - iYear) * 12), iDay = (int)((dDate - iYear - (double)iMonth / 12) * 30);
             iYear_ += iYear;
             iMonth_ += iMonth;
             iDay_ += iDay;
@@ -133,26 +133,35 @@ namespace Utilities
             // Need some more checks on the year, though
             
             if (iYear_ < 0)
+            {
                 return false;
+            }
             
             if (iMonth_ > 12 || iMonth_ < 1)
+            {
                 return false;
+            }
             
             if (iDay_ > 31 || iDay_ < 1)
+            {
                 return false;
+            }
             
             if (((iDay_ == 31) && ( (iMonth_ == 2) || (iMonth_ == 4) || (iMonth_ == 6) || (iMonth_ == 9) || (iMonth_ == 11))))
+            {
                 return false;
+            }
             
             if ((iDay_ == 30) && (iMonth_ == 2))
+            {
                 return false;
+            }
             
             // 29th February for leap years
-            if ((iYear_ % 4 != 0)  && (iDay_ == 29) && (iMonth_ == 2))
+            if (IsLeapYear() && (iDay_ == 29) && (iMonth_ == 2))
+            {
                 return false;
-            
-            if ((iYear_ % 400 != 0) && (iYear_ % 100 == 0) && (iDay_ == 29) && (iMonth_ == 2))
-                return false;
+            }
             
             return true;
         }
@@ -162,6 +171,14 @@ namespace Utilities
             // check for equality
             if (! (d1.IsValid() && (d2.IsValid())) )
             {
+                if (!d1.IsValid())
+                {
+                    throw EXCEPTION("Date 1 is not valid");
+                }
+                if (!d2.IsValid())
+                {
+                    throw EXCEPTION("Date 2 is not valid");
+                }
                 return false;
             }
             
@@ -212,7 +229,7 @@ namespace Utilities
             if (d1==d2)
             {
                 return true;
-            };
+            }
             
             return (d1>d2);
         }
@@ -227,7 +244,6 @@ namespace Utilities
             return !(d1==d2);
         }
         
-        
         MyDate next_date(const MyDate& d)
         {
             if (!d.IsValid())
@@ -235,17 +251,20 @@ namespace Utilities
                 return MyDate(0,0,0);
             }
             
-            //
             MyDate ndat=MyDate((d.GetDay()+1),d.GetMonth(),d.GetYear());
             
             // first try adding a day
             if (ndat.IsValid())
+            {
                 return ndat;
+            }
             ndat=MyDate(1,(d.GetMonth()+1),d.GetYear());
             
             // then try adding a month
             if (ndat.IsValid())
+            {
                 return ndat;
+            }
             ndat = MyDate(1,1,(d.GetYear()+1));
             
             // must be next year
@@ -257,25 +276,35 @@ namespace Utilities
             if (!d.IsValid())
             {
                 return MyDate();
-            };
+            }
             // return the default date
             MyDate pdat = MyDate((d.GetDay() - 1),d.GetMonth(),d.GetYear());
             if (pdat.IsValid())
+            {
                 return pdat;
+            }
             // try same month
             pdat = MyDate(31,(d.GetMonth() - 1),d.GetYear());
             if (pdat.IsValid())
+            {
                 return pdat;
+            }
             // try previous month
             pdat = MyDate(30,(d.GetMonth() - 1),d.GetYear());
             if (pdat.IsValid())
+            {
                 return pdat;
+            }
             pdat = MyDate(29,(d.GetMonth() - 1),d.GetYear());
             if (pdat.IsValid())
+            {
                 return pdat;
+            }
             pdat = MyDate(28,(d.GetMonth() - 1),d.GetYear());
             if (pdat.IsValid())
+            {
                 return pdat;
+            }
             pdat = MyDate(31,12,(d.GetYear() - 1));
             // try previous year
             return pdat;
@@ -309,11 +338,6 @@ namespace Utilities
             // prefix operator, return new value
             *this = previous_date(*this);
             return *this;
-        }
-        
-        bool IsLeapYear(const long lYear)
-        {
-            return ((lYear % 400 == 0) || ((lYear % 4 == 0) && (lYear % 100 != 0)));
         }
         
         double MyDate::Diff(const MyDate & sDate) const
@@ -404,11 +428,16 @@ namespace Utilities
             out << "Date : " << iDay_ << "/" << iMonth_ << "/" << iYear_ << std::endl;
         }
         
+        bool IsLeapYear(long lYear)
+        {
+            return ((lYear % 400 == 0) || ((lYear % 4 == 0) && (lYear % 100 != 0)));
+        }
+        
         long GetDate(const MyDate & sDate)
         {
             if (!sDate.IsValid())
             {
-                return -1;
+                throw EXCEPTION("Date is not valid");
             }
             else
             {
@@ -431,10 +460,10 @@ namespace Utilities
         
         long GetDate(const tm & stime)
         {
-            MyDate sDate(stime);
-            return GetDate(sDate);
+            return GetDate(stime);
         }
         
+        //  Does not seem to work at first sight
         std::tm GetTime(long lDate)
         {
             tm stime;
@@ -449,7 +478,9 @@ namespace Utilities
             for (int i = 0 ; i < 12 ; ++i)
             {
                 if (iDaysRemaining < DaysAtBeginningOfEachMonth[i])
+                {
                     iMonth++;
+                }
             }
             iDays = static_cast<int>(iDaysRemaining) - DaysAtBeginningOfEachMonth[iMonth - 1];
             

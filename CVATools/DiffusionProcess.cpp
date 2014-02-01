@@ -89,7 +89,7 @@ namespace Finance
                         if (bStartFromCap_)
                         {
                             dOldValue = dCap_;
-                       }
+                        }
                     }
                     else
                     {

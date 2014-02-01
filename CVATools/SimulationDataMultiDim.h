@@ -39,8 +39,22 @@ namespace Utilities
         virtual std::map<double, std::map<std::size_t, DVector > > GetData() const;
         virtual Utilities::MyVector<double> GetData(double dDate, std::size_t iPath) const;
         
-        //  Apply functions
-        virtual void Apply(double (*func)(double));
+        template<typename Functor>
+        void Apply(Functor func)
+        {
+            std::map<double, std::map<std::size_t, DVector> >::iterator itDates = dData_.begin();
+            for ( ; itDates != dData_.end() ; ++itDates)
+            {
+                std::map<std::size_t, DVector>::iterator itPaths = itDates->second.begin();
+                for ( ; itPaths != itDates->second.end() ; ++itPaths)
+                {
+                    for (std::size_t iDim = 0 ; iDim < itPaths->second.size() ; ++iDim)
+                    {
+                        itPaths->second.at(iDim) = func(itPaths->second.at(iDim));
+                    }
+                }
+            }
+        };
         template<typename T>
         void Apply(const T& t)
         {

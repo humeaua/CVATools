@@ -34,7 +34,7 @@ namespace Finance
             }
             else
             {
-                throw EXCEPTION("Unknown frequency in Parse Frequency");
+                throw EXCEPTION("Unknown frequency");
             }
         }
     }

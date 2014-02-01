@@ -25,15 +25,19 @@ namespace Finance
             switch (eOptionType_)
             {
                 case CALL:
+                {
                     return s1 < dStrike_ - dLeftSpread_ ? 0.0 : s1 > dStrike_ + dRightSpread_ ? 1.0 : (s1 - dStrike_ + dLeftSpread_) / (dRightSpread_ + dLeftSpread_);
-                    break;
+                }
                 case PUT:
+                {
                     return s1 < dStrike_ - dLeftSpread_ ? 1.0 : s1 > dStrike_ + dRightSpread_ ? 0.0 : (dStrike_ - dLeftSpread_ - s1) / (dRightSpread_ + dLeftSpread_);
-                    break;
+                }
                 case STRADDLE:
                 default:
+                {
                     throw EXCEPTION("Option type not handled");
                     break;
+                }
             }
             return 0.0;
         }

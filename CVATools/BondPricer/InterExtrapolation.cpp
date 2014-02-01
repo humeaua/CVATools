@@ -33,9 +33,13 @@ namespace Utilities
             }
             
             if (dVariable < dVariables_.front())
+            {
                 iValue1 = 0;
+            }
             else if (dVariable > dVariables_.back())
+            {
                 iValue1 = static_cast<int>(iNValues - 2);
+            }
         }
         
         LinearInterpolator::LinearInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
@@ -127,7 +131,18 @@ namespace Utilities
             int iValue1 = 0;
             FindIndex(dVariable, iValue1);
             int iValue2 = iValue1 + 1;
-            return iValue2 == (int)dVariables_.size() || iValue2 == 0 ? dValues_.at(iValue2) : std::abs(dVariable - dVariables_.at(iValue1)) < std::abs(dVariable - dVariables_.at(iValue2)) ? dValues_.at(iValue1) : dValues_.at(iValue2);
+            if (iValue2 == (int)dVariables_.size() || iValue2 == 0)
+            {
+                return dValues_.at(iValue2);
+            }
+            else if (std::abs(dVariable - dVariables_.at(iValue1)) < std::abs(dVariable - dVariables_.at(iValue2)))
+            {
+                return dValues_.at(iValue1);
+            }
+            else
+            {
+                return dValues_.at(iValue2);
+            }
         }
         
         void NearInterpolator::FindIndex(double dVariable, int& iValue1) const
@@ -148,7 +163,14 @@ namespace Utilities
         {
             int iValue1 = 0;
             FindIndex(dVariable, iValue1);
-            return iValue1 == (int)dVariables_.size() ? dValues_.at(iValue1 - 1) : dValues_.at(iValue1);
+            if (iValue1 == (int)dVariables_.size())
+            {
+                return dValues_.back();
+            }
+            else
+            {
+                return dValues_.at(iValue1);
+            }
         }
         
         void LeftContinuousInterpolator::FindIndex(double dVariable, int &iValue1) const
@@ -160,9 +182,13 @@ namespace Utilities
             }
             
             if (dVariable < dVariables_.front())
+            {
                 iValue1 = 0;
-            else 
+            }
+            else
+            {
                 iValue1++;
+            }
         }
         
         RightContinuousInterpolator::RightContinuousInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
@@ -172,7 +198,14 @@ namespace Utilities
         {
             int iValue1 = 0;
             FindIndex(dVariable, iValue1);
-            return iValue1 == -1 ? dValues_.at(0) : dValues_.at(iValue1);
+            if (iValue1 == -1)
+            {
+                return dValues_.at(0);
+            }
+            else
+            {
+                return dValues_.at(iValue1);
+            }
         }
         
         HermiteSplineCubicInterpolator::HermiteSplineCubicInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)

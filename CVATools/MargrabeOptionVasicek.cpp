@@ -89,15 +89,13 @@ namespace Finance
         
         DVector MargrabeOptionVasicek::MultiDrift(double dt, DVector dx) const
         {
-            DVector dResult(3);
-            return dResult;
+            return DVector(3, 0.0);
         }
         
         //  MultiDimensional Variance --> not used but must be declared
         DVector MargrabeOptionVasicek::MultiVol(double dt, DVector dx) const
         {
-            DVector sResult(3);
-            return sResult;
+            return DVector(3, 0.0);
         }
         
         double MargrabeOptionVasicek::alpha(double t, double r_t) const

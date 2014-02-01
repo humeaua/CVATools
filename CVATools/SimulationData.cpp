@@ -17,9 +17,7 @@ namespace Utilities
     {}
     
     SimulationData::~SimulationData()
-    {
-        dDates_.clear();
-    }
+    {}
     
     void SimulationData::AddDate(double dDate)
     {

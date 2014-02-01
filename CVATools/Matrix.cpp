@@ -60,7 +60,7 @@ namespace Utilities
             double det = mat(0,0) * A + mat(0,1) * B + mat(0,2) * C;
             if (det < std::numeric_limits<double>::epsilon())
             {
-                throw MyException("matrixinverse : Cannot inverse singular matrix");
+                throw EXCEPTION("Cannot inverse singular matrix");
             }
             hi.Reallocate(3, 3);
             hi(0,0) = A / det;
@@ -146,7 +146,9 @@ namespace Utilities
             indxr.at(i)=irow; //We are now ready to divide the pivot row by the
             indxc.at(i)=icol; //pivot element, located at irow and icol.
             if (a(icol,icol) == 0.0)
+            {
                 throw EXCEPTION("Singular Matrix");
+            }
             pivinv=1.0/a(icol,icol);
             a(icol,icol)=1.0;
             for (l=0;l<n;l++)
@@ -214,7 +216,6 @@ namespace Utilities
                     J[i][j] = 0;
                     j++;
                 }
-                
             }
         }
         
@@ -225,15 +226,18 @@ namespace Utilities
             for(int j=0;j<mat.getcols();j++)
             {
                 if (j == i)
+                {
                     LL[i][j] = 1;
+                }
                 else
+                {
                     LL[i][j] = 0;
+                }
             }
         }
         
         for (int index=0;index < mat.getrows();index++)
         {
-            
             for(int k = index+1;k<mat.getrows();k++)
             {
                 double alpha = J[k][index]/J[index][index];

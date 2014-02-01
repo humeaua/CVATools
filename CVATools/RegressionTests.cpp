@@ -140,13 +140,17 @@ void RegressionTest_TimeStatistics(std::ostream & os)
             clock_t tic = clock();
             double dResult = Maths::Statistics::MeanOld(dData);
             if (dResult != 1.0)
+            {
                 throw EXCEPTION("Mean Result is not 1.0");
+            }
             dTimeOld += (double)(clock() - tic)/CLOCKS_PER_SEC;
             
             tic = clock();
             dResult = Maths::Statistics::Mean(dData);
             if (dResult != 1.0)
+            {
                 throw EXCEPTION("Mean Result is not 1.0");
+            }
             dTimeNew += (double)(clock() - tic)/CLOCKS_PER_SEC;
         }
         os << "Mean old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
@@ -170,13 +174,17 @@ void RegressionTest_TimeStatistics(std::ostream & os)
             clock_t tic = clock();
             double dResult = Maths::Statistics::VarianceOld(dData);
             if (dResult != 0.0)
+            {
                 throw EXCEPTION("Variance is not 0.0");
+            }
             dTimeOld += (double)(clock() - tic)/CLOCKS_PER_SEC;
             
             tic = clock();
             dResult = Maths::Statistics::Variance(dData);
             if (dResult != 0.0)
+            {
                 throw EXCEPTION("Variance is not 0.0");
+            }
             dTimeNew += (double)(clock() - tic)/CLOCKS_PER_SEC;
         }
         os << "Variance old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;

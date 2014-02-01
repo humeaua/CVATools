@@ -24,12 +24,11 @@ namespace Utilities
             BUSINESSDAY
         }TimeUnits;
         
-        bool IsLeapYear(long lYear);
         std::tm Add(const std::tm &sDate, long lUnit, TimeUnits eTimeUnit);
         
         std::tm GetTime(long lDate);
         long GetDate(const std::tm & sTime);
-        
+        bool IsLeapYear(long lYear);
         std::tm CorrectTime(const std::tm& sTime);
         
         class MyDate

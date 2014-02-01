@@ -55,4 +55,14 @@ namespace Utilities
         
         return (double&)dData_.at(i + j * iNObservations_);
     }
+    
+    //  Getters
+    std::size_t RegressionData::GetNbObservations() const
+    {
+        return iNObservations_;
+    }
+    std::size_t RegressionData::GetNbVariables() const
+    {
+        return iNVars_;
+    }
 }

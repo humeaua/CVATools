@@ -369,13 +369,11 @@ int _main()
             {
                 std::cout << x << ";" << sGaussianKernel.Estimate(dXY, x) << std::endl;
             }
-            
         }
         catch (std::exception & e)
         {
             std::cout << "Error : " << e.what() << std::endl;
         }
-        
     }
     else if (iTest == 8)
     {
@@ -649,6 +647,10 @@ int _main()
         {
             std::cout << "MyException caught : " << sException.what() << std::endl;
         }
+        catch (std::exception & sException)
+        {
+            std::cout << "std::exception caught " << sException.what() << std::endl;
+        }
         catch (...)
         {
             std::cout << "Unknown exception caught" << std::endl;
@@ -755,7 +757,9 @@ int _main()
         Utilities::Eigendecomposition_jacobi(a, eigenvectors, dEigenValues, &nrot);
         
         for (int i = 0 ; i < n ; ++i)
+        {
             std::cout << dEigenValues.at(i) << std::endl;
+        }
     }
     else if (iTest == 29)
     {
@@ -764,17 +768,23 @@ int _main()
     else if (iTest == 30)
     {
         //  Old require exception
-        try {
+        try
+        {
             int i = 0 ;
             Utilities::requireException(i == 1, "i is not equal to 1", "main");
-        } catch (Utilities::MyException & excep) {
+        }
+        catch (Utilities::MyException & excep)
+        {
             std::cout << "Old MyException caught : " << excep.what() << std::endl;
         }
         //  New require exception
-        try {
+        try
+        {
             int i = 0 ;
             REQUIREEXCEPTION(i==1, "i is not equal to 1");
-        } catch (Utilities::MyException & excep) {
+        }
+        catch (Utilities::MyException & excep)
+        {
             std::cout << "New MyException caught : " << excep.what() << std::endl;
         }
     }

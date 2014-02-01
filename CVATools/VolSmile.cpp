@@ -81,5 +81,15 @@ namespace Finance
         {
             return Utilities::StdDev<double, double>(dVariables_);
         }
+        
+        double VolSmile::FwdRef() const
+        {
+            return dFwdRef_;
+        }
+        
+        double VolSmile::Maturity() const
+        {
+            return dMaturity_;
+        }
     }
 }

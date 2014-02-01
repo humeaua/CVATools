@@ -17,42 +17,24 @@ namespace Finance
 {
     namespace Volatility
     {
-        VolatilitySurface::VolatilitySurface(double dSpot, const std::map<long, std::map<double, double> >&  VolSurface) : VolSurface_(VolSurface), Finance::Volatility::SVIParameters(dSpot)
+        VolatilitySurface::VolatilitySurface(const std::vector<VolSmile> & VolSurface) : m_VolSurface(VolSurface)
         {
-            REQUIREEXCEPTION(dSpot > 0.0, "Spot is negative");
-            Calibrate(VolSurface_);
+            for (std::vector<VolSmile>::const_iterator volSmile = m_VolSurface.begin() ; volSmile != m_VolSurface.end() ; ++volSmile)
+            {
+                m_Expiries.push_back(volSmile->Maturity());
+            }
         }
         
-        double VolatilitySurface::Get(long lExpiry, double dStrike) const
+        double VolatilitySurface::operator()(double Expiry, double Strike) const
         {
-            if (VolSurface_.count(lExpiry) != 0)
+            std::size_t iExpiry = 0;
+            if (Utilities::IsFound(m_Expiries, Expiry, iExpiry))
             {
-                std::map<long, std::map<double, double> >::const_iterator it = VolSurface_.find(lExpiry);
-                if (it->second.count(dStrike) != 0)
-                {
-                    return it->second.find(dStrike)->second;
-                }
-                else
-                {
-                    //  Spline cubic interpolation of log strike : good for now
-                    const std::map<double,double> VolSmile = it->second;
-                    std::map<double, double>::const_iterator iter0 = VolSmile.begin();
-                    std::vector<double> dStrikes(VolSmile.size(), 0.0), dVols(VolSmile.size(), 0.0);
-                    std::vector<double>::iterator iterVol = dVols.begin();
-                    for (std::vector<double>::iterator iterStrike = dStrikes.begin() ; iterStrike != dStrikes.end() ; ++iterStrike, ++iter0, ++iterVol)
-                    {
-                        *iterStrike = log(iter0->first);
-                        *iterVol = iter0->second;
-                    }
-                    
-                    //Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
-                    Utilities::Interp::HermiteSplineCubicInterpolator Interp(dStrikes, dVols);
-                    return Interp(dStrike);
-                }
+                return m_VolSurface[iExpiry](Strike);
             }
             else
             {
-                //  Linear interpolation of the variance, spline cubic over the log strike
+                /*//  Linear interpolation of the variance, spline cubic over the log strike
                 std::vector<long> lExpiries(VolSurface_.size(), 0L);
                 std::map<long, std::map<double, double> >::const_iterator it = VolSurface_.begin();
                 for (std::size_t iExpiry = 0 ; iExpiry < VolSurface_.size() ; ++iExpiry, ++it)
@@ -94,24 +76,14 @@ namespace Finance
                     //Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
                     Utilities::Interp::HermiteSplineCubicInterpolator Interp(dStrikes, dVols);
                     return sqrt(Interp(dStrike) * 365.0 / lExpiry); // return the volatility, not the variance
+                    throw EXCEPTION("Not yet implemented");
                 }
                 else
                 {
                     //  Extrapolation Error ?
                     throw EXCEPTION("Index not found in Volatility surface");
-                }
-            }
-        }
-        
-        double VolatilitySurface::Interpolate(long lExpiry, double dStrike) const
-        {
-            if (dStrike > 0.0)
-            {
-                return Volatility(log(dStrike / dSpot_), lExpiry / 365.0);
-            }
-            else
-            {
-                throw EXCEPTION("VolatilitySurface::Interpolate : Strike is negative");
+                }*/
+                throw EXCEPTION("Not yet implemented");
             }
         }
         
@@ -123,9 +95,12 @@ namespace Finance
         bool VolatilitySurface::CheckButterflySpreadArbitrage() const
         {
             //  Call price convex function of strike for all expiries
-            for (std::map<long, std::map<double, double> >::const_iterator itExpiry = VolSurface_.begin() ; itExpiry != VolSurface_.end() ; ++itExpiry)
+            for (std::vector<VolSmile>::const_iterator volSmile = m_VolSurface.begin() ; volSmile != m_VolSurface.end() ; ++volSmile)
             {
-                
+                if (!volSmile->IsArbitrageFree())
+                {
+                    return false;
+                }
             }
             return true;
         }

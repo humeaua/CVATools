@@ -28,14 +28,10 @@ namespace Finance
         protected:
             std::vector<double> dA_, dB_, dRho_, dM_, dSigma_;
             std::vector<double> dExpiries_;
-            double dSpot_;
         public:
-            SVIParameters(double dSpot);
             
             virtual double Volatility(double k, double t) const;
             virtual double Variance(double k, double t) const;
-            
-            virtual void Calibrate(const std::map<long, std::map<double, double> > & sVolSurface);
         };
     }
 }

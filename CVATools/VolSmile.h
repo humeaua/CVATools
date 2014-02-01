@@ -29,6 +29,10 @@ namespace Finance
             
             virtual bool IsArbitrageFree() const;
             
+            //  Getters
+            virtual double FwdRef() const;
+            virtual double Maturity() const;
+            
             virtual double GetFirstStrike() const;
             virtual double GetLastStrike() const;
             virtual double GetMeanStrike() const;

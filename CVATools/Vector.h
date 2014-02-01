@@ -20,58 +20,59 @@ namespace Utilities
     template <class C, class Alloc = std::allocator<C> >
     class MyVector : public std::vector<C, Alloc>
     {
+        typedef std::vector<C,Alloc> Base;
     public:
-        MyVector() : std::vector<C>() {};
-        explicit  MyVector (const std::allocator<C>& alloc = std::allocator<C>()) : std::vector<C>(alloc) {};
+        MyVector() : Base() {};
+        explicit  MyVector (const std::allocator<C>& alloc = std::allocator<C>()) : Base(alloc) {};
         
         explicit MyVector (std::size_t n, const C & val = C(),
-                           const std::allocator<C>& alloc = std::allocator<C>()) : std::vector<C>(n, val, alloc) {};
+                           const std::allocator<C>& alloc = std::allocator<C>()) : Base(n, val, alloc) {};
         
         template <class InputIterator>
         MyVector (InputIterator first, InputIterator last,
-                  const std::allocator<C>& alloc = std::allocator<C>()) : std::vector<C>(first, last, alloc) {};
+                  const std::allocator<C>& alloc = std::allocator<C>()) : Base(first, last, alloc) {};
         
-        MyVector (const MyVector & x) : std::vector<C>(x) {};
-        MyVector (const std::vector<C> & x) : std::vector<C>(x) {};
+        MyVector (const MyVector & x) : Base(x) {};
+        MyVector (const std::vector<C> & x) : Base(x) {};
         
-        virtual MyVector<C,Alloc> operator+(MyVector<C,Alloc> &v)
+        virtual MyVector<C,Alloc> operator+(const MyVector<C,Alloc> &v)
         {
             REQUIREEXCEPTION((*this).size() == v.size(), "Vectors are not the same size");
-            std::vector<C> result;
+            Base result;
             result.reserve(v.size());
             
             std::transform(this->begin(), this->end(), v.begin(), std::back_inserter(result), std::plus<C>());
-            return MyVector<C>(result);
+            return result;
         };
 
-        virtual MyVector<C,Alloc> operator-(MyVector<C,Alloc> &v)
+        virtual MyVector<C,Alloc> operator-(const MyVector<C,Alloc> &v)
         {
             REQUIREEXCEPTION((*this).size() == v.size(), "Vectors are not the same size");
-            std::vector<C> result;
+            Base result;
             result.reserve(v.size());
             
             std::transform(this->begin(), this->end(), v.begin(), std::back_inserter(result), std::minus<C>());
-            return MyVector<C>(result);
+            return result;
         };
         
-        virtual MyVector<C,Alloc> operator*(MyVector<C,Alloc> &v)
+        virtual MyVector<C,Alloc> operator*(const MyVector<C,Alloc> &v)
         {
             REQUIREEXCEPTION((*this).size() == v.size(), "Vectors are not the same size");
-            std::vector<C> result;
+            Base result;
             result.reserve(v.size());
             
             std::transform(this->begin(), this->end(), v.begin(), std::back_inserter(result), std::multiplies<C>());
-            return MyVector<C>(result);
+            return result;
         };
         
-        virtual MyVector<C,Alloc> operator/(MyVector<C,Alloc> &v)
+        virtual MyVector<C,Alloc> operator/(const MyVector<C,Alloc> &v)
         {
             REQUIREEXCEPTION((*this).size() == v.size(), "Vectors are not the same size");
-            std::vector<C> result;
+            Base result;
             result.reserve(v.size());
             
             std::transform(this->begin(), this->end(), v.begin(), std::back_inserter(result), std::divides<C>());
-            return MyVector<C>(result);
+            return result;
         };
         
         virtual MyVector<C,Alloc> operator+(C value)

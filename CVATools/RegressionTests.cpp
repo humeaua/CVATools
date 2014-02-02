@@ -60,13 +60,13 @@ void RegressionTest_BondPricing(std::ostream & os)
         const std::vector<double> dCoupons(20, 0.01);
         const bool bIsFixedRate = true;
          
-        const Finance::Pricers::BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
+        const Finance::Pricers::BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
         const double dBondPrice = sBondPricer.Price();
-        const double dRefBondPrice = 0.730468208690114;
-        const double dError = 1.0e-5;
+        const double dRefBondPrice = 0.717898133743137;
+        const double dTolerance = 1.0e-5;
         
         os << "Test Bond Price : ";
-        if (fabs(dBondPrice - dRefBondPrice) < dError)
+        if (fabs(dBondPrice - dRefBondPrice) < dTolerance)
         {
             os << "SUCCEEDED" << std::endl;
         }
@@ -77,8 +77,8 @@ void RegressionTest_BondPricing(std::ostream & os)
         
         os << "Test Bond Yield : ";
         const double dPriceToYield = sBondPricer.PriceToYield(dBondPrice);
-        const double dRefYield = 0.0262459982515766;
-        if (fabs(dPriceToYield - dRefYield) < dError)
+        const double dRefYield = 0.0271908027808272;
+        if (fabs(dPriceToYield - dRefYield) < dTolerance)
         {
             os << "SUCCEEDED" << std::endl;
         }
@@ -89,8 +89,8 @@ void RegressionTest_BondPricing(std::ostream & os)
         
         os << "Test Bond I-Spread : ";
         const double dISpread = sBondPricer.I_Spread(dBondPrice);
-        const double dRefISpread =-0.000759355581875055;
-        if (fabs(dISpread - dRefISpread) < dError)
+        const double dRefISpread =-0.000382137306462867;
+        if (fabs(dISpread - dRefISpread) < dTolerance)
         {
             os << "SUCCEEDED" << std::endl;
         }
@@ -100,9 +100,9 @@ void RegressionTest_BondPricing(std::ostream & os)
         }
         
         os << "Test Bond Z-Spread : ";
-        const double dZSpread = sBondPricer.Z_Spread(dBondPrice);
-        const double dRefZSpread = 0.000343415391374062;
-        if (fabs(dZSpread - dRefZSpread) < dError)
+        const double dZSpread = sBondPricer.Z_Spread(dBondPrice);	
+        const double dRefZSpread = 0.000366813031560259;
+        if (fabs(dZSpread - dRefZSpread) < dTolerance)
         {
             os << "SUCCEEDED" << std::endl;
         }

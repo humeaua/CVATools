@@ -309,7 +309,7 @@ int _main()
         std::vector<double> dCoupons(20, 0.01);
         bool bIsFixedRate = true;
         
-        Finance::Pricers::BondPricer sBondPricer(sToday, sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
+        Finance::Pricers::BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
         double dBondPrice = sBondPricer.Price();
         std::cout << "Bond Pricer : " << dBondPrice << std::endl;
         std::cout << "Yield : " << sBondPricer.PriceToYield(dBondPrice) << std::endl;

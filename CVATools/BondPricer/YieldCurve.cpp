@@ -128,5 +128,10 @@ namespace Finance
                 dValues_.at(i) -= dShift * exp(-dVariables_.at(i) / dTau);
             }
         }
+        
+        const Utilities::Date::MyDate& YieldCurve::Today() const
+        {
+            return sToday_;
+        }
     }
 }

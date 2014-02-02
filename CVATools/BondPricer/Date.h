@@ -42,6 +42,7 @@ namespace Utilities
             MyDate(const int& day, const int& month, const int& year);
             MyDate(const std::tm& sDate);
             MyDate(double dDate);
+            MyDate(const MyDate& date);
             virtual ~MyDate();
             
             virtual bool IsValid() const;
@@ -88,7 +89,7 @@ namespace Utilities
         MyDate next_date(const MyDate& d);
         
         long GetDate(const MyDate & sDate);
-        MyDate InitializeTodayDate();
+        MyDate InitialiseTodayDate();
     }
 }
 #endif

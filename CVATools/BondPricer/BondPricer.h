@@ -38,12 +38,10 @@ namespace Finance
         {
         protected:
             Finance::Base::YieldCurve sYieldCurve_;
-            Utilities::Date::MyDate sToday_;
             double dPrice_;
         public:
             ZSpreadNewton(const Bond & sBond,
                           const Finance::Base::YieldCurve & sYieldCurve,
-                          const Utilities::Date::MyDate & sTodaydouble,
                           double dPrice,
                           std::size_t iNIterMax = 100,
                           double dTolerance = 1e-06,
@@ -56,7 +54,6 @@ namespace Finance
         {
         protected:
             Finance::Base::YieldCurve sYieldCurve_;
-            Utilities::Date::MyDate sToday_;
             
             //  Newton parameters
             double dToleranceNewton_;
@@ -65,7 +62,7 @@ namespace Finance
             virtual double AccruedInterest() const;
             
         public:
-            BondPricer(const Utilities::Date::MyDate & sToday, const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate, double dToleranceNewton = 1e-06, std::size_t iNIterMaxNewton = 100);
+            BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate, double dToleranceNewton = 1e-06, std::size_t iNIterMaxNewton = 100);
             
             virtual double Price() const;
             

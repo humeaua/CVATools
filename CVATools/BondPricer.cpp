@@ -16,7 +16,7 @@ namespace Finance
 {
     namespace Pricers
     {
-        PriceToYieldNewton::PriceToYieldNewton(const Bond & sBond, const Utilities::Date::MyDate & sToday, double dPrice, std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : Bond(sBond), NewtonRaphson1D(iNIterMax, dTolerance, dEpsValueDeriv), sToday_(sToday),dPrice_(dPrice)
+        PriceToYieldNewton::PriceToYieldNewton(const Bond & sBond, const Utilities::Date::MyDate & sToday, double dPrice, std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : Bond(sBond), NewtonRaphson1D(iNIterMax, dTolerance, dEpsValueDeriv), dPrice_(dPrice), sToday_(sToday)
         {}
         
         double PriceToYieldNewton::f(double r) const
@@ -49,23 +49,24 @@ namespace Finance
             return dDeriv;
         }
         
-        ZSpreadNewton::ZSpreadNewton(const Bond & sBond, const Finance::Base::YieldCurve & sYieldCurve, const Utilities::Date::MyDate & sToday, double dPrice, std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : Bond(sBond), NewtonRaphson1D(iNIterMax, dTolerance, dEpsValueDeriv), sYieldCurve_(sYieldCurve), dPrice_(dPrice), sToday_(sToday)
+        ZSpreadNewton::ZSpreadNewton(const Bond & sBond, const Finance::Base::YieldCurve & sYieldCurve, double dPrice, std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : Bond(sBond), NewtonRaphson1D(iNIterMax, dTolerance, dEpsValueDeriv), sYieldCurve_(sYieldCurve), dPrice_(dPrice)
         {}
         
         double ZSpreadNewton::f(double r) const
         {
             double dRes = 0.;
+            const Utilities::Date::MyDate & sToday = sYieldCurve_.Today();
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
                 Utilities::Date::MyDate sEndDate = vCoupons_.at(iDate).GetEndDate();
-                double dCoverage = Finance::Base::GetCoverage(sToday_, sEndDate, vCoupons_.at(iDate).GetBasis());
-                dRes += vCoupons_.at(iDate).GetCoupon() * pow(1. + sYieldCurve_(sEndDate.Diff(sToday_)) + r, -dCoverage);
+                double dCoverage = Finance::Base::GetCoverage(sToday, sEndDate, vCoupons_.at(iDate).GetBasis());
+                dRes += vCoupons_.at(iDate).GetCoupon() * pow(1. + sYieldCurve_(sEndDate.Diff(sToday)) + r, -dCoverage);
             }
             if (bIsNotionalRepaidBack_)
             {
                 Utilities::Date::MyDate sEndDate = vCoupons_.back().GetEndDate();
-                double dCoverage = Finance::Base::GetCoverage(sToday_, sEndDate, vCoupons_.back().GetBasis());
-                dRes += dNotional_ * pow(1. + sYieldCurve_(sEndDate.Diff(sToday_)) + r, -dCoverage);
+                double dCoverage = Finance::Base::GetCoverage(sToday, sEndDate, vCoupons_.back().GetBasis());
+                dRes += dNotional_ * pow(1. + sYieldCurve_(sEndDate.Diff(sToday)) + r, -dCoverage);
             }
             return dRes - dPrice_;
         }
@@ -73,7 +74,7 @@ namespace Finance
         double ZSpreadNewton::df(double r) const
         {
             double dDeriv = 0.0;
-            Utilities::Date::MyDate sToday = Utilities::Date::InitializeTodayDate();
+            const Utilities::Date::MyDate&  sToday = sYieldCurve_.Today();
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
                 double dCoverage = GetCoverage(sToday, vCoupons_.at(iDate).GetEndDate(), vCoupons_.at(iDate).GetBasis());
@@ -87,7 +88,7 @@ namespace Finance
             return dDeriv;
         }
         
-        BondPricer::BondPricer(const Utilities::Date::MyDate & sToday, const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate, double dTolerance, std::size_t iNIterMax) : sYieldCurve_(sYieldCurve), dToleranceNewton_(dTolerance), iNIterMaxNewton_(iNIterMax), Bond(dNotional, true), sToday_(sToday)
+        BondPricer::BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const DVector & dCoupons, double dNotional, bool bIsFixedRate, double dTolerance, std::size_t iNIterMax) : sYieldCurve_(sYieldCurve), dToleranceNewton_(dTolerance), iNIterMaxNewton_(iNIterMax), Bond(dNotional, true)
         {
             Instruments::CreateBond(dCoupons, sStart, sEnd, eBasis, eFrequency, bIsFixedRate, vCoupons_);
         }
@@ -95,6 +96,7 @@ namespace Finance
         double BondPricer::Price() const
         {
             double dPrice = 0.;
+            const Utilities::Date::MyDate & sToday = sYieldCurve_.Today();
             if (vCoupons_.size() > 0)
             {
                 //  1st coupon
@@ -105,7 +107,7 @@ namespace Finance
                 else
                 {
                     Finance::Instruments::DF sDF(sYieldCurve_);
-                    dPrice += vCoupons_.at(0).GetCoupon() * (sDF(sToday_) - vCoupons_.at(0).GetPayingDateDF(sYieldCurve_));
+                    dPrice += vCoupons_.at(0).GetCoupon() * (sDF(sToday) - vCoupons_.at(0).GetPayingDateDF(sYieldCurve_));
                 }
                 for (std::size_t iDate = 1 ; iDate < vCoupons_.size() ; ++iDate)
                 {
@@ -129,7 +131,7 @@ namespace Finance
         bool BondPricer::HasAlreadyBegun() const
         {
             //  Initialization of Today Date
-            Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
+            const Utilities::Date::MyDate& sTodayDate = sYieldCurve_.Today();
             
             return vCoupons_.front().GetStartDate() < sTodayDate;
         }
@@ -143,7 +145,8 @@ namespace Finance
             else
             {
                 double dPrice = 0.;
-                Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
+                const Utilities::Date::MyDate& sTodayDate = sYieldCurve_.Today();
+                
                 if (vCoupons_.size() > 0)
                 {
                     //  1st coupon
@@ -196,18 +199,20 @@ namespace Finance
         
         double BondPricer::PriceToYield(double dPrice) const
         {
-            PriceToYieldNewton sNewtonClass(*this, sToday_,dPrice);
+            const Utilities::Date::MyDate & sToday = sYieldCurve_.Today();
+            PriceToYieldNewton sNewtonClass(*this, sToday,dPrice);
             return sNewtonClass.algo_root_finder(0.0);
         }
         
         double BondPricer::I_Spread(double dPrice) const
         {
-            return PriceToYield(dPrice) - sYieldCurve_(vCoupons_.back().GetEndDate().Diff(sToday_));
+            const Utilities::Date::MyDate & sToday = sYieldCurve_.Today();
+            return PriceToYield(dPrice) - sYieldCurve_(vCoupons_.back().GetEndDate().Diff(sToday));
         }
         
         double BondPricer::Z_Spread(double dPrice) const
         {
-            ZSpreadNewton sZSpread(*this, sYieldCurve_, sToday_,dPrice);
+            ZSpreadNewton sZSpread(*this, sYieldCurve_, dPrice);
             return sZSpread.algo_root_finder(0.0);
         }
         
@@ -220,7 +225,7 @@ namespace Finance
                 {
                     sStartDates.push_back(vCoupons_[iDate].GetStartDate());
                 }
-                Utilities::Date::MyDate sTodayDate = Utilities::Date::InitializeTodayDate();
+                const Utilities::Date::MyDate& sTodayDate = sYieldCurve_.Today();
                 
                 int iFind = Utilities::FindInVector(sStartDates, sTodayDate);
                 return vCoupons_[iFind].GetPayingDateDF(sYieldCurve_) * Finance::Base::GetCoverage(sTodayDate, vCoupons_[iFind].GetEndDate(), vCoupons_[iFind].GetBasis()) * vCoupons_[iFind].GetCoupon();

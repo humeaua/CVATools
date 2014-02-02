@@ -29,6 +29,7 @@ namespace Finance
             
             virtual std::string GetCurrency() const;
             virtual std::string GetName() const;
+            virtual const Utilities::Date::MyDate& Today() const;
             
             //  Cash operators : cash rates
             virtual double operator()(double t) const;

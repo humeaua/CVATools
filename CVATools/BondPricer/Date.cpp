@@ -49,6 +49,13 @@ namespace Utilities
             iYear_ = sDate.tm_year;
         }
         
+        MyDate::MyDate(const MyDate& date)
+        {
+            iDay_ = date.GetDay();
+            iMonth_ = date.GetMonth();
+            iYear_ = date.GetYear();
+        }
+        
         int MyDate::GetDay() const
         {
             return iDay_;
@@ -532,7 +539,7 @@ namespace Utilities
             return sMyDate.Totm();
         }
         
-        MyDate InitializeTodayDate()
+        MyDate InitialiseTodayDate()
         {
             return Utilities::Date::MyDate();
         }

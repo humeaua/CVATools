@@ -252,8 +252,8 @@ void RegressionTest_PayoffLinearization(std::ostream & os)
         os << "FAILED" << std::endl;
     }
     
-    os << "beta_1 : " << dRegCoefs.first << std::endl;
-    os << "beta_2 : " << dRegCoefs.second << std::endl;
+    //os << "beta_1 : " << dRegCoefs.first << std::endl;
+    //os << "beta_2 : " << dRegCoefs.second << std::endl;
 }
 
 void RegressionTest_Interpolation(std::ostream & os)

@@ -20,6 +20,8 @@
 
 #include "SquareRoot.h"
 #include "OrnsteinUhlenbeck.h"
+#include "BlackScholes.h"
+#include "StochCorrel.h"
 
 void RegressionTest_BondPricing(std::ostream & os)
 {
@@ -345,21 +347,29 @@ void RegressionTest_ProcessPathSimulation(std::ostream & os)
     long long lSeed = 0;
     const Finance::Processes::SquareRoot squareRoot(0.1, 1.0, 0.1, dX0, lSeed);
     const Finance::Processes::OrnsteinUhlenbeck ornsteinUhlenbeck(0.1, 1.0, 0.1, dX0, lSeed);
+    const Finance::Processes::BlackScholes blackScholes(0.02, 0.1, dX0, lSeed);
+    const Finance::Processes::StochCorrel stochCorrel(1.0, 0, 0.4, dX0 - 1.0, lSeed);
     const double dDates[] = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0};
     std::vector<double> DatesVec(dDates, dDates + 21);
     const double dTolerance = 1e-6;
     
-    std::vector<double> ResultsSR = squareRoot.simulate1path(DatesVec), ResultsOU = ornsteinUhlenbeck.simulate1path(DatesVec);
+    std::vector<double> ResultsSR = squareRoot.simulate1path(DatesVec),
+                        ResultsOU = ornsteinUhlenbeck.simulate1path(DatesVec),
+                        ResultsBS = blackScholes.simulate1path(DatesVec),
+                        ResultsSC = stochCorrel.simulate1path(DatesVec);
     
     const double dRefValuesSquareRoot[] = {1,1.01533189,1.00218429,0.980863849,0.951722112,0.926746364,0.915307718,0.945391067,0.887362489,0.896643275,0.940587215,0.940422193,0.961310737,0.920984543,0.977360754,0.961919216,0.984237052,0.98193395,1.04122305,1.0258744,1.02188529};
     const double dRefValuesOU[] = {1,0.999208646,1.01024586,1.04327062,1.0151356,1.03420104,1.02086556,1.04054557,1.05788609,1.06227928,1.01526912,0.952106248,0.976487794,1.01307013,1.02616416,1.0676393,1.07698467,1.08466054,1.16087981,1.16508758,1.11629776};
-    
-    double dDiffSquareRoot = 0.0, dDiffOU = 0.0;
+    const double dRefValuesBS[] = {1,1.0012045,1.01432396,1.0497388,1.0239206,1.04533587,1.03433247,1.05644539,1.07644225,1.08360508,1.03902345,0.977602932,1.00365087,1.04229106,1.05770459,1.10188194,1.11418417,1.12492225,1.20483491,1.21310068, 1.16801572};
+    const double dRefValuesSC[] = {0,-0.00318125765,0.0414593747,0.170569407,0.0445972641,0.1175252,0.0544624305,0.12910955,0.187557141,0.189330344,-0.0118042998,-0.263968357,-0.146158452,0.0123023101,0.0642886051,0.225600951,0.243368035,0.253124662,0.528737107,0.498240656,0.286494823};
+    double dDiffSquareRoot = 0.0, dDiffOU = 0.0, dDiffBS = 0.0, dDiffSC = 0.0;
     for (std::size_t iDate = 0 ; iDate < DatesVec.size() ; ++iDate)
     {
-        //os << std::setprecision(9) << ResultsOU[iDate] << std::endl;
+        //os << std::setprecision(9) << ResultsSC[iDate] << std::endl;
         dDiffSquareRoot += std::abs(dRefValuesSquareRoot[iDate] - ResultsSR[iDate]);
         dDiffOU += std::abs(dRefValuesOU[iDate] - ResultsOU[iDate]);
+        dDiffBS += std::abs(dRefValuesBS[iDate] - ResultsBS[iDate]);
+        dDiffSC += std::abs(dRefValuesSC[iDate] - ResultsSC[iDate]);
     }
     
     os << "Square Root process Simulation : ";
@@ -373,6 +383,24 @@ void RegressionTest_ProcessPathSimulation(std::ostream & os)
     }
     os << "Ornstein Ulhenbeck process Simulation : ";
     if (dDiffOU < dTolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+    }
+    os << "Black Scholes process Simulation : ";
+    if (dDiffBS < dTolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+    }
+    os << "Stochastic correlation process Simulation : ";
+    if (dDiffSC < dTolerance)
     {
         os << "SUCCEEDED" << std::endl;
     }

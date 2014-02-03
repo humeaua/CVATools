@@ -23,6 +23,18 @@
 #include "BlackScholes.h"
 #include "StochCorrel.h"
 
+//  Forward declaration of the different regression tests
+void RegressionTest_BondPricing(std::ostream & os);
+void RegressionTest_TimeStatistics(std::ostream & os);
+void RegressionTest_PayoffLinearization(std::ostream & os);
+void RegressionTest_Interpolation(std::ostream & os);
+void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os);
+void RegressionTest_ProcessPathSimulation(std::ostream & os);
+void RegressionTest_Date(std::ostream & os);
+
+
+//  Declaration of all the regression tests
+
 void RegressionTest_BondPricing(std::ostream & os)
 {
     //////////////////////////////////////////////////////////////
@@ -408,4 +420,60 @@ void RegressionTest_ProcessPathSimulation(std::ostream & os)
     {
         os << "FAILED" << std::endl;
     }
+}
+
+//  Regression test for date
+void RegressionTest_Date(std::ostream & os)
+{
+    os << "Regression Test for date" << std::endl;
+    
+    Utilities::Date::MyDate sToday(3,2,2014);
+    
+    os << "Today is " << sToday.Print() << std::endl;
+    
+    if (DEBUG)
+    {
+        os << "Add one day" << std::endl;
+        os << "New date is " << sToday.Add(1, Utilities::Date::DAY).Print() << std::endl;
+        os << "Add one week" << std::endl;
+        os << "New date is " << sToday.Add(1, Utilities::Date::WEEK).Print() << std::endl;
+        os << "Add one month " << std::endl;
+        os << "New date is " << sToday.Add(1, Utilities::Date::MONTH).Print() << std::endl;
+        os << "Add one year " << std::endl;
+        os << "New date is " << sToday.Add(1, Utilities::Date::YEAR).Print() << std::endl;
+    }
+    Utilities::Date::MyDate finalDate(11, 3, 2015);
+    os << "Test of add function : " ;
+    if (sToday == finalDate)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+    }
+}
+
+/////////////////////////////////////////////////////
+//
+//      Regression test launcher
+//
+/////////////////////////////////////////////////////
+
+void LaunchRegressionTests(std::ostream & os)
+{
+    RegressionTest_BondPricing(os);
+    os << std::endl;
+    RegressionTest_TimeStatistics(os);
+    os << std::endl;
+    RegressionTest_PayoffLinearization(os);
+    os << std::endl;
+    RegressionTest_Interpolation(os);
+    os << std::endl;
+    RegressionTest_VolatilitySurfaceInterpolation(os);
+    os << std::endl;
+    RegressionTest_ProcessPathSimulation(os);
+    os << std::endl;
+    RegressionTest_Date(os);
+    os << std::endl;
 }

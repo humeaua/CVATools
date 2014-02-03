@@ -153,18 +153,7 @@ int _main()
     
     if (iTest == 0)
     {
-        RegressionTest_BondPricing();
-        std::cout << std::endl;
-        RegressionTest_TimeStatistics();
-        std::cout << std::endl;
-        RegressionTest_PayoffLinearization();
-        std::cout << std::endl;
-        RegressionTest_Interpolation();
-        std::cout << std::endl;
-        RegressionTest_VolatilitySurfaceInterpolation();
-        std::cout << std::endl;
-        RegressionTest_ProcessPathSimulation();
-        std::cout << std::endl;
+        LaunchRegressionTests(std::cout);
     }
     if (iTest == 1)
     {

@@ -8,6 +8,7 @@
 
 #include "Date.h"
 #include "VectorUtilities.h"
+#include <sstream>
 
 namespace Utilities
 {    
@@ -353,7 +354,7 @@ namespace Utilities
             return iYear_ - sDate.GetYear() + (iMonth_ - sDate.GetMonth()) / 12.0 + (iDay_ - sDate.GetDay()) / 360.0;
         }
         
-        void MyDate::Add(long iUnit, const TimeUnits& eTimeUnit)
+        MyDate MyDate::Add(long iUnit, const TimeUnits& eTimeUnit)
         {
             int iDay;
             if (eTimeUnit == WEEK)
@@ -425,14 +426,17 @@ namespace Utilities
                     throw EXCEPTION("Could not interpret unit");
                     break;
             }
+            return *this;
         }
         
         MyDate::~MyDate()
         {}
         
-        void MyDate::Print(std::ostream & out) const
+        std::string MyDate::Print() const
         {
-            out << "Date : " << iDay_ << "/" << iMonth_ << "/" << iYear_ << std::endl;
+            std::stringstream out;
+            out << iDay_ << "/" << iMonth_ << "/" << iYear_;
+            return out.str();
         }
         
         bool IsLeapYear(long lYear)

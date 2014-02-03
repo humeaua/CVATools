@@ -442,6 +442,13 @@ void RegressionTest_Date(std::ostream & os)
         os << "Add one year " << std::endl;
         os << "New date is " << sToday.Add(1, Utilities::Date::YEAR).Print() << std::endl;
     }
+    else
+    {
+        sToday.Add(1, Utilities::Date::DAY);
+        sToday.Add(1, Utilities::Date::WEEK);
+        sToday.Add(1, Utilities::Date::MONTH);
+        sToday.Add(1, Utilities::Date::YEAR);
+    }
     Utilities::Date::MyDate finalDate(11, 3, 2015);
     os << "Test of add function : " ;
     if (sToday == finalDate)

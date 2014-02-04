@@ -87,15 +87,15 @@ namespace Finance
         dSigma_(dSigma)
         {}
         
-        DVector MargrabeOptionVasicek::MultiDrift(double dt, DVector dx) const
+        std::vector<double> MargrabeOptionVasicek::MultiDrift(double dt, std::vector<double> dx) const
         {
-            return DVector(3, 0.0);
+            return std::vector<double>(3, 0.0);
         }
         
         //  MultiDimensional Variance --> not used but must be declared
-        DVector MargrabeOptionVasicek::MultiVol(double dt, DVector dx) const
+        std::vector<double> MargrabeOptionVasicek::MultiVol(double dt, std::vector<double> dx) const
         {
-            return DVector(3, 0.0);
+            return std::vector<double>(3, 0.0);
         }
         
         double MargrabeOptionVasicek::alpha(double t, double r_t) const
@@ -118,7 +118,7 @@ namespace Finance
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             
             //   store values for initial time step
-            DVector dCurrentValues(4,0.0);
+            std::vector<double> dCurrentValues(4,0.0);
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
                 dCurrentValues.at(0) = dS1_;
@@ -131,7 +131,7 @@ namespace Finance
             // Choleski Decomposition of correlation matrix
             Utilities::Matrix<double> sCholDec(3,3);
             CholeskiDecomposition(sCorrelationMatrix_, sCholDec);
-            DVector dRandomNumbers(3,0.0), dCorrelatedRN(3,0.0);
+            std::vector<double> dRandomNumbers(3,0.0), dCorrelatedRN(3,0.0);
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
                 double dOldStock1 = dS1_, dOldStock2 = dS2_, dOldIntShortRate = 0.0, dOldShortRate = dR0_, dNewStock1 = 0.0, dNewStock2 = 0.0, dNewIntShortRate = 0.0, dNewShortRate = 0.0;

@@ -11,7 +11,6 @@
 
 #include <vector>
 #include <map>
-#include "Type.h"
 #include "Vector.h"
 
 namespace Utilities
@@ -19,7 +18,7 @@ namespace Utilities
     class SimulationDataMultiDim {
     protected:
         //        Date,             Path
-        std::map<double, std::map<std::size_t, DVector > > dData_;
+        std::map<double, std::map<std::size_t, std::vector<double> > > dData_;
         
     public:
         //Default constructor
@@ -36,16 +35,16 @@ namespace Utilities
         virtual void Put(double dDate, std::size_t iPath, std::size_t iDimension, double dValue);
         
         // Getter
-        virtual std::map<double, std::map<std::size_t, DVector > > GetData() const;
+        virtual std::map<double, std::map<std::size_t, std::vector<double> > > GetData() const;
         virtual Utilities::MyVector<double> GetData(double dDate, std::size_t iPath) const;
         
         template<typename Functor>
         void Apply(Functor func)
         {
-            std::map<double, std::map<std::size_t, DVector> >::iterator itDates = dData_.begin();
+            std::map<double, std::map<std::size_t, std::vector<double> > >::iterator itDates = dData_.begin();
             for ( ; itDates != dData_.end() ; ++itDates)
             {
-                std::map<std::size_t, DVector>::iterator itPaths = itDates->second.begin();
+                std::map<std::size_t, std::vector<double> >::iterator itPaths = itDates->second.begin();
                 for ( ; itPaths != itDates->second.end() ; ++itPaths)
                 {
                     for (std::size_t iDim = 0 ; iDim < itPaths->second.size() ; ++iDim)
@@ -58,10 +57,10 @@ namespace Utilities
         template<typename T>
         void Apply(const T& t)
         {
-            std::map<double, std::map<std::size_t, DVector> >::iterator itDates = dData_.begin();
+            std::map<double, std::map<std::size_t, std::vector<double> > >::iterator itDates = dData_.begin();
             for ( ; itDates != dData_.end() ; ++itDates)
             {
-                std::map<std::size_t, DVector>::iterator itPaths = itDates->second.begin();
+                std::map<std::size_t, std::vector<double> >::iterator itPaths = itDates->second.begin();
                 for ( ; itPaths != itDates->second.end() ; ++itPaths)
                 {
                     for (std::size_t iDim = 0 ; iDim < itPaths->second.size() ; ++iDim)

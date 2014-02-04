@@ -10,7 +10,6 @@
 #define CVATools_Matrix_h
 
 #include <iostream>
-#include "Type.h"
 #include "Vector.h"
 
 namespace Utilities

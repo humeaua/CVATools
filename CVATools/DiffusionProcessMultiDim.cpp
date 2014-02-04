@@ -14,14 +14,14 @@ namespace Finance
 {
     namespace Processes
     {
-        DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Utilities::Matrix<double> & sCorrelationMatrix, const DVector & dX0, const std::vector<StochProcessSimulation> & sSimulationParams, long long & lSeed) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix), dX0_(dX0), sSimulationParams_(sSimulationParams), SimulatedProcessMultiDim(lSeed)
+        DiffusionProcessMultiDim::DiffusionProcessMultiDim(std::size_t iNDimensions, const Utilities::Matrix<double> & sCorrelationMatrix, const std::vector<double>  & dX0, const std::vector<StochProcessSimulation> & sSimulationParams, long long & lSeed) : iNDimensions_(iNDimensions), sCorrelationMatrix_(sCorrelationMatrix), dX0_(dX0), sSimulationParams_(sSimulationParams), SimulatedProcessMultiDim(lSeed)
         {
             assert(iNDimensions_ == sCorrelationMatrix_.getrows());
             assert(iNDimensions_ == sCorrelationMatrix_.getcols());
         }
         
         template <size_t iDim>
-        DiffusionProcessMultiDim::DiffusionProcessMultiDim(double dCorrelationMatrix[iDim][iDim], const DVector & dX0) : iNDimensions_(iDim), dX0_(dX0)
+        DiffusionProcessMultiDim::DiffusionProcessMultiDim(double dCorrelationMatrix[iDim][iDim], const std::vector<double> & dX0) : iNDimensions_(iDim), dX0_(dX0)
         {
             sCorrelationMatrix_ = Matrix(dCorrelationMatrix, iDim);
         }
@@ -30,10 +30,10 @@ namespace Finance
         {}
         
         //  MultiDimensional Expectation
-        DVector DiffusionProcessMultiDim::MultiExpectation(double t0, DVector dx, double dt) const
+        std::vector<double> DiffusionProcessMultiDim::MultiExpectation(double t0, std::vector<double> dx, double dt) const
         {
             assert(dx.size() == iNDimensions_);
-            DVector dResult(iNDimensions_), dMultiDrift = MultiDrift(dt, dx);
+            std::vector<double> dResult(iNDimensions_), dMultiDrift = MultiDrift(dt, dx);
             for (std::size_t iDim = 0 ; iDim < iNDimensions_ ; ++iDim)
             {
                 dResult.at(iDim) = dx.at(iDim) + dMultiDrift.at(iDim);
@@ -42,11 +42,11 @@ namespace Finance
         }
         
         //  MultiDimensional Variance
-        Utilities::Matrix<double> DiffusionProcessMultiDim::MultiVariance(double t0, const DVector & dx, double dt) const
+        Utilities::Matrix<double> DiffusionProcessMultiDim::MultiVariance(double t0, const std::vector<double> & dx, double dt) const
         {
             assert(dx.size() == iNDimensions_);
             Utilities::Matrix<double> dResult(iNDimensions_, iNDimensions_);
-            DVector dMultiVol = MultiVol(dt, dx);
+            std::vector<double> dMultiVol = MultiVol(dt, dx);
             for (std::size_t iRow = 0 ; iRow < iNDimensions_ ; ++iRow)
             {
                 double dSigmai = dMultiVol.at(iRow);
@@ -72,7 +72,7 @@ namespace Finance
             
             std::tr1::normal_distribution<double> dist(0.0,1.0);
             
-            DVector dOldValues, dRandomNumbers(iNDimensions_);
+            std::vector<double> dOldValues, dRandomNumbers(iNDimensions_);
             for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
             {
                 double t0 = dDates.at(iDate - 1), dt = dDates.at(iDate) - t0;
@@ -91,7 +91,7 @@ namespace Finance
                     //  Choleski decomposition
                     CholeskiDecomposition(sCovarMatrix, sSquareRoot);
                     
-                    DVector dExpectation = MultiExpectation(t0, dOldValues, dt);
+                    std::vector<double> dExpectation = MultiExpectation(t0, dOldValues, dt);
                     
                     //  Generate the random numbers
                     for (std::size_t i = 0 ; i < iNDimensions_ ; ++i)
@@ -99,7 +99,7 @@ namespace Finance
                         dRandomNumbers.at(i) = dist(*m_eng);
                     }
                     
-                    DVector dCorrelatedNumbers;
+                    std::vector<double> dCorrelatedNumbers;
                     mult(dCorrelatedNumbers, sSquareRoot, dRandomNumbers);
                     
                     for (std::size_t i = 0 ; i < iNDimensions_ ; ++i)

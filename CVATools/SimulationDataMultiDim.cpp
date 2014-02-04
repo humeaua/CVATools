@@ -18,7 +18,7 @@ namespace Utilities
     //  Overloading constructor
     SimulationDataMultiDim::SimulationDataMultiDim(const std::vector<double> & dDates, std::size_t iNPaths, std::size_t iNDimensions)
     {
-        DVector sEmptyVector(iNDimensions, 0.0);
+        std::vector<double> sEmptyVector(iNDimensions, 0.0);
         for (std::size_t iDate = 0 ; iDate < dDates.size() ; ++iDate)
         {
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
@@ -81,7 +81,7 @@ namespace Utilities
     }
     
     // Getter
-    std::map<double, std::map<std::size_t, DVector > > SimulationDataMultiDim::GetData() const
+    std::map<double, std::map<std::size_t, std::vector<double> > > SimulationDataMultiDim::GetData() const
     {
         return dData_;
     }
@@ -90,7 +90,7 @@ namespace Utilities
     {
         if (dData_.count(dDate) != 0)
         {
-            std::map<std::size_t, DVector> dLoc = dData_.find(dDate)->second;
+            std::map<std::size_t, std::vector<double>> dLoc = dData_.find(dDate)->second;
             if (dLoc.count(iPath) != 0)
             {
                 return dLoc.find(iPath)->second;

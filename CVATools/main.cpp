@@ -251,7 +251,7 @@ int _main()
         }
         
         Utilities::SimulationDataMultiDim sData = sOption.simulate(dDates, iNPaths);
-        std::map<double, std::map<std::size_t, DVector> > sDatamap = sData.GetData();
+        std::map<double, std::map<std::size_t, std::vector<double> > > sDatamap = sData.GetData();
         for (std::size_t i = 0 ; i < 4 ; ++i)
         {
             std::stringstream out ;
@@ -264,7 +264,7 @@ int _main()
         //  Test for apply function
         //sData.Apply(exp);
         //sDatamap = sData.GetData();
-        //DVector firstvect = sDatamap.find(0)->second.find(0)->second;
+        //std::vector<double> firstvect = sDatamap.find(0)->second.find(0)->second;
         //for (std::size_t i = 0 ; i < firstvect.size() ; ++i)
         //{
         //    std::cout << i << " " << firstvect[i] << std::endl;

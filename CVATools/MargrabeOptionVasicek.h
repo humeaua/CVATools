@@ -36,10 +36,10 @@ namespace Finance
             MargrabeOptionVasicek(double dT, double dK, double dRho12, double dRhor1, double dRhor2, const std::vector<double>& dInitialValues, double dA, double dB, double dSigma, double dSigma1, double dSigma2, const std::vector<Processes::StochProcessSimulation> & sSimulationParams, long long & lSeed);
             
             //  MultiDimensional Drift drift
-            virtual DVector MultiDrift(double dt, DVector dx) const ;
+            virtual std::vector<double> MultiDrift(double dt, std::vector<double> dx) const ;
             
             //  MultiDimensional volatility vector
-            virtual DVector MultiVol(double dt, DVector dx) const;
+            virtual std::vector<double> MultiVol(double dt, std::vector<double> dx) const;
             
             virtual double alpha(double t, double r_t) const;
             virtual double beta(double t, double r_t) const;

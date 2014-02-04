@@ -133,7 +133,7 @@ namespace Utilities
         {
             return (T&)data.at(i + rowsize*j);
         }
-        
+                          
         virtual int getrows() const
         {
             return rowsize;
@@ -144,15 +144,15 @@ namespace Utilities
             return colsize;
         }
         
-        void print()
+        void print(std::ostream & os)
         {
             for (int i=0; i<rowsize; i++)
             {
                 for (int j=0; j<colsize; j++)
                 {
-                    std::cout << (*this)(i,j) << '\t';
+                    os << (*this)(i,j) << '\t';
                 }
-                std::cout << std::endl;
+                os << std::endl;
             }
         }
         
@@ -161,6 +161,8 @@ namespace Utilities
         int colsize;
         std::vector<T> data;
     };
+    
+    
     
     template<typename T>
     void addmatrix(Matrix<T>& New, const Matrix<T>& One, const Matrix<T>& Two)
@@ -203,7 +205,22 @@ namespace Utilities
         }
     };
     
-    void mult(DVector & New, const Matrix<double> & matrix, const DVector & Old);
+    template<typename T>
+    void mult(std::vector<T> & New, const Matrix<T> & matrix, const std::vector<T> & Old)
+    {
+        REQUIREEXCEPTION(matrix.getcols() == Old.size(), "Need same size in vector as in matrix number of rows");
+        New.resize(matrix.getrows());
+        
+        for (int i = 0 ; i < matrix.getrows() ; ++i)
+        {
+            New.at(i) = 0.;
+            for (int j = 0 ; j < matrix.getcols() ; ++j)
+            {
+                New.at(i) += matrix(i,j) * Old.at(j);
+            }
+        }
+    };
+    
     void matrixinverse(Matrix<double> & hi, const Matrix<double> & mat);
     void gaussj(Matrix<double> & a, Matrix<double> & b);
     

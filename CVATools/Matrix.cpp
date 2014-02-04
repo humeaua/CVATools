@@ -14,21 +14,6 @@
 
 namespace Utilities
 {
-    void mult(DVector & New, const Matrix<double> & matrix, const DVector & Old)
-    {
-        assert(matrix.getcols() == Old.size());
-        New.resize(matrix.getrows());
-        
-        for (int i = 0 ; i < matrix.getrows() ; ++i)
-        {
-            New.at(i) = 0.;
-            for (int j = 0 ; j < matrix.getcols() ; ++j)
-            {
-                New.at(i) += matrix(i,j) * Old.at(j);
-            }
-        }
-    }
-    
     void matrixinverse(Matrix<double>& hi, const Matrix<double>& mat)
     {
         //  Check the size of the matrix first
@@ -38,7 +23,7 @@ namespace Utilities
             double det = mat(0,0) * mat(1,1) - mat(1,0) * mat(0,1);
             if (det < std::numeric_limits<double>::epsilon())
             {
-                throw MyException("matrixinverse : Cannot inverse singular matrix");
+                throw EXCEPTION("Cannot inverse singular matrix");
             }
             hi(0,0) = mat(1,1) / det;
             hi(1,0) = -mat(1,0) / det;
@@ -58,7 +43,7 @@ namespace Utilities
                     I = mat(0,0) * mat(1,1) - mat(1,0) * mat(0,1);
             
             double det = mat(0,0) * A + mat(0,1) * B + mat(0,2) * C;
-            if (det < std::numeric_limits<double>::epsilon())
+            if (fabs(det) < std::numeric_limits<double>::epsilon())
             {
                 throw EXCEPTION("Cannot inverse singular matrix");
             }
@@ -258,7 +243,7 @@ namespace Utilities
                 U(i,j) = J[i][j];
             }
         }
-        
+        //  Copy to L as we cannot do better 
         for (int i=0;i<mat.getrows();i++)
         {
             for (int j=0;j<mat.getcols();j++)
@@ -266,6 +251,7 @@ namespace Utilities
                 L(i,j) = LL[i][j];
             }
         }
+        
     }
     
     void CholeskiDecomposition(//   Input

@@ -16,10 +16,16 @@ namespace Utiliites {
     
     template<class C, class D> class HashTable : public std::tr1::unordered_map<C, D>
     {
+        typedef typename std::tr1::unordered_map<C, D>::const_iterator const_iterator;
     public:
-        virtual void print(std::ostream & out = std::cout) const;
+        virtual void print(std::ostream & os = std::cout) const
+        {
+            for (const_iterator it = this->begin() ; it != this->end() ; ++it)
+            {
+                os << it->first << " ; " << it->second << std::endl;
+            }
+        }
     };
 }
-
 
 #endif /* defined(__CVATools__HashTable__) */

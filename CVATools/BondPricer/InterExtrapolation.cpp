@@ -42,6 +42,11 @@ namespace Utilities
             }
         }
         
+        size_t Interpolator::size() const
+        {
+            return dVariables_.size();
+        }
+        
         LinearInterpolator::LinearInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
         {}
         

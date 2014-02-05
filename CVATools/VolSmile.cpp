@@ -91,5 +91,11 @@ namespace Finance
         {
             return dMaturity_;
         }
+        
+        bool VolSmile::IsATMVolQuoted() const
+        {
+            //  If not found, the function FindInVector returns -1;
+            return Utilities::FindInVector(dVariables_, 0.0) != -1;
+        }
     }
 }

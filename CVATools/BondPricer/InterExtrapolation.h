@@ -28,6 +28,7 @@ namespace Utilities
             virtual double operator()(double dVariable) const = 0;
             
             virtual void FindIndex(double dVariable, int& iValue1) const;
+            virtual size_t size() const;
         };
         
         class LinearInterpolator : public Interpolator

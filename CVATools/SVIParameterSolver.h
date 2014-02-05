@@ -24,7 +24,8 @@ namespace Finance
         public:
             SVIParameterSolver();
             
-            void SetFirstGuess(const VolSmile & volSmile);
+            //  The parameter useParabola controls the fact that the parameters m and sigma are choosen by fitting a parabola, using the first quoted strike, the last quoted strike and the at-the-money volatility
+            void SetFirstGuess(const VolSmile & volSmile, bool useParabola);
         };
     }
 }

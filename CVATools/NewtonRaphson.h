@@ -21,7 +21,8 @@ namespace Maths
         double dEpsValueDeriv_;
         
     public:
-        NewtonRaphson1D(std::size_t iNIterMax = 100, double dTolerance = 1e-06, double dEpsValueDeriv = 1e-06);
+        NewtonRaphson1D();
+        NewtonRaphson1D(std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv);
         
         virtual double f(double x) const = 0;
         virtual double df(double x) const = 0;

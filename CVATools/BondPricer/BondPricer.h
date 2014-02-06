@@ -26,9 +26,12 @@ namespace Finance
             PriceToYieldNewton(const Bond & sBond,
                                const Utilities::Date::MyDate & sToday,
                                double dPrice,
-                               std::size_t iNIterMax = 100,
-                               double dTolerance = 1e-06,
-                               double dEpsValueDeriv = 1e-06);
+                               std::size_t iNIterMax,
+                               double dTolerance,
+                               double dEpsValueDeriv);
+            PriceToYieldNewton(const Bond & sBond,
+                               const Utilities::Date::MyDate & sToday,
+                               double dPrice);
             virtual double f(double x) const;
             virtual double df(double x) const;
         };
@@ -42,9 +45,12 @@ namespace Finance
             ZSpreadNewton(const Bond & sBond,
                           const Finance::Base::YieldCurve & sYieldCurve,
                           double dPrice,
-                          std::size_t iNIterMax = 100,
-                          double dTolerance = 1e-06,
-                          double dEpsValueDeriv = 1e-06);
+                          std::size_t iNIterMax,
+                          double dTolerance,
+                          double dEpsValueDeriv);
+            ZSpreadNewton(const Bond & sBond,
+                          const Finance::Base::YieldCurve & sYieldCurve,
+                          double dPrice);
             virtual double f(double x) const;
             virtual double df(double x) const;
         };

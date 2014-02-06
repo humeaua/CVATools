@@ -12,6 +12,9 @@
 
 namespace Maths
 {
+    NewtonRaphson1D::NewtonRaphson1D() : iNIterMax_(100), dTolerance_(1.0e-6), dEpsValueDeriv_(1.0e-6)
+    {}
+    
     NewtonRaphson1D::NewtonRaphson1D(std::size_t iNIterMax, double dTolerance, double dEpsValueDeriv) : iNIterMax_(iNIterMax), dTolerance_(dTolerance), dEpsValueDeriv_(dEpsValueDeriv)
     {
         REQUIREEXCEPTION(dEpsValueDeriv > 0, "Epsilon value for derivative should be positive");

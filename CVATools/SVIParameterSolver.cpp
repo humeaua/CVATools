@@ -9,6 +9,7 @@
 #include "SVIParameterSolver.h"
 #include "Exception.h"
 #include "Require.h"
+#include <cmath>
 
 namespace Finance
 {
@@ -69,6 +70,57 @@ namespace Finance
                 StrikesOutput[i] = (*strike - dM_) / dSigma_;
             }
         }
+        
+        void SVIParameterSolver::ComputeRHS(const std::vector<double> &NormalizedLogStrikes, const std::vector<double> &Variance, std::vector<double> &RHS) const
+        {
+            for (std::size_t i = 0 ; i < NormalizedLogStrikes.size() ; ++i)
+            {
+                RHS[0] += Variance[i];
+                RHS[1] += Variance[i] * NormalizedLogStrikes[i];
+                RHS[2] += Variance[i] * sqrt(1 + NormalizedLogStrikes[i] * NormalizedLogStrikes[i]);
+            }
+        }
+        
+        void SVIParameterSolver::ComputeLHSMatrix(const std::vector<double> &NormalizedLogStrikes, Utilities::Matrix<double> &LHSMatrix) const
+        {
+            for (std::size_t i = 0 ; i < NormalizedLogStrikes.size() ; ++i)
+            {
+                LHSMatrix(0,1) += NormalizedLogStrikes[i];
+                LHSMatrix(0,2) += sqrt(1 + NormalizedLogStrikes[i] * NormalizedLogStrikes[i]);
+                LHSMatrix(1,2) += NormalizedLogStrikes[i] * sqrt(1 + NormalizedLogStrikes[i] * NormalizedLogStrikes[i]);
+                LHSMatrix(1,1) += NormalizedLogStrikes[i] * NormalizedLogStrikes[i];
+            }
+            LHSMatrix(0,0) = NormalizedLogStrikes.size();
+            LHSMatrix(2,2) = LHSMatrix(0,0) + LHSMatrix(1,1);
+            LHSMatrix(0,2) = LHSMatrix(2,0);
+            LHSMatrix(1,2) = LHSMatrix(2,1);
+            LHSMatrix(0,1) = LHSMatrix(1,0);
 
+        }
+        
+        void SVIParameterSolver::Solve(const std::vector<double> & LogStrikesInput,
+                                       const std::vector<double> & volatilitiesInput,
+                                       double T)// maturity
+        {
+            std::vector<double> NormalizedLogStrikes, Variance, RHS(3), Params(3);
+            Utilities::Matrix<double> LHS(3,3), LHSInverse(3,3);
+            
+            //  Normalize variables
+            Normalize(LogStrikesInput, volatilitiesInput, T, NormalizedLogStrikes, Variance);
+            
+            //  Compute coefficients of linear system
+            ComputeLHSMatrix(NormalizedLogStrikes, LHS);
+            ComputeRHS(NormalizedLogStrikes, Variance, RHS);
+            
+            //  Invert matrix
+            Utilities::matrixinverse(LHSInverse, LHS);
+            
+            //  Multiply inverted matrix by rhs
+            Utilities::mult(Params, LHSInverse, RHS);
+            
+            dA_ = Params[0] / T;
+            dRho_ = Params[1] / Params[2];
+            dB_ = Params[2] / (dSigma_ * T);
+        }
     }
 }

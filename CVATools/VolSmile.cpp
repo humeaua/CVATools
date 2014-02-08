@@ -11,6 +11,7 @@
 #include "Require.h"
 #include "MathFunctions.h"
 #include "VectorUtilities.h"
+#include <sstream>
 
 namespace Finance
 {
@@ -22,12 +23,17 @@ namespace Finance
                            double T) : Utilities::Interp::HermiteSplineCubicInterpolator(dStrikes, dVolatilities), dFwdRef_(dFwdRef), dMaturity_(T)
         {
             REQUIREEXCEPTION(T >= 0.0, "Maturity is negative");
+            REQUIREEXCEPTION(dFwdRef_ > 0, "Reference forward is negative");
             for (std::size_t i = 0 ; i < dVariables_.size() ; ++i)
             {
+                if (dVariables_[i] < 0.0)
+                {
+                    std::stringstream ss;
+                    ss << "Variable at index " << i << " is negative. Value : " << dVariables_[i];
+                    throw EXCEPTION(ss.str());
+                }
                 dVariables_[i] = log(dVariables_[i] / dFwdRef_);
             }
-            //std::transform(dVariables_.begin(), dVariables_.end(), dVariables_.begin(), bind2nd(std::divides<double>(), dFwdRef));
-            //std::for_each(dVariables_.begin(), dVariables_.end(), log);
         }
         
         bool VolSmile::CheckButterflySpreadArbitrage() const
@@ -55,7 +61,7 @@ namespace Finance
         {
             REQUIREEXCEPTION(K > 0, "Strike is negative");
             const double logFwdOverStrike = log(dFwdRef_ / K);
-            const double volatility = (*this)(-logFwdOverStrike);
+            const double volatility = (*this)(K);
             if (volatility == 0.0)
             {
                 return std::max(dFwdRef_ - K, 0.0);
@@ -104,6 +110,11 @@ namespace Finance
         {
             //  If not found, the function FindInVector returns -1;
             return Utilities::FindInVector(dVariables_, 0.0) != -1;
+        }
+        
+        double VolSmile::operator()(double strike) const
+        {
+            return HermiteSplineCubicInterpolator::operator()(log(strike / dFwdRef_));
         }
     }
 }

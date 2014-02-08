@@ -39,6 +39,8 @@ namespace Finance
             virtual double GetStdDevStrike() const; // TEST : to get the parameter sigma in SVI ?
             
             virtual bool IsATMVolQuoted() const;
+            
+            virtual double operator()(double strike) const;
         };
     }
 }

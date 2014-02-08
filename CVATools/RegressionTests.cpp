@@ -24,6 +24,7 @@
 #include "StochCorrel.h"
 
 #include "VolSmile.h"
+#include "SVIParameterSolver.h"
 
 //  Forward declaration of the different regression tests
 void RegressionTest_BondPricing(std::ostream & os);
@@ -351,23 +352,57 @@ void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
     os << "Volatility Surface Interpolation" << std::endl;
     
     const double dFwdRef = 1.0, T = 1.0;
-    double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
-    std::vector<double> strikesvect(strikes, strikes + 7), volsvect(vols, vols + 7);
+    const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
+    const std::vector<double> strikesvect(strikes, strikes + 7), volsvect(vols, vols + 7);
     Finance::Volatility::VolSmile volSmile(strikesvect, volsvect, dFwdRef, T);
+    Finance::Volatility::SVIParameterSolver sviParameterSolver(dFwdRef);
+    
+    try
+    {
+        sviParameterSolver.Solve(volSmile, true); // use parabola
+    }
+    catch (Utilities::MyException & excep)
+    {
+        os << excep.what() << std::endl;
+        throw ;
+    }
+    catch (std::exception & excep)
+    {
+        os << excep.what() << std::endl;
+        throw ;
+    }
+    catch (...)
+    {
+        os << "Unknown exception caught" << std::endl;
+        throw ;
+    }
     
     os << "Non-Arbitrageability of smile : " << volSmile.IsArbitrageFree() << std::endl;
+    os << "SVI Parametrisation arbitrable ? " << sviParameterSolver.IsArbitrable(T) << std::endl;
+
     
     double dVolHermiteInterp[] = {0.162387398,0.171055648,0.178274859,0.184201251,0.188977135,0.19273226,0.195585021,0.197643533,0.199006591,0.199764531,0.2,0.199788646,0.199199746,0.198296762,0.19713785,0.195776315,0.194261028,0.192636796,0.190944705,0.189222427,0.187504502,0.185822589,0.184205704,0.182680428,0.181271101,0.18,0.177885476,0.175906058,0.174028117,0.172220433,0.170454026,0.168701994,0.166939366,0.16514297,0.163291305,0.161364427,0.159343843,0.157212411,0.154954249,0.152554649,0.15,0.146707486,0.142439116,0.137675673,0.132867982,0.128438737,0.124784208,0.122275831,0.121261693,0.122067925,0.125,0.129212102,0.133595371,0.138050381,0.142483334,0.146805754,0.150934187,0.154789933,0.158298785,0.161390785,0.164,0.166353304,0.168714128,0.171074576,0.173427164,0.175764796,0.178080747,0.180368643,0.182622445,0.18483643,0.187005179,0.189123558,0.191186708,0.193190027,0.195129164,0.197,0.198947562,0.201080311,0.203341447,0.205676738,0.208034399,0.210364993,0.21262132,0.214758323,0.216732992,0.218504278,0.220033005,0.221281792,0.222214972,0.222798525,0.223,0.222788455,0.22213439,0.221009686,0.219387548,0.21724245,0.214550081,0.211287294,0.207432059,0.202963418};
+    double dSVIParametrisationParabola[] = {0.24621736,0.241945343,0.237741155,0.233604978,0.229537202,0.225538421,0.221609434,0.217751242,0.213965045,0.210252242,0.206614426,0.203053383,0.199571086,0.196169694,0.192851539,0.189619125,0.186475116,0.183422322,0.18046369,0.177602283,0.174841263,0.17218387,0.169633396,0.167193157,0.16486646,0.162656574,0.160566688,0.158599875,0.15675905,0.155046929,0.153465986,0.152018412,0.150706072,0.149530472,0.14849272,0.147593499,0.146833042,0.146211117,0.14572701,0.145379533,0.145167016,0.145087331,0.145137901,0.145315735,0.145617455,0.146039331,0.146577328,0.147227142,0.14798425,0.14884395,0.149801411,0.15085171,0.151989878,0.153210932,0.154509915,0.155881926,0.157322143,0.158825852,0.160388464,0.162005534,0.163672771,0.16538605,0.167141419,0.168935104,0.170763514,0.172623235,0.174511037,0.176423866,0.178358845,0.180313264,0.182284581,0.184270413,0.186268529,0.188276847,0.190293422,0.192316447,0.194344239,0.196375235,0.198407988,0.200441156,0.202473499,0.204503874,0.206531225,0.20855458,0.210573047,0.212585806,0.214592107,0.216591265,0.218582652,0.220565698,0.222539885,0.224504744,0.22645985,0.22840482,0.230339311,0.232263015,0.234175659,0.236077001,0.237966826,0.239844947};
     
-    double dErrorInterpHermite = 0.0;
+    double dErrorInterpHermite = 0.0, dErrorSVIParabola = 0.0;
     int i = 0;
     for (double dStrike = 0.50 ; dStrike < 1.5 ; dStrike += 0.01, ++i)
     {
-        //std::cout << std::setprecision(9) << volSmile(dStrike) << std::endl;
+        //os << std::setprecision(9) << sviParameterSolver(dStrike) << std::endl;
         dErrorInterpHermite += std::abs(dVolHermiteInterp[i] - volSmile(dStrike));
+        dErrorSVIParabola += std::abs(sviParameterSolver(dStrike) - dSVIParametrisationParabola[i]);
     }
     const double dTolerance = 1e-06;
     os << "Hermite Interpolation of smile : " ;
+    if (dErrorInterpHermite < dTolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+    }
+    os << "SVI Parametrisation of smile : " ;
     if (dErrorInterpHermite < dTolerance)
     {
         os << "SUCCEEDED" << std::endl;
@@ -504,10 +539,10 @@ void LaunchRegressionTests(std::ostream & os)
     os << std::endl;
     RegressionTest_Interpolation(os);
     os << std::endl;
-    RegressionTest_VolatilitySurfaceInterpolation(os);
-    os << std::endl;
     RegressionTest_ProcessPathSimulation(os);
     os << std::endl;
     RegressionTest_Date(os);
+    os << std::endl;
+    RegressionTest_VolatilitySurfaceInterpolation(os);
     os << std::endl;
 }

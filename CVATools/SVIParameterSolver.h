@@ -52,6 +52,7 @@ namespace Finance
         public:
             virtual void Solve(const Finance::Volatility::VolSmile & volSmile, bool bUseParabola);
             virtual double operator()(double strike) const;
+            virtual bool IsArbitrable(double T) const;
         };
     }
 }

@@ -42,16 +42,26 @@ namespace Finance
                 else
                 {
                     //  1st guess parametrisation : atm vol + sigma * (log(K/F))^2
-                    double atmVol = volSmile(0.0);
-                    dSigma_ = ((volSmile(firstStrike) - atmVol) / firstStrike - (volSmile(lastStrike) - atmVol) / lastStrike) / (firstStrike - lastStrike);
+                    double atmVol = volSmile(dFwdRef_);
+                    //  We call the operator as first strike and last strike are quoted as logstrikes
+                    dSigma_ = ((volSmile.Utilities::Interp::HermiteSplineCubicInterpolator::operator()(firstStrike) - atmVol) / firstStrike - (volSmile.Utilities::Interp::HermiteSplineCubicInterpolator::operator()(lastStrike) - atmVol) / lastStrike) / (firstStrike - lastStrike);
                     dM_ = 0.0; // need to check in this case
                     
-                    REQUIREEXCEPTION(dSigma_ == 0, "Smile is flat");
+                    REQUIREEXCEPTION(dSigma_ != 0, "Smile is flat");
                 }
             }
             else
             {
-                throw EXCEPTION("First strike must be negative and last strike must be positive");
+                std::stringstream ss;
+                if (firstStrike > 0.0)
+                {
+                    ss << "First strike must be negative. Current value " << firstStrike << ". ";
+                }
+                if (lastStrike < 0.0)
+                {
+                    ss << "Last strike must be positive. Current value " << lastStrike << ".";
+                }
+                throw EXCEPTION(ss.str());
             }
         }
         
@@ -96,9 +106,9 @@ namespace Finance
             }
             LHSMatrix(0,0) = NormalizedLogStrikes.size();
             LHSMatrix(2,2) = LHSMatrix(0,0) + LHSMatrix(1,1);
-            LHSMatrix(0,2) = LHSMatrix(2,0);
-            LHSMatrix(1,2) = LHSMatrix(2,1);
-            LHSMatrix(0,1) = LHSMatrix(1,0);
+            LHSMatrix(2,0) = LHSMatrix(0,2);
+            LHSMatrix(2,1) = LHSMatrix(1,2);
+            LHSMatrix(1,0) = LHSMatrix(0,1);
 
         }
         
@@ -140,13 +150,35 @@ namespace Finance
         {
             double logStrike = log(strike / dFwdRef_);
             double volsquare = dA_ + dB_ * (dRho_ * (logStrike - dM_) + sqrt((logStrike - dM_) * (logStrike - dM_) + dSigma_ * dSigma_));
-            if (volsquare >= 0)
+            if (volsquare < 0)
             {
                 std::stringstream ss;
                 ss << "Variance is negative for strike K : " << strike ;
                 throw EXCEPTION(ss.str());
             }
             return sqrt(volsquare);
+        }
+        
+        bool SVIParameterSolver::IsArbitrable(double T) const
+        {
+            if (!(dB_ * T <= 4.0 && dB_ >= 0))
+            {
+                std::cout << "B : " << dB_ << std::endl;
+                return true;
+            }
+            if (!(fabs(dRho_) < 1.0))
+            {
+                std::cout << "Rho : " << dRho_ << std::endl;
+                return true;
+            }
+            if (!(fabs(dRho_ * dB_ * dSigma_ * T)< 4.0 * dSigma_ - dB_ * dSigma_ * T))
+            {
+                std::cout << "Rho : " << dRho_ << std::endl;
+                std::cout << "B : " << dB_ << std::endl;
+                std::cout << "Sigma : " << dSigma_ << std::endl;
+                return true;
+            }
+            return false;
         }
     }
 }

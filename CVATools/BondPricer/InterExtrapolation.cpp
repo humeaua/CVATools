@@ -31,6 +31,10 @@ namespace Utilities
             {
                 iValue1 = Utilities::FindInVector(dVariables_, dVariable);
             }
+            else
+            {
+                iValue1 = static_cast<int>(iValue);
+            }
             
             if (dVariable < dVariables_.front())
             {
@@ -40,6 +44,12 @@ namespace Utilities
             {
                 iValue1 = static_cast<int>(iNValues - 2);
             }
+        }
+        
+        double Interpolator::ValueIfVariablePresent(int iVar) const
+        {
+            std::size_t lVar = static_cast<size_t>(iVar);
+            return dValues_.at(lVar);
         }
         
         size_t Interpolator::size() const
@@ -218,28 +228,36 @@ namespace Utilities
         
         double HermiteSplineCubicInterpolator::operator()(double dVariable) const
         {
-            int iValue1 = 0, iValue2;
-            FindIndex(dVariable, iValue1);
-            iValue2 = iValue1 + 1;
-            
-            double dm_1 = 0.0, dm_2 = 0.0;
-            if (iValue2 == dVariables_.size() - 1)
+            int iIndex = Utilities::GetIndex(dVariables_, dVariable);
+            if (iIndex != -1)
             {
-                dm_1 = (dValues_.back() - dValues_.at(dVariables_.size() - 2)) / (dVariables_.back() - dVariables_.at(dVariables_.size() - 2));
-            }
-            else if (iValue1 == 0)
-            {
-                dm_2 = (dValues_.at(1) - dValues_.at(0)) / (dVariables_.at(1) - dVariables_.at(0));
+                return ValueIfVariablePresent(iIndex);
             }
             else
             {
-                dm_1 = (dValues_.at(iValue1 + 1) - dValues_.at(iValue1)) / (dVariables_.at(iValue1 + 1) - dVariables_.at(iValue1));
-                dm_2 = (dValues_.at(iValue2 + 1) - dValues_.at(iValue2)) / (dVariables_.at(iValue2 + 1) - dVariables_.at(iValue2));
+                int iValue1 = 0, iValue2;
+                FindIndex(dVariable, iValue1);
+                iValue2 = iValue1 + 1;
+                
+                double dm_1 = 0.0, dm_2 = 0.0;
+                if (iValue2 == dVariables_.size() - 1)
+                {
+                    dm_1 = (dValues_.back() - dValues_.at(dVariables_.size() - 2)) / (dVariables_.back() - dVariables_.at(dVariables_.size() - 2));
+                }
+                else if (iValue1 == 0)
+                {
+                    dm_2 = (dValues_.at(1) - dValues_.at(0)) / (dVariables_.at(1) - dVariables_.at(0));
+                }
+                else
+                {
+                    dm_1 = (dValues_.at(iValue1 + 1) - dValues_.at(iValue1)) / (dVariables_.at(iValue1 + 1) - dVariables_.at(iValue1));
+                    dm_2 = (dValues_.at(iValue2 + 1) - dValues_.at(iValue2)) / (dVariables_.at(iValue2 + 1) - dVariables_.at(iValue2));
+                }
+                
+                double t = (dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1));
+                
+                return (2 * t * t * t - 3 * t * t + 1) * dValues_.at(iValue1) + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1)) + (-2. * t * t * t + 3. * t * t) * dValues_.at(iValue2) + (t * t * t - t * t) * dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
             }
-            
-            double t = (dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1));
-            
-            return (2 * t * t * t - 3 * t * t + 1) * dValues_.at(iValue1) + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1)) + (-2. * t * t * t + 3. * t * t) * dValues_.at(iValue2) + (t * t * t - t * t) * dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
         }
     }
 }

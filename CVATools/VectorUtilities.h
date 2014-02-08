@@ -137,12 +137,12 @@ namespace Utilities {
 
     //  Function to get the index of a variable in a vector
     //  Return -1 if not found
-    template<typename T> std::size_t GetIndex(const std::vector<T> & vect, const T & value)
+    template<typename T> int GetIndex(const std::vector<T> & vect, const T & value)
     {
         typename std::vector<T>::const_iterator it = std::find(vect.begin(), vect.end(), value);
         if (it != vect.end() || (it == vect.end() && value == vect.back()))
         {
-            return it - vect.begin();
+            return static_cast<int>(it - vect.begin());
         }
         else
         {

@@ -23,6 +23,8 @@
 #include "BlackScholes.h"
 #include "StochCorrel.h"
 
+#include "VolSmile.h"
+
 //  Forward declaration of the different regression tests
 void RegressionTest_BondPricing(std::ostream & os);
 void RegressionTest_TimeStatistics(std::ostream & os);
@@ -348,7 +350,13 @@ void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
 {
     os << "Volatility Surface Interpolation" << std::endl;
     
-    os << "Not yet implemented !!" << std::endl;
+    const double dFwdRef = 1.0, T = 1.0;
+    double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
+    std::vector<double> strikesvect(strikes, strikes + 7), volsvect(vols, vols + 7);
+    Finance::Volatility::VolSmile volSmile(strikesvect, volsvect, dFwdRef, T);
+    
+    os << "Non-Arbitrageability of smile : " << volSmile.IsArbitrageFree() << std::endl;
+    
 }
 
 void RegressionTest_ProcessPathSimulation(std::ostream & os)

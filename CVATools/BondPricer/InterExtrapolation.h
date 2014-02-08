@@ -27,7 +27,8 @@ namespace Utilities
                          const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const = 0;
             
-            virtual void FindIndex(double dVariable, int& iValue1) const;
+            void FindIndex(double dVariable, int & iValue1) const;
+            virtual double ValueIfVariablePresent(int iVar) const;
             virtual size_t size() const;
         };
         
@@ -78,6 +79,7 @@ namespace Utilities
         public:
             HermiteSplineCubicInterpolator(const std::vector<double> & dVariables,
                                            const std::vector<double> & dValues);
+            
             virtual double operator()(double dVariable) const;
         };
     }

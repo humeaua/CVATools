@@ -22,8 +22,12 @@ namespace Finance
                            double T) : Utilities::Interp::HermiteSplineCubicInterpolator(dStrikes, dVolatilities), dFwdRef_(dFwdRef), dMaturity_(T)
         {
             REQUIREEXCEPTION(T >= 0.0, "Maturity is negative");
-            std::transform(dVariables_.begin(), dVariables_.end(), dVariables_.begin(), bind2nd(std::divides<double>(), dFwdRef));
-            std::for_each(dVariables_.begin(), dVariables_.end(), log);
+            for (std::size_t i = 0 ; i < dVariables_.size() ; ++i)
+            {
+                dVariables_[i] = log(dVariables_[i] / dFwdRef_);
+            }
+            //std::transform(dVariables_.begin(), dVariables_.end(), dVariables_.begin(), bind2nd(std::divides<double>(), dFwdRef));
+            //std::for_each(dVariables_.begin(), dVariables_.end(), log);
         }
         
         bool VolSmile::CheckButterflySpreadArbitrage() const
@@ -35,6 +39,10 @@ namespace Finance
                 
                 if (CallPrice(dOldStrike0) + CallPrice(Strike) - 2.0 * CallPrice(dOldStrike1) < 0.0)
                 {
+                    std::cout << "Butterfly spread arbitrage at strike " << dOldStrike1 << " and maturity T = " << dMaturity_ << " year" << std::endl;
+                    std::cout << "Call price (K = " << dOldStrike0 << ") : " << CallPrice(dOldStrike0) << std::endl;
+                    std::cout << "Call price (K = " << dOldStrike1 << ") : " << CallPrice(dOldStrike1) << std::endl;
+                    std::cout << "Call price (K = " << Strike << ") : " << CallPrice(Strike) << std::endl;
                     return false;
                 }
                 dOldStrike0 = dOldStrike1;

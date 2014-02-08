@@ -116,5 +116,15 @@ namespace Finance
         {
             return HermiteSplineCubicInterpolator::operator()(log(strike / dFwdRef_));
         }
+        
+        std::vector<double> VolSmile::LogStrikes() const
+        {
+            return dVariables_;
+        }
+        
+        std::vector<double> VolSmile::Volatilities() const
+        {
+            return dValues_;
+        }
     }
 }

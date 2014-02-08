@@ -32,6 +32,8 @@ namespace Finance
             //  Getters
             virtual double FwdRef() const;
             virtual double Maturity() const;
+            virtual std::vector<double> LogStrikes() const;
+            virtual std::vector<double> Volatilities() const;
             
             virtual double GetFirstStrike() const;
             virtual double GetLastStrike() const;

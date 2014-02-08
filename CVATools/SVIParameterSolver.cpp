@@ -10,12 +10,16 @@
 #include "Exception.h"
 #include "Require.h"
 #include <cmath>
+#include <sstream>
 
 namespace Finance
 {
     namespace Volatility
     {
-        SVIParameterSolver::SVIParameterSolver() : dA_(0.0), dB_(0.0), dRho_(0.0), dSigma_(0.0), dM_(0.0)
+        SVIParameterSolver::SVIParameterSolver(double dFwdRef) : dA_(0.0), dB_(0.0), dRho_(0.0), dSigma_(0.0), dM_(0.0), dFwdRef_(dFwdRef)
+        {}
+        
+        SVIParameterSolver::~SVIParameterSolver()
         {}
         
         void SVIParameterSolver::SetFirstGuess(const VolSmile & volSmile, bool useParabola)
@@ -98,6 +102,15 @@ namespace Finance
 
         }
         
+        void SVIParameterSolver::Solve(const Finance::Volatility::VolSmile & volSmile, bool useParabola)
+        {
+            //  Set First guess
+            SetFirstGuess(volSmile, useParabola);
+            
+            //  apply solver
+            Solve(volSmile.LogStrikes(), volSmile.Volatilities(), volSmile.Maturity());
+        }
+        
         void SVIParameterSolver::Solve(const std::vector<double> & LogStrikesInput,
                                        const std::vector<double> & volatilitiesInput,
                                        double T)// maturity
@@ -121,6 +134,19 @@ namespace Finance
             dA_ = Params[0] / T;
             dRho_ = Params[1] / Params[2];
             dB_ = Params[2] / (dSigma_ * T);
+        }
+        
+        double SVIParameterSolver::operator()(double strike) const
+        {
+            double logStrike = log(strike / dFwdRef_);
+            double volsquare = dA_ + dB_ * (dRho_ * (logStrike - dM_) + sqrt((logStrike - dM_) * (logStrike - dM_) + dSigma_ * dSigma_));
+            if (volsquare >= 0)
+            {
+                std::stringstream ss;
+                ss << "Variance is negative for strike K : " << strike ;
+                throw EXCEPTION(ss.str());
+            }
+            return sqrt(volsquare);
         }
     }
 }

@@ -114,7 +114,20 @@ namespace Finance
         
         double VolSmile::operator()(double strike) const
         {
-            return HermiteSplineCubicInterpolator::operator()(log(strike / dFwdRef_));
+            //  Flat extrapolation in concordance with Roger Lee moment formula
+            const double logstrike = log(strike / dFwdRef_);
+            if (logstrike < GetFirstStrike())
+            {
+                return dValues_.front();
+            }
+            else if (logstrike > GetLastStrike())
+            {
+                return dValues_.back();
+            }
+            else
+            {
+                return HermiteSplineCubicInterpolator::operator()(logstrike);
+            }
         }
         
         std::vector<double> VolSmile::LogStrikes() const

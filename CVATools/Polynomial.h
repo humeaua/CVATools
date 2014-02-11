@@ -24,6 +24,7 @@ namespace Maths
         
         virtual double operator()(double x, size_t i) const = 0;
         virtual double deriv(double x, size_t i) const = 0;
+        virtual double deriv2(double x, size_t i) const = 0;
     };
 }
 

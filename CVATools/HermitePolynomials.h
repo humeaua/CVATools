@@ -26,6 +26,7 @@ namespace Maths
         
         virtual double operator()(double x, size_t i) const;
         virtual double deriv(double x, size_t i) const;
+        virtual double deriv2(double x, size_t i) const;
     };
     
     class HermitePolynomials

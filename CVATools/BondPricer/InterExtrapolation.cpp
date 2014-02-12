@@ -259,5 +259,52 @@ namespace Utilities
                 return (2 * t * t * t - 3 * t * t + 1) * dValues_.at(iValue1) + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1)) + (-2. * t * t * t + 3. * t * t) * dValues_.at(iValue2) + (t * t * t - t * t) * dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
             }
         }
+        
+        HermiteDegree5Interpolator::HermiteDegree5Interpolator(const std::vector<double> & dVariables,
+                                                               const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
+        {}
+        
+        double HermiteDegree5Interpolator::operator()(double dVariable) const
+        {
+            int iIndex = Utilities::GetIndex(dVariables_, dVariable);
+            if (iIndex != -1)
+            {
+                return ValueIfVariablePresent(iIndex);
+            }
+            else
+            {
+                int iValue1 = 0, iValue2;
+                FindIndex(dVariable, iValue1);
+                iValue2 = iValue1 + 1;
+                
+                double dm_1 = 0.0, dm_2 = 0.0, dm_3 = 0.0, dm_4 = 0.0;
+                if (iValue2 == dVariables_.size() - 1)
+                {
+                    dm_1 = (dValues_.back() - dValues_.at(dVariables_.size() - 2)) / (dVariables_.back() - dVariables_.at(dVariables_.size() - 2));
+                }
+                else if (iValue1 == 0)
+                {
+                    dm_2 = (dValues_.at(1) - dValues_.at(0)) / (dVariables_.at(1) - dVariables_.at(0));
+                }
+                else
+                {
+                    dm_1 = (dValues_.at(iValue1 + 1) - dValues_.at(iValue1)) / (dVariables_.at(iValue1 + 1) - dVariables_.at(iValue1));
+                    dm_2 = (dValues_.at(iValue2 + 1) - dValues_.at(iValue2)) / (dVariables_.at(iValue2 + 1) - dVariables_.at(iValue2));
+                    
+                    dm_3 = (dValues_.at(iValue1 + 1) - 2 * dValues_.at(iValue1) + dValues_.at(iValue1 - 1)) / ((dVariables_.at(iValue1 + 1) - dVariables_.at(iValue1)) * (dVariables_.at(iValue1 + 1) - dVariables_.at(iValue1)));
+                    dm_4 = (dValues_.at(iValue2 + 1) - 2 * dValues_.at(iValue2) + dValues_.at(iValue2 - 1)) / ((dVariables_.at(iValue2 + 1) - dVariables_.at(iValue2)) * (dVariables_.at(iValue2 + 1) - dVariables_.at(iValue2)));
+                }
+                
+                double delta = (dVariables_.at(iValue2) - dVariables_.at(iValue1));
+                double t = (dVariable - dVariables_.at(iValue1)) / delta;
+                
+                return Maths::HermitePolynomial5::operator()(t, 0) * dValues_.at(iValue1)
+                        + Maths::HermitePolynomial5::operator()(t, 1) * dm_1 * delta
+                        + Maths::HermitePolynomial5::operator()(t, 2) * dm_3 * delta * delta
+                        + Maths::HermitePolynomial5::operator()(t, 3) * dValues_.at(iValue2)
+                        + Maths::HermitePolynomial5::operator()(t, 4) * dm_2 * delta
+                        + Maths::HermitePolynomial5::operator()(t, 5) * dm_4 * delta * delta;
+            }
+        }
     }
 }

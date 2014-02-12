@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <map>
+#include "HermitePolynomials.h"
 
 namespace Utilities
 {
@@ -79,6 +80,15 @@ namespace Utilities
         public:
             HermiteSplineCubicInterpolator(const std::vector<double> & dVariables,
                                            const std::vector<double> & dValues);
+            
+            virtual double operator()(double dVariable) const;
+        };
+        
+        class HermiteDegree5Interpolator : public Interpolator, public Maths::HermitePolynomial5
+        {
+        public:
+            HermiteDegree5Interpolator(const std::vector<double> & dVariables,
+                                       const std::vector<double> & dValues);
             
             virtual double operator()(double dVariable) const;
         };

@@ -16,13 +16,24 @@
 
 namespace Maths
 {
-    class HermitePolynomial : public Polynomial
+    class HermitePolynomial3 : public Polynomial
     {
     private:
         
     public:
-        HermitePolynomial();
-        virtual ~HermitePolynomial();
+        HermitePolynomial3();
+        virtual ~HermitePolynomial3();
+        
+        virtual double operator()(double x, size_t i) const;
+        virtual double deriv(double x, size_t i) const;
+        virtual double deriv2(double x, size_t i) const;
+    };
+    
+    class HermitePolynomial5 : public Polynomial
+    {
+    public:
+        HermitePolynomial5();
+        virtual ~HermitePolynomial5();
         
         virtual double operator()(double x, size_t i) const;
         virtual double deriv(double x, size_t i) const;

@@ -145,7 +145,7 @@ namespace Maths
             }
             case 5:
             {
-                return 0.5 * (t*t*t - 2*t*t*t*t - t*t*t*t*t);
+                return 0.5 * (t*t*t - 2*t*t*t*t + t*t*t*t*t);
             }
             default:
             {

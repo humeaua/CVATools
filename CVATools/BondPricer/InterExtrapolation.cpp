@@ -146,7 +146,7 @@ namespace Utilities
             int iValue1 = 0;
             FindIndex(dVariable, iValue1);
             int iValue2 = iValue1 + 1;
-            if (iValue2 == (int)dVariables_.size() || iValue2 == 0)
+            if (iValue2 == static_cast<int>(dVariables_.size()) || iValue2 == 0)
             {
                 return dValues_.at(iValue2);
             }
@@ -178,7 +178,7 @@ namespace Utilities
         {
             int iValue1 = 0;
             FindIndex(dVariable, iValue1);
-            if (iValue1 == (int)dVariables_.size())
+            if (iValue1 == static_cast<int>(dVariables_.size()))
             {
                 return dValues_.back();
             }

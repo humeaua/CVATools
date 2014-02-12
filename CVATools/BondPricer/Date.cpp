@@ -26,7 +26,7 @@ namespace Utilities
         {
             SetLocalDate();
             //  Bond Basis (30/360) convention
-            const int iYear = (int)dDate, iMonth = (int)((dDate - iYear) * 12), iDay = (int)((dDate - iYear - (double)iMonth / 12) * 30);
+            const int iYear = static_cast<int>(dDate), iMonth = static_cast<int>((dDate - iYear) * 12), iDay = static_cast<int>((dDate - iYear - iMonth / 12.0) * 30);
             iYear_ += iYear;
             iMonth_ += iMonth;
             iDay_ += iDay;

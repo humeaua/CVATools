@@ -248,7 +248,7 @@ int _main()
         std::size_t iNDates = 100, iNPaths = 10;
         for (std::size_t i = 0 ; i < iNDates; ++i)
         {
-            dDates.push_back((double)i /iNDates);
+            dDates.push_back(static_cast<double>(i) /iNDates);
         }
         
         Utilities::SimulationDataMultiDim sData = sOption.simulate(dDates, iNPaths);
@@ -339,7 +339,7 @@ int _main()
         
         for (std::size_t i = 0 ; i < 400 ; ++i)
         {
-            double dT = (double)i / 10.0;
+            double dT = static_cast<double>(i) / 10.0;
             std::cout << dT << ";" << sYieldCurve(dT) << std::endl;
         }
     }

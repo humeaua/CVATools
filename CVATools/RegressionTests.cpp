@@ -160,7 +160,7 @@ void RegressionTest_TimeStatistics(std::ostream & os)
             {
                 throw EXCEPTION("Mean Result is not 1.0");
             }
-            dTimeOld += (double)(clock() - tic)/CLOCKS_PER_SEC;
+            dTimeOld += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
             
             tic = clock();
             dResult = Maths::Statistics::Mean(dData);
@@ -168,7 +168,7 @@ void RegressionTest_TimeStatistics(std::ostream & os)
             {
                 throw EXCEPTION("Mean Result is not 1.0");
             }
-            dTimeNew += (double)(clock() - tic)/CLOCKS_PER_SEC;
+            dTimeNew += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
         }
         os << "Mean old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
         os << "Mean time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
@@ -194,7 +194,7 @@ void RegressionTest_TimeStatistics(std::ostream & os)
             {
                 throw EXCEPTION("Variance is not 0.0");
             }
-            dTimeOld += (double)(clock() - tic)/CLOCKS_PER_SEC;
+            dTimeOld += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
             
             tic = clock();
             dResult = Maths::Statistics::Variance(dData);
@@ -202,7 +202,7 @@ void RegressionTest_TimeStatistics(std::ostream & os)
             {
                 throw EXCEPTION("Variance is not 0.0");
             }
-            dTimeNew += (double)(clock() - tic)/CLOCKS_PER_SEC;
+            dTimeNew += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
         }
         os << "Variance old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
         os << "Variance time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;

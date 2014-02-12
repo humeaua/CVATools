@@ -102,7 +102,7 @@ namespace Maths
 #define ERROR 1e-10
 #endif
             
-            REQUIREEXCEPTION(fabs(k - (int)k) > ERROR,  "Power has to be an integer when computing Debye function for negative value");
+            REQUIREEXCEPTION(fabs(k - static_cast<int>(k)) > ERROR,  "Power has to be an integer when computing Debye function for negative value");
             // case i = 0
             dRes -= pow(EPSILON,k-1.0);
             double dx = EPSILON;

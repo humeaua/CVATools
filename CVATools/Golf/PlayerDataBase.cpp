@@ -47,7 +47,7 @@ namespace Golf
                     sPlayers_.back().LoadFromFile(cDirectoryName + "/" + str, eDiscountType, sDate);
                 }
             }
-            std::cout << "Loading completed in " << (double)(clock() - tic) / CLOCKS_PER_SEC << " seconds" << std::endl;
+            std::cout << "Loading completed in " << static_cast<double>(clock() - tic) / CLOCKS_PER_SEC << " seconds" << std::endl;
             closedir (dir);
         }
         else
@@ -61,7 +61,7 @@ namespace Golf
     {
         clock_t tic = clock();
         std::sort(sPlayers_.begin(), sPlayers_.end(), std::greater<Player>());
-        std::cout << "Computation of ranking done in " << (double)(clock() - tic) / CLOCKS_PER_SEC << " seconds" << std::endl;
+        std::cout << "Computation of ranking done in " << static_cast<double>(clock() - tic) / CLOCKS_PER_SEC << " seconds" << std::endl;
         std::cout << std::endl;
     }
     

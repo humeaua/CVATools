@@ -289,7 +289,8 @@ void RegressionTest_Interpolation(std::ostream & os)
     double valuesrefleftcontinuous[] = {1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
     double valuesrefrightcontinuous[] ={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1};
     double valueshermite[] = {-1.349,-0.792,-0.323,0.064,0.375,0.616,0.793,0.912,0.979,1,0.981,0.928,0.847,0.744,0.625,0.496,0.363,0.232,0.109,4.4408921e-16,0.109,0.232,0.363,0.496,0.625,0.744,0.847,0.928,0.981,1,1,1,1,1,1,1,1,1,1};
-    double dErrorlin = 0.0, dErrorloglindf = 0.0, dErrorleftcontinuous = 0.0, dErrorrightcontinuous = 0.0, dErrorhermite = 0.0;
+    double valueshermite5[] = {12.39427,8.33184,5.48301,3.56608,2.34375,1.61952,1.23409,1.06176,1.00683,1,0.99477,0.96384,0.89551,0.79008,0.65625,0.50752,0.35859,0.22176,0.10333,4.4408921e-16,0.109,0.232,0.363,0.496,0.625,0.744,0.847,0.928,0.981,1,1,1,1,1,1,1,1,1,1};
+    double dErrorlin = 0.0, dErrorloglindf = 0.0, dErrorleftcontinuous = 0.0, dErrorrightcontinuous = 0.0, dErrorhermite = 0.0, dErrorhermite5 = 0.0;
     int i = 0;
     for (double var = 0.1 ; var < 4.0 ; var += 0.1, i++)
     {
@@ -298,7 +299,8 @@ void RegressionTest_Interpolation(std::ostream & os)
         dErrorleftcontinuous    += std::abs(leftcontinuous(var) - valuesrefleftcontinuous[i]);
         dErrorrightcontinuous   += std::abs(rightcontinuous(var) - valuesrefrightcontinuous[i]);
         dErrorhermite           += std::abs(hermite(var) - valueshermite[i]);
-        //std::cout << std::setprecision(9) << var << ";" << hermite5(var) << ";" << hermite(var) << std::endl;
+        dErrorhermite5          += std::abs(hermite5(var) - valueshermite5[i]);
+        //std::cout << std::setprecision(9) << hermite5(var) << std::endl;
     }
     
     //for (double var = 2.5 ; var < 3.0 ; var += 0.01)
@@ -345,6 +347,15 @@ void RegressionTest_Interpolation(std::ostream & os)
     }
     os << "Hermite spline cubic interpolation  : ";
     if (dErrorhermite < dTolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+    }
+    os << "Hermite degree 5 interpolation  : ";
+    if (dErrorhermite5 < dTolerance)
     {
         os << "SUCCEEDED" << std::endl;
     }

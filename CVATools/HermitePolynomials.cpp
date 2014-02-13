@@ -133,7 +133,8 @@ namespace Maths
             }
             case 2:
             {
-                return 0.5 * (t*t - 3 * t*t*t + 3 * t*t*t*t - 7 * t*t*t*t*t); // seems wrong
+                return 0.5 * (t*t - 3 * t*t*t + 3 * t*t*t*t -  t*t*t*t*t); 
+                //return 0.5 * (t-1) * (t-1) * (t-1) * t*t;
             }
             case 3:
             {
@@ -173,8 +174,8 @@ namespace Maths
             }
             case 2:
             {
-                //return 0.5 * (t*t - 3 * t*t*t + 3 * t*t*t*t - 7 * t*t*t*t*t);
-                return 0.5 * (2*t - 9 * t*t + 12 * t*t*t - 35 * t*t*t*t); // seems wrong
+                //return 0.5 * (t*t - 3 * t*t*t + 3 * t*t*t*t -  t*t*t*t*t);
+                return 0.5 * (2*t - 9 * t*t + 12 * t*t*t - 5 * t*t*t*t);
             }
             case 3:
             {
@@ -218,9 +219,9 @@ namespace Maths
             }
             case 2:
             {
-                //return 0.5 * (t*t - 3 * t*t*t + 3 * t*t*t*t - 7 * t*t*t*t*t);
-                //return 0.5 * (2*t - 9 * t*t + 12 * t*t*t - 35 * t*t*t*t);
-                return 0.5 * (2 - 18 * t + 36 * t*t - 140 * t*t*t); // seems wrong
+                //return 0.5 * (t*t - 3 * t*t*t + 3 * t*t*t*t -  t*t*t*t*t);
+                //return 0.5 * (2*t - 9 * t*t + 12 * t*t*t - 5 * t*t*t*t);
+                return 0.5 * (2 - 18 * t + 36 * t*t - 20 * t*t*t); // seems wrong
             }
             case 3:
             {

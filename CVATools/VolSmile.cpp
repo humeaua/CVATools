@@ -20,7 +20,7 @@ namespace Finance
         VolSmile::VolSmile(const std::vector<double> & dStrikes,
                            const std::vector<double> & dVolatilities,
                            double dFwdRef,
-                           double T) : Utilities::Interp::HermiteSplineCubicInterpolator(dStrikes, dVolatilities), dFwdRef_(dFwdRef), dMaturity_(T)
+                           double T) : Utilities::Interp::HermiteDegree5Interpolator(dStrikes, dVolatilities), dFwdRef_(dFwdRef), dMaturity_(T)
         {
             REQUIREEXCEPTION(T >= 0.0, "Maturity is negative");
             REQUIREEXCEPTION(dFwdRef_ > 0, "Reference forward is negative");
@@ -126,7 +126,7 @@ namespace Finance
             }
             else
             {
-                return HermiteSplineCubicInterpolator::operator()(logstrike);
+                return HermiteDegree5Interpolator::operator()(logstrike);
             }
         }
         

@@ -16,7 +16,7 @@ namespace Finance
 {
     namespace Volatility
     {
-        class VolSmile : public Utilities::Interp::HermiteSplineCubicInterpolator
+        class VolSmile : public Utilities::Interp::HermiteDegree5Interpolator
         {
         protected:
             double dFwdRef_;

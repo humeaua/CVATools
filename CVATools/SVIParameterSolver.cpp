@@ -44,7 +44,7 @@ namespace Finance
                     //  1st guess parametrisation : atm vol + sigma * (log(K/F))^2
                     double atmVol = volSmile(dFwdRef_);
                     //  We call the operator as first strike and last strike are quoted as logstrikes
-                    dSigma_ = ((volSmile.Utilities::Interp::HermiteSplineCubicInterpolator::operator()(firstStrike) - atmVol) / firstStrike - (volSmile.Utilities::Interp::HermiteSplineCubicInterpolator::operator()(lastStrike) - atmVol) / lastStrike) / (firstStrike - lastStrike);
+                    dSigma_ = ((volSmile.Utilities::Interp::HermiteDegree5Interpolator::operator()(firstStrike) - atmVol) / firstStrike - (volSmile.Utilities::Interp::HermiteDegree5Interpolator::operator()(lastStrike) - atmVol) / lastStrike) / (firstStrike - lastStrike);
                     dM_ = 0.0; // need to check in this case
                     
                     REQUIREEXCEPTION(dSigma_ != 0, "Smile is flat");

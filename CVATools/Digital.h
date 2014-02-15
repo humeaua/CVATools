@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "Payoff.h"
+#include "VanillaOptionType.h"
 
 namespace Finance
 {

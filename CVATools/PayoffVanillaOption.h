@@ -10,6 +10,7 @@
 #define CVATools_PayoffVanillaOption_h
 
 #include "Payoff.h"
+#include "VanillaOptionType.h"
 
 namespace Finance
 {

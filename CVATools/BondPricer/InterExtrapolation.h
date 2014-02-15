@@ -75,22 +75,46 @@ namespace Utilities
             virtual double operator()(double dVariable) const;
         };
         
-        class HermiteSplineCubicInterpolator : public Interpolator, public Maths::HermitePolynomial3
+        struct HermitePrecomputedCoefficients
+        {
+            double dm_1, dm_2, dm_3, dm_4;
+            
+            HermitePrecomputedCoefficients();
+        };
+        
+        class HermiteInterpolator : public Interpolator
+        {
+        public:
+            HermiteInterpolator(const std::vector<double> & dVariables,
+                                const std::vector<double> & dValues);
+                        
+            virtual double PointDerivative(double dVariable) const = 0;
+        private:
+            virtual HermitePrecomputedCoefficients PrecomputeCoefficients(const int & iValue1, const int & iValue2) const = 0;
+        };
+        
+        class HermiteSplineCubicInterpolator : public HermiteInterpolator, public Maths::HermitePolynomial3
         {
         public:
             HermiteSplineCubicInterpolator(const std::vector<double> & dVariables,
                                            const std::vector<double> & dValues);
             
             virtual double operator()(double dVariable) const;
+            virtual double PointDerivative(double dVariable) const;
+        private:
+            virtual HermitePrecomputedCoefficients PrecomputeCoefficients(const int & iValue1, const int & iValue2) const;
         };
         
-        class HermiteDegree5Interpolator : public Interpolator, public Maths::HermitePolynomial5
+        class HermiteDegree5Interpolator : public HermiteInterpolator, public Maths::HermitePolynomial5
         {
         public:
             HermiteDegree5Interpolator(const std::vector<double> & dVariables,
                                        const std::vector<double> & dValues);
             
             virtual double operator()(double dVariable) const;
+            virtual double PointDerivative(double dVariable) const;
+        private:
+            virtual HermitePrecomputedCoefficients PrecomputeCoefficients(const int & iValue1, const int & iValue2) const;
         };
     }
 }

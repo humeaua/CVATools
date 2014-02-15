@@ -75,7 +75,7 @@ namespace Utilities
             virtual double operator()(double dVariable) const;
         };
         
-        class HermiteSplineCubicInterpolator : public Interpolator
+        class HermiteSplineCubicInterpolator : public Interpolator, public Maths::HermitePolynomial3
         {
         public:
             HermiteSplineCubicInterpolator(const std::vector<double> & dVariables,

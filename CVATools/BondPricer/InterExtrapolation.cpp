@@ -256,7 +256,7 @@ namespace Utilities
                 
                 double t = (dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1));
                 
-                return (2 * t * t * t - 3 * t * t + 1) * dValues_.at(iValue1) + (t * t * t - 2 * t * t + t) * dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1)) + (-2. * t * t * t + 3. * t * t) * dValues_.at(iValue2) + (t * t * t - t * t) * dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
+                return Maths::HermitePolynomial3::operator()(t, 0) * dValues_.at(iValue1) + Maths::HermitePolynomial3::operator()(t, 1) * dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1)) + Maths::HermitePolynomial3::operator()(t, 2) * dValues_.at(iValue2) + Maths::HermitePolynomial3::operator()(t, 3) * dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
             }
         }
         

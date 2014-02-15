@@ -115,6 +115,7 @@ namespace Finance
         double VolSmile::operator()(double strike) const
         {
             //  Flat extrapolation in concordance with Roger Lee moment formula
+            REQUIREEXCEPTION(strike > 0.0, "Strike is negative");
             const double logstrike = log(strike / dFwdRef_);
             if (logstrike < GetFirstStrike())
             {
@@ -127,6 +128,21 @@ namespace Finance
             else
             {
                 return HermiteDegree5Interpolator::operator()(logstrike);
+            }
+        }
+        
+        double VolSmile::skew(double strike) const
+        {
+            REQUIREEXCEPTION(strike > 0.0, "Strike is negative");
+            //  Flat extrapolation in concordance with Roger Lee moment formula
+            const double logstrike = log(strike / dFwdRef_);
+            if (logstrike < GetFirstStrike() || logstrike > GetLastStrike())
+            {
+                return 0.0;
+            }
+            else
+            {
+                return HermiteDegree5Interpolator::PointDerivative(logstrike) / strike;
             }
         }
         

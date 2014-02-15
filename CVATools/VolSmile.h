@@ -42,7 +42,11 @@ namespace Finance
             
             virtual bool IsATMVolQuoted() const;
             
+            //  to get the volatility
             virtual double operator()(double strike) const;
+            
+            //  to get the skew
+            virtual double skew(double strike) const;
         };
     }
 }

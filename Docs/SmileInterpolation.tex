@@ -68,12 +68,44 @@ Using a smile is useful to define the distribution of a financial underlying at 
 \begin{proposition}
 	With the above notations
 	\begin{equation}
-		\phi(K) = \frac{\partial ^2 C^T}{\partial K^2} + \sigma''(K) \frac{\partial C^T}{\partial \sigma} + \sigma'(K)^2 \frac{\partial^2 C^T}{\partial \sigma^2}
+		\phi(K) = \frac{\partial ^2 C^T}{\partial K^2} + \sigma''(K) \frac{\partial C^T}{\partial \sigma} + \sigma'(K)^2 \frac{\partial^2 C^T}{\partial \sigma^2} + 2 \sigma'(K) \frac{\partial^2 C^T}{\partial \sigma \partial K} 
 	\end{equation}
 \end{proposition}
 
 If we want the density function to be a $\mathcal{C}^1$ function of the strike $K$, $K\mapsto \sigma(K)$ has to be at least a $\mathcal{C}^3$ function
 
 \section{Interpolation via a polynomial function of degree 5}
+\subsection{Hermite Interpolation}
+
+A polynomial function of degree 5 between 0 and 1 can be determined by the values in 0 and 1, the first derivative in 0 and 1 and the second derivative in 0 and 1.
+
+\noindent We have 
+
+\begin{equation}
+	f(x) = f(0) H_0^0(x) + f(1) H_1^0(x) + f'(0) H_0^1(x) + f'(1) H_1^1(x) + f''(0) H_0^2(x) + f''(1) H_1^2(x)
+\end{equation}
+
+\noindent where
+
+\begin{equation}
+\begin{aligned}
+	H_0^0(x) &= 1 - 10 x^3 + 15 x^4 - 6 x^5\\
+	H_0^1(x) &= t - 6 x^3 + 8 x^4 - 3 x^5\\
+	H_0^2(x) &= \frac{1}{2} \left(x^2 - 3 x^3 + 3 x^4 - x^5\right)\\
+	H_1^0(x) &= 10x^3 - 15 x^4 + 6 x^5\\
+	H_1^1(x) &= -4x^3 + 7 x^4 - 3x^5\\
+	H_1^2(x) &= \frac{1}{2} \left(x^3 - 2x^4 + x^5\right)
+\end{aligned}
+\end{equation}
+
+\subsection{Smile interpolation methodology}
+
+We assume that the function $K \mapsto \sigma(K)$ is a piecewise Hermite-interpolated polynomial of degree as a function of $\ln\left(\frac{K}{F}\right)$, where is $F=F_{0,T}$ is the forward at time $0$ of the underlying asset.\\
+
+\noindent Let us assume that we have the set of quoted volatilities
+
+\begin{equation*}
+	\mathcal{V} = \left\{(K_i, \sigma_i), i = 1,\dots, n\right\}
+\end{equation*}
 
 \end{document}

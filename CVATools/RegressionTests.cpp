@@ -26,6 +26,8 @@
 #include "VolSmile.h"
 #include "SVIParameterSolver.h"
 
+#include "Analytic.h"
+
 //  Forward declaration of the different regression tests
 void RegressionTest_BondPricing(std::ostream & os);
 void RegressionTest_TimeStatistics(std::ostream & os);
@@ -34,7 +36,7 @@ void RegressionTest_Interpolation(std::ostream & os);
 void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os);
 void RegressionTest_ProcessPathSimulation(std::ostream & os);
 void RegressionTest_Date(std::ostream & os);
-
+void RegressionTest_AnalyticFormulae(std::ostream & os);
 
 //  Declaration of all the regression tests
 
@@ -541,6 +543,45 @@ void RegressionTest_Date(std::ostream & os)
     }
 }
 
+void RegressionTest_AnalyticFormulae(std::ostream & os)
+{
+    os << "Regression Test for Analytic formulae" << std::endl;
+    
+    const double dFwdRef = 1.0, T = 1.0;
+    const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
+    const std::vector<double> strikesvect(strikes, strikes + 7), volsvect(vols, vols + 7);
+    Finance::Volatility::VolSmile volSmile(strikesvect, volsvect, dFwdRef, T);
+    
+    Finance::Pricers::Analytic sAnalytic;
+    
+    const double volatility = 0.150, rate = 0.02;
+    
+    const double ATMFCallRef = 0.0586014601, ATMFPutRef = 0.0586014601, Call110Ref = 0.0245073664, PUT110Ref = 0.122527234,DigitalnoSmileATMFRef = 0.519400067, DigitalSmileATMFRef = 0.499302695, VegaATMFRef = 0.389944432, Digital90NoSmileRef = 0.766064086, Digital90SmileRef = 0.774093566;
+
+    double error = 0.0;
+    error += std::abs(sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - ATMFCallRef);
+    error += std::abs(sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::PUT) - ATMFPutRef);
+    error += std::abs(sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - Call110Ref);
+    error += std::abs(sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::PUT) - PUT110Ref);
+    error += std::abs(sAnalytic.DigitalPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - DigitalnoSmileATMFRef);
+    error += std::abs(sAnalytic.DigitalPrice(dFwdRef, dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) - DigitalSmileATMFRef);
+    error += std::abs(sAnalytic.VegaVanillaOption(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - VegaATMFRef);
+    error += std::abs(sAnalytic.VegaVanillaOption(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::PUT) - VegaATMFRef);
+    error += std::abs(sAnalytic.DigitalPrice(dFwdRef, 0.9 *dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - Digital90NoSmileRef);
+    error += std::abs(sAnalytic.DigitalPrice(dFwdRef, 0.9 * dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) - Digital90SmileRef);
+    
+    const double tolerance = 1e-06;
+   
+    if (error < tolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+    }
+}
+
 /////////////////////////////////////////////////////
 //
 //      Regression test launcher
@@ -549,6 +590,7 @@ void RegressionTest_Date(std::ostream & os)
 
 void LaunchRegressionTests(std::ostream & os)
 {
+    os << std::setprecision(9);
     RegressionTest_BondPricing(os);
     os << std::endl;
     RegressionTest_TimeStatistics(os);
@@ -562,5 +604,7 @@ void LaunchRegressionTests(std::ostream & os)
     RegressionTest_Date(os);
     os << std::endl;
     RegressionTest_VolatilitySurfaceInterpolation(os);
+    os << std::endl;
+    RegressionTest_AnalyticFormulae(os);
     os << std::endl;
 }

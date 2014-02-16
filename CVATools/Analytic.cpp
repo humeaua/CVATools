@@ -29,7 +29,7 @@ namespace Finance
                             double volatility,
                             double maturity) const
         {
-            return log(forward / strike) / (volatility * sqrt(maturity)) + 0.5 * volatility * sqrt(maturity);
+            return log(forward / strike) / (volatility * sqrt(maturity)) - 0.5 * volatility * sqrt(maturity);
         }
         
         void Analytic::CheckParameters() const

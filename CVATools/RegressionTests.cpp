@@ -177,7 +177,7 @@ void RegressionTest_TimeStatistics(std::ostream & os)
         
         os << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
         os << "Computation mean : ";
-        if (dTimeNew < 1.1 * dTimeOld)
+        if (dTimeNew < 1.25 * dTimeOld)
         {
             os << "SUCCEEDED" << std::endl;
         }

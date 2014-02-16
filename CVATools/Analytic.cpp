@@ -80,6 +80,26 @@ namespace Finance
             }
         }
         
+        double Analytic::VolgaVanillaOption(double forward,
+                                            double strike,
+                                            double volatility,
+                                            double maturity,
+                                            double rate,
+                                            Finance::Payoff::VanillaOptionType optionType) const
+        {
+            return VegaVanillaOption(forward, strike, volatility, maturity, rate, optionType) * d1(forward, strike, volatility, maturity) * d2(forward, strike, volatility, maturity) / volatility;
+        }
+        
+        double Analytic::d2CalldVolatilitydStrike(double forward,
+                                                  double strike,
+                                                  double volatility,
+                                                  double maturity,
+                                                  double rate,
+                                                  Finance::Payoff::VanillaOptionType optionType) const
+        {
+            return VegaVanillaOption(forward, strike, volatility, maturity, rate, optionType) * d1(forward, strike, volatility, maturity) / (strike * volatility * sqrt(maturity));
+        }
+        
         double Analytic::DigitalPrice(double forward,
                                       double strike,
                                       double volatility,
@@ -90,17 +110,18 @@ namespace Finance
             if (optionType == Finance::Payoff::STRADDLE)
             {
                 //  Digital straddle pays 1, so is equal to zero-coupon bond
+                std::cout << "Straddle case = Zero coupon bond : paying one unit of domestic currency at maturity" << std::endl;
                 return exp(-rate * maturity);
             }
             else if (optionType == Finance::Payoff::CALL)
             {
-                const double l_d1 = d1(forward, strike, volatility, maturity);
-                return exp(-rate * maturity) * Maths::AccCumNorm(l_d1);
+                const double l_d2 = d2(forward, strike, volatility, maturity);
+                return exp(-rate * maturity) * Maths::AccCumNorm(l_d2);
             }
             else // put
             {
-                const double l_d2 = d2(forward, strike, volatility, maturity);
-                return exp(-rate * maturity) * Maths::AccCumNorm(l_d2);
+                const double l_d1 = d1(forward, strike, volatility, maturity);
+                return exp(-rate * maturity) * Maths::AccCumNorm(-l_d1);
             }
         }
         
@@ -114,7 +135,7 @@ namespace Finance
             if (optionType == Finance::Payoff::STRADDLE)
             {
                 //  Digital straddle pays 1, so is equal to zero-coupon bond
-                return exp(-rate * maturity);
+                return DigitalPrice(forward, strike, 0.0, maturity, rate, Finance::Payoff::STRADDLE);
             }
             else
             {
@@ -122,15 +143,40 @@ namespace Finance
                 double noSmiledPrice = 0.0;
                 if (optionType == Finance::Payoff::CALL)
                 {
-                    const double l_d1 = d1(forward, strike, volatility, maturity);
-                    noSmiledPrice = exp(-rate * maturity) * Maths::AccCumNorm(l_d1);
-                }
-                else // put
-                {
                     const double l_d2 = d2(forward, strike, volatility, maturity);
                     noSmiledPrice = exp(-rate * maturity) * Maths::AccCumNorm(l_d2);
                 }
+                else // put
+                {
+                    const double l_d1 = d1(forward, strike, volatility, maturity);
+                    noSmiledPrice = exp(-rate * maturity) * Maths::AccCumNorm(-l_d1);
+                }
                 return noSmiledPrice - volSmile.skew(strike) * VegaVanillaOption(forward, strike, volatility, maturity, rate, optionType);
+            }
+        }
+        
+        double Analytic::d2CdStrike2(double forward,
+                                     double strike,
+                                     double volatility,
+                                     double maturity,
+                                     double rate,
+                                     Finance::Payoff::VanillaOptionType optionType) const
+        {
+            if (optionType == Finance::Payoff::STRADDLE)
+            {
+                //  Digital straddle pays 1, so is equal to zero-coupon bond
+                std::cout << "Straddle case = Zero coupon bond : paying one unit of domestic currency at maturity" << std::endl;
+                return 0;
+            }
+            else if (optionType == Finance::Payoff::CALL)
+            {
+                const double l_d2 = d2(forward, strike, volatility, maturity);
+                return -1.0 / (strike * volatility * sqrt(maturity)) * exp(-0.5 * l_d2 * l_d2) * ONE_OVER_SQUARE_ROOT_OF_2_PI;
+            }
+            else // put
+            {
+                const double l_d1 = d1(forward, strike, volatility, maturity);
+                return 1.0 / (strike * volatility * sqrt(maturity)) * exp(-0.5 * l_d1 * l_d1) * ONE_OVER_SQUARE_ROOT_OF_2_PI;
             }
         }
     }

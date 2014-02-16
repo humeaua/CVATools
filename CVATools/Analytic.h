@@ -26,6 +26,9 @@ namespace Finance
         public:
             virtual double VanillaPrice(double forward, double strike, double volatility, double maturity, double rate, Finance::Payoff::VanillaOptionType optionType) const;
             virtual double VegaVanillaOption(double forward, double strike, double volatility, double maturity, double rate, Finance::Payoff::VanillaOptionType optionType) const;
+            virtual double VolgaVanillaOption(double forward, double strike, double volatility, double maturity, double rate, Finance::Payoff::VanillaOptionType optionType) const;
+            virtual double d2CalldVolatilitydStrike(double forward, double strike, double volatility, double maturity, double rate, Finance::Payoff::VanillaOptionType optionType) const;
+            virtual double d2CdStrike2(double forward, double strike, double volatility, double maturity, double rate, Finance::Payoff::VanillaOptionType optionType) const;
             virtual double DigitalPrice(double forward, double strike, double volatility, double maturity, double rate, Finance::Payoff::VanillaOptionType optionType) const;
             virtual double DigitalPrice(double forward, double strike, const Finance::Volatility::VolSmile & volSmile, double maturity, double rate, Finance::Payoff::VanillaOptionType optionType) const;
         };

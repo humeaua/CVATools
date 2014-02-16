@@ -556,7 +556,7 @@ void RegressionTest_AnalyticFormulae(std::ostream & os)
     
     const double volatility = 0.150, rate = 0.02;
     
-    const double ATMFCallRef = 0.0586014601, ATMFPutRef = 0.0586014601, Call110Ref = 0.0245073664, PUT110Ref = 0.122527234,DigitalnoSmileATMFRef = 0.519400067, DigitalSmileATMFRef = 0.499302695, VegaATMFRef = 0.389944432, Digital90NoSmileRef = 0.766064086, Digital90SmileRef = 0.774093566;
+    const double ATMFCallRef = 0.0586014601,ATMFPutRef = 0.0586014601,Call110Ref = 0.0245073664,PUT110Ref = 0.122527234,DigitalnoSmileATMFRef = 0.460798607,DigitalSmileATMFRef =0.450454163,VegaATMFRef = 0.389944432,Digital90NoSmileRef = 0.720252526,Digital90SmileRef = 0.728282006;
 
     double error = 0.0;
     error += std::abs(sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - ATMFCallRef);
@@ -569,6 +569,21 @@ void RegressionTest_AnalyticFormulae(std::ostream & os)
     error += std::abs(sAnalytic.VegaVanillaOption(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::PUT) - VegaATMFRef);
     error += std::abs(sAnalytic.DigitalPrice(dFwdRef, 0.9 *dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - Digital90NoSmileRef);
     error += std::abs(sAnalytic.DigitalPrice(dFwdRef, 0.9 * dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) - Digital90SmileRef);
+    
+    bool bOutput = false;
+    if (bOutput)
+    {
+        os << "ATMFCallRef = " << sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        os << " ATMFPutRef = " << sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::PUT) << ",";
+        os << " Call110Ref = " << sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        os << " PUT110Ref = " << sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::PUT) << ",";
+        os << " DigitalnoSmileATMFRef = " << sAnalytic.DigitalPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        os << " DigitalSmileATMFRef =" << sAnalytic.DigitalPrice(dFwdRef, dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) << ",";
+        os << " VegaATMFRef = " << sAnalytic.VegaVanillaOption(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        os << " Digital90NoSmileRef = " << sAnalytic.DigitalPrice(dFwdRef, 0.9 *dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        os << " Digital90SmileRef = " << sAnalytic.DigitalPrice(dFwdRef, 0.9 * dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) ;
+        os << ";" << std::endl;
+    }
     
     const double tolerance = 1e-06;
    

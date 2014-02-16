@@ -154,7 +154,17 @@ int _main()
     
     if (iTest == 0)
     {
-        LaunchRegressionTests(std::cout);
+        bool bSucceeded = LaunchRegressionTests(std::cout);
+        std::cout << "Regresssion Tests : " ;
+
+        if (bSucceeded)
+        {
+            std::cout << "SUCCEEDED" << std::endl;
+        }
+        else
+        {
+            std::cout << "FAILED" << std::endl;
+        }
     }
     if (iTest == 1)
     {

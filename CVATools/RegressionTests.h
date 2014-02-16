@@ -11,6 +11,6 @@
 
 #include <iostream>
 
-void LaunchRegressionTests(std::ostream & os);
+bool LaunchRegressionTests(std::ostream & os);
 
 #endif /* defined(__CVATools__RegressionTests__) */

@@ -29,18 +29,18 @@
 #include "Analytic.h"
 
 //  Forward declaration of the different regression tests
-void RegressionTest_BondPricing(std::ostream & os);
-void RegressionTest_TimeStatistics(std::ostream & os);
-void RegressionTest_PayoffLinearization(std::ostream & os);
-void RegressionTest_Interpolation(std::ostream & os);
-void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os);
-void RegressionTest_ProcessPathSimulation(std::ostream & os);
-void RegressionTest_Date(std::ostream & os);
-void RegressionTest_AnalyticFormulae(std::ostream & os);
+bool RegressionTest_BondPricing(std::ostream & os);
+bool RegressionTest_TimeStatistics(std::ostream & os);
+bool RegressionTest_PayoffLinearization(std::ostream & os);
+bool RegressionTest_Interpolation(std::ostream & os);
+bool RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os);
+bool RegressionTest_ProcessPathSimulation(std::ostream & os);
+bool RegressionTest_Date(std::ostream & os);
+bool RegressionTest_AnalyticFormulae(std::ostream & os);
 
 //  Declaration of all the regression tests
 
-void RegressionTest_BondPricing(std::ostream & os)
+bool RegressionTest_BondPricing(std::ostream & os)
 {
     //////////////////////////////////////////////////////////////
     //                                                          //
@@ -90,6 +90,7 @@ void RegressionTest_BondPricing(std::ostream & os)
         else
         {
             os << "FAILED" << std::endl;
+            return false;
         }
         
         os << "Test Bond Yield : ";
@@ -102,6 +103,7 @@ void RegressionTest_BondPricing(std::ostream & os)
         else
         {
             os << "FAILED" << std::endl;
+            return false;
         }
         
         os << "Test Bond I-Spread : ";
@@ -114,6 +116,7 @@ void RegressionTest_BondPricing(std::ostream & os)
         else
         {
             os << "FAILED" << std::endl;
+            return false;
         }
         
         os << "Test Bond Z-Spread : ";
@@ -126,25 +129,30 @@ void RegressionTest_BondPricing(std::ostream & os)
         else
         {
             os << "FAILED" << std::endl;
+            return false;
         }
     }
     catch( const Utilities::MyException & e)
     {
         os << "MyException caught : " << std::endl;
         os << e.what() << std::endl;
+        return false;
     }
     catch( const std::exception & e)
     {
         os << "Exception caught : " << std::endl;
         os << e.what() << std::endl;
+        return false;
     }
     catch(...)
     {
         os << "Unknown exception caught" << std::endl;
+        return false;
     }
+    return true;
 }
 
-void RegressionTest_TimeStatistics(std::ostream & os)
+bool RegressionTest_TimeStatistics(std::ostream & os)
 {
     try
     {
@@ -184,6 +192,7 @@ void RegressionTest_TimeStatistics(std::ostream & os)
         else
         {
             os << "FAILED" << std::endl;
+            return false;
         }
         
         std::cout << std::endl;
@@ -219,23 +228,28 @@ void RegressionTest_TimeStatistics(std::ostream & os)
         else
         {
             os << "FAILED" << std::endl;
+            return false;
         }
     }
     catch (const Utilities::MyException & excep)
     {
         os << "MyException caught : " << excep.what() << std::endl;
+        return false;
     }
     catch (const std::exception & excep)
     {
         os << "std::exception caught : " << excep.what() << std::endl;
+        return false;
     }
     catch (...)
     {
         os << "Unknown exception caught" << std::endl;
+        return false;
     }
+    return true;
 }
 
-void RegressionTest_PayoffLinearization(std::ostream & os)
+bool RegressionTest_PayoffLinearization(std::ostream & os)
 {
     os << "Regression Test Payoff Linearization" << std::endl;
     os << std::endl;
@@ -255,10 +269,10 @@ void RegressionTest_PayoffLinearization(std::ostream & os)
      Coef Stock : 0.648333
      */
     
-    double dRefConstant = -0.48575578680955, dRefCoefStock = 0.648332710908638;
+    const double dRefConstant = -0.48575578680955, dRefCoefStock = 0.648332710908638;
     
-    std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
-    double dEpsilon = 1e-10;
+    const std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
+    const double dEpsilon = 1e-10;
     os << "Payoff linearization : " ;
     if (fabs(dRegCoefs.first - dRefCoefStock) < dEpsilon && fabs(dRegCoefs.second - dRefConstant) < dEpsilon)
     {
@@ -267,13 +281,15 @@ void RegressionTest_PayoffLinearization(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     
     //os << "beta_1 : " << dRegCoefs.first << std::endl;
     //os << "beta_2 : " << dRegCoefs.second << std::endl;
+    return true;
 }
 
-void RegressionTest_Interpolation(std::ostream & os)
+bool RegressionTest_Interpolation(std::ostream & os)
 {
     os << "Regression Test Interpolation " << std::endl;
     os << std::endl;
@@ -319,6 +335,7 @@ void RegressionTest_Interpolation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "Log-lin DF interpolation : ";
     if (dErrorloglindf < dTolerance)
@@ -328,6 +345,7 @@ void RegressionTest_Interpolation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "Left continuous interpolation : ";
     if (dErrorleftcontinuous < dTolerance)
@@ -337,6 +355,7 @@ void RegressionTest_Interpolation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "Right continuous interpolation : ";
     if (dErrorrightcontinuous < dTolerance)
@@ -346,6 +365,7 @@ void RegressionTest_Interpolation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "Hermite spline cubic interpolation  : ";
     if (dErrorhermite < dTolerance)
@@ -355,6 +375,7 @@ void RegressionTest_Interpolation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "Hermite degree 5 interpolation  : ";
     if (dErrorhermite5 < dTolerance)
@@ -364,10 +385,12 @@ void RegressionTest_Interpolation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
+    return true;
 }
 
-void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
+bool RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
 {
     os << "Volatility Surface Interpolation" << std::endl;
     
@@ -384,17 +407,17 @@ void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
     catch (Utilities::MyException & excep)
     {
         os << excep.what() << std::endl;
-        throw ;
+        return false;
     }
     catch (std::exception & excep)
     {
         os << excep.what() << std::endl;
-        throw ;
+        return false;
     }
     catch (...)
     {
         os << "Unknown exception caught" << std::endl;
-        throw ;
+        return false;
     }
     
     os << "Non-Arbitrageability of smile : " << volSmile.IsArbitrageFree() << std::endl;
@@ -421,6 +444,7 @@ void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "SVI Parametrisation of smile : " ;
     if (dErrorSVIParabola < dTolerance)
@@ -430,10 +454,12 @@ void RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
+    return true;
 }
 
-void RegressionTest_ProcessPathSimulation(std::ostream & os)
+bool RegressionTest_ProcessPathSimulation(std::ostream & os)
 {
     os << "Process Path Simulation" << std::endl;
     const double dX0 = 1.0;
@@ -474,6 +500,7 @@ void RegressionTest_ProcessPathSimulation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "Ornstein Ulhenbeck process Simulation : ";
     if (dDiffOU < dTolerance)
@@ -483,6 +510,7 @@ void RegressionTest_ProcessPathSimulation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "Black Scholes process Simulation : ";
     if (dDiffBS < dTolerance)
@@ -492,6 +520,7 @@ void RegressionTest_ProcessPathSimulation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
     os << "Stochastic correlation process Simulation : ";
     if (dDiffSC < dTolerance)
@@ -501,11 +530,13 @@ void RegressionTest_ProcessPathSimulation(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
+    return true;
 }
 
 //  Regression test for date
-void RegressionTest_Date(std::ostream & os)
+bool RegressionTest_Date(std::ostream & os)
 {
     os << "Regression Test for date" << std::endl;
     
@@ -540,10 +571,12 @@ void RegressionTest_Date(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
+    return true;
 }
 
-void RegressionTest_AnalyticFormulae(std::ostream & os)
+bool RegressionTest_AnalyticFormulae(std::ostream & os)
 {
     os << "Regression Test for Analytic formulae" << std::endl;
     
@@ -594,7 +627,9 @@ void RegressionTest_AnalyticFormulae(std::ostream & os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
     }
+    return true;
 }
 
 /////////////////////////////////////////////////////
@@ -603,23 +638,65 @@ void RegressionTest_AnalyticFormulae(std::ostream & os)
 //
 /////////////////////////////////////////////////////
 
-void LaunchRegressionTests(std::ostream & os)
+bool LaunchRegressionTests(std::ostream & os)
 {
+    bool bSucceeded = true;
     os << std::setprecision(9);
-    RegressionTest_BondPricing(os);
+    
+    bSucceeded = RegressionTest_BondPricing(os);
+    if (!bSucceeded)
+    {
+        return bSucceeded;
+    }
     os << std::endl;
-    RegressionTest_TimeStatistics(os);
+    
+    bSucceeded = RegressionTest_TimeStatistics(os);
+    if (!bSucceeded)
+    {
+        return bSucceeded;
+    }
     os << std::endl;
-    RegressionTest_PayoffLinearization(os);
+    
+    bSucceeded = RegressionTest_PayoffLinearization(os);
+    if (!bSucceeded)
+    {
+        return bSucceeded;
+    }
     os << std::endl;
-    RegressionTest_Interpolation(os);
+    
+    bSucceeded = RegressionTest_Interpolation(os);
+    if (!bSucceeded)
+    {
+        return bSucceeded;
+    }
     os << std::endl;
-    RegressionTest_ProcessPathSimulation(os);
+    
+    bSucceeded = RegressionTest_ProcessPathSimulation(os);
+    if (!bSucceeded)
+    {
+        return bSucceeded;
+    }
     os << std::endl;
-    RegressionTest_Date(os);
+    
+    bSucceeded = RegressionTest_Date(os);
+    if (!bSucceeded)
+    {
+        return bSucceeded;
+    }
     os << std::endl;
-    RegressionTest_VolatilitySurfaceInterpolation(os);
+    
+    bSucceeded = RegressionTest_VolatilitySurfaceInterpolation(os);
+    if (!bSucceeded)
+    {
+        return bSucceeded;
+    }
     os << std::endl;
-    RegressionTest_AnalyticFormulae(os);
+    
+    bSucceeded = RegressionTest_AnalyticFormulae(os);
+    if (!bSucceeded)
+    {
+        return bSucceeded;
+    }
     os << std::endl;
+    return bSucceeded;
 }

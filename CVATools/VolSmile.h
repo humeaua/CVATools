@@ -47,6 +47,9 @@ namespace Finance
             
             //  to get the skew
             virtual double skew(double strike) const;
+            
+            // to get the volatility convexity
+            virtual double volatilityConvexity(double strike) const;
         };
     }
 }

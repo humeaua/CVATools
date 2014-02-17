@@ -89,6 +89,7 @@ namespace Utilities
                                 const std::vector<double> & dValues);
                         
             virtual double PointDerivative(double dVariable) const = 0;
+            virtual double PointConvexity(double dVariable) const = 0;
         private:
             virtual HermitePrecomputedCoefficients PrecomputeCoefficients(const int & iValue1, const int & iValue2) const = 0;
         };
@@ -101,6 +102,7 @@ namespace Utilities
             
             virtual double operator()(double dVariable) const;
             virtual double PointDerivative(double dVariable) const;
+            virtual double PointConvexity(double dVariable) const;
         private:
             virtual HermitePrecomputedCoefficients PrecomputeCoefficients(const int & iValue1, const int & iValue2) const;
         };
@@ -113,6 +115,7 @@ namespace Utilities
             
             virtual double operator()(double dVariable) const;
             virtual double PointDerivative(double dVariable) const;
+            virtual double PointConvexity(double dVariable) const;
         private:
             virtual HermitePrecomputedCoefficients PrecomputeCoefficients(const int & iValue1, const int & iValue2) const;
         };

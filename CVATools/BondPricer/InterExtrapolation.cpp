@@ -288,6 +288,22 @@ namespace Utilities
                 + Maths::HermitePolynomial3::deriv(t, 3) * coeffs.dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
         }
         
+        double HermiteSplineCubicInterpolator::PointConvexity(double dVariable) const
+        {
+            int iValue1 = 0, iValue2;
+            FindIndex(dVariable, iValue1);
+            iValue2 = iValue1 + 1;
+            
+            HermitePrecomputedCoefficients coeffs = PrecomputeCoefficients(iValue1, iValue2);
+            
+            double t = (dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1));
+            
+            return Maths::HermitePolynomial3::deriv2(t, 0) * dValues_.at(iValue1)
+            + Maths::HermitePolynomial3::deriv2(t, 1) * coeffs.dm_1 * (dVariables_.at(iValue2) - dVariables_.at(iValue1))
+            + Maths::HermitePolynomial3::deriv2(t, 2) * dValues_.at(iValue2)
+            + Maths::HermitePolynomial3::deriv2(t, 3) * coeffs.dm_2 * (dVariables_.at(iValue2) - dVariables_.at(iValue1));
+        }
+        
         HermiteDegree5Interpolator::HermiteDegree5Interpolator(const std::vector<double> & dVariables,
                                                                const std::vector<double> & dValues) : HermiteInterpolator(dVariables, dValues)
         {}
@@ -358,6 +374,25 @@ namespace Utilities
             + Maths::HermitePolynomial5::deriv(t, 3) * dValues_.at(iValue2)
             + Maths::HermitePolynomial5::deriv(t, 4) * coeffs.dm_2 * delta
             + Maths::HermitePolynomial5::deriv(t, 5) * coeffs.dm_4 * delta * delta;
+        }
+        
+        double HermiteDegree5Interpolator::PointConvexity(double dVariable) const
+        {
+            int iValue1 = 0, iValue2;
+            FindIndex(dVariable, iValue1);
+            iValue2 = iValue1 + 1;
+            
+            HermitePrecomputedCoefficients coeffs = PrecomputeCoefficients(iValue1, iValue2);
+            
+            double delta = (dVariables_.at(iValue2) - dVariables_.at(iValue1));
+            double t = (dVariable - dVariables_.at(iValue1)) / delta;
+            
+            return Maths::HermitePolynomial5::deriv2(t, 0) * dValues_.at(iValue1)
+            + Maths::HermitePolynomial5::deriv2(t, 1) * coeffs.dm_1 * delta
+            + Maths::HermitePolynomial5::deriv2(t, 2) * coeffs.dm_3 * delta * delta
+            + Maths::HermitePolynomial5::deriv2(t, 3) * dValues_.at(iValue2)
+            + Maths::HermitePolynomial5::deriv2(t, 4) * coeffs.dm_2 * delta
+            + Maths::HermitePolynomial5::deriv2(t, 5) * coeffs.dm_4 * delta * delta;
         }
     }
 }

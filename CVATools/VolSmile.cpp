@@ -146,6 +146,21 @@ namespace Finance
             }
         }
         
+        double VolSmile::volatilityConvexity(double strike) const
+        {
+            REQUIREEXCEPTION(strike > 0.0, "Strike is negative");
+            //  Flat extrapolation in concordance with Roger Lee moment formula
+            const double logstrike = log(strike / dFwdRef_);
+            if (logstrike < GetFirstStrike() || logstrike > GetLastStrike())
+            {
+                return 0.0;
+            }
+            else
+            {
+                return (HermiteDegree5Interpolator::PointConvexity(logstrike) - HermiteDegree5Interpolator::PointDerivative(logstrike)) / strike / strike;
+            }
+        }
+        
         std::vector<double> VolSmile::LogStrikes() const
         {
             return dVariables_;

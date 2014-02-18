@@ -202,7 +202,6 @@ namespace Maths
     
     double HermitePolynomial5::deriv2(double t, size_t i) const
     {
-        throw EXCEPTION("Not yet implemented");
         switch (i)
         {
             case 0:

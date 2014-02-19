@@ -112,24 +112,17 @@ void DisplayChoices(size_t & iTest)
 {
     std::cout << "Choose the test : " << std::endl;
     std::cout << "0- Regression Tests" << std::endl;
-    std::cout << "1- Ornstein Ulhenbeck Process" << std::endl;
-    std::cout << "2- Square root process" << std::endl;
-    std::cout << "3- Black Scholes process" << std::endl;
     std::cout << "4- Two Asset simulation" << std::endl;
-    std::cout << "5- Bond Pricer" << std::endl;
-    std::cout << "6- Yield Curve interpolation" << std::endl;
     std::cout << "7- Kernel Estimation" << std::endl;
     std::cout << "8- Business Day" << std::endl;
     std::cout << "9- Mu Parser Test" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "11- Fibonacci Series" << std::endl;
     std::cout << "12- Smart pointers" << std::endl;
-    std::cout << "13- Payoff Linearization" << std::endl;
     std::cout << "14- Cracking the coding interview" << std::endl;
     std::cout << "15- Debye Function" << std::endl;
     std::cout << "16- Sobol Sequences" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
-    std::cout << "18- Stochastic Correlation" << std::endl;
     std::cout << "19- Random number one step generation" << std::endl;
     std::cout << "20- FileWriter" << std::endl;
     std::cout << "21- Map" << std::endl;
@@ -142,8 +135,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "28- Exo DM louis matrices" << std::endl;
     std::cout << "29- Alglib testing" << std::endl;
     std::cout << "30- Exception Testing" << std::endl;
-    std::cout << "31- Smile Interpolation by splines" << std::endl;
-    std::cout << "32- Hermite degree 5 interpolation" << std::endl;
     std::cin >> iTest;
 }
 
@@ -164,62 +155,6 @@ int _main()
         else
         {
             std::cout << "FAILED" << std::endl;
-        }
-    }
-    if (iTest == 1)
-    {
-        long long lSeed = 0;
-        Finance::Processes::OrnsteinUhlenbeck sOU(0.05, 0.2, 0.1, 0.2, lSeed);
-        std::size_t iNDates = 100, iNPaths = 10;
-        std::vector<double> dDates;
-        double dT = 1;
-        for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
-        {
-            dDates.push_back(dT * iDate / iNDates);
-        }
-        Utilities::SimulationData sResult = sOU.simulate(dDates, iNPaths);
-        Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/OrnsteinUlhenbeck.csv", false, 10);
-        sPrint.PrintInFile(sResult.GetData());
-    }
-    else if (iTest == 2)
-    {
-        long long lSeed = 0;
-        Finance::Processes::SquareRoot sSquareRoot(0.2, 0.2, 0.2, 0.2, lSeed);
-        std::size_t iNDates = 1000, iNPaths = 10;
-        std::vector<double> dDates;
-        double dT = 10;
-        for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
-        {
-            dDates.push_back(dT * iDate / iNDates);
-        }
-        Utilities::SimulationData sResult = sSquareRoot.simulate(dDates, iNPaths);
-        Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/SquareRoot.csv", false, 10);
-        sPrint.PrintInFile(sResult.GetData());
-    }
-    else if (iTest == 3)
-    {
-        try
-        {
-            long long lSeed = 1;
-            Finance::Processes::BlackScholes sBS(0.08, 0.4, 10, lSeed);
-            std::size_t iNDates = 10, iNPaths = 10;
-            std::vector<double> dDates;
-            double dT = 10;
-            for (std::size_t iDate = 0 ; iDate <= iNDates ; ++iDate)
-            {
-                dDates.push_back(dT * iDate / iNDates);
-            }
-            Utilities::SimulationData sResult = sBS.simulate(dDates, iNPaths);
-            Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/BlackScholes.csv", false, 10);
-            sPrint.PrintInFile(sResult.GetData());
-        }
-        catch (std::exception & e)
-        {
-            std::cout << "Exception caught : " << e.what() << std::endl;
-        }
-        catch (...)
-        {
-            std::cout << "Unknown exception caught!" << std::endl;
         }
     }
     else if (iTest == 4)
@@ -280,78 +215,6 @@ int _main()
         //{
         //    std::cout << i << " " << firstvect[i] << std::endl;
         //}
-    }
-    else if (iTest == 5)
-    {
-        // Yield curve as of 10th May, 2013
-        //          1 Mo	3 Mo	6 Mo	1 Yr	2 Yr	3 Yr	5 Yr	7 Yr	10 Yr	20 Yr	30 Yr
-        // 05/10/13	0.02	0.04	0.08	0.11	0.26	0.38	0.82	1.28	1.90	2.70	3.10
-        std::vector<std::pair<double, double> > dYC;
-        dYC.push_back(std::make_pair(1.0 / 12, 0.0002));
-        dYC.push_back(std::make_pair(3.0 / 12, 0.0004));
-        dYC.push_back(std::make_pair(6.0 / 12, 0.0008));
-        dYC.push_back(std::make_pair(1.0, 0.0011));
-        dYC.push_back(std::make_pair(2.0, 0.0026));
-        dYC.push_back(std::make_pair(3.0, 0.0038));
-        dYC.push_back(std::make_pair(5.0, 0.0082));
-        dYC.push_back(std::make_pair(7.0, 0.0128));
-        dYC.push_back(std::make_pair(10.0, 0.0190));
-        dYC.push_back(std::make_pair(20.0, 0.0270));
-        dYC.push_back(std::make_pair(30.0, 0.0310));
-
-        Utilities::Date::MyDate sStart(11,05,2014), sEnd(11,05,2034), sToday;
-        Finance::Base::YieldCurve sYieldCurve(sToday, "USD", "USD_YC_10_05_2013", Utilities::GetPairOfVectorFromVectorOfPair(dYC));
-        
-        Finance::Base::MyBasis eBasis = Finance::Base::BONDBASIS;
-        Finance::Base::MyFrequency eFrequency = Finance::Base::MyFrequencyAnnual;
-        double dNotional = 1.;
-        
-        std::vector<double> dCoupons(20, 0.01);
-        bool bIsFixedRate = true;
-        
-        Finance::Pricers::BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
-        double dBondPrice = sBondPricer.Price();
-        std::cout << "Bond Pricer : " << dBondPrice << std::endl;
-        std::cout << "Yield : " << sBondPricer.PriceToYield(dBondPrice) << std::endl;
-        std::cout << "I-Spread : " << sBondPricer.I_Spread(dBondPrice) << std::endl;
-        std::cout << "Z-Spread : " << sBondPricer.Z_Spread(dBondPrice) << std::endl;
-        std::cout << "Z-Spread (2% margin) : " << sBondPricer.Z_Spread(dBondPrice * 1.02) << std::endl;
-                
-        
-         //Regression test
-         //Bond Pricer : 0.733378
-         //Yield : 0.0259757
-         //I-Spread : -0.00125763
-         //Z-Spread : -0.000419156
-         //Z-Spread (2% margin) : -0.0015014
-
-        std::cout << "Good Bye !" << std::endl;
-    }
-    else if (iTest == 6)
-    {
-        // Yield curve as of 10th May, 2013
-        //          1 Mo	3 Mo	6 Mo	1 Yr	2 Yr	3 Yr	5 Yr	7 Yr	10 Yr	20 Yr	30 Yr
-        // 05/10/13	0.02	0.04	0.08	0.11	0.26	0.38	0.82	1.28	1.90	2.70	3.10
-        std::vector<std::pair<double, double> > dYC;
-        dYC.push_back(std::make_pair(1.0 / 12, 0.0002));
-        dYC.push_back(std::make_pair(3.0 / 12, 0.0004));
-        dYC.push_back(std::make_pair(6.0 / 12, 0.0008));
-        dYC.push_back(std::make_pair(1.0, 0.0011));
-        dYC.push_back(std::make_pair(2.0, 0.0026));
-        dYC.push_back(std::make_pair(3.0, 0.0038));
-        dYC.push_back(std::make_pair(5.0, 0.0082));
-        dYC.push_back(std::make_pair(7.0, 0.0128));
-        dYC.push_back(std::make_pair(10.0, 0.0190));
-        dYC.push_back(std::make_pair(20.0, 0.0270));
-        dYC.push_back(std::make_pair(30.0, 0.0310));
-        
-        Finance::Base::YieldCurve sYieldCurve(Utilities::Date::MyDate(), "USD", "USD_YC_10_05_2013", Utilities::GetPairOfVectorFromVectorOfPair(dYC));
-        
-        for (std::size_t i = 0 ; i < 400 ; ++i)
-        {
-            double dT = static_cast<double>(i) / 10.0;
-            std::cout << dT << ";" << sYieldCurve(dT) << std::endl;
-        }
     }
     else if (iTest == 7)
     {
@@ -478,25 +341,6 @@ int _main()
         std::cout << "Year : " << pDate0->GetYear() << std::endl;
         std::cout << std::endl;
     }
-    else if (iTest == 13)
-    {
-        // Payoff Linearisation
-        long long lSeed = 0;
-        Finance::Payoff::PayoffVanillaOption sPayoff(1.0, Finance::Payoff::CALL);
-        Finance::Processes::BlackScholes sBlackScholes(0.0, 0.4, 1.0, lSeed);
-        
-        Maths::PayoffLinearization sPayoffLinearization(1000);
-        
-        double dDates[2] = {0.0, 1.0};
-        std::vector<double> dSimulationsDates(dDates, dDates + 2);
-    
-        std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
-        
-        std::cout << "Cst : " << dRegCoefs.first << std::endl;
-        std::cout << "Coef Stock : " << dRegCoefs.second << std::endl;
-        
-        //std::cout << "R2 : " << sPayoffLinearization.Computer2() << std::endl;
-    }
     else if (iTest == 14)
     {
         //  cracking the coding interview
@@ -582,35 +426,6 @@ int _main()
         }
         
         std::cout << std::endl;
-    }
-    else if (iTest == 18)
-    {
-        long long lSeed = 0;
-        Finance::Processes::StochCorrel sStochCorrel(1.0, 1.0, 0.2, 0.5, lSeed);
-        std::size_t iNDates = 500, iNPaths = 10;
-        std::vector<double> dDates;
-        double dT = 10;
-        for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
-        {
-            dDates.push_back(dT * iDate / iNDates);
-        }
-        Utilities::SimulationData sResult = sStochCorrel.simulate(dDates, iNPaths);
-        Utilities::PrintCpp sPrint("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/StochCorrel.csv", false, 10);
-        sPrint.PrintInFile(sResult.GetData());
-    }
-    else if (iTest == 19)
-    {
-        // Test for random numbers
-        long long lSeed = 1;
-        Finance::Processes::BlackScholes sBS(0.08, 0.4, 1, lSeed);
-        for (std::size_t i = 0 ; i < 10 ; ++i)
-        {
-            double sResult = sBS.Generate1(0.0, 1.0, 0.1);
-            std::cout << "Step " << i << " : " << std::endl;
-            std::cout << "Result : " << sResult << std::endl;
-            
-            std::cout << " " << std::endl;
-        }
     }
     else if (iTest == 20)
     {
@@ -787,21 +602,6 @@ int _main()
         {
             std::cout << "New MyException caught : " << excep.what() << std::endl;
         }
-    }
-    else if (iTest == 31)
-    {
-        std::vector<double> dStrikes(3,0.0), dVols(3, 0.0);
-        dStrikes.at(0) = 0.75;
-        dStrikes.at(1) = 1;
-        dStrikes.at(2) = 1.25;
-        
-        dVols.at(0) = 0.25;
-        dVols.at(1) = 0.20;
-        dVols.at(2) = 0.23;
-        Utilities::Interp::HermiteSplineCubicInterpolator Interp(dStrikes, dVols);
-        
-        for (double dStrike = 0.5 ; dStrike < 1.5 ; dStrike += 0.05)
-            std::cout << dStrike << ";" << Interp(dStrike) << std::endl;
     }
     else if (iTest == 32)
     {

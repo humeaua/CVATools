@@ -125,7 +125,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "17- Thinking in C++" << std::endl;
     std::cout << "19- Random number one step generation" << std::endl;
     std::cout << "20- FileWriter" << std::endl;
-    std::cout << "21- Map" << std::endl;
     std::cout << "22- Golf" << std::endl;
     std::cout << "23- Tournament writer" << std::endl;
     std::cout << "24- Player Reader" << std::endl;
@@ -133,7 +132,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "26- Player Data Base" << std::endl;
     std::cout << "27- HTTP Fetcher" << std::endl;
     std::cout << "28- Exo DM louis matrices" << std::endl;
-    std::cout << "29- Alglib testing" << std::endl;
     std::cout << "30- Exception Testing" << std::endl;
     std::cin >> iTest;
 }
@@ -433,16 +431,6 @@ int _main()
         FileWriter sWriter(std::vector<std::string>(10, "10"));
         sWriter.Write();
     }
-    else if (iTest == 21)
-    {
-        // Map
-        std::map<size_t, double> ConvertIntToDouble;
-        ConvertIntToDouble.at(0) = 0.0;
-        ConvertIntToDouble.at(1) = 1.0;
-        ConvertIntToDouble.at(2) = 2.0;
-        
-        std::cout << ConvertIntToDouble.size() << std::endl;
-    }
     else if (iTest == 22)
     {
         // Golf
@@ -575,10 +563,6 @@ int _main()
         {
             std::cout << dEigenValues.at(i) << std::endl;
         }
-    }
-    else if (iTest == 29)
-    {
-        alglib::sparsematrix sparsematrix;
     }
     else if (iTest == 30)
     {

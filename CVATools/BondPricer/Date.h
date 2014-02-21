@@ -39,7 +39,7 @@ namespace Utilities
             int iDay_;
         public:
             MyDate();
-            MyDate(const int& day, const int& month, const int& year);
+            MyDate(int day, int month, int year);
             MyDate(const std::tm& sDate);
             MyDate(double dDate);
             MyDate(const MyDate& date);

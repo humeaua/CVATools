@@ -37,7 +37,7 @@ namespace Utilities
             return ((iYear_ % 400 == 0) || ((iYear_ % 4 == 0) && (iYear_ % 100 != 0)));
         }
         
-        MyDate::MyDate(const int& day, const int& month, const int& year) : iDay_(day), iMonth_(month), iYear_(year)
+        MyDate::MyDate( int day, int month, int year) : iDay_(day), iMonth_(month), iYear_(year)
         {
             //  Remove require from constructor as it is throwing an exception
             //Utilities::requireException(IsValid(), "Date is not valid", "MyDate::MyDate");

@@ -36,7 +36,7 @@ namespace Utilities
             
             virtual double SigmaLoc(double t, double dS) const = 0;
             
-            virtual SimulationData simulate(const std::vector<double> & dDates, std::size_t iNPaths) const;
+            virtual std::vector<double> simulate1path(const std::vector<double> & dDates) const;
         };
     }
 }

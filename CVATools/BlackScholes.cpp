@@ -39,39 +39,31 @@ namespace Finance
         
         //  return a simulation data of the simulated path for the diffusion process
         
-        Utilities::SimulationData BlackScholes::simulate(const std::vector<double> &dDates, std::size_t iNPaths) const
+        std::vector<double> BlackScholes::simulate1path(const std::vector<double> &dDates) const
         {
-            std::size_t iNDates = dDates.size();
-            Utilities::SimulationData sResult(iNPaths, iNDates);
+            std::vector<double> result(dDates.size(), 0.0);
             
             std::tr1::normal_distribution<double> dist(0.0,1.0);
-            for (std::size_t iDate = 0 ; iDate < iNDates ; ++iDate)
+            double dOldValue = dX0_;
+            result.at(0) = dOldValue;
+            for (std::size_t iDate = 1 ; iDate < dDates.size() ; ++iDate)
             {
-                sResult.AddDate(dDates[iDate]);
-            }
-            for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
-            {
-                double dOldValue = dX0_;
-                sResult(iPath, 0) = dOldValue;
-                for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
+                double t0 = dDates.at(iDate - 1), dt = dDates.at(iDate) - t0;
+                dOldValue *= exp((dDrift_ - dVol_ * dVol_ * 0.5) * dt + dVol_ * sqrt(dt) * dist(*m_eng));
+                if (bFloorSimulation_ && dOldValue < 0.0)
                 {
-                    double t0 = dDates.at(iDate - 1), dt = dDates.at(iDate) - t0;
-                    dOldValue *= exp((dDrift_ - dVol_ * dVol_ * 0.5) * dt + dVol_ * sqrt(dt) * dist(*m_eng));
-                    if (bFloorSimulation_ && dOldValue < 0.0)
+                    result.at(iDate) = 0.0;
+                    if (bStartFromFloor_)
                     {
-                        sResult(iPath, iDate) = 0.0;
-                        if (bStartFromFloor_)
-                        {
-                            dOldValue = 0.0;
-                        }
-                    }
-                    else
-                    {
-                        sResult(iPath, iDate) = dOldValue;
+                        dOldValue = 0.0;
                     }
                 }
+                else
+                {
+                    result.at(iDate) = dOldValue;
+                }
             }
-            return sResult;
+            return result;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Utilities
         {
             for (std::size_t iDate = 0 ; iDate < dDates_.size() ; ++iDate)
             {
-                (*this)(iPath, iDate) = dData.at(iPath).at(iPath);
+                (*this)(iPath, iDate) = dData.at(iPath).at(iDate);
             }
         }
     }

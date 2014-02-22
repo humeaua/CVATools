@@ -60,44 +60,15 @@ namespace Finance
         //  return a simulation data of the simulated path for the diffusion process
         Utilities::SimulationData DiffusionProcess::simulate(const std::vector<double> &dDates, std::size_t iNPaths) const
         {
-            std::size_t iNDates = dDates.size();
-            Utilities::SimulationData sResult(iNPaths,iNDates);
+            std::vector<std::vector<double> > dData(iNPaths, std::vector<double>(dDates.size(), 0.0));
             
-            std::tr1::normal_distribution<double> dist(0.0,1.0);
-            double dDate0 = dDates.at(0);
-            sResult.AddDate(dDate0);
             for (std::size_t iPath = 0 ; iPath < iNPaths ; ++iPath)
             {
-                double dOldValue = dX0_;
-                sResult(iPath, 0) = dOldValue; // 1st date
-                for (std::size_t iDate = 1 ; iDate < iNDates ; ++iDate)
-                {
-                    double t0 = dDates[iDate - 1], dt = dDates[iDate] - t0;
-                    sResult.AddDate(dDates[iDate]);
-                    dOldValue = expectation(t0, dOldValue, dt) + stdev(t0, dOldValue, dt) * dist(*m_eng);
-                    if (bFloorSimulation_ && dOldValue < dFloor_)
-                    {
-                        sResult(iPath, iDate) = dFloor_; 
-                        if (bStartFromFloor_)
-                        {
-                            dOldValue = dFloor_;
-                        }
-                    }
-                    else if (bCapSimulation_ && dOldValue > dCap_)
-                    {
-                        sResult(iPath, iDate) = dCap_; 
-                        if (bStartFromCap_)
-                        {
-                            dOldValue = dCap_;
-                        }
-                    }
-                    else
-                    {
-                        sResult(iPath, iDate) = dOldValue;
-                    }
-                }
+                dData[iPath] = simulate1path(dDates);
             }
-            return sResult;
+            
+            Utilities::SimulationData result(dData, dDates);
+            return result;
         }
         
         std::vector<double> DiffusionProcess::simulate1path(const std::vector<double> &dDates) const

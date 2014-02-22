@@ -269,10 +269,9 @@ bool RegressionTest_PayoffLinearization(std::ostream & os)
      Coef Stock : 0.648333
      */
     
-    const double dRefConstant = -0.48575578680955, dRefCoefStock = 0.648332710908638;
-    
+    const double dRefConstant = -0.467719463611643, dRefCoefStock = 0.628602529249528;
     const std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
-    const double dEpsilon = 1e-10;
+    const double dEpsilon = 1e-6;
     os << "Payoff linearization : " ;
     if (fabs(dRegCoefs.first - dRefCoefStock) < dEpsilon && fabs(dRegCoefs.second - dRefConstant) < dEpsilon)
     {
@@ -503,12 +502,12 @@ bool RegressionTest_ProcessPathSimulation(std::ostream & os)
     
     const double dRefValuesSquareRoot[] = {1,1.01533189,1.00218429,0.980863849,0.951722112,0.926746364,0.915307718,0.945391067,0.887362489,0.896643275,0.940587215,0.940422193,0.961310737,0.920984543,0.977360754,0.961919216,0.984237052,0.98193395,1.04122305,1.0258744,1.02188529};
     const double dRefValuesOU[] = {1,0.999208646,1.01024586,1.04327062,1.0151356,1.03420104,1.02086556,1.04054557,1.05788609,1.06227928,1.01526912,0.952106248,0.976487794,1.01307013,1.02616416,1.0676393,1.07698467,1.08466054,1.16087981,1.16508758,1.11629776};
-    const double dRefValuesBS[] = {1,1.0012045,1.01432396,1.0497388,1.0239206,1.04533587,1.03433247,1.05644539,1.07644225,1.08360508,1.03902345,0.977602932,1.00365087,1.04229106,1.05770459,1.10188194,1.11418417,1.12492225,1.20483491,1.21310068, 1.16801572};
+    const double dRefValuesBS[] = {1,1.00070493,1.01337791,1.04925637,1.0219766,1.04346905,1.0314758,1.05387909,1.0744517,1.08145192,1.03373856,0.971762002,0.996885123,1.03552707,1.0509566,1.09762101,1.11039261,1.12153443,1.21366543,1.22260359,1.16777423};
     const double dRefValuesSC[] = {0,-0.00318125765,0.0414593747,0.170569407,0.0445972641,0.1175252,0.0544624305,0.12910955,0.187557141,0.189330344,-0.0118042998,-0.263968357,-0.146158452,0.0123023101,0.0642886051,0.225600951,0.243368035,0.253124662,0.528737107,0.498240656,0.286494823};
     double dDiffSquareRoot = 0.0, dDiffOU = 0.0, dDiffBS = 0.0, dDiffSC = 0.0;
     for (std::size_t iDate = 0 ; iDate < DatesVec.size() ; ++iDate)
     {
-        //os << std::setprecision(9) << ResultsSC[iDate] << std::endl;
+        os << std::setprecision(9) << ResultsBS[iDate] << std::endl;
         dDiffSquareRoot += std::abs(dRefValuesSquareRoot[iDate] - ResultsSR[iDate]);
         dDiffOU += std::abs(dRefValuesOU[iDate] - ResultsOU[iDate]);
         dDiffBS += std::abs(dRefValuesBS[iDate] - ResultsBS[iDate]);

@@ -21,6 +21,7 @@ namespace Utilities
         std::vector<double> dDates_;
     public:
         SimulationData(std::size_t iNPaths, std::size_t iNDates);
+        SimulationData(const std::vector<std::vector<double> > & dData, const std::vector<double> & dDates);
         
         virtual ~SimulationData();
 

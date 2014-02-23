@@ -11,58 +11,30 @@
 
 namespace Utilities
 {
-    RegressionData::RegressionData() : iNObservations_(0), iNVars_(0)
+    RegressionData::RegressionData() : Matrix<double>(0,0)
     {}
     
-    RegressionData::RegressionData(std::size_t iNObservations, std::size_t iNVars) : iNVars_(iNVars), iNObservations_(iNObservations)
+    RegressionData::RegressionData(std::size_t iNObservations, std::size_t iNVars) : Matrix<double>(iNObservations, iNVars)
     {
-        dData_.resize(iNObservations * iNVars);
+        data.resize(iNObservations * iNVars, 0.0);
     }
     
-    RegressionData::RegressionData(const std::vector<double> & dData) : dData_(dData), iNVars_(1), iNObservations_(dData.size())
-    {}
-    
-    double& RegressionData::operator ()(int i, int j)
+    RegressionData::RegressionData(const std::vector<double> & dData) : Matrix<double>(dData.size(), (std::size_t)1)
     {
-        REQUIREEXCEPTION(i >= 0 && j >= 0, "Indexes are negative");
-        REQUIREEXCEPTION(i < iNObservations_, "Observation index is out of bounds");
-        REQUIREEXCEPTION(j < iNVars_, "Variable index is out of bounds");
-        
-        return dData_.at(i + j * iNObservations_);
-    }
-    
-    double& RegressionData::operator ()(int i, int j) const
-    {
-        REQUIREEXCEPTION(i >= 0 && j >= 0, "Indexes are negative");
-        REQUIREEXCEPTION(i < iNObservations_, "Observation index is out of bounds");
-        REQUIREEXCEPTION(j < iNVars_, "Variable index is out of bounds");
-        
-        return (double&)(dData_.at(i + j * iNObservations_));
-    }
-    
-    double& RegressionData::operator ()(size_t i, size_t j)
-    {
-        REQUIREEXCEPTION(i < iNObservations_, "Observation index is out of bounds");
-        REQUIREEXCEPTION(j < iNVars_, "Variable index is out of bounds");
-        
-        return dData_.at(i + j * iNObservations_);
-    }
-    
-    double& RegressionData::operator ()(size_t i, size_t j) const
-    {
-        REQUIREEXCEPTION(i < iNObservations_, "Observation index is out of bounds");
-        REQUIREEXCEPTION(j < iNVars_, "Variable index is out of bounds");
-        
-        return (double&)dData_.at(i + j * iNObservations_);
+        std::size_t zero = 0;
+        for (std::size_t i = 0 ; i < dData.size() ; ++i)
+        {
+            (*this)(i,zero) = dData.at(i);
+        }
     }
     
     //  Getters
     std::size_t RegressionData::GetNbObservations() const
     {
-        return iNObservations_;
+        return rowsize;
     }
     std::size_t RegressionData::GetNbVariables() const
     {
-        return iNVars_;
+        return colsize;
     }
 }

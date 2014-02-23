@@ -10,14 +10,12 @@
 #define __CVATools__RegressionData__
 
 #include <vector>
+#include "Matrix.h"
 
 namespace Utilities
 {
-    class RegressionData
+    class RegressionData : public Matrix<double>
     {
-    protected:
-        std::vector<double> dData_;
-        std::size_t iNObservations_, iNVars_;
     public:
         RegressionData();
         RegressionData(std::size_t iNObservations, std::size_t iNVars);
@@ -26,12 +24,6 @@ namespace Utilities
         //  Getters
         virtual std::size_t GetNbObservations() const;
         virtual std::size_t GetNbVariables() const;
-        
-        //  Access operators
-        virtual double& operator ()(int i, int j);
-        virtual double& operator ()(int i, int j) const;
-        virtual double& operator ()(size_t i, size_t j);
-        virtual double& operator ()(size_t i, size_t j) const;
     };
 }
 

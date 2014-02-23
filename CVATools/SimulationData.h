@@ -28,10 +28,6 @@ namespace Utilities
         //  Method to add date in the simulation so that we can keep the dates as well and not only the simulated values
         virtual void AddDate(double dDate);
         
-        //  Getter and Setter for element
-        virtual double& operator ()(size_t iPath, size_t iDate) const;
-        virtual double& operator ()(size_t iPath, size_t iDate);
-        
         // Getter for all simulated value for just one date
         virtual std::vector<double> Get(double dDate) const;
         

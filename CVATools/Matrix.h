@@ -99,8 +99,8 @@ namespace Utilities
         
         Matrix(const std::vector<std::vector<T> > & data)
         {
-            m_rowsize = data.size();
-            m_colsize = data.front().size();
+            m_rowsize = static_cast<int>(data.size());
+            m_colsize = static_cast<int>(data.front().size());
             for (std::size_t i = 0 ; i < m_rowsize; ++i)
             {
                 for (std::size_t j = 0 ; j < m_colsize; ++j)

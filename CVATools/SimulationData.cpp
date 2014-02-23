@@ -16,16 +16,8 @@ namespace Utilities
     SimulationData::SimulationData(std::size_t iNPaths, std::size_t iNDates) : RegressionData(iNPaths, iNDates)
     {}
     
-    SimulationData::SimulationData(const std::vector<std::vector<double> > & dData, const std::vector<double>& dDates) : RegressionData(dData.size(), dDates.size()), dDates_(dDates)
-    {
-        for (std::size_t iPath = 0 ; iPath < dData.size() ; ++iPath)
-        {
-            for (std::size_t iDate = 0 ; iDate < dDates_.size() ; ++iDate)
-            {
-                (*this)(iPath, iDate) = dData.at(iPath).at(iDate);
-            }
-        }
-    }
+    SimulationData::SimulationData(const Matrix<double> & data, const std::vector<double> & dates) : RegressionData(data), dDates_(dates)
+    {}
     
     SimulationData::~SimulationData()
     {}

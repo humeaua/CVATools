@@ -28,6 +28,9 @@ namespace Utilities
         }
     }
     
+    RegressionData::RegressionData(const Matrix<double> & data) : Matrix<double>(data)
+    {}
+    
     //  Getters
     std::size_t RegressionData::GetNbObservations() const
     {

@@ -20,37 +20,37 @@ namespace Utilities
     public:
         Matrix(int N, int M)
         {
-            rowsize = N;
-            colsize = M;
-            data.resize(rowsize*colsize, T());
+            m_rowsize = N;
+            m_colsize = M;
+            m_data.resize(m_rowsize*m_colsize, T());
         }
         
         Matrix(int N, int M, T& value)
         {
-            rowsize = N;
-            colsize = M;
-            data.resize(rowsize*colsize, value);
+            m_rowsize = N;
+            m_colsize = M;
+            m_data.resize(m_rowsize*m_colsize, value);
         }
         
         Matrix(std::size_t N, std::size_t M)
         {
-            rowsize = static_cast<int>(N);
-            colsize = static_cast<int>(M);
-            data.resize(rowsize*colsize, T());
+            m_rowsize = static_cast<int>(N);
+            m_colsize = static_cast<int>(M);
+            m_data.resize(m_rowsize*m_colsize, T());
         }
         
         Matrix(std::size_t N, std::size_t M,T& value)
         {
-            rowsize = static_cast<int>(N);
-            colsize = static_cast<int>(M);
-            data.resize(rowsize*colsize, value);
+            m_rowsize = static_cast<int>(N);
+            m_colsize = static_cast<int>(M);
+            m_data.resize(m_rowsize*m_colsize, value);
         }
         
         Matrix(std::size_t N, bool bIsIdentity)
         {
-            rowsize = static_cast<int>(N);
-            colsize = static_cast<int>(N);
-            data.resize(rowsize*colsize, T());
+            m_rowsize = static_cast<int>(N);
+            m_colsize = static_cast<int>(N);
+            m_data.resize(m_rowsize*m_colsize, T());
             if (bIsIdentity)
             {
                 for (std::size_t i = 0 ; i < N ; ++i)
@@ -62,9 +62,9 @@ namespace Utilities
         
         Matrix(int N, bool bIsIdentity)
         {
-            rowsize = N;
-            colsize = N;
-            data.resize(rowsize*colsize, T());
+            m_rowsize = N;
+            m_colsize = N;
+            m_data.resize(m_rowsize*m_colsize, T());
             if (bIsIdentity)
             {
                 for (std::size_t i = 0 ; i < N ; ++i)
@@ -76,78 +76,91 @@ namespace Utilities
         
         Matrix(const Matrix& m)
         {
-            rowsize = m.rowsize;
-            colsize = m.colsize;
-            data.resize(rowsize*colsize);
-            data = m.data;
+            m_rowsize = m.m_rowsize;
+            m_colsize = m.m_colsize;
+            m_data.resize(m_rowsize*m_colsize);
+            m_data = m.m_data;
         }
         
         template <size_t M>
         Matrix(T dData[][M], int N)
         {
-            rowsize = N;
-            colsize = M;
-            data.resize(rowsize*colsize);
-            for (std::size_t i = 0 ; i < rowsize; ++i)
+            m_rowsize = N;
+            m_colsize = M;
+            m_data.resize(m_rowsize*m_colsize);
+            for (std::size_t i = 0 ; i < m_rowsize; ++i)
             {
-                for (std::size_t j = 0 ; j < colsize; ++j)
+                for (std::size_t j = 0 ; j < m_colsize; ++j)
                 {
                     (*this)(i,j) = dData[i][j];
                 }
             }
         }
         
+        Matrix(const std::vector<std::vector<T> > & data)
+        {
+            m_rowsize = data.size();
+            m_colsize = data.front().size();
+            for (std::size_t i = 0 ; i < m_rowsize; ++i)
+            {
+                for (std::size_t j = 0 ; j < m_colsize; ++j)
+                {
+                    (*this)(i,j) = data[i][j];
+                }
+            }
+        }
+        
         virtual void Reallocate(int N, int M)
         {
-            data.clear();
-            rowsize = N;
-            colsize = M;
-            data.resize(rowsize * colsize, T());
+            m_data.clear();
+            m_rowsize = N;
+            m_colsize = M;
+            m_data.resize(m_rowsize * m_colsize, T());
         }
         
         virtual void Reallocate(std::size_t N, std::size_t M)
         {
-            data.clear();
-            rowsize = static_cast<int>(N);
-            colsize = static_cast<int>(M);
-            data.resize(rowsize * colsize, T());
+            m_data.clear();
+            m_rowsize = static_cast<int>(N);
+            m_colsize = static_cast<int>(M);
+            m_data.resize(m_rowsize * m_colsize, T());
         }
         
         virtual T& operator ()(int i, int j)
         {
-            return data.at(i + rowsize*j);
+            return m_data.at(i + m_rowsize*j);
         }
         
         virtual T& operator ()(int i, int j) const
         {
-            return (T&)data.at(i + rowsize*j);
+            return (T&)m_data.at(i + m_rowsize*j);
         }
         
         virtual T& operator ()(std::size_t i, std::size_t j)
         {
-            return data.at(i + rowsize*j);
+            return m_data.at(i + m_rowsize*j);
         }
         
         virtual T& operator ()(std::size_t i, std::size_t j) const
         {
-            return (T&)data.at(i + rowsize*j);
+            return (T&)m_data.at(i + m_rowsize*j);
         }
                           
         virtual int getrows() const
         {
-            return rowsize;
+            return m_rowsize;
         }
         
         virtual int getcols() const
         {
-            return colsize;
+            return m_colsize;
         }
         
         void print(std::ostream & os)
         {
-            for (int i=0; i<rowsize; i++)
+            for (int i=0; i<m_rowsize; i++)
             {
-                for (int j=0; j<colsize; j++)
+                for (int j=0; j<m_colsize; j++)
                 {
                     os << (*this)(i,j) << '\t';
                 }
@@ -156,9 +169,9 @@ namespace Utilities
         }
         
     protected:
-        int rowsize;
-        int colsize;
-        std::vector<T> data;
+        int m_rowsize;
+        int m_colsize;
+        std::vector<T> m_data;
     };
     
     

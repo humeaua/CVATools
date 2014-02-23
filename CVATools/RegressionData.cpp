@@ -16,7 +16,7 @@ namespace Utilities
     
     RegressionData::RegressionData(std::size_t iNObservations, std::size_t iNVars) : Matrix<double>(iNObservations, iNVars)
     {
-        data.resize(iNObservations * iNVars, 0.0);
+        m_data.resize(iNObservations * iNVars, 0.0);
     }
     
     RegressionData::RegressionData(const std::vector<double> & dData) : Matrix<double>(dData.size(), (std::size_t)1)
@@ -31,10 +31,10 @@ namespace Utilities
     //  Getters
     std::size_t RegressionData::GetNbObservations() const
     {
-        return rowsize;
+        return static_cast<std::size_t>(getrows());
     }
     std::size_t RegressionData::GetNbVariables() const
     {
-        return colsize;
+        return static_cast<std::size_t>(getcols());
     }
 }

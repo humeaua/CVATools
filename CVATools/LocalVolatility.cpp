@@ -9,7 +9,7 @@
 #include "LocalVolatility.h"
 #include <tr1/random>
 
-namespace Utilities
+namespace Finance
 {
     namespace Processes
     {
@@ -39,6 +39,11 @@ namespace Utilities
                 sResult.at(iDate) = dOldValue;
             }
             return sResult;
+        }
+        
+        double LocalVolatility::diffusion(double t, double S) const
+        {
+            return S * SigmaLoc(t, S);
         }
     }
 }

@@ -12,6 +12,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <stdlib.h>
+#include "StringUtilities.h"
 
 namespace Utilities
 {
@@ -27,7 +28,7 @@ namespace Utilities
     
     /* use S__LINE__ instead of __LINE__ */
 #ifndef EXCEPTION
-#define EXCEPTION(x) Utilities::MyException(std::string(x) + " in function : " + __FUNCTION__ + " (line " + S__LINE__ + ")")
+#define EXCEPTION(x) Utilities::MyException(std::string(x) + " in function : " + __FUNCTION__ + " (line " + S__LINE__ + ") in " + Utilities::Split(__FILE__, "/").back())
 #endif
 }
 

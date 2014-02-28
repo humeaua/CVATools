@@ -46,7 +46,7 @@ namespace Finance
             }
             else
             {
-                throw EXCEPTION("t is not positive");
+                throw EXCEPTION("t is negative");
             }
         }
         
@@ -88,12 +88,27 @@ namespace Finance
             
             //  Test if the pillars in the yield curve are equal
             const bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_, dTolerance);
-            REQUIREEXCEPTION(bPillarAreEqual, "Yield curve pillars are not the same. Should be the same for now");
             
-            for (std::size_t iPillar = 0 ; iPillar < sYieldCurve.dVariables_.size() ; ++ iPillar)
+            if (bPillarAreEqual)
             {
-                sResult.dVariables_.push_back(sYieldCurve.dVariables_.at(iPillar) + dVariables_.at(iPillar));
-                sResult.dValues_.push_back(sYieldCurve.dValues_.at(iPillar) + dValues_.at(iPillar));
+                for (std::size_t iPillar = 0 ; iPillar < sYieldCurve.dVariables_.size() ; ++ iPillar)
+                {
+                    sResult.dVariables_.push_back(sYieldCurve.dVariables_.at(iPillar) + dVariables_.at(iPillar));
+                    sResult.dValues_.push_back(sYieldCurve.dValues_.at(iPillar) + dValues_.at(iPillar));
+                }
+            }
+            else
+            {
+                sResult.dVariables_ = dVariables_;
+                for (std::size_t i = 0 ; i < sYieldCurve.dValues_.size() ; ++i)
+                {
+                    sResult.dVariables_.push_back(sYieldCurve.dVariables_.at(i));
+                }
+                std::unique(sResult.dVariables_.begin(), sResult.dVariables_.end());
+                for (std::size_t i = 0 ; i < sResult.dVariables_.size() ; ++i)
+                {
+                    sResult.dValues_.push_back(sYieldCurve(sResult.dVariables_.at(i)) + this->operator()(sResult.dVariables_.at(i)));
+                }
             }
             
             return sResult;
@@ -102,7 +117,6 @@ namespace Finance
         YieldCurve YieldCurve::operator=(double dValue)
         {
             //  Clear everything before filling anything
-            //eInterpolationType_ = Utilities::Interp::LIN;
             dValues_.clear();
             dVariables_.clear();
             for (std::size_t i = 0 ; i < 2 ; ++i)

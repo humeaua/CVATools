@@ -20,10 +20,10 @@ namespace Finance
         protected:
             double dK_;
             
+            virtual double pay2(double s1, double s2) const;
+            
         public:
             PayoffMargrabe(double dK);
-            
-            virtual double pay(double s1, double s2) const;
         };
     }
 }

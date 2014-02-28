@@ -20,12 +20,12 @@ namespace Finance
         class Digital : public Payoff
         {
         protected:
-            double dStrike_, dLeftSpread_, dRightSpread_;
+            double dStrike_;
             VanillaOptionType eOptionType_;
-        public:
-            Digital(double dStrike, double dLeftSpread, double dRightSpread, VanillaOptionType eOptionType);
             
-            double pay(double s1) const;
+            double pay1(double s1) const;
+        public:
+            Digital(double dStrike, VanillaOptionType eOptionType);
         };
     }
 }

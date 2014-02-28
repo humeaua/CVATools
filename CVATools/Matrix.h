@@ -101,6 +101,7 @@ namespace Utilities
         {
             m_rowsize = static_cast<int>(data.size());
             m_colsize = static_cast<int>(data.front().size());
+            m_data.resize(m_colsize * m_rowsize);
             for (std::size_t i = 0 ; i < m_rowsize; ++i)
             {
                 for (std::size_t j = 0 ; j < m_colsize; ++j)

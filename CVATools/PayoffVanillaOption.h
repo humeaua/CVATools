@@ -21,11 +21,11 @@ namespace Finance
         protected:
             double dStrike_;
             VanillaOptionType eOptionType_;
+            
+            virtual double pay1(double dS) const;
         public:
             PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType_);
             virtual ~PayoffVanillaOption();
-            
-            virtual double pay(double dS) const;
         };
     }
 }

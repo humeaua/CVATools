@@ -19,7 +19,7 @@ namespace Finance
             REQUIREEXCEPTION(dRightSpread_ >= 0.0, "Right spread has to be positive");
         }
         
-        double PutSpread::pay(double s1) const
+        double PutSpread::pay1(double s1) const
         {
             //  We buy one put of strike dStrike + dRightSpread and sell one put of strike dStrike - dLeftSpread
             return std::max(dStrike_ + dRightSpread_ - s1, 0.0) - std::max(dStrike_ - dLeftSpread_ - s1, 0.0);

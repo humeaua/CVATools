@@ -15,13 +15,13 @@ namespace Finance
 {
     namespace Payoff
     {
-        PayoffVanillaOption::PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType) : dStrike_(dStrike), eOptionType_(eOptionType)
+        PayoffVanillaOption::PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType) : dStrike_(dStrike), eOptionType_(eOptionType), Finance::Payoff::Payoff()
         {}
         
         PayoffVanillaOption::~PayoffVanillaOption()
         {}
         
-        double PayoffVanillaOption::pay(double dS) const
+        double PayoffVanillaOption::pay1(double dS) const
         {
             switch (eOptionType_)
             {

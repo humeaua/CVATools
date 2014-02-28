@@ -69,7 +69,8 @@ namespace Maths
         
         for (std::size_t iPath = 0 ; iPath < iNPaths_ ; ++iPath)
         {
-            dPayoff.at(iPath) = sPayoff.pay(dFinalUnderlying.at(iPath));
+            const std::vector<double> & S = std::vector<double>(1, dFinalUnderlying.at(iPath));
+            dPayoff.at(iPath) = sPayoff.pay(S);
         }
         
         std::vector<double> bla = LeastSquareRegression::ComputeRegCoefs(sRegressionData, dPayoff);

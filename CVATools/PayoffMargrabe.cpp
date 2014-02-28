@@ -16,7 +16,7 @@ namespace Finance
         PayoffMargrabe::PayoffMargrabe(double dK) : dK_(dK)
         {}
         
-        double PayoffMargrabe::pay(double s1, double s2) const
+        double PayoffMargrabe::pay2(double s1, double s2) const
         {
             return std::max(s1 - dK_ * s2, 0.0);
         }

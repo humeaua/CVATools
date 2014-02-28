@@ -9,14 +9,20 @@
 #ifndef CVATools_Payoff_h
 #define CVATools_Payoff_h
 
+#include "EuropeanPayoff.h"
+
 namespace Finance
 {
     namespace Payoff
     {
-        class Payoff
+        class Payoff : public EuropeanPayoff
         {
+        protected:
+            virtual double pay1(double s1) const = 0;
+            virtual double pay2(double s1, double s2) const;
         public:
-            virtual double pay(double s1) const = 0;
+            Payoff();
+            virtual ~Payoff();
         };
     }
 }

@@ -20,10 +20,10 @@ namespace Finance
         {
         protected:
             double dStrike_, dLeftSpread_, dRightSpread_;
+            
+            virtual double pay1(double s1) const;
         public:
             PutSpread(double dStrike, double dLeftSpread, double dRightSpread);
-            
-            virtual double pay(double s1) const;
         };
     }
 }

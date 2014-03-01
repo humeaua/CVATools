@@ -17,10 +17,10 @@ namespace Finance
         {}
 
         //  Computation of spot discount factor
-        double RateCurve::Spot(const Utilities::Date::MyDate &SpotDate, const Finance::Market::Market &Market) const
+        double RateCurve::Spot(const Utilities::Date::MyDate &SpotDate) const
         {
             //  Assuming ACT365FIXED day count convention for discount factors
-            double dt = SpotDate.Diff(Market.TodayDate());
+            double dt = SpotDate.Diff(DiscountCurve_.Today());
             return exp(-DiscountCurve_(dt) * dt);
         }
         

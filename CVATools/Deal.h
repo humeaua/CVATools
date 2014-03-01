@@ -25,7 +25,7 @@ namespace Finance
         public:
             Deal(const std::vector<Leg*> & Legs);
             
-            virtual double Price(const std::vector<Finance::Models::Model> & models) const;
+            virtual double Price(const std::vector<Finance::Models::Model> & models, const std::string &reportingCurrency) const;
         };
     }
 }

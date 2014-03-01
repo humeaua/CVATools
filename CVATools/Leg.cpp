@@ -12,6 +12,9 @@ namespace Finance
 {
     namespace Deal
     {
+        Leg::Leg()
+        {}
+        
         Leg::Leg(const Leg & Leg0)
         {
             *this = Leg0;

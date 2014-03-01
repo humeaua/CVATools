@@ -30,6 +30,7 @@ namespace Finance
         protected:
             //  Need for now two declaration of the methods depending on the signatures of the methods as I do not know yet how to handle the arguments
             virtual double Spot(const Utilities::Date::MyDate & SpotDate, const Finance::Market::Market & Market) const = 0;
+            virtual double Spot(const Utilities::Date::MyDate & SpotDate) const = 0;
             
             virtual double Forward(const Utilities::Date::MyDate & FixingDate,
                                    const Utilities::Date::MyDate & SettleDate,

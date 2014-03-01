@@ -22,7 +22,7 @@ namespace Finance
         private:
             Finance::Base::YieldCurve DiscountCurve_;
         protected:
-            virtual double Spot(const Utilities::Date::MyDate & SpotDate, const Finance::Market::Market & Market) const;
+            virtual double Spot(const Utilities::Date::MyDate & SpotDate, const Finance::Market::Market & Market) const = 0;
             
             virtual double Forward(const Utilities::Date::MyDate & FixingDate,
                                    const Utilities::Date::MyDate & SettleDate,
@@ -38,6 +38,8 @@ namespace Finance
                                    const ModelState & ModelState) const = 0;
         public:
             RateCurve(const Finance::Base::YieldCurve & DiscountCurve);
+            virtual double Spot(const Utilities::Date::MyDate & SpotDate) const;
+            
         };
     }
 }

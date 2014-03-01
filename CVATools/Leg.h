@@ -19,8 +19,9 @@ namespace Finance
         class Leg
         {
         public:
+            Leg();
             Leg(const Leg & Leg0);
-            virtual double Price(const Finance::Models::Model & model) const = 0;
+            virtual double Price(const Finance::Models::Model & model, const std::string & reportingCurrency) const = 0;
         };
     }
 }

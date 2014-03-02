@@ -1,0 +1,130 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{amsthm} % to enable the proofs
+\usepackage{graphicx} % to enable the graphics
+\usepackage{mathtools}
+
+\usepackage{bbm}
+
+\usepackage[hidelinks]{hyperref}
+
+% to be read by all users : how to number theorems and definitions : 
+% done by A. Humeau on 4/10/2012
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{notation}{Notation}[section]
+
+% end of environment addition
+
+\usepackage{geometry}
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+\usepackage[utf8]{inputenc}
+
+% to insert code in the report
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{white}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+%end of addition to insert code in the report
+
+\bibliographystyle{plain}
+
+\DeclareMathOperator*{\mysup}{sup}
+
+\begin{document}
+
+\title{Analytical formula for an Asian option}
+\author{Alexandre Humeau}
+\date{\today}
+\maketitle
+
+\section{Payoff}
+
+Let us consider an Asian european option (call or put). The payoff of such option in $T$ is 
+
+\begin{equation}
+	\left(\omega \left( \bar{S} - K\right)\right)^+
+\end{equation}
+
+\noindent where
+
+\begin{equation}
+	\bar{S} = \frac{1}{n} \sum_{i=1}^n S_{t_i}
+\end{equation}
+ 
+\noindent with $0 = t_0 < t_1 < t_2 < \dots < t_n \leq T$.
+
+\section{Model}
+
+Let us assume that the stock price $S$ follows a GBM under the risk neutral probability
+
+\begin{equation}
+	\frac{dS_t}{S_t} = rdt + \sigma dW_t
+\end{equation}
+
+\noindent Then
+
+\begin{equation}
+	\forall i \in [1,n], S_{t_i} = S_0 e^{(r - \frac{\sigma^2}{2})t_i + \sigma W_{t_i}}
+\end{equation}
+
+\subsection{Moment matching method}
+\subsubsection{Motivations}
+As we want to find a formula in the Black-Scholes world for the Asian option, let us try to fit a Black-Scholes lognormal underlying for $\bar{S}$.
+
+\begin{equation}
+	\frac{d\bar{S}_t}{\bar{S}_t} = \bar{\mu}dt + \bar{\sigma} dW_t
+\end{equation}
+
+\subsubsection{Calculation}
+
+\begin{equation}
+\begin{aligned}
+	\mathbb{E}\left[\bar{S}\right] &= S_0 e^{\bar{\mu} T}\\
+	&= \frac{1}{n} \sum_{i=1}^{n} S_0\mathbb{E}\left[S_{t_i}\right]\\
+	&= \frac{1}{n} \sum_{i=1}^{n} S_0 e^{r t_i}
+\end{aligned}
+\end{equation}
+
+\noindent Then 
+
+\begin{equation}	
+	\bar{\mu} = \frac{1}{T} \ln\left(\frac{1}{n} \sum_{i=1}^{n} e^{r t_i}\right)
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+	Var\left(\bar{S}\right) &= S_0^2 e^{2\bar{\mu}T}\left( e^{\bar{\sigma}^2 T} - 1\right)\\
+	&= \frac{1}{n} \left(\sum_{i=1}^{n} Var\left(S_{t_i}\right) + 2 \sum_{i < j = 1}^{n} Cov\left(S_{t_i}, S_{t_j}\right)\right)\\
+	&= \frac{1}{n} \left(\sum_{i=1}^{n} S_0 e^{\left(2r + \sigma^2\right) t_i}+ 2 \sum_{i < j = 1}^{n} Cov\left(S_{t_i}, S_{t_j}\right)\right)\\
+\end{aligned}
+\end{equation}
+
+\noindent where 
+
+\begin{equation}
+\begin{aligned}
+	Cov\left(S_{t_i}, S_{t_j}\right) &= \mathbb{E}\left[S_{t_i} S_{t_j}\right] - \mathbb{E}\left[S_{t_i} \right] \mathbb{E}\left[S_{t_j}\right]\\
+	&= \mathbb{E}\left[ S_{t_i} \mathbb{E}\left[S_{t_j}  \middle | S_{t_i} \right] \right]  - \mathbb{E}\left[S_{t_i} \right] \mathbb{E}\left[S_{t_j}\right]\\
+	&= \mathbb{E}\left[ S_{t_i}^2 \mathbb{E}\left[e^{\left(r - \frac{\sigma^2}{2}\right)\left(t_j - t_i\right) + \sigma \left(W_{t_j} - W_{t_i}\right)} \middle | S_{t_i} \right] \right]  - \mathbb{E}\left[S_{t_i} \right] \mathbb{E}\left[S_{t_j}\right]\\
+	&= e^{r\left(t_j - t_i\right)} \mathbb{E}\left[S_{t_i}^2\right] - S_0^2 e^{r\left(t_i + t_j\right)}\\
+	&= e^{r\left(t_j - t_i\right)} S_0^2 e^{\left(2r + \sigma^2\right)t_i} - S_0^2 e^{r\left(t_i + t_j\right)}\\
+	&= S_0^2 e^{r\left(t_i + t_j\right)} \left( e^{ \sigma^2 t_i }  - 1\right)
+\end{aligned}
+\end{equation}
+
+\end{document}

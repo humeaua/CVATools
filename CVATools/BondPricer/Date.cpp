@@ -439,6 +439,11 @@ namespace Utilities
             return out.str();
         }
         
+        long MyDate::GetDays1900() const
+        {
+            return GetDate(*this);
+        }
+        
         bool IsLeapYear(long lYear)
         {
             return ((lYear % 400 == 0) || ((lYear % 4 == 0) && (lYear % 100 != 0)));
@@ -456,7 +461,7 @@ namespace Utilities
                 int i;
                 for (i = 0 ; i < sDate.GetYear() - 1900 ; ++ i)
                 {
-                    lResult += IsLeapYear(i) ? 366 : 365;
+                    lResult += IsLeapYear(i + 1900) ? 366 : 365;
                 }
                 lResult += DaysAtBeginningOfEachMonth[sDate.GetMonth() - 1];
                 if (IsLeapYear(sDate.GetYear()) && sDate.GetMonth() > 2)

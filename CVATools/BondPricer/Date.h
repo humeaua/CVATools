@@ -75,7 +75,7 @@ namespace Utilities
             virtual void SetLocalDate();
             
             virtual std::tm Totm() const;
-
+            virtual long GetDays1900() const;
         };
         
         bool operator == (const MyDate&, const MyDate&); // comparison operators

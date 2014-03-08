@@ -10,7 +10,6 @@
 #define __CVATools__ModelState__
 
 #include <iostream>
-#include "Underlying.h"
 #include <vector>
 
 /*
@@ -27,7 +26,7 @@ namespace Finance
         class ModelState
         {
         private:
-            std::vector<Underlying> Underlyings;
+            std::vector<Underlying*> Underlyings;
         };
     }
 }

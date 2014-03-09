@@ -17,10 +17,8 @@ namespace Finance
 {
     namespace Underlyings
     {
-        class RateCurve : public Underlying
+        class RateCurve : public Underlying, public Finance::Base::YieldCurve
         {
-        private:
-            Finance::Base::YieldCurve DiscountCurve_;
         protected:
             virtual double Spot(const Utilities::Date::MyDate & SpotDate, const Finance::Market::Market & Market) const = 0;
             

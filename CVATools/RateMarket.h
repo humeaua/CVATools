@@ -17,14 +17,13 @@ namespace Finance
 {
     namespace Market
     {
-        class RateMarket : public Market
+        class RateMarket : public Market, public Finance::Base::YieldCurve
         {
         protected:
-            Finance::Base::YieldCurve sDiscountCurve_;
-            
             virtual void Load(const std::string & cMarketName);
         public:
             RateMarket(const std::string & cMarketName);
+            RateMarket(const Finance::Base::YieldCurve & yc);
         };
     }
 }

@@ -179,5 +179,71 @@ namespace Finance
                 return 1.0 / (strike * volatility * sqrt(maturity)) * exp(-0.5 * l_d1 * l_d1) * ONE_OVER_SQUARE_ROOT_OF_2_PI;
             }
         }
+        
+        void Analytic::CheckPastFixings(const std::vector<std::pair<double, double> > &pastFixings) const
+        {
+            for (std::vector<std::pair<double, double> >::const_iterator pastFixing = pastFixings.begin() ; pastFixing != pastFixings.end() ; ++pastFixing)
+            {
+                if (pastFixing->first > 0.0)
+                {
+                    throw EXCEPTION("Time for past fixing not negative");
+                }
+                if (pastFixing->second <= 0.0)
+                {
+                    throw EXCEPTION("Past fixing is negative");
+                }
+            }
+        }
+        
+        double Analytic::AsianOption(double spot,
+                                     double strike,
+                                     Finance::Payoff::VanillaOptionType optionType,
+                                     double volatility,
+                                     double maturity,
+                                     double rate,
+                                     const std::vector<double> & futureObservationTimes,
+                                     const std::vector<std::pair<double, double> > & pastFixings) const
+        {
+            //  Check if final observation times is before maturity
+            if (futureObservationTimes.back() > maturity)
+            {
+                throw EXCEPTION("Final observation times is after maturity");
+            }
+            //  Moment matching method to get the price
+            const std::size_t totalObservationsTimes = futureObservationTimes.size() + pastFixings.size();
+            
+            //  Compute the forward
+            double forward = 0.0;
+            for (std::size_t i = 0 ; i < pastFixings.size() ; ++i)
+            {
+                forward += pastFixings.at(i).second;
+            }
+            for (std::size_t i = 0 ; i < futureObservationTimes.size() ; ++i)
+            {
+                forward += spot * exp(rate * futureObservationTimes.at(i));
+            }
+            forward /= totalObservationsTimes;
+            
+            //  compute the variance
+            double variance = 0;
+            for (std::size_t i = 0 ; i < futureObservationTimes.size() ; ++i)
+            {
+                variance += exp((2.0 * rate + volatility * volatility) * futureObservationTimes.at(i));
+            }
+            for (std::size_t i = 0 ; i < futureObservationTimes.size() ; ++i)
+            {
+                for (std::size_t j = i + 1 ; i < futureObservationTimes.size() ; ++j)
+                {
+                    double innerfactor = 0.;
+                    innerfactor += (rate - 0.5 * volatility * volatility) * (futureObservationTimes.at(i) + futureObservationTimes.at(j));
+                    innerfactor += 0.5 * volatility * volatility * futureObservationTimes.at(i) * (futureObservationTimes.at(i) + futureObservationTimes.at(j)) * (futureObservationTimes.at(i) + futureObservationTimes.at(j)) / futureObservationTimes.at(j) / futureObservationTimes.at(j);
+                    variance += 2.0 * exp(innerfactor);
+                }
+            }
+            variance *= spot * spot / totalObservationsTimes / totalObservationsTimes;
+            
+            const double volatilityaverage = log (variance / forward / forward) / maturity;
+            return VanillaPrice(forward, strike, sqrt(volatilityaverage), maturity, rate, optionType);
+        }
     }
 }

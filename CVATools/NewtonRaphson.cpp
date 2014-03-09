@@ -23,7 +23,7 @@ namespace Maths
     
     double NewtonRaphson1D::algo_root_finder(double dInitialGuess) const
     {
-        //  Newton Raphson method to find the yield that correspond to the price of the bond
+        //  Newton Raphson method to find the zero of a function : the function must not have a double root 
         double dx = dInitialGuess, dfdx;
         std::size_t iNIter = 0;
         
@@ -43,7 +43,7 @@ namespace Maths
             df0 = f(dx);
             
             //  Update number of iterations
-            iNIter++;
+            ++iNIter;
         }
         
         if (iNIter >= iNIterMax_)

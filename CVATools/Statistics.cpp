@@ -136,7 +136,6 @@ namespace Maths
     {
         size_t size = v.size();
         double mean = Mean(v);
-        std::vector<double> diff(size);
         if (size <= 1)
         {
             return 0.0;
@@ -160,7 +159,7 @@ namespace Maths
         dMean /= n;
         dVariance /= n;
         dVariance -= dMean * dMean;
-        return n == 0 || n== 1 ? 0.0 : dVariance;
+        return n <= 1 ? 0.0 : dVariance;
     }
     
     double Statistics::StandardDeviation(const std::vector<double> &dData)

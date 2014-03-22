@@ -1,0 +1,109 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{amsthm} % to enable the proofs
+\usepackage{graphicx} % to enable the graphics
+\usepackage{mathtools}
+
+\usepackage{bbm}
+
+\usepackage[hidelinks]{hyperref}
+
+% to be read by all users : how to number theorems and definitions : 
+% done by A. Humeau on 4/10/2012
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{notation}{Notation}[section]
+
+% end of environment addition
+
+\usepackage{geometry}
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+\usepackage[utf8]{inputenc}
+
+% to insert code in the report
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{white}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+%end of addition to insert code in the report
+
+\bibliographystyle{plain}
+
+\DeclareMathOperator*{\mysup}{sup}
+
+\begin{document}
+
+\title{Stochastic Local Volatility}
+\author{Alexandre Humeau}
+\date{\today}
+\maketitle
+
+\section{The Model}
+\subsection{General description}
+Let $T$ be a finite time horizon (the final maturity of the deal we want to price, for example)
+Let $S$ be an asset of drift $\mu_t$ under the domestic risk-neutral probability measure. We assume the following dynamics under $\mathbb{Q}_d$
+
+\begin{equation}
+	\frac{dS_t}{S_t} = \mu_t dt + \sigma(S_t,t) e^{X_t} dW_t
+\end{equation}
+
+\noindent where $(S,t) \mapsto \sigma(S,t)$ is the local volatility function (deterministic function of spot and time, calibrated to the vanilla option market at time $0$. We will develop later a methodology to calibrate that function $\sigma$. $X$ is an Ornstein-Ulhenbeck process so that : 
+
+\begin{equation}
+	\forall t \in [0,T], \mathbb{E}\left[e^{X_t}\right] = 1
+\end{equation}
+
+\noindent The goal of the stochastic volatility would be to calibrate to the forward smile (to be consistent with the 
+
+\subsection{Stochastic volatility part}
+Let us assume that $X$ follows the following dynamics under the domestic risk-neutral probability measure
+
+\begin{equation}
+\begin{aligned}
+	dX_t &= (\theta(t) - \lambda X_t) dt + \sigma_X dW_t^X\\
+	X_0 &= 1
+\end{aligned}
+\end{equation}
+
+\noindent The coefficients are kept constant for now for simplicity.
+
+\noindent We have 
+
+\begin{equation}
+	X_t = e^{-\lambda t} + \int_{0}^t \theta(s) e^{-\lambda (t-s)} ds + \int_0^t \sigma_X e^{-\lambda(t-s)} dW_s^X
+\end{equation}
+
+\noindent Then,
+
+\begin{equation}
+\begin{aligned}
+	\exp\left(e^{-\lambda t} + \int_{0}^t \theta(s) e^{-\lambda (t-s)} ds + \frac{1}{2}\int_0^t \sigma_X^2 e^{-2\lambda(t-s)} ds\right) &= 1\\
+	e^{-\lambda t} + \int_{0}^t \theta(s) e^{-\lambda (t-s)} ds + \frac{1}{2}\int_0^t \sigma_X^2 e^{-2\lambda(t-s)} ds &= 0
+\end{aligned}
+\end{equation}
+
+Setting $f(t) = \theta(t) e^{\lambda t}$ it yields
+
+\begin{equation}
+\begin{aligned}
+	&a(t) \int_0^t f(s) ds + f(t) = b(t)\\
+	&a(t)  = \lambda e^{-\lambda t}\\
+	&b(t) = \lambda e^{-\lambda t} - \frac{\sigma_X^2}{2} e^{-2\lambda t}
+\end{aligned}
+\end{equation}
+
+\end{document}

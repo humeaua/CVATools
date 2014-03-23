@@ -89,21 +89,99 @@ Let us assume that $X$ follows the following dynamics under the domestic risk-ne
 
 \noindent Then,
 
-\begin{equation}
+\begin{equation*}
 \begin{aligned}
 	\exp\left(e^{-\lambda t} + \int_{0}^t \theta(s) e^{-\lambda (t-s)} ds + \frac{1}{2}\int_0^t \sigma_X^2 e^{-2\lambda(t-s)} ds\right) &= 1\\
-	e^{-\lambda t} + \int_{0}^t \theta(s) e^{-\lambda (t-s)} ds + \frac{1}{2}\int_0^t \sigma_X^2 e^{-2\lambda(t-s)} ds &= 0
+	e^{-\lambda t} + \int_{0}^t \theta(s) e^{-\lambda (t-s)} ds + \frac{1}{2}\int_0^t \sigma_X^2 e^{-2\lambda(t-s)} ds &= 0\\
+	e^{-\lambda t} + \int_{0}^t \theta(s) e^{\lambda s} ds e^{-\lambda t} + \frac{1}{2}\int_0^t \sigma_X^2 e^{-2\lambda(t-s)} ds &= 0\\
+	-\lambda e^{-\lambda t} - \int_{0}^t \theta(s) e^{\lambda s} ds \lambda e^{-\lambda t} + \sigma_X^2 e^{-2\lambda t} + \theta(t) &= 0
 \end{aligned}
-\end{equation}
+\end{equation*}
 
 Setting $f(t) = \theta(t) e^{\lambda t}$ it yields
 
 \begin{equation}
 \begin{aligned}
-	&a(t) \int_0^t f(s) ds + f(t) = b(t)\\
-	&a(t)  = \lambda e^{-\lambda t}\\
-	&b(t) = \lambda e^{-\lambda t} - \frac{\sigma_X^2}{2} e^{-2\lambda t}
+	&\lambda \int_0^t f(s) ds + f(t) = c(t)\\
+	&c(t) = \lambda - \frac{\sigma_X^2}{2} e^{-\lambda t}
 \end{aligned}
+\end{equation}
+
+\noindent Then $f$ satisfies the following ODE
+
+\begin{equation}
+\begin{aligned}
+	& f'(t) + \lambda f(t) = -\frac{\sigma_X^2 \lambda}{2} e^{-\lambda t}\\
+	&f(0) = \lambda - \frac{\sigma_X^2}{2}
+\end{aligned}
+\end{equation}
+
+\noindent Then
+
+\begin{equation}
+\begin{aligned}
+	f(t) &= Ce^{-\lambda t} - \frac{\sigma_X^2 \lambda}{2}t e^{-\lambda t}\\
+	&= \left(\lambda - \frac{\sigma_X^2}{2}\right) e^{-\lambda t} - \frac{\sigma_X^2 \lambda}{2}t e^{-\lambda t}\\
+	f(t) &= \lambda e^{-\lambda t} - \frac{\sigma_X^2}{2} (1 + \lambda t) e^{-\lambda t}
+\end{aligned}
+\end{equation}
+
+\noindent Then
+
+\begin{equation}
+	\theta(t) = \lambda e^{-2\lambda t} -\frac{\sigma_X^2}{2} (1 + \lambda t) e^{-2\lambda t}
+\end{equation}
+
+The stochastic volatility $X$ can be computed quite easily and be simulated exactly
+
+\begin{equation}
+	X_t \sim \mathcal{N}\left(e^{-\lambda t} + \int_0^t \theta(s) e^{-\lambda (t-s)} ds, \sigma^2 \frac{1 - e^{-2\lambda t}}{2\lambda}\right)
+\end{equation}
+
+\subsection{Calibration of the local volatility}
+
+\begin{theorem}[Markovian Projection]
+Put here the theorem of the markovian projection of general volatility models into a local volatility
+\end{theorem}
+
+\noindent In our case, we have
+
+\begin{equation}
+\begin{aligned}
+	\sigma_D^2(x, t) &= \mathbb{E} \left[ e^{2X_t} \sigma^2(S_t, t) \middle| S_t = S\right]\\
+	&= \mathbb{E}\left[e^{2X_t} \middle| S_t = S \right] \sigma^2(S,t)
+\end{aligned}
+\end{equation}
+
+\noindent Let us introduce the Green function $G(S_0, X_0, t_0 ; S, X, t)$.  Let us set $b(X) = e^{X}$. $G$ satisfies
+
+\begin{equation}
+	\frac{\partial G}{\partial T} 
+- \frac{1}{2} \frac{\partial^2}{\partial S^2} \left(\sigma^2 b^2 S^2 G\right) 
+- \frac{\partial^2}{\partial X^2} \left( \sigma_X^2 G\right) 
+- \frac{\partial^2}{\partial S \partial X} \left(\rho b \sigma S \sigma_X G \right) 
++ \frac{\partial }{\partial X}\left( (\theta - \lambda X) G\right) 
++ \frac{\partial }{\partial S}(\mu S G)
+ = 0
+\end{equation}
+
+\noindent Let us assume (in relation of the previous section), that 
+\begin{enumerate}
+	\item $\sigma_X$, $\theta$ and $\lambda$ are not functions of $X$
+	\item $\mu$ is not a function of S
+	\item $\rho$ is neither a function of $S$ nor $X$
+\end{enumerate}
+
+\noindent The calibration PDE degenerates into 
+
+\begin{equation}
+	\frac{\partial G}{\partial T} 
+- \frac{1}{2} e^{2X }\frac{\partial^2}{\partial S^2} \left(\sigma^2 S^2 G\right) 
+- \sigma_X^2 \frac{\partial^2}{\partial X^2} \left( G\right) 
+- \rho \frac{\partial^2}{\partial S \partial X} \left(b \sigma S \sigma_X G \right) 
++ \left(\theta - \lambda X\right) \frac{\partial }{\partial X}\left( G\right) 
++ \mu \frac{\partial }{\partial S}(S G)
+ = 0
 \end{equation}
 
 \end{document}

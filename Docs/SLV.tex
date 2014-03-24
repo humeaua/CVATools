@@ -153,6 +153,7 @@ Put here the theorem of the markovian projection of general volatility models in
 \end{aligned}
 \end{equation}
 
+\subsubsection{Calibration via a PDE}
 \noindent Let us introduce the Green function $G(S_0, X_0, t_0 ; S, X, t)$.  Let us set $b(X) = e^{X}$. $G$ satisfies
 
 \begin{equation}
@@ -183,5 +184,61 @@ Put here the theorem of the markovian projection of general volatility models in
 + \mu \frac{\partial }{\partial S}(S G)
  = 0
 \end{equation}
+
+\noindent Let us denote by $Q$ the density of $S$
+
+\begin{equation}
+	Q(S,t) = \int_\mathbb{R} G(S,X,t) dX
+\end{equation}
+
+\noindent Then
+
+\begin{equation}
+	\frac{\partial Q}{\partial t} - \frac{1}{2} \frac{\partial^2}{\partial S^2} \left(\sigma^2 S^2 \int_\mathbb{R} e^{2X} G(S,X,t) dX \right) + \mu \frac{\partial }{\partial S}(S G) = 0
+\end{equation}
+
+\noindent Thus,
+
+\begin{equation}
+	\frac{\partial Q}{\partial t} - \frac{1}{2} \frac{\partial^2}{\partial S^2} \left(\sigma^2  \frac{\int_\mathbb{R} e^{2X} G(S,X,t) dX}{\int_\mathbb{R} G(X,S,t) dX}S^2Q\right) + \mu \frac{\partial }{\partial S}(S G) = 0
+\end{equation}
+
+\noindent We recognize the Dupire equation which defines a local volatility function $\sigma_D(S,t)$
+
+\begin{equation}
+	\sigma_D^2(S,t) = \sigma^2(S,t) \frac{\int_\mathbb{R} e^{2X} G(S,X,t) dX}{\int_\mathbb{R} G(X,S,t) dX}
+\end{equation}
+
+\noindent which permits to re-write the calibration PDE
+
+\begin{equation}
+\begin{aligned}
+\label{eq:SLVCalibrationPDE}
+	&\frac{\partial G}{\partial T}
+	- \frac{1}{2} \frac{\partial^2}{\partial S^2} \left(S^2 e^{2X} \sigma_D^2 \frac{\int_\mathbb{R} G(S,X,t) dX}{\int_\mathbb{R} e^{2X} G(S,X,t) dX}\right)
++ \mu \frac{\partial}{\partial S}\left( S G\right)
+- \frac{\sigma_X^2}{2} \frac{\partial^2 G}{\partial X^2}
++ \frac{\partial }{\partial X} \left((\theta - \lambda X) G\right)\\
+&- \rho \sigma_X \frac{\partial^2}{\partial S \partial X} \left(e^X S \sigma_D \sqrt{\frac{\int_\mathbb{R} G(S,X,t) dX}{\int_\mathbb{R} e^{2X} G(S,X,t) dX}} G\right) = 0
+\end{aligned}
+\end{equation}
+
+The only SLV models tractables with a PDE calibration are then mono-asset SLV models. We will develop in the following another method which enable us to calibrate via Monte-Carlo SLV Models. However, a Monte-Carlo will have more noise than a PDE calibration.
+
+\subsubsection{Calibration by Monte-Carlo}
+In this section, we will develop a method to calibrate the SLV models in a higher dimension problem using a Monte-Carlo simulation.
+
+\section{Solving the SLV calibration PDE}
+In this section we will develop numerical methods to solve equation (\ref{eq:SLVCalibrationPDE})
+
+\begin{thebibliography}{9}
+
+\bibitem{lamport94}
+  Frédéric Abergel, Rémi Tachet,
+  \emph{A Non-linear integro-differential equation from Mathematical Finance}.
+  AIMS Journal,
+  Version 1, 8 sept 2011
+
+\end{thebibliography}
 
 \end{document}

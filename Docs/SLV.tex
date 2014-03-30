@@ -44,6 +44,7 @@
 \bibliographystyle{plain}
 
 \DeclareMathOperator*{\mysup}{sup}
+\DeclareMathOperator*{\argmin}{argmin}
 
 \begin{document}
 
@@ -226,18 +227,96 @@ Put here the theorem of the markovian projection of general volatility models in
 The only SLV models tractables with a PDE calibration are then mono-asset SLV models. We will develop in the following another method which enable us to calibrate via Monte-Carlo SLV Models. However, a Monte-Carlo will have more noise than a PDE calibration.
 
 \subsubsection{Calibration by Monte-Carlo}
-In this section, we will develop a method to calibrate the SLV models in a higher dimension problem using a Monte-Carlo simulation.
+In this section, we will develop a method to calibrate the SLV models in a higher dimension problem using a Monte-Carlo simulation.\\
+
+\noindent Let us re-write the Dupire equation associated with the SLV model we just described
+
+\begin{equation}
+\begin{aligned}
+	&\frac{\partial C}{\partial T} + P_d(0,T) \mathbb{E}^{\mathbb{Q}_T} \left[ \left(K r_d(T) - S_T r_f(T)\right) \textbf{1}_{\{S_T > K\}}\right] - \frac{1}{2} \sigma_D^2(K,T) K^2 \frac{\partial^2 C}{\partial K^2} = 0\\
+	&\frac{\partial C}{\partial T} + P_d(0,T) \mathbb{E}^{\mathbb{Q}_T} \left[ \left(K r_d(T) - S_T r_f(T)\right) \textbf{1}_{\{S_T > K\}}\right] - \frac{1}{2} \sigma^2(K,T) \mathbb{E}\left[e^{2X_T}\middle| S_T=K\right] K^2 \frac{\partial^2 C}{\partial K^2} = 0\\
+\end{aligned}
+\end{equation}
+
+\noindent To write the calibration equation, we are left with, the calculation of the following integral
+
+\begin{equation}
+	\mathbb{E}\left[e^{2X_T}\middle| S_T=K\right] = \frac{\mathbb{E}\left[e^{2X_T} \textbf{1}_{S_T=K}\right]}{\mathbb{P}(S_T = K)}
+\end{equation}
+
+\noindent Two Monte-Carlo method can then be used for the computation of this conditional expectation
+
+\begin{enumerate}
+	\item Estimation of the integral via a full Monte-Carlo simulation of $(S_T,X_T)$
+	\item Approximation of the conditional expectation via a Least-Square approach using well-choosen polynomial functions
+\end{enumerate}
+
+\paragraph{Estimation via Least-Squares}
+As we want to compute a $S_T$-measurable integral, we can approximate
+
+\begin{equation}
+	\mathbb{E}\left[e^{2X_T}\middle| S_T \right] \approx \sum_{m=1}^{M} \beta_m \zeta_m\left(S_T\right)
+\end{equation}
+
+\noindent where the coefficients $(\beta_1, \dots, \beta_M)$ are found by a least-square approach. Let us assume we have $N$ realisations of the random variables $(S_T,X_T)$ denoted by $\left((S_T^1,X_T^1),\dots, (S_T^N,X_T^N)\right)$
+
+\noindent Let us write the minimization problem associated with Least-Square in our case. Let us set $\beta = \left(\beta_1, \dots, \beta_M\right)$
+
+\begin{equation}
+	\hat{\beta} = \argmin_{\beta \in \mathbb{R}^M}
+\left\{\mathbb{E}\left[\left(\mathbb{E}\left[e^{2X_T} \middle| S_T\right] - \sum_{m=1}^M \beta_m \zeta_m\left(S_T\right)\right)^2\right]\right\}
+\end{equation}
+
+\noindent Denoting by $M_{\zeta \zeta}$ and $M_{\zeta X}$ the following quantities, according to \cite{Humeau2013}
+
+\begin{equation}
+\begin{aligned}
+	(M_{\zeta \zeta})_{r,s} &= \mathbb{E}\left[\zeta_r(S_T)\zeta_s(S_T)\right]\\
+	(M_{\zeta X})_r &= \mathbb{E}\left[\zeta_r(S_T)e^{2X_T}\right]
+\end{aligned}
+\end{equation}
+
+\noindent we have the following estimation for the "regression coefficients" $\beta$
+
+\begin{equation}	
+	\beta = (M_{\zeta \zeta})^{-1} M_{\zeta X}
+\end{equation}
+
+\noindent Those quantities can be estimated using the Monte-Carlo paths
+
+\begin{equation}
+\begin{aligned}
+	(\hat{M}_{\zeta \zeta})_{r,s} &= \frac{1}{N} \sum_{n=1}^N \zeta_r(S_T^n)\zeta_s(S_T^n)\\
+	(\hat{M}_{\zeta X})_r &= \frac{1}{N} \sum_{n=1}^N \zeta_r(S_T^n)e^{2X_T^n}
+\end{aligned}
+\end{equation}
+
+\noindent However, those estimations can be high-biased because the same paths are used to compute the regression coefficients are used to the conditional expectation.
+
+\paragraph{Estimation via Monte-Carlo}
 
 \section{Solving the SLV calibration PDE}
 In this section we will develop numerical methods to solve equation (\ref{eq:SLVCalibrationPDE})
 
 \begin{thebibliography}{9}
 
-\bibitem{lamport94}
+\bibitem{AbergelTachet2011}
   Frédéric Abergel, Rémi Tachet,
-  \emph{A Non-linear integro-differential equation from Mathematical Finance}.
+  \emph{A Non-linear integro-differential equation from Mathematical Finance},
   AIMS Journal,
-  Version 1, 8 sept 2011
+  Version 1, 8th Sept. 2011
+
+\bibitem{Humeau2013}
+ Alexandre Humeau,
+ \emph{Credit Valuation Adjustment},
+ Master's thesis Ecole Centrale Paris
+ Version 2, 
+ 1st November 2013
+
+\bibitem{VanDerStoepGrzelakOosterlee2013}
+ Anthonie W. Van Der Stoep, Lech A. Grzelak, Cornelis W. Oosterlee,
+ \emph{The Heston Stochastic-Local volatility Model : Efficient Monte-Carlo simulation},
+ Version 1, 11th June 2013
 
 \end{thebibliography}
 

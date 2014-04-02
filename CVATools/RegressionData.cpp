@@ -15,9 +15,7 @@ namespace Utilities
     {}
     
     RegressionData::RegressionData(std::size_t iNObservations, std::size_t iNVars) : Matrix<double>(iNObservations, iNVars)
-    {
-        m_data.resize(iNObservations * iNVars, 0.0);
-    }
+    {}
     
     RegressionData::RegressionData(const std::vector<double> & dData) : Matrix<double>(dData.size(), (std::size_t)1)
     {

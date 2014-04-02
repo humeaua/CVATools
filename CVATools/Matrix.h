@@ -18,165 +18,231 @@ namespace Utilities
     class Matrix
     {
     public:
-        Matrix(int N, int M)
-        {
-            m_rowsize = N;
-            m_colsize = M;
-            m_data.resize(m_rowsize*m_colsize, T());
-        }
-        
-        Matrix(int N, int M, T& value)
-        {
-            m_rowsize = N;
-            m_colsize = M;
-            m_data.resize(m_rowsize*m_colsize, value);
-        }
-        
-        Matrix(std::size_t N, std::size_t M)
-        {
-            m_rowsize = static_cast<int>(N);
-            m_colsize = static_cast<int>(M);
-            m_data.resize(m_rowsize*m_colsize, T());
-        }
-        
-        Matrix(std::size_t N, std::size_t M,T& value)
-        {
-            m_rowsize = static_cast<int>(N);
-            m_colsize = static_cast<int>(M);
-            m_data.resize(m_rowsize*m_colsize, value);
-        }
-        
-        Matrix(std::size_t N, bool bIsIdentity)
-        {
-            m_rowsize = static_cast<int>(N);
-            m_colsize = static_cast<int>(N);
-            m_data.resize(m_rowsize*m_colsize, T());
-            if (bIsIdentity)
-            {
-                for (std::size_t i = 0 ; i < N ; ++i)
-                {
-                    (*this)(i,i) = 1.0;
-                }
-            }
-        }
-        
-        Matrix(int N, bool bIsIdentity)
-        {
-            m_rowsize = N;
-            m_colsize = N;
-            m_data.resize(m_rowsize*m_colsize, T());
-            if (bIsIdentity)
-            {
-                for (std::size_t i = 0 ; i < N ; ++i)
-                {
-                    (*this)(i,i) = 1.0;
-                }
-            }
-        }
-        
-        Matrix(const Matrix& m)
-        {
-            m_rowsize = m.m_rowsize;
-            m_colsize = m.m_colsize;
-            m_data.resize(m_rowsize*m_colsize);
-            m_data = m.m_data;
-        }
+        Matrix(std::size_t N, std::size_t M);
+        Matrix(std::size_t N, std::size_t M, T& value);
+        Matrix(std::size_t N, bool bIsIdentity);
+        Matrix(int N, bool bIsIdentity);
+        Matrix(const Matrix& m);
         
         template <size_t M>
-        Matrix(T dData[][M], int N)
-        {
-            m_rowsize = N;
-            m_colsize = M;
-            m_data.resize(m_rowsize*m_colsize);
-            for (std::size_t i = 0 ; i < m_rowsize; ++i)
-            {
-                for (std::size_t j = 0 ; j < m_colsize; ++j)
-                {
-                    (*this)(i,j) = dData[i][j];
-                }
-            }
-        }
+        Matrix(T dData[][M], int N);
         
-        Matrix(const std::vector<std::vector<T> > & data)
-        {
-            m_rowsize = static_cast<int>(data.size());
-            m_colsize = static_cast<int>(data.front().size());
-            m_data.resize(m_colsize * m_rowsize);
-            for (std::size_t i = 0 ; i < m_rowsize; ++i)
-            {
-                for (std::size_t j = 0 ; j < m_colsize; ++j)
-                {
-                    (*this)(i,j) = data[i][j];
-                }
-            }
-        }
+        Matrix(const std::vector<std::vector<T> > & data);
         
-        virtual void Reallocate(int N, int M)
-        {
-            m_data.clear();
-            m_rowsize = N;
-            m_colsize = M;
-            m_data.resize(m_rowsize * m_colsize, T());
-        }
+        virtual void Reallocate(std::size_t N, std::size_t M);
         
-        virtual void Reallocate(std::size_t N, std::size_t M)
-        {
-            m_data.clear();
-            m_rowsize = static_cast<int>(N);
-            m_colsize = static_cast<int>(M);
-            m_data.resize(m_rowsize * m_colsize, T());
-        }
+        virtual const T& operator ()(std::size_t row_index, std::size_t column_index) const;
+        virtual T& operator ()(std::size_t row_index, std::size_t column_index);
         
-        virtual T& operator ()(int i, int j)
-        {
-            return m_data.at(i + m_rowsize*j);
-        }
+        virtual size_t getrows() const;
+        virtual size_t getcols() const;
+        std::ostream & print(std::ostream & os);
         
-        virtual T& operator ()(int i, int j) const
-        {
-            return (T&)m_data.at(i + m_rowsize*j);
-        }
+        class row;
+        row operator[](size_t index);
         
-        virtual T& operator ()(std::size_t i, std::size_t j)
-        {
-            return m_data.at(i + m_rowsize*j);
-        }
+        virtual const std::vector<T> & data() const;
         
-        virtual T& operator ()(std::size_t i, std::size_t j) const
-        {
-            return (T&)m_data.at(i + m_rowsize*j);
-        }
-                          
-        virtual int getrows() const
-        {
-            return m_rowsize;
-        }
-        
-        virtual int getcols() const
-        {
-            return m_colsize;
-        }
-        
-        void print(std::ostream & os)
-        {
-            for (int i=0; i<m_rowsize; i++)
-            {
-                for (int j=0; j<m_colsize; j++)
-                {
-                    os << (*this)(i,j) << '\t';
-                }
-                os << std::endl;
-            }
-        }
-        
-    protected:
-        int m_rowsize;
-        int m_colsize;
+    private:
+        size_t m_rowsize;
+        size_t m_colsize;
         std::vector<T> m_data;
+        
+        void CheckIndexes(size_t row_index, size_t col_index) const;
     };
     
+    template<typename T>
+    class Matrix<T>::row
+    {
+    public:
+        row(double * data, size_t colsize);
+        T & operator[](size_t column_index);
+    private:
+        double * m_data;
+        size_t m_colsize;
+    };
     
+    template<typename T>
+    Matrix<T>::Matrix(std::size_t N, std::size_t M)
+    {
+        static T init;
+        m_rowsize = static_cast<int>(N);
+        m_colsize = static_cast<int>(M);
+        m_data.resize(m_rowsize*m_colsize, init);
+    }
     
+    template<typename T>
+    Matrix<T>::Matrix(std::size_t N, std::size_t M,T& value)
+    {
+        m_rowsize = static_cast<int>(N);
+        m_colsize = static_cast<int>(M);
+        m_data.resize(m_rowsize*m_colsize, value);
+    }
+    
+    template<typename T>
+    Matrix<T>::Matrix(std::size_t N, bool bIsIdentity)
+    {
+        m_rowsize = static_cast<int>(N);
+        m_colsize = static_cast<int>(N);
+        m_data.resize(m_rowsize*m_colsize, T());
+        if (bIsIdentity)
+        {
+            for (std::size_t i = 0 ; i < N ; ++i)
+            {
+                (*this)(i,i) = 1.0;
+            }
+        }
+    }
+    
+    template<typename T>
+    Matrix<T>::Matrix(int N, bool bIsIdentity)
+    {
+        m_rowsize = N;
+        m_colsize = N;
+        m_data.resize(m_rowsize*m_colsize, T());
+        if (bIsIdentity)
+        {
+            for (std::size_t i = 0 ; i < N ; ++i)
+            {
+                (*this)(i,i) = 1.0;
+            }
+        }
+    }
+    
+    template<typename T>
+    Matrix<T>::Matrix(const Matrix& m)
+    {
+        m_rowsize = m.m_rowsize;
+        m_colsize = m.m_colsize;
+        m_data.resize(m_rowsize*m_colsize);
+        m_data = m.m_data;
+    }
+    
+    template<typename T>
+    template<size_t M>
+    Matrix<T>::Matrix(T dData[][M], int N)
+    {
+        m_rowsize = N;
+        m_colsize = M;
+        m_data.resize(m_rowsize*m_colsize);
+        for (std::size_t i = 0 ; i < m_rowsize; ++i)
+        {
+            for (std::size_t j = 0 ; j < m_colsize; ++j)
+            {
+                (*this)(i,j) = dData[i][j];
+            }
+        }
+    }
+    
+    template<typename T>
+    Matrix<T>::Matrix(const std::vector<std::vector<T> > & data)
+    {
+        m_rowsize = static_cast<int>(data.size());
+        m_colsize = static_cast<int>(data.front().size());
+        m_data.resize(m_colsize * m_rowsize);
+        for (std::size_t i = 0 ; i < m_rowsize; ++i)
+        {
+            for (std::size_t j = 0 ; j < m_colsize; ++j)
+            {
+                (*this)(i,j) = data[i][j];
+            }
+        }
+    }
+    
+    template<typename T>
+    void Matrix<T>::Reallocate(std::size_t N, std::size_t M)
+    {
+        m_data.clear();
+        m_rowsize = static_cast<int>(N);
+        m_colsize = static_cast<int>(M);
+        m_data.resize(m_rowsize * m_colsize, T());
+    }
+    
+    template<typename T>
+    void Matrix<T>::CheckIndexes(size_t row_index, size_t column_index) const
+    {
+        if (static_cast<int>(column_index) < 0)
+        {
+            throw EXCEPTION("Index is negative");
+        }
+        if (column_index > m_colsize)
+        {
+            throw EXCEPTION("column index out of range");
+        }
+        if (static_cast<int>(row_index) < 0)
+        {
+            throw EXCEPTION("Index is negative");
+        }
+        if (row_index > m_rowsize)
+        {
+            throw EXCEPTION("column index out of range");
+        }
+    }
+    
+    template<typename T>
+    T& Matrix<T>::operator ()(std::size_t row_index, std::size_t column_index)
+    {
+        CheckIndexes(row_index, column_index);
+        return m_data.at(row_index + m_rowsize * column_index);
+    }
+    
+    template<typename T>
+    const T& Matrix<T>::operator ()(std::size_t row_index, std::size_t column_index) const
+    {
+        CheckIndexes(row_index, column_index);
+        return m_data.at(row_index + m_rowsize * column_index);
+    }
+    
+    template<typename T>
+    size_t Matrix<T>::getrows() const
+    {
+        return m_rowsize;
+    }
+    
+    template<typename T>
+    size_t Matrix<T>::getcols() const
+    {
+        return m_colsize;
+    }
+    
+    template<typename T>
+    std::ostream & Matrix<T>::print(std::ostream & os)
+    {
+        for (int i=0; i<m_rowsize; i++)
+        {
+            for (int j=0; j<m_colsize; j++)
+            {
+                os << (*this)(i,j) << '\t';
+            }
+            os << std::endl;
+        }
+        return os;
+    }
+    
+    template<typename T>
+    const std::vector<T> & Matrix<T>::data() const
+    {
+        return m_data;
+    }
+    
+    template<typename T>
+    Matrix<T>::row::row(double * data, size_t colsize) : m_data(data), m_colsize(colsize)
+    {}
+    
+    template<typename T>
+    T & Matrix<T>::row::operator[](size_t column_index)
+    {
+        if (static_cast<int>(column_index) < 0)
+        {
+            throw EXCEPTION("Index is negative");
+        }
+        if (column_index > m_colsize)
+        {
+            throw EXCEPTION("column index out of range");
+        }
+        return m_data[column_index];
+    }
+
     template<typename T>
     void addmatrix(Matrix<T>& New, const Matrix<T>& One, const Matrix<T>& Two)
     {

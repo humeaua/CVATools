@@ -78,7 +78,8 @@ namespace Utilities
     {
         REQUIREEXCEPTION(a.getcols() == a.getrows(), "a is not a square matrix");
         REQUIREEXCEPTION(a.getrows() == b.getrows(), "b must the same number of rows as a");
-        int i,icol,irow,j,k,l,ll,n=a.getcols(),m=b.getcols();
+        int i,icol,irow,j,k,l,ll;
+        size_t n = a.getcols(), m = b.getcols();
         double big,dum,pivinv,temp;
         //The integer arrays ipiv, indxr, and indxc are used for book-keeping on the pivoting
         std::vector<int> indxc(n,0), indxr(n,0), ipiv(n,0);
@@ -164,7 +165,7 @@ namespace Utilities
         //This is the end of the main loop over columns of the reduction. It only remains to unscramble
         //the solution in view of the column interchanges. We do this by interchanging pairs of
         //   columns in the reverse order that the permutation was built up.
-        for (l=n-1;l>=0;l--)
+        for (size_t l=n-1;static_cast<int>(l)>=0;l--)
         {
             if (indxr.at(l) != indxc.at(l))
             {
@@ -259,7 +260,7 @@ namespace Utilities
                                //   Output
                                Matrix<double> & dSquareRoot)
     {
-        int iNRows = dMatrix.getrows();
+        size_t iNRows = dMatrix.getrows();
         dSquareRoot.Reallocate(iNRows, iNRows);
         
         std::vector<std::vector<double> > L(iNRows, std::vector<double>(iNRows, 0.0));
@@ -306,7 +307,7 @@ namespace Utilities
                                    int * nrot)
     {
         std::size_t n = dMatrix.getcols();
-        
+        Matrix<double> copy = dMatrix;
         // reallocate the eigenvectors matrix and the eigenvalues
         EigenValues.resize(n);
         Eigenvectors.Reallocate(n, n);
@@ -363,7 +364,7 @@ namespace Utilities
                     //After four sweeps, skip the rotation if the off-diagonal element is small.
                     if (i > 4 && (float)(fabs(EigenValues.at(ip))+g) == (float)fabs(EigenValues.at(ip)) && (float)(fabs(EigenValues.at(iq))+g) == (float)fabs(EigenValues.at(iq)))
                     {
-                        dMatrix(ip,iq)=0.0;
+                        copy(ip,iq)=0.0;
                     }
                     else if (fabs(dMatrix(ip,iq)) > tresh)
                     {
@@ -386,21 +387,21 @@ namespace Utilities
                         z.at(ip) += h;
                         EigenValues.at(ip) -= h;
                         EigenValues.at(iq) += h;
-                        dMatrix(ip,iq)=0.0;
+                        copy(ip,iq)=0.0;
                         for (j=1;j<=ip-1;j++)
                         {
                             //Case of rotations 1 ≤ j < p.
-                            ROTATE_CPP(dMatrix,j,ip,j,iq)
+                            ROTATE_CPP(copy,j,ip,j,iq)
                         }
                         for (j=ip+1;j<=iq-1;j++)
                         {
                             //Case of rotations p < j < q.
-                            ROTATE_CPP(dMatrix,ip,j,j,iq)
+                            ROTATE_CPP(copy,ip,j,j,iq)
                         }
                         for (j=iq+1;j<n;j++)
                         {
                             //Case of rotations q < j ≤ n.
-                            ROTATE_CPP(dMatrix,ip,j,iq,j)
+                            ROTATE_CPP(copy,ip,j,iq,j)
                         }
                         for (j=0;j<n;j++)
                         {
@@ -427,7 +428,7 @@ namespace Utilities
     {
         int k,j,i;
         float p;
-        int n=v.getrows();
+        size_t n=v.getrows();
         for (i=0;i<n-1;i++)
         {
             p=d.at(k=i);

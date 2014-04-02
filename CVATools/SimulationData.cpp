@@ -32,7 +32,7 @@ namespace Utilities
         std::size_t iIndex = Utilities::GetIndex(dDates_, dDate);
         REQUIREEXCEPTION(iIndex != -1, "Date not found");
         
-        return Subset(m_data, iIndex * GetNbObservations(), (iIndex + 1) * GetNbObservations() - 1);
+        return Subset(data(), iIndex * GetNbObservations(), (iIndex + 1) * GetNbObservations() - 1);
     }
     
     std::map<double, std::map<std::size_t, double> > SimulationData::GetData() const

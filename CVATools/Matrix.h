@@ -44,7 +44,6 @@ namespace Utilities
         virtual const std::vector<T> & data() const;
         
     private:
-        friend class row;
         size_t m_rowsize;
         size_t m_colsize;
         std::vector<T> m_data;

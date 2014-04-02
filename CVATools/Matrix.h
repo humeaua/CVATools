@@ -44,6 +44,7 @@ namespace Utilities
         virtual const std::vector<T> & data() const;
         
     private:
+        friend class row;
         size_t m_rowsize;
         size_t m_colsize;
         std::vector<T> m_data;
@@ -223,6 +224,20 @@ namespace Utilities
     const std::vector<T> & Matrix<T>::data() const
     {
         return m_data;
+    }
+    
+    template<typename T>
+    class Matrix<T>::row Matrix<T>::operator[](size_t index)
+    {
+        if (static_cast<int>(index) < 0)
+        {
+            throw EXCEPTION("Index is negative");
+        }
+        if (index > m_rowsize)
+        {
+            throw EXCEPTION("column index out of range");
+        }
+        return Matrix<T>::row(&m_data[index * m_rowsize],m_colsize);
     }
     
     template<typename T>

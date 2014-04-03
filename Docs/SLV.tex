@@ -244,6 +244,26 @@ In this section, we will develop a method to calibrate the SLV models in a highe
 	\mathbb{E}\left[e^{2X_T}\middle| S_T=K\right] = \frac{\mathbb{E}\left[e^{2X_T} \textbf{1}_{S_T=K}\right]}{\mathbb{P}(S_T = K)}
 \end{equation}
 
+\noindent Re-writting the above equation as a function of log-spot $y_t = \log\left(S_t\right)$ yields
+
+\begin{equation}
+	\label{eq:SLVEquationlogspot}
+	\mathbb{E}\left[e^{2X_T}\middle| y_T=k\right] = \frac{\mathbb{E}\left[e^{2X_T} \textbf{1}_{y_T=k}\right]}{\mathbb{P}(y_T = k)}
+\end{equation}
+
+\noindent where $k = \log(K)$.\\
+
+\noindent Let us assume that we have an expression for the forward transition probabilities $(y,X,T) \mapsto p(y,X,T) = G(e^y,X,T)$, the two expectations that come into play in equation (\ref{eq:SLVEquationlogspot}) can be refactored such as
+
+\begin{equation}
+	\sigma(k,T) = \sigma_D(e^k, T) \sqrt{\frac{I_0(k,T)}{I_1(k,T)}}
+\end{equation}
+
+\noindent where
+\begin{equation}
+	I_n(k,T) = \int e^{nx} p(y,x,T) dx, \text{ for } n \in \{0,1\}
+\end{equation}
+
 \noindent Two Monte-Carlo method can then be used for the computation of this conditional expectation
 
 \begin{enumerate}
@@ -295,6 +315,43 @@ As we want to compute a $S_T$-measurable integral, we can approximate
 
 \paragraph{Estimation via Monte-Carlo}
 
+\section{Overview of the methodology proposed in \cite{Clark2010}}
+\subsection{Main equations}
+
+We have the following dynamics for the FX Spot $S$
+
+\begin{equation}
+\begin{aligned}
+	&\frac{dS_t}{S_t} = \mu^d_t dt + \sqrt{v_t} A(S_t,t) dW_t^{(1)}\\
+	&v_t \text{ is a stochastic process : Heston or expoonential-OU,...}\\
+	&dv_t = \kappa (m(t) - v_t) dt + \alpha \sqrt{v_t} dW_t^{(2)} \text{ for Heston}\\
+	&d\langle W^{(1)}, W^{(2)} \rangle_t = \rho dt
+\end{aligned}
+\end{equation}
+
+
+\subsubsection{PDE for volatility as Heston process}
+Let $p(y,v,t)$ be the joint probability distribution for log-spot $y$ and stochastic variance $v$ at time $t$.
+
+\begin{equation}
+	\frac{\partial p}{\partial t} = \frac{1}{2} \frac{\partial^2 \left[vA^2(y,t)p\right]}{\partial y^2} + \rho \alpha \frac{\partial^2 \left[vA(y,t)p\right]}{\partial y \partial v} + \frac{1}{2} \alpha^2 \frac{\partial^2 \left[v^2 p \right]}{\partial v^2} + \frac{\partial }{\partial y} \left[\left(\frac{1}{2} vA^2(y,t) - \mu^d_t\right)p\right] + \kappa \frac{\partial \left[\left(v-m_t\right) p\right]}{\partial v}
+\end{equation}
+
+\noindent It then reduces to 
+
+\begin{equation}
+\begin{aligned}
+	\frac{\partial p}{\partial t} =
+ &\frac{A^2v}{2}\frac{\partial^2 p}{\partial y^2}
+ + \rho \alpha A v \frac{\partial^2 p}{\partial y \partial v} 
++ \frac{\alpha^2 v}{2} \frac{\partial^2 p}{\partial v^2} 
++ \left(\frac{1}{2} A^2 v + 2 A A' v + \rho \alpha A - \mu^d_t\right)\frac{\partial p}{\partial y}\\
+& + \left(\kappa \left[v - m_t\right] + \alpha^2 + \rho \alpha A' v\right) \frac{\partial p}{\partial v}
++\left[ AA'v + \rho \alpha A' + AA''v + \left[A'\right]^2 + \kappa\right] p
+\end{aligned}
+\end{equation}
+
+\subsubsection{PDE for volatility as exponential of Ornstein-Ulhenbeck process}
 \section{Solving the SLV calibration PDE}
 In this section we will develop numerical methods to solve equation (\ref{eq:SLVCalibrationPDE})
 
@@ -318,6 +375,11 @@ In this section we will develop numerical methods to solve equation (\ref{eq:SLV
  \emph{The Heston Stochastic-Local volatility Model : Efficient Monte-Carlo simulation},
  Version 1, 11th June 2013
 
+\bibitem{Clark2010}
+ Iain J. Clark, 
+ \emph{Foreign Exchange option pricing : A Practitioner's Guide},
+ Wiley Finance,
+ ,2010
 \end{thebibliography}
 
 \end{document}

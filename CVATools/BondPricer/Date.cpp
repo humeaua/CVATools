@@ -351,7 +351,10 @@ namespace Utilities
         double MyDate::Diff(const MyDate & sDate) const
         {
             //  Bond Basis Convention (30/360)
-            return iYear_ - sDate.GetYear() + (iMonth_ - sDate.GetMonth()) / 12.0 + (iDay_ - sDate.GetDay()) / 360.0;
+            //return iYear_ - sDate.GetYear() + (iMonth_ - sDate.GetMonth()) / 12.0 + (iDay_ - sDate.GetDay()) / 360.0;
+            //  ACT365 convention
+            long lFuture = sDate.GetDays1900(), lToday = this->GetDays1900();
+            return static_cast<double>(lToday - lFuture) / 365.0;
         }
         
         MyDate MyDate::Add(long iUnit, const TimeUnits& eTimeUnit)

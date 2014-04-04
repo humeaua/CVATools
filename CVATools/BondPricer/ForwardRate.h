@@ -15,12 +15,17 @@ namespace Finance
 {
     namespace Instruments
     {
-        class ForwardRate : public DF
+        class ForwardRate
         {
         public:
-            ForwardRate(const YieldCurve & sInitialYieldCurve);
+            ForwardRate(const Base::YieldCurve & sInitialYieldCurve);
             
             virtual double FwdRate(double dStart, double dEnd) const;
+            virtual double FwdRate(const Utilities::Date::MyDate & start,
+                                   const Utilities::Date::MyDate & end) const;
+            virtual const Utilities::Date::MyDate & Today() const;
+        private:
+            DF m_discountFactor;
         };
     }
 }

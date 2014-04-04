@@ -13,29 +13,34 @@ namespace Finance
 {
     namespace Payoff
     {
-        Digital::Digital(double dStrike, VanillaOptionType eOptionType) : dStrike_(dStrike),  eOptionType_(eOptionType)
+        DigitalCall::DigitalCall(double dStrike) : dStrike_(dStrike)
+        {}
+        
+        double DigitalCall::pay1(double s1) const
         {
-            REQUIREEXCEPTION(eOptionType_ == CALL || eOptionType_ == PUT, "Option Type has to be CALL or PUT");
+            if (s1 > dStrike_)
+            {
+                return 1.0;
+            }
+            else
+            {
+                return 0.0;
+            }
         }
         
-        double Digital::pay1(double s1) const
+        DigitalPut::DigitalPut(double strike) : dStrike_(strike)
+        {}
+        
+        double DigitalPut::pay1(double s1) const
         {
-            switch (eOptionType_)
+            if (s1 < dStrike_)
             {
-                case CALL:
-                {
-                    return s1 < dStrike_ ? 0.0 : 1.0;
-                }
-                case PUT:
-                {
-                    return s1 < dStrike_ ? 1.0 : 0.0;
-                }
-                default:
-                {
-                    throw EXCEPTION("Option type not handled");
-                }
+                return 1.0;
             }
-            return 0.0;
+            else
+            {
+                return 0.0;
+            }
         }
     }
 }

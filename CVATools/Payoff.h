@@ -15,11 +15,10 @@ namespace Finance
 {
     namespace Payoff
     {
-        class Payoff : public EuropeanPayoff
+        class Payoff : public EuropeanPayoff1
         {
         protected:
             virtual double pay1(double s1) const = 0;
-            virtual double pay2(double s1, double s2) const;
         public:
             Payoff();
             virtual ~Payoff();

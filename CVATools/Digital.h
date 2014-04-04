@@ -17,15 +17,24 @@ namespace Finance
 {
     namespace Payoff
     {
-        class Digital : public Payoff
+        class DigitalCall : public Payoff
         {
         protected:
             double dStrike_;
-            VanillaOptionType eOptionType_;
             
             double pay1(double s1) const;
         public:
-            Digital(double dStrike, VanillaOptionType eOptionType);
+            DigitalCall(double dStrike);
+        };
+        
+        class DigitalPut : public Payoff
+        {
+        protected:
+            double dStrike_;
+            
+            double pay1(double s1) const;
+        public:
+            DigitalPut(double dStrike);
         };
     }
 }

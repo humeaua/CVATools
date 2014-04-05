@@ -256,11 +256,13 @@ In this section, we will develop a method to calibrate the SLV models in a highe
 \noindent Let us assume that we have an expression for the forward transition probabilities $(y,X,T) \mapsto p(y,X,T) = G(e^y,X,T)$, the two expectations that come into play in equation (\ref{eq:SLVEquationlogspot}) can be refactored such as
 
 \begin{equation}
+	\label{eq:calibrationlocalvolSLV}
 	\sigma(k,T) = \sigma_D(e^k, T) \sqrt{\frac{I_0(k,T)}{I_1(k,T)}}
 \end{equation}
 
 \noindent where
 \begin{equation}
+	\label{eq:Inintegral}
 	I_n(k,T) = \int e^{nx} p(y,x,T) dx, \text{ for } n \in \{0,1\}
 \end{equation}
 
@@ -340,6 +342,7 @@ Let $p(y,v,t)$ be the joint probability distribution for log-spot $y$ and stocha
 \noindent It then reduces to 
 
 \begin{equation}
+\label{eq:SLV}
 \begin{aligned}
 	\frac{\partial p}{\partial t} =
  &\frac{A^2v}{2}\frac{\partial^2 p}{\partial y^2}
@@ -351,7 +354,29 @@ Let $p(y,v,t)$ be the joint probability distribution for log-spot $y$ and stocha
 \end{aligned}
 \end{equation}
 
+\noindent where 
+
+\begin{equation}
+\begin{aligned}
+A&= A(y,t)\\
+A' &= \frac{\partial A}{\partial y}\\
+A'' &= \frac{\partial^2 A}{\partial y^2}
+\end{aligned}
+\end{equation}
+
 \subsubsection{PDE for volatility as exponential of Ornstein-Ulhenbeck process}
+\subsection{Forward induction for local volatility calibration on SLV - PDE Calibration}
+Let us take the methodology developed in \cite{Clark2010}.\\
+Let us assume of sequence of timepoints $\{t_0 = 0, t_1, t_2, \dots, t_N = T_{cal}\}$. The approach is somewhat like boostrapping a yield curve but we are trying to infer a surface $A(y,t)$
+
+\begin{enumerate}
+	\item Start at time $t_0 = 0$ with an initial local volatility correction $\forall y, A(y,0) = 1$ and an initial condition
+\begin{equation}
+	p(y,v,0) = \delta_{\{y-y_0\}} \delta_{\{v-v_0\}}
+\end{equation}
+	\item Construct a forward timestepping scheme for (\ref{eq:SLV}) using a finite scheme for the PDE such as either explicit finite differencing or ADI timestepping. Spatial derivatives $A'$ and $A''$ can be estimated at time $t$ by setting a function $f(y) = A(y,t)$ equal to a cubic spline and extracting first and second-order derivative by symbolic differentiation of $f(y)$
+	\item Refine $A(y,t)$ by the use of (\ref{eq:calibrationlocalvolSLV}) by calculating $I_0$ and $I_1$ integrals defined in (\ref{eq:Inintegral}) at each required level of $y$, taking numerical integral in the variance dimension. Then update the diffusion, convection and force terms in (\ref{eq:SLV})
+\end{enumerate}
 \section{Solving the SLV calibration PDE}
 In this section we will develop numerical methods to solve equation (\ref{eq:SLVCalibrationPDE})
 

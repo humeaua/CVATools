@@ -29,19 +29,9 @@
 
 #include "Analytic.h"
 
-//  Forward declaration of the different regression tests
-bool RegressionTest_BondPricing(std::ostream & os);
-bool RegressionTest_TimeStatistics(std::ostream & os);
-bool RegressionTest_PayoffLinearization(std::ostream & os);
-bool RegressionTest_Interpolation(std::ostream & os);
-bool RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os);
-bool RegressionTest_ProcessPathSimulation(std::ostream & os);
-bool RegressionTest_Date(std::ostream & os);
-bool RegressionTest_AnalyticFormulae(std::ostream & os);
-
 //  Declaration of all the regression tests
 
-bool RegressionTest_BondPricing(std::ostream & os)
+bool RegressionTest::BondPricing(std::ostream & os)
 {
     //////////////////////////////////////////////////////////////
     //                                                          //
@@ -154,7 +144,7 @@ bool RegressionTest_BondPricing(std::ostream & os)
     return true;
 }
 
-bool RegressionTest_TimeStatistics(std::ostream & os)
+bool RegressionTest::TimeStatistics(std::ostream & os)
 {
     try
     {
@@ -251,7 +241,7 @@ bool RegressionTest_TimeStatistics(std::ostream & os)
     return true;
 }
 
-bool RegressionTest_PayoffLinearization(std::ostream & os)
+bool RegressionTest::PayoffLinearization(std::ostream & os)
 {
     os << "Regression Test Payoff Linearization" << std::endl;
     os << std::endl;
@@ -290,7 +280,7 @@ bool RegressionTest_PayoffLinearization(std::ostream & os)
     return true;
 }
 
-bool RegressionTest_Interpolation(std::ostream & os)
+bool RegressionTest::Interpolation(std::ostream & os)
 {
     os << "Regression Test Interpolation " << std::endl;
     os << std::endl;
@@ -394,7 +384,7 @@ bool RegressionTest_Interpolation(std::ostream & os)
     return true;
 }
 
-bool RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
+bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os)
 {
     os << "Volatility Surface Interpolation" << std::endl;
     
@@ -486,7 +476,7 @@ bool RegressionTest_VolatilitySurfaceInterpolation(std::ostream & os)
     return true;
 }
 
-bool RegressionTest_ProcessPathSimulation(std::ostream & os)
+bool RegressionTest::ProcessPathSimulation(std::ostream & os)
 {
     os << "Process Path Simulation" << std::endl;
     const double dX0 = 1.0;
@@ -577,7 +567,7 @@ bool RegressionTest_ProcessPathSimulation(std::ostream & os)
 }
 
 //  Regression test for date
-bool RegressionTest_Date(std::ostream & os)
+bool RegressionTest::Date(std::ostream & os)
 {
     os << "Regression Test for date" << std::endl;
     
@@ -614,7 +604,7 @@ bool RegressionTest_Date(std::ostream & os)
     return true;
 }
 
-bool RegressionTest_AnalyticFormulae(std::ostream & os)
+bool RegressionTest::AnalyticFormulae(std::ostream & os)
 {
     os << "Regression Test for Analytic formulae" << std::endl;
     
@@ -676,68 +666,36 @@ bool RegressionTest_AnalyticFormulae(std::ostream & os)
 //
 /////////////////////////////////////////////////////
 
-bool LaunchRegressionTests(std::ostream & os)
+void RegressionTestLauncher::FillMap()
 {
-    bool bSucceeded = true;
-    os << std::setprecision(9);
-    
-    bSucceeded = RegressionTest_BondPricing(os);
-    if (!bSucceeded)
-    {
-        return bSucceeded;
-    }
-    os << std::endl;
-    
-    bSucceeded = RegressionTest_TimeStatistics(os);
-    if (!bSucceeded)
-    {
-        return bSucceeded;
-    }
-    os << std::endl;
-    
-    bSucceeded = RegressionTest_PayoffLinearization(os);
-    if (!bSucceeded)
-    {
-        return bSucceeded;
-    }
-    os << std::endl;
-    
+    m_mapping.insert(std::make_pair("Analytic", &RegressionTest::AnalyticFormulae));
+    m_mapping.insert(std::make_pair("VolatilitySurface", &RegressionTest::VolatilitySurfaceInterpolation));
+    m_mapping.insert(std::make_pair("Date", &RegressionTest::Date));
+    m_mapping.insert(std::make_pair("Process Path Simulation", &RegressionTest::ProcessPathSimulation));
+    m_mapping.insert(std::make_pair("Payoff linearization", &RegressionTest::PayoffLinearization));
 #ifdef DEBUG
-    // run only in debug :--> needs to be fixed
-    bSucceeded = RegressionTest_Interpolation(os);
-    if (!bSucceeded)
-    {
-        return bSucceeded;
-    }
-    os << std::endl;
+    m_mapping.insert(std::make_pair("Interpolation", &RegressionTest::Interpolation));
 #endif
+    m_mapping.insert(std::make_pair("Time Statistics", &RegressionTest::TimeStatistics));
+    m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
+}
+
+bool RegressionTestLauncher::Launch(std::ostream &out)
+{
+    bool result = true;
+    //  Fill Map
+    FillMap();
     
-    bSucceeded = RegressionTest_ProcessPathSimulation(os);
-    if (!bSucceeded)
+    //  Iterate along the map
+    auto it = m_mapping.begin();
+    for ( ; it != m_mapping.end() ; ++it)
     {
-        return bSucceeded;
+        result = (m_regTest.*(it->second))(out);
+        if (!result)
+        {
+            return result;
+        }
+        std::cout << std::endl;
     }
-    os << std::endl;
-    
-    bSucceeded = RegressionTest_Date(os);
-    if (!bSucceeded)
-    {
-        return bSucceeded;
-    }
-    os << std::endl;
-    
-    bSucceeded = RegressionTest_VolatilitySurfaceInterpolation(os);
-    if (!bSucceeded)
-    {
-        return bSucceeded;
-    }
-    os << std::endl;
-    
-    bSucceeded = RegressionTest_AnalyticFormulae(os);
-    if (!bSucceeded)
-    {
-        return bSucceeded;
-    }
-    os << std::endl;
-    return bSucceeded;
+    return result;
 }

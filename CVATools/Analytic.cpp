@@ -226,24 +226,23 @@ namespace Finance
             
             //  compute the variance
             double variance = 0;
-            for (std::size_t i = 0 ; i < futureObservationTimes.size() ; ++i)
+            //  Computation based on following paper : Analytical formula for Asian option Alexandre Humeau (6th April 2014)
+            double denominator = 0.0, numerator = 0.0;
+            for (size_t i = 0 ; i < futureObservationTimes.size() ; ++i)
             {
-                variance += exp((2.0 * rate + volatility * volatility) * futureObservationTimes.at(i));
-            }
-            for (std::size_t i = 0 ; i < futureObservationTimes.size() ; ++i)
-            {
-                for (std::size_t j = i + 1 ; i < futureObservationTimes.size() ; ++j)
+                denominator += exp(rate * futureObservationTimes.at(i));
+                for (size_t j = 0 ; j < futureObservationTimes.size() ; ++j)
                 {
-                    double innerfactor = 0.;
-                    innerfactor += (rate - 0.5 * volatility * volatility) * (futureObservationTimes.at(i) + futureObservationTimes.at(j));
-                    innerfactor += 0.5 * volatility * volatility * futureObservationTimes.at(i) * (futureObservationTimes.at(i) + futureObservationTimes.at(j)) * (futureObservationTimes.at(i) + futureObservationTimes.at(j)) / futureObservationTimes.at(j) / futureObservationTimes.at(j);
-                    variance += 2.0 * exp(innerfactor);
+                    numerator += exp(rate * (futureObservationTimes.at(i) + futureObservationTimes.at(j))) * (exp(volatility * volatility * std::min(futureObservationTimes.at(i), futureObservationTimes.at(j))) - 1.0);
                 }
             }
-            variance *= spot * spot / totalObservationsTimes / totalObservationsTimes;
+            denominator /= futureObservationTimes.size();
+            denominator *= denominator;
+            numerator /= (futureObservationTimes.size() * futureObservationTimes.size());
             
-            const double volatilityaverage = log (variance / forward / forward) / maturity;
-            return VanillaPrice(forward, strike, sqrt(volatilityaverage), maturity, rate, optionType);
+            //const double volatilityaverage = log (variance / forward / forward) / maturity;
+            const double volatilityaverage = sqrt(log(1 + numerator / denominator) / maturity);
+            return VanillaPrice(forward, strike, volatilityaverage, maturity, rate, optionType);
         }
     }
 }

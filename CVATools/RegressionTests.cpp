@@ -608,16 +608,30 @@ bool RegressionTest::AnalyticFormulae(std::ostream & os)
 {
     os << "Regression Test for Analytic formulae" << std::endl;
     
-    const double dFwdRef = 1.0, T = 1.0;
+    const double dFwdRef = 1.0, T = 1.0, spot = 1.0;
     const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
-    const std::vector<double> strikesvect(strikes, strikes + 7), volsvect(vols, vols + 7);
+    const double observationTimes[] = {0.0, 0.5, 1.0};
+    const std::vector<double> strikesvect(strikes, strikes + 7), volsvect(vols, vols + 7), observationTimesvect(observationTimes, observationTimes + 3);
+    std::vector<std::pair<double, double> > pastFixings;
+    pastFixings.push_back(std::make_pair(-1.0, 0.9));
+    pastFixings.push_back(std::make_pair(-0.5, 1.1));
     Finance::Volatility::VolSmile volSmile(strikesvect, volsvect, dFwdRef, T);
     
     Finance::Pricers::Analytic sAnalytic;
     
     const double volatility = 0.150, rate = 0.02;
     
-    const double ATMFCallRef = 0.0586014601,ATMFPutRef = 0.0586014601,Call110Ref = 0.0245073664,PUT110Ref = 0.122527234,DigitalnoSmileATMFRef = 0.460798607,DigitalSmileATMFRef =0.450454163,VegaATMFRef = 0.389944432,Digital90NoSmileRef = 0.720252526,Digital90SmileRef = 0.728282006;
+    const double
+    ATMFCallRef = 0.0586014601,
+    ATMFPutRef = 0.0586014601,
+    Call110Ref = 0.0245073664,
+    PUT110Ref = 0.122527234,
+    DigitalnoSmileATMFRef = 0.460798607,
+    DigitalSmileATMFRef =0.450454163,
+    VegaATMFRef = 0.389944432,
+    Digital90NoSmileRef = 0.720252526,
+    Digital90SmileRef = 0.728282006,
+    AsianOptionRef = 0.0343143823;
 
     double error = 0.0;
     error += std::abs(sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - ATMFCallRef);
@@ -630,10 +644,12 @@ bool RegressionTest::AnalyticFormulae(std::ostream & os)
     error += std::abs(sAnalytic.VegaVanillaOption(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::PUT) - VegaATMFRef);
     error += std::abs(sAnalytic.DigitalPrice(dFwdRef, 0.9 *dFwdRef, volatility, T, rate, Finance::Payoff::CALL) - Digital90NoSmileRef);
     error += std::abs(sAnalytic.DigitalPrice(dFwdRef, 0.9 * dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) - Digital90SmileRef);
+    error += std::abs(sAnalytic.AsianOption(spot, dFwdRef, Finance::Payoff::CALL, volatility, T, rate, observationTimesvect, pastFixings) - AsianOptionRef);
     
     bool bOutput = false;
     if (bOutput)
     {
+        os << std::setprecision(9);
         os << "ATMFCallRef = " << sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
         os << " ATMFPutRef = " << sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::PUT) << ",";
         os << " Call110Ref = " << sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
@@ -643,6 +659,7 @@ bool RegressionTest::AnalyticFormulae(std::ostream & os)
         os << " VegaATMFRef = " << sAnalytic.VegaVanillaOption(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
         os << " Digital90NoSmileRef = " << sAnalytic.DigitalPrice(dFwdRef, 0.9 *dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
         os << " Digital90SmileRef = " << sAnalytic.DigitalPrice(dFwdRef, 0.9 * dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) ;
+        os << " Asian option = " << sAnalytic.AsianOption(spot, dFwdRef, Finance::Payoff::CALL, volatility, T, rate, observationTimesvect, pastFixings) << std::endl;
         os << ";" << std::endl;
     }
     

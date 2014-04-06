@@ -95,7 +95,7 @@ As we want to find a formula in the Black-Scholes world for the Asian option, le
 \begin{equation}
 \begin{aligned}
 	\mathbb{E}\left[\bar{S}\right] &= S_0 e^{\bar{\mu} T}\\
-	&= \frac{1}{n} \sum_{i=1}^{n} S_0\mathbb{E}\left[S_{t_i}\right]\\
+	&= \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}\left[S_{t_i}\right]\\
 	&= \frac{1}{n} \sum_{i=1}^{n} S_0 e^{r t_i}
 \end{aligned}
 \end{equation}
@@ -109,8 +109,8 @@ As we want to find a formula in the Black-Scholes world for the Asian option, le
 \begin{equation}
 \begin{aligned}
 	Var\left(\bar{S}\right) &= S_0^2 e^{2\bar{\mu}T}\left( e^{\bar{\sigma}^2 T} - 1\right)\\
-	&= \frac{1}{n} \left(\sum_{i=1}^{n} Var\left(S_{t_i}\right) + 2 \sum_{i < j = 1}^{n} Cov\left(S_{t_i}, S_{t_j}\right)\right)\\
-	&= \frac{1}{n} \left(\sum_{i=1}^{n} S_0 e^{\left(2r + \sigma^2\right) t_i}+ 2 \sum_{i < j = 1}^{n} Cov\left(S_{t_i}, S_{t_j}\right)\right)\\
+	&= \frac{1}{n^2} \left(\sum_{i=1}^{n} Var\left(S_{t_i}\right) + 2 \sum_{i < j = 1}^{n} Cov\left(S_{t_i}, S_{t_j}\right)\right)\\
+	&= \frac{1}{n^2} \left(\sum_{i=1}^{n} S_0^2 e^{2r t_i} \left(e^{ \sigma^2t_i} -1\right)+ 2 \sum_{i < j = 1}^{n} Cov\left(S_{t_i}, S_{t_j}\right)\right)\\
 \end{aligned}
 \end{equation}
 
@@ -125,6 +125,30 @@ As we want to find a formula in the Black-Scholes world for the Asian option, le
 	&= e^{r\left(t_j - t_i\right)} S_0^2 e^{\left(2r + \sigma^2\right)t_i} - S_0^2 e^{r\left(t_i + t_j\right)}\\
 	&= S_0^2 e^{r\left(t_i + t_j\right)} \left( e^{ \sigma^2 t_i }  - 1\right)
 \end{aligned}
+\end{equation}
+
+\noindent Then,
+
+\begin{equation}
+	Var\left(\bar{S}\right) =\frac{1}{n^2} \left(\sum_{i=1}^{n} S_0^2 e^{2r t_i} \left(e^{ \sigma^2t_i} -1\right) + 2 \sum_{i<j=1}^{n}  S_0^2 e^{r\left(t_i + t_j\right)} \left(e^{\sigma^2 t_i} - 1\right) \right)
+\end{equation}
+
+\noindent Thus,
+
+\begin{equation}
+	e^{2\bar{\mu}T}\left( e^{\bar{\sigma}^2 T} - 1\right) = \frac{1}{n^2} \left(\sum_{i=1}^{n} e^{2r t_i} \left(e^{ \sigma^2t_i} -1\right) + 2 \sum_{i<j=1}^{n} e^{r\left(t_i + t_j\right)} \left(e^{\sigma^2 t_i} - 1\right) \right)
+\end{equation}
+
+\noindent Then,
+
+\begin{equation}
+	\left( e^{\bar{\sigma}^2 T} - 1\right) = \frac{\frac{1}{n^2} \left(\sum_{i=1}^{n} e^{2r t_i} \left(e^{ \sigma^2t_i} -1\right) + 2 \sum_{i<j=1}^{n} e^{r\left(t_i + t_j\right)} \left(e^{\sigma^2 t_i} - 1\right) \right)}{\left(\frac{1}{n} \sum_{i=1}^{n} e^{rt_i}\right)^2}
+\end{equation}
+
+\noindent In conclusion
+
+\begin{equation}
+	\bar{\sigma}^2 T = \ln\left(1+\frac{\frac{1}{n^2}\sum_{i,j=1}^{n} e^{r \left(t_i+t_j\right)} \left(e^{ \sigma^2\min\left(t_i,t_j\right)} -1\right)}{\left(\frac{1}{n} \sum_{i=1}^{n} e^{rt_i}\right)^2}\right)
 \end{equation}
 
 \end{document}

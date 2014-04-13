@@ -234,26 +234,26 @@ In this section, we will develop a method to calibrate the SLV models in a highe
 \begin{equation}
 \begin{aligned}
 	&\frac{\partial C}{\partial T} + P_d(0,T) \mathbb{E}^{\mathbb{Q}_T} \left[ \left(K r_d(T) - S_T r_f(T)\right) \textbf{1}_{\{S_T > K\}}\right] - \frac{1}{2} \sigma_D^2(K,T) K^2 \frac{\partial^2 C}{\partial K^2} = 0\\
-	&\frac{\partial C}{\partial T} + P_d(0,T) \mathbb{E}^{\mathbb{Q}_T} \left[ \left(K r_d(T) - S_T r_f(T)\right) \textbf{1}_{\{S_T > K\}}\right] - \frac{1}{2} \sigma^2(K,T) \mathbb{E}\left[e^{2X_T}\middle| S_T=K\right] K^2 \frac{\partial^2 C}{\partial K^2} = 0\\
+	&\frac{\partial C}{\partial T} + P_d(0,T) \mathbb{E}^{\mathbb{Q}_T^d} \left[ \left(K r_d(T) - S_T r_f(T)\right) \textbf{1}_{\{S_T > K\}}\right] - \frac{1}{2} \sigma^2(K,T) \mathbb{E}^{\mathbb{Q}_T}\left[e^{2X_T}\middle| S_T=K\right] K^2 \frac{\partial^2 C}{\partial K^2} = 0\\
 \end{aligned}
 \end{equation}
 
 \noindent To write the calibration equation, we are left with, the calculation of the following integral
 
 \begin{equation}
-	\mathbb{E}\left[e^{2X_T}\middle| S_T=K\right] = \frac{\mathbb{E}\left[e^{2X_T} \textbf{1}_{S_T=K}\right]}{\mathbb{P}(S_T = K)}
+	\mathbb{E}^{\mathbb{Q}_T^d}\left[e^{2X_T}\middle| S_T=K\right] = \frac{\mathbb{E}^{\mathbb{Q}_T^d}\left[e^{2X_T} \textbf{1}_{S_T=K}\right]}{\mathbb{Q}_T^d(S_T = K)}
 \end{equation}
 
 \noindent Re-writting the above equation as a function of log-spot $y_t = \log\left(S_t\right)$ yields
 
 \begin{equation}
 	\label{eq:SLVEquationlogspot}
-	\mathbb{E}\left[e^{2X_T}\middle| y_T=k\right] = \frac{\mathbb{E}\left[e^{2X_T} \textbf{1}_{y_T=k}\right]}{\mathbb{P}(y_T = k)}
+	\mathbb{E}^{\mathbb{Q}_T^d}\left[e^{2X_T}\middle| y_T=k\right] = \frac{\mathbb{E}^{\mathbb{Q}_T^d}\left[e^{2X_T} \textbf{1}_{y_T=k}\right]}{\mathbb{Q}_T^d(y_T = k)}
 \end{equation}
 
 \noindent where $k = \log(K)$.\\
 
-\noindent Let us assume that we have an expression for the forward transition probabilities $(y,X,T) \mapsto p(y,X,T) = G(e^y,X,T)$, the two expectations that come into play in equation (\ref{eq:SLVEquationlogspot}) can be refactored such as
+\noindent Let us assume that we have an expression for the forward transition probabilities under domestic probability $(y,X,T) \mapsto p(y,X,T) = G(e^y,X,T)$, the two expectations that come into play in equation (\ref{eq:SLVEquationlogspot}) can be refactored such as
 
 \begin{equation}
 	\label{eq:calibrationlocalvolSLV}
@@ -277,7 +277,7 @@ In this section, we will develop a method to calibrate the SLV models in a highe
 As we want to compute a $S_T$-measurable integral, we can approximate
 
 \begin{equation}
-	\mathbb{E}\left[e^{2X_T}\middle| S_T \right] \approx \sum_{m=1}^{M} \beta_m \zeta_m\left(S_T\right)
+	\mathbb{E}^{\mathbb{Q}_T^d}\left[e^{2X_T}\middle| S_T \right] \approx \sum_{m=1}^{M} \beta_m \zeta_m\left(S_T\right)
 \end{equation}
 
 \noindent where the coefficients $(\beta_1, \dots, \beta_M)$ are found by a least-square approach. Let us assume we have $N$ realisations of the random variables $(S_T,X_T)$ denoted by $\left((S_T^1,X_T^1),\dots, (S_T^N,X_T^N)\right)$
@@ -286,15 +286,15 @@ As we want to compute a $S_T$-measurable integral, we can approximate
 
 \begin{equation}
 	\hat{\beta} = \argmin_{\beta \in \mathbb{R}^M}
-\left\{\mathbb{E}\left[\left(\mathbb{E}\left[e^{2X_T} \middle| S_T\right] - \sum_{m=1}^M \beta_m \zeta_m\left(S_T\right)\right)^2\right]\right\}
+\left\{\mathbb{E}^{\mathbb{Q}_T^d}\left[\left(\mathbb{E}^{\mathbb{Q}_T^d}\left[e^{2X_T} \middle| S_T\right] - \sum_{m=1}^M \beta_m \zeta_m\left(S_T\right)\right)^2\right]\right\}
 \end{equation}
 
 \noindent Denoting by $M_{\zeta \zeta}$ and $M_{\zeta X}$ the following quantities, according to \cite{Humeau2013}
 
 \begin{equation}
 \begin{aligned}
-	(M_{\zeta \zeta})_{r,s} &= \mathbb{E}\left[\zeta_r(S_T)\zeta_s(S_T)\right]\\
-	(M_{\zeta X})_r &= \mathbb{E}\left[\zeta_r(S_T)e^{2X_T}\right]
+	(M_{\zeta \zeta})_{r,s} &= \mathbb{E}^{\mathbb{Q}_T^d}\left[\zeta_r(S_T)\zeta_s(S_T)\right]\\
+	(M_{\zeta X})_r &= \mathbb{E}^{\mathbb{Q}_T^d}\left[\zeta_r(S_T)e^{2X_T}\right]
 \end{aligned}
 \end{equation}
 

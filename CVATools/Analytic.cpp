@@ -225,7 +225,6 @@ namespace Finance
             forward /= totalObservationsTimes;
             
             //  compute the variance
-            double variance = 0;
             //  Computation based on following paper : Analytical formula for Asian option Alexandre Humeau (6th April 2014)
             double denominator = 0.0, numerator = 0.0;
             for (size_t i = 0 ; i < futureObservationTimes.size() ; ++i)

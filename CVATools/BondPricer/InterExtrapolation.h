@@ -47,6 +47,8 @@ namespace Utilities
             LogLinDFInterpolator(const std::vector<double> & dVariables,
                                  const std::vector<double> & dValues);
             virtual double operator()(double dVariable) const;
+        private:
+            double m_epsilon;
         };
         
         class NearInterpolator : public Interpolator

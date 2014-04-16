@@ -121,20 +121,29 @@ namespace Utilities
             }
         }
         
-        LogLinDFInterpolator::LogLinDFInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues)
+        LogLinDFInterpolator::LogLinDFInterpolator(const std::vector<double> & dVariables, const std::vector<double> & dValues) : Interpolator(dVariables, dValues), m_epsilon(1e-07)
         {}
 
         double LogLinDFInterpolator::operator()(double dVariable) const
         {
             int iValue1 = 0, iValue2 = 0;
             FindIndex(dVariable, iValue1);
-            iValue2 = iValue1 + 1;
+            if (iValue1 == dVariables_.size() - 1)
+            {
+                iValue2 = iValue1--;
+            }
+            else
+            {
+                iValue2 = iValue1 + 1;
+            }
             //  raw interpolation as described in http://www.math.ku.dk/~rolf/HaganWest.pdf by Hagan and West.
             //  Linear interpolation in the log of the discount factors
-#ifndef EPSILON_RAW
-#define EPSILON_RAW 1e-07
-#endif
-            REQUIREEXCEPTION(fabs(dVariable) > EPSILON_RAW, "Cannot perform Raw interpolation, variable is too small");
+
+            //REQUIREEXCEPTION(fabs(dVariable) > m_epsilon, "Cannot perform Raw interpolation, variable is too small");
+            if (std::abs(dVariable) < m_epsilon)
+            {
+                throw EXCEPTION("Cannot perform Raw interpolation, variable is too small");
+            }
             return 1.0 / dVariable * ((dVariable - dVariables_.at(iValue1)) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue2) * dVariables_.at(iValue2) + (dVariables_.at(iValue2) - dVariable) / (dVariables_.at(iValue2) - dVariables_.at(iValue1)) * dValues_.at(iValue1) * dVariables_.at(iValue1) );
         }
         

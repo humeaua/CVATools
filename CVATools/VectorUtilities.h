@@ -88,6 +88,23 @@ namespace Utilities {
         return false;
     };
     
+    template<>
+    inline bool IsFound(const std::vector<double> & vect, double& value, std::size_t & iWhere)
+    {
+        const double dTolerance = 1e-10;
+        for (std::size_t i = 0 ; i < vect.size(); ++i)
+        {
+            if (std::abs(vect.at(i) - value) < dTolerance)
+            {
+                iWhere = i;
+                return true;
+            }
+        }
+        //  If not found return the size of the vector
+        iWhere = vect.size();
+        return false;
+    }
+    
     // May change this function to a template version
     template<typename T>
     bool AreEqual(const std::vector<T> & vect1, const std::vector<T> & vect2, T tolerance)

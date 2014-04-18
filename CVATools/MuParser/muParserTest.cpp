@@ -785,7 +785,7 @@ namespace mu
       }
       catch(Parser::exception_type &e)
       {
-        std::cout << _T("\n  ") << e.GetExpr() << _T(" : ") << e.GetMsg();
+        std::cout << _T("\n  ") << e.GetExpr() << _T(" : ") << e.what();
         iStat += 1;
       }
 
@@ -818,7 +818,7 @@ namespace mu
       }
       catch(Parser::exception_type &e)
       {
-        std::cout << _T("\n  ") << e.GetExpr() << _T(" : ") << e.GetMsg();
+        std::cout << _T("\n  ") << e.GetExpr() << _T(" : ") << e.what();
         iStat += 1;
       }
       
@@ -1089,7 +1089,7 @@ namespace mu
       }
       catch(const Parser::exception_type &e)
       {
-        std::cout << "\n" << e.GetMsg() << std::endl;
+        std::cout << "\n" << e.what() << std::endl;
         std::cout << e.GetToken() << std::endl;
         Abort();
       }
@@ -1141,14 +1141,14 @@ namespace mu
         p.SetExpr(a_str);
         p.Eval();
       }
-      catch(ParserError &e)
+      catch(const ParserError &e)
       {
         // output the formula in case of an failed test
         if (a_bFail==false || (a_bFail==true && a_iErrc!=e.GetCode()) )
         {
           std::cout << _T("\n  ") 
                         << _T("Expression: ") << a_str 
-                        << _T("  Code:") << e.GetCode() << _T("(") << e.GetMsg() << _T(")")
+                        << _T("  Code:") << e.GetCode() << _T("(") << e.what() << _T(")")
                         << _T("  Expected:") << a_iErrc;
         }
 
@@ -1316,7 +1316,7 @@ namespace mu
           if (fVal[0]!=fVal[2] && fVal[0]!=-999 && fVal[1]!=-998)
             std::cout << _T("\n  fail: ") << a_str.c_str() << _T(" (copy construction)");
           else
-            std::cout << _T("\n  fail: ") << a_str.c_str() << _T(" (") << e.GetMsg() << _T(")");
+            std::cout << _T("\n  fail: ") << a_str.c_str() << _T(" (") << e.what() << _T(")");
           return 1;
         }
       }
@@ -1368,11 +1368,11 @@ namespace mu
                         << _T(" ;calculated: ") << fVal[0]<< _T(").");
         }
       }
-      catch(Parser::exception_type &e)
+      catch(const Parser::exception_type &e)
       {
         if (a_fPass)
         {
-          std::cout << _T("\n  fail: ") << e.GetExpr() << _T(" : ") << e.GetMsg();
+          std::cout << _T("\n  fail: ") << e.GetExpr() << _T(" : ") << e.what();
           iRet = 1;
         }
       }

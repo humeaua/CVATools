@@ -123,7 +123,7 @@ private:
 
   Part of the math parser package.
 */
-class ParserError
+    class ParserError : public std::exception
 {
 private:
 
@@ -154,10 +154,13 @@ public:
 
     void SetFormula(const string_type &a_strFormula);
     const string_type& GetExpr() const;
-    const string_type& GetMsg() const;
-    std::size_t GetPos() const;
+    virtual const char * what() const throw();
     const string_type& GetToken() const;
     EErrorCodes GetCode() const;
+    
+protected:
+    const string_type& GetMsg() const;
+    std::size_t GetPos() const;
 
 private:
     string_type m_strMsg;     ///< The message string

@@ -301,6 +301,13 @@ namespace mu
   {
     return m_strMsg;
   }
+    
+  //------------------------------------------------------------------------------
+  /** \brief Returns the message string for this error. */
+  const char * ParserError::what() const throw()
+  {
+      return GetMsg().c_str();
+  }
 
   //------------------------------------------------------------------------------
   /** \brief Return the formula position related to the error. 

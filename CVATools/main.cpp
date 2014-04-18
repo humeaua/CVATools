@@ -234,7 +234,7 @@ int _main()
                 std::cout << x << ";" << sGaussianKernel.Estimate(dXY, x) << std::endl;
             }
         }
-        catch (std::exception & e)
+        catch (const std::exception & e)
         {
             std::cout << "Error : " << e.what() << std::endl;
         }
@@ -362,7 +362,7 @@ int _main()
                 dXY.push_back(std::make_pair(x, Maths::DebyeFunction(x, k)));
             }
         }
-        catch(Utilities::MyException & e)
+        catch(const Utilities::MyException & e)
         {
             std::cout << "Exception caught" << e.what() << std::endl;
         }
@@ -449,11 +449,11 @@ int _main()
             }
             
         }
-        catch (Utilities::MyException & sException)
+        catch (const Utilities::MyException & sException)
         {
             std::cout << "MyException caught : " << sException.what() << std::endl;
         }
-        catch (std::exception & sException)
+        catch (const std::exception & sException)
         {
             std::cout << "std::exception caught " << sException.what() << std::endl;
         }
@@ -470,11 +470,11 @@ int _main()
             
             sTourChampionship2013.Print();
         }
-        catch(Utilities::MyException & sException)
+        catch(const Utilities::MyException & sException)
         {
             std::cout << "MyException caught : " << sException.what() << std::endl;
         }
-        catch (std::exception & sException)
+        catch (const std::exception & sException)
         {
             std::cout << "std::exception caught " << sException.what() << std::endl;
         }
@@ -490,11 +490,11 @@ int _main()
             Golf::Player sTigerWoods("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/Tiger_Woods.csv");
             sTigerWoods.Print();
         }
-        catch(Utilities::MyException & sException)
+        catch(const Utilities::MyException & sException)
         {
             std::cout << "MyException caught : " << sException.what() << std::endl;
         }
-        catch (std::exception & sException)
+        catch (const std::exception & sException)
         {
             std::cout << "std::exception caught " << sException.what() << std::endl;
         }
@@ -585,7 +585,7 @@ int _main()
             int i = 0 ;
             REQUIREEXCEPTION(i==1, "i is not equal to 1");
         }
-        catch (Utilities::MyException & excep)
+        catch (const Utilities::MyException & excep)
         {
             std::cout << "New MyException caught : " << excep.what() << std::endl;
         }
@@ -618,11 +618,11 @@ int main()
     {
         _main();
     }
-    catch (Utilities::MyException & excep)
+    catch (const Utilities::MyException & excep)
     {
         std::cout << "MyException caught : " << excep.what() << std::endl;
     }
-    catch (std::exception & excep)
+    catch (const std::exception & excep)
     {
         std::cout << "std::exception caught : " << excep.what() << std::endl;
     }

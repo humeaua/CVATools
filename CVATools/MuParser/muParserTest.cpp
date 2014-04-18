@@ -1087,13 +1087,13 @@ namespace mu
         for (int i=0; i<(int)m_vTestFun.size(); ++i)
           iStat += (this->*m_vTestFun[i])();
       }
-      catch(Parser::exception_type &e)
+      catch(const Parser::exception_type &e)
       {
         std::cout << "\n" << e.GetMsg() << std::endl;
         std::cout << e.GetToken() << std::endl;
         Abort();
       }
-      catch(std::exception &e)
+      catch(const std::exception &e)
       {
         std::cout << e.what() << std::endl;
         Abort();
@@ -1285,7 +1285,7 @@ namespace mu
           value_type *v = p2.Eval(nNum);
           fVal[4] = v[nNum-1];
         }
-        catch(std::exception &e)
+        catch(const std::exception &e)
         {
           std::cout << _T("\n  ") << e.what() << _T("\n");
         }
@@ -1309,7 +1309,7 @@ namespace mu
                                                 << fVal[4] << _T(").");
         }
       }
-      catch(Parser::exception_type &e)
+      catch(const Parser::exception_type &e)
       {
         if (a_fPass)
         {
@@ -1320,7 +1320,7 @@ namespace mu
           return 1;
         }
       }
-      catch(std::exception &e)
+      catch(const std::exception &e)
       {
         std::cout << _T("\n  fail: ") << a_str.c_str() << _T(" (") << e.what() << _T(")");
         return 1;  // always return a failure since this exception is not expected

@@ -124,13 +124,13 @@ bool RegressionTest::BondPricing(std::ostream & os)
             return false;
         }
     }
-    catch( const Utilities::MyException & e)
+    catch(const Utilities::MyException & e)
     {
         os << "MyException caught : " << std::endl;
         os << e.what() << std::endl;
         return false;
     }
-    catch( const std::exception & e)
+    catch(const std::exception & e)
     {
         os << "Exception caught : " << std::endl;
         os << e.what() << std::endl;
@@ -391,12 +391,12 @@ bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os)
     {
         sviParameterSolver.Solve(volSmile, true); // use parabola
     }
-    catch (Utilities::MyException & excep)
+    catch (const Utilities::MyException & excep)
     {
         os << excep.what() << std::endl;
         return false;
     }
-    catch (std::exception & excep)
+    catch (const std::exception & excep)
     {
         os << excep.what() << std::endl;
         return false;

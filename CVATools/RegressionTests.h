@@ -25,6 +25,7 @@ public:
     bool ProcessPathSimulation(std::ostream & os);
     bool Date(std::ostream & os);
     bool AnalyticFormulae(std::ostream & os);
+    bool MatrixInversion(std::ostream & os);
 };
 
 class RegressionTestLauncher

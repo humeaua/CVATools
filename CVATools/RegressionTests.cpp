@@ -670,6 +670,57 @@ bool RegressionTest::AnalyticFormulae(std::ostream & os)
     return true;
 }
 
+
+bool RegressionTest::MatrixInversion(std::ostream &os)
+{
+    os << "Regression Test for Matrix inversion" << std::endl;
+    
+    Utilities::Matrix<double> matrix(3,3), inverse(3,3), refinvmatrix(3,3);
+    matrix(0,0) = matrix(0,1) = matrix(0,2) = 1;
+    matrix(1,0) = 3;
+    matrix(1,1) = 4;
+    matrix(1,2) = 5;
+    matrix(2,0) = 6;
+    matrix(2,1) = 12;
+    matrix(2,2) = 20;
+    
+    refinvmatrix[0][0] = 10;
+    refinvmatrix[0][1] = -4;
+    refinvmatrix[0][2] = 0.5;
+    refinvmatrix[1][0] = -15;
+    refinvmatrix[1][1] = 7;
+    refinvmatrix[1][2] = -1;
+    refinvmatrix[2][0] = 6;
+    refinvmatrix[2][1] = -3;
+    refinvmatrix[2][2] = 0.5;
+    
+    Utilities::matrixinverse(inverse, matrix);
+    
+    inverse.print(os);
+    refinvmatrix.print(os);
+    
+    const double tolerance = 1e-8;
+    double error = 0.0;
+    for (size_t i = 0 ; i < 3 ; ++i)
+    {
+        for (size_t j = 0 ; j < 3 ; ++j)
+        {
+            error += std::abs(refinvmatrix[j][i] - inverse[i][j]);
+        }
+    }
+    
+    if (error < tolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+        return false;
+    }
+    return true;
+}
+
 /////////////////////////////////////////////////////
 //
 //      Regression test launcher
@@ -688,6 +739,7 @@ void RegressionTestLauncher::FillMap()
 #endif
     m_mapping.insert(std::make_pair("Time Statistics", &RegressionTest::TimeStatistics));
     m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
+    m_mapping.insert(std::make_pair("Matrix inversion", &RegressionTest::MatrixInversion));
 }
 
 bool RegressionTestLauncher::Launch(std::ostream &out)

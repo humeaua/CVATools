@@ -6,43 +6,18 @@
 //  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
 //
 
-#include <pthread.h>
-#include <iostream>
-#include "OrnsteinUhlenbeck.h"
-#include "SquareRoot.h"
-#include "BlackScholes.h"
 #include "MargrabeOptionVasicek.h"
-#include <cmath>
-#include <sstream>
-
-#include "BondPricer/BondPricer.h"
 #include "GaussianKernel.h"
 #include "RegressionTests.h"
 #include "MuParser/muParserTest.h"
-#include "Vector.h"
 #include "VectorUtilities.h"
 
 #include <tr1/memory>
-#include "PayoffVanillaOption.h"
-#include "BlackScholes.h"
-#include "PayoffLinearization.h"
 #include "MathFunctions.h"
 #include "Printcpp.h"
 #include "Sobol.h"
-#include <set>
-#include <functional>
-#include "StochCorrel.h"
-#include <stack>
-#include "OfficialWorldGolfRankings.h"
-#include "Tournament.h"
 #include "dirent.h"
 #include "PlayerDataBase.h"
-//#include "HTTPFetcher.h"
-#include "linalg.h"
-#include "VectorUtilities.h"
-#include "NewtonSolver.h"
-
-#include "Any.h"
 
 #define NUM_THREADS 5
 

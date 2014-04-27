@@ -151,7 +151,6 @@ bool RegressionTest::TimeStatistics(std::ostream & os) const
     {
         // Regression Test Statistics Time
         std::size_t iNTimes = 10;
-        //os << "Regression Test Time Computation for statistics" << std::endl;
         os << std::endl;
         std::vector<double> dData(1000000, 1.0);
         double dTimeOld = 0.0, dTimeNew = 0.0;
@@ -281,8 +280,6 @@ bool RegressionTest::PayoffLinearization(std::ostream & os) const
 
 bool RegressionTest::Interpolation(std::ostream & os) const
 {
-    //os << "Regression Test Interpolation " << std::endl;
-    os << std::endl;
     double variables[] = {1.0, 2.0, 3.0, 3.5}, values[] = {1.0, 0.0, 1.0, 1.0};
     std::vector<double> vectvar(variables, variables + 4), vectvalues(values, values + 4);
     
@@ -378,8 +375,6 @@ bool RegressionTest::Interpolation(std::ostream & os) const
 
 bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os) const
 {
-    //os << "Volatility Surface Interpolation" << std::endl;
-    
     const double dFwdRef = 1.0, T = 1.0;
     const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
     const std::vector<double> strikesvect(strikes, strikes + 7), volsvect(vols, vols + 7);
@@ -470,7 +465,6 @@ bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os) const
 
 bool RegressionTest::ProcessPathSimulation(std::ostream & os) const
 {
-    //os << "Process Path Simulation" << std::endl;
     const double dX0 = 1.0;
     
     long long lSeed = 0;
@@ -561,8 +555,6 @@ bool RegressionTest::ProcessPathSimulation(std::ostream & os) const
 //  Regression test for date
 bool RegressionTest::Date(std::ostream & os) const
 {
-    //os << "Regression Test for date" << std::endl;
-    
     Utilities::Date::MyDate sToday(3,2,2014);
     
     os << "Today is " << sToday.Print() << std::endl;
@@ -598,8 +590,6 @@ bool RegressionTest::Date(std::ostream & os) const
 
 bool RegressionTest::AnalyticFormulae(std::ostream & os) const
 {
-    //os << "Regression Test for Analytic formulae" << std::endl;
-    
     const double dFwdRef = 1.0, T = 1.0, spot = 1.0;
     const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
     const double observationTimes[] = {0.0, 0.5, 1.0};
@@ -672,8 +662,6 @@ bool RegressionTest::AnalyticFormulae(std::ostream & os) const
 
 bool RegressionTest::MatrixInversion(std::ostream &os) const
 {
-    //os << "Regression Test for Matrix inversion" << std::endl;
-    
     Utilities::Matrix<double> matrix(3,3), inverse(3,3), refinvmatrix(3,3);
     matrix(0,0) = matrix(0,1) = matrix(0,2) = 1;
     matrix(1,0) = 3;

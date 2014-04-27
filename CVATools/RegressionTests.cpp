@@ -28,10 +28,11 @@
 #include "SVIParameterSolver.h"
 
 #include "Analytic.h"
+#include "NewtonSolver.h"
 
 //  Declaration of all the regression tests
 
-bool RegressionTest::BondPricing(std::ostream & os)
+bool RegressionTest::BondPricing(std::ostream & os) const
 {
     //////////////////////////////////////////////////////////////
     //                                                          //
@@ -40,7 +41,7 @@ bool RegressionTest::BondPricing(std::ostream & os)
     //////////////////////////////////////////////////////////////
     try
     {
-        os << "Regression Test for Bond Pricing" << std::endl;
+        //os << "Regression Test for Bond Pricing" << std::endl;
         
         // Yield curve as of 10th May, 2013
         //          1 Mo	3 Mo	6 Mo	1 Yr	2 Yr	3 Yr	5 Yr	7 Yr	10 Yr	20 Yr	30 Yr
@@ -144,13 +145,13 @@ bool RegressionTest::BondPricing(std::ostream & os)
     return true;
 }
 
-bool RegressionTest::TimeStatistics(std::ostream & os)
+bool RegressionTest::TimeStatistics(std::ostream & os) const
 {
     try
     {
         // Regression Test Statistics Time
         std::size_t iNTimes = 10;
-        os << "Regression Test Time Computation for statistics" << std::endl;
+        //os << "Regression Test Time Computation for statistics" << std::endl;
         os << std::endl;
         std::vector<double> dData(1000000, 1.0);
         double dTimeOld = 0.0, dTimeNew = 0.0;
@@ -241,10 +242,8 @@ bool RegressionTest::TimeStatistics(std::ostream & os)
     return true;
 }
 
-bool RegressionTest::PayoffLinearization(std::ostream & os)
+bool RegressionTest::PayoffLinearization(std::ostream & os) const
 {
-    os << "Regression Test Payoff Linearization" << std::endl;
-    os << std::endl;
     // Payoff Linearisation
     Finance::Payoff::PayoffVanillaOption sPayoff(1.0, ::Finance::Payoff::CALL);
     long long lSeed = 0;
@@ -280,9 +279,9 @@ bool RegressionTest::PayoffLinearization(std::ostream & os)
     return true;
 }
 
-bool RegressionTest::Interpolation(std::ostream & os)
+bool RegressionTest::Interpolation(std::ostream & os) const
 {
-    os << "Regression Test Interpolation " << std::endl;
+    //os << "Regression Test Interpolation " << std::endl;
     os << std::endl;
     double variables[] = {1.0, 2.0, 3.0, 3.5}, values[] = {1.0, 0.0, 1.0, 1.0};
     std::vector<double> vectvar(variables, variables + 4), vectvalues(values, values + 4);
@@ -377,9 +376,9 @@ bool RegressionTest::Interpolation(std::ostream & os)
     return true;
 }
 
-bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os)
+bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os) const
 {
-    os << "Volatility Surface Interpolation" << std::endl;
+    //os << "Volatility Surface Interpolation" << std::endl;
     
     const double dFwdRef = 1.0, T = 1.0;
     const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
@@ -469,9 +468,9 @@ bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os)
     return true;
 }
 
-bool RegressionTest::ProcessPathSimulation(std::ostream & os)
+bool RegressionTest::ProcessPathSimulation(std::ostream & os) const
 {
-    os << "Process Path Simulation" << std::endl;
+    //os << "Process Path Simulation" << std::endl;
     const double dX0 = 1.0;
     
     long long lSeed = 0;
@@ -560,9 +559,9 @@ bool RegressionTest::ProcessPathSimulation(std::ostream & os)
 }
 
 //  Regression test for date
-bool RegressionTest::Date(std::ostream & os)
+bool RegressionTest::Date(std::ostream & os) const
 {
-    os << "Regression Test for date" << std::endl;
+    //os << "Regression Test for date" << std::endl;
     
     Utilities::Date::MyDate sToday(3,2,2014);
     
@@ -584,7 +583,7 @@ bool RegressionTest::Date(std::ostream & os)
         sToday.Add(1, Utilities::Date::YEAR);
 #endif
     Utilities::Date::MyDate finalDate(11, 3, 2015);
-    os << "Test of add function : " ;
+    //os << "Test of add function : " ;
     if (sToday == finalDate)
     {
         os << "SUCCEEDED" << std::endl;
@@ -597,9 +596,9 @@ bool RegressionTest::Date(std::ostream & os)
     return true;
 }
 
-bool RegressionTest::AnalyticFormulae(std::ostream & os)
+bool RegressionTest::AnalyticFormulae(std::ostream & os) const
 {
-    os << "Regression Test for Analytic formulae" << std::endl;
+    //os << "Regression Test for Analytic formulae" << std::endl;
     
     const double dFwdRef = 1.0, T = 1.0, spot = 1.0;
     const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
@@ -671,9 +670,9 @@ bool RegressionTest::AnalyticFormulae(std::ostream & os)
 }
 
 
-bool RegressionTest::MatrixInversion(std::ostream &os)
+bool RegressionTest::MatrixInversion(std::ostream &os) const
 {
-    os << "Regression Test for Matrix inversion" << std::endl;
+    //os << "Regression Test for Matrix inversion" << std::endl;
     
     Utilities::Matrix<double> matrix(3,3), inverse(3,3), refinvmatrix(3,3);
     matrix(0,0) = matrix(0,1) = matrix(0,2) = 1;
@@ -696,8 +695,10 @@ bool RegressionTest::MatrixInversion(std::ostream &os)
     
     Utilities::matrixinverse(inverse, matrix);
     
+#ifdef DEBUG
     inverse.print(os);
     refinvmatrix.print(os);
+#endif
     
     const double tolerance = 1e-8;
     double error = 0.0;
@@ -716,6 +717,40 @@ bool RegressionTest::MatrixInversion(std::ostream &os)
     else
     {
         os << "FAILED" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+double MySqrt(double x);
+double MySqrt(double x)
+{
+    return sqrt(x) - 1;
+}
+
+double MySqrtDeriv(double x);
+double MySqrtDeriv(double x)
+{
+    return 0.5 / sqrt(x);
+}
+
+bool RegressionTest::NewtonSolver(std::ostream &os) const
+{
+    Utilities::Solvers::NewtonParams params;
+    params.m_dFirstGuess = 2.0;
+    
+    Utilities::Solvers::NewtonSolver<double(double)> solver(MySqrt, MySqrtDeriv, params);
+    
+    double ref = 1.0;
+    const double tolerance = params.m_dTolerance;
+    const double calc = solver.Solve();
+    if (std::abs(calc - ref) < tolerance)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED";
         return false;
     }
     return true;
@@ -740,6 +775,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Time Statistics", &RegressionTest::TimeStatistics));
     m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
     m_mapping.insert(std::make_pair("Matrix inversion", &RegressionTest::MatrixInversion));
+    m_mapping.insert(std::make_pair("Newton Solver", &RegressionTest::NewtonSolver));
 }
 
 bool RegressionTestLauncher::Launch(std::ostream &out)
@@ -752,6 +788,7 @@ bool RegressionTestLauncher::Launch(std::ostream &out)
     auto it = m_mapping.begin();
     for ( ; it != m_mapping.end() ; ++it)
     {
+        out << "Regression Test " << it->first << std::endl;
         result = (m_regTest.*(it->second))(out);
         if (!result)
         {

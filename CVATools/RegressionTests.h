@@ -13,19 +13,20 @@
 #include <map>
 
 class RegressionTest;
-typedef bool (RegressionTest::* RegressionTestFunction)(std::ostream &);
+typedef bool (RegressionTest::* RegressionTestFunction)(std::ostream &) const;
 
 class RegressionTest {
 public:
-    bool BondPricing(std::ostream & os);
-    bool TimeStatistics(std::ostream & os);
-    bool PayoffLinearization(std::ostream & os);
-    bool Interpolation(std::ostream & os);
-    bool VolatilitySurfaceInterpolation(std::ostream & os);
-    bool ProcessPathSimulation(std::ostream & os);
-    bool Date(std::ostream & os);
-    bool AnalyticFormulae(std::ostream & os);
-    bool MatrixInversion(std::ostream & os);
+    bool BondPricing(std::ostream & os) const;
+    bool TimeStatistics(std::ostream & os) const;
+    bool PayoffLinearization(std::ostream & os) const;
+    bool Interpolation(std::ostream & os) const;
+    bool VolatilitySurfaceInterpolation(std::ostream & os) const;
+    bool ProcessPathSimulation(std::ostream & os) const;
+    bool Date(std::ostream & os) const;
+    bool AnalyticFormulae(std::ostream & os) const;
+    bool MatrixInversion(std::ostream & os) const;
+    bool NewtonSolver(std::ostream & os) const;
 };
 
 class RegressionTestLauncher

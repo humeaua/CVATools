@@ -40,6 +40,7 @@
 //#include "HTTPFetcher.h"
 #include "linalg.h"
 #include "VectorUtilities.h"
+#include "NewtonSolver.h"
 
 #include "Any.h"
 
@@ -135,7 +136,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "27- HTTP Fetcher" << std::endl;
     std::cout << "28- Exo DM louis matrices" << std::endl;
     std::cout << "30- Exception Testing" << std::endl;
-    std::cout << "33- Unary function (obsolete)" << std::endl;
     std::cin >> iTest;
 }
 
@@ -609,10 +609,6 @@ int _main()
         
         std::cout << "Inversed matrix" << std::endl;
         inverse.print(std::cout);
-    }
-    else if (iTest == 33)
-    {
-        //std::unary_function<double, double> f = exp;
     }
     return 0;
 }

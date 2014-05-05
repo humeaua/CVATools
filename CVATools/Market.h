@@ -26,7 +26,8 @@ namespace Finance
             Market(const Utilities::Date::MyDate & TodayDate);
             
             //  Getter
-            Utilities::Date::MyDate TodayDate() const;
+            const Utilities::Date::MyDate& TodayDate() const;
+            Utilities::Date::MyDate & TodayDate();
         };
     }
 }

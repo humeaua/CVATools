@@ -591,8 +591,7 @@ int _main()
     }
     else if (iTest == 33)
     {
-        Maths::StatisticMean mean;
-        Utilities::Wrapper<Maths::StatisticGatherer> wrapper(mean);
+        std::tr1::shared_ptr<Maths::StatisticGatherer> wrapper(new Maths::StatisticMean);
     }
     return 0;
 }

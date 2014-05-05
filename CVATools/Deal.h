@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include "Leg.h"
+#include <tr1/memory>
 
 namespace Finance
 {
@@ -20,10 +21,10 @@ namespace Finance
         class Deal
         {
         protected:
-            std::vector<Leg*> Legs_;
+            std::vector<std::tr1::shared_ptr<Leg> > Legs_;
             
         public:
-            Deal(const std::vector<Leg*> & Legs);
+            Deal(const std::vector<std::tr1::shared_ptr<Leg> > & Legs);
             
             virtual double Price(const std::vector<Finance::Models::Model> & models, const std::string &reportingCurrency) const;
         };

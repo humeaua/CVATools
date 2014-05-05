@@ -19,7 +19,7 @@ namespace Utilities
     {
     public:
         Matrix(std::size_t N, std::size_t M);
-        Matrix(std::size_t N, std::size_t M, T& value);
+        Matrix(std::size_t N, std::size_t M, const T& value);
         Matrix(std::size_t N, bool bIsIdentity);
         Matrix(int N, bool bIsIdentity);
         Matrix(const Matrix& m);
@@ -39,7 +39,8 @@ namespace Utilities
         std::ostream & print(std::ostream & os);
         
         class row;
-        row operator[](size_t index);
+        const row & operator[](size_t index) const;
+        row & operator[](size_t index);
         
         virtual const std::vector<T> & data() const;
         
@@ -57,6 +58,7 @@ namespace Utilities
     public:
         row(double * data, size_t colsize);
         T & operator[](size_t column_index);
+        const T& operator[](size_t column_index) const;
     private:
         double * m_data;
         size_t m_colsize;
@@ -72,7 +74,7 @@ namespace Utilities
     }
     
     template<typename T>
-    Matrix<T>::Matrix(std::size_t N, std::size_t M,T& value)
+    Matrix<T>::Matrix(std::size_t N, std::size_t M,const T& value)
     {
         m_rowsize = static_cast<int>(N);
         m_colsize = static_cast<int>(M);
@@ -226,7 +228,7 @@ namespace Utilities
     }
     
     template<typename T>
-    class Matrix<T>::row Matrix<T>::operator[](size_t index)
+    const typename Matrix<T>::row & Matrix<T>::operator[](size_t index) const
     {
         if (static_cast<int>(index) < 0)
         {
@@ -240,8 +242,38 @@ namespace Utilities
     }
     
     template<typename T>
+    typename Matrix<T>::row & Matrix<T>::operator[](size_t index)
+    {
+        if (static_cast<int>(index) < 0)
+        {
+            throw EXCEPTION("Index is negative");
+        }
+        if (index > m_rowsize)
+        {
+            throw EXCEPTION("column index out of range");
+        }
+        //  local static to avoid warning
+        static Matrix<T>::row row(&m_data[index * m_rowsize],m_colsize);
+        return row;
+    }
+    
+    template<typename T>
     Matrix<T>::row::row(double * data, size_t colsize) : m_data(data), m_colsize(colsize)
     {}
+    
+    template<typename T>
+    const T & Matrix<T>::row::operator[](size_t column_index) const
+    {
+        if (static_cast<int>(column_index) < 0)
+        {
+            throw EXCEPTION("Index is negative");
+        }
+        if (column_index > m_colsize)
+        {
+            throw EXCEPTION("column index out of range");
+        }
+        return m_data[column_index];
+    }
     
     template<typename T>
     T & Matrix<T>::row::operator[](size_t column_index)

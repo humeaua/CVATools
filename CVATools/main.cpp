@@ -19,6 +19,9 @@
 #include "dirent.h"
 #include "PlayerDataBase.h"
 
+#include "StatisticGatherer.h"
+#include "Wrapper.h"
+
 #define NUM_THREADS 5
 
 /*int main (int argc, const char * argv[])
@@ -111,6 +114,7 @@ void DisplayChoices(size_t & iTest)
     std::cout << "27- HTTP Fetcher" << std::endl;
     std::cout << "28- Exo DM louis matrices" << std::endl;
     std::cout << "30- Exception Testing" << std::endl;
+    std::cout << "33- Design patterns and derivative pricing" << std::endl;
     std::cin >> iTest;
 }
 
@@ -584,6 +588,11 @@ int _main()
         
         std::cout << "Inversed matrix" << std::endl;
         inverse.print(std::cout);
+    }
+    else if (iTest == 33)
+    {
+        Maths::StatisticMean mean;
+        Utilities::Wrapper<Maths::StatisticGatherer> wrapper(mean);
     }
     return 0;
 }

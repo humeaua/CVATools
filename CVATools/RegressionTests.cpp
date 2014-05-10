@@ -671,15 +671,15 @@ bool RegressionTest::MatrixInversion(std::ostream &os) const
     matrix(2,1) = 12;
     matrix(2,2) = 20;
     
-    refinvmatrix[0][0] = 10;
-    refinvmatrix[0][1] = -4;
-    refinvmatrix[0][2] = 0.5;
-    refinvmatrix[1][0] = -15;
-    refinvmatrix[1][1] = 7;
-    refinvmatrix[1][2] = -1;
-    refinvmatrix[2][0] = 6;
-    refinvmatrix[2][1] = -3;
-    refinvmatrix[2][2] = 0.5;
+    refinvmatrix(0,0) = 10;
+    refinvmatrix(0,1) = -4;
+    refinvmatrix(0,2) = 0.5;
+    refinvmatrix(1,0) = -15;
+    refinvmatrix(1,1) = 7;
+    refinvmatrix(1,2) = -1;
+    refinvmatrix(2,0) = 6;
+    refinvmatrix(2,1) = -3;
+    refinvmatrix(2,2) = 0.5;
     
     Utilities::matrixinverse(inverse, matrix);
     
@@ -694,7 +694,7 @@ bool RegressionTest::MatrixInversion(std::ostream &os) const
     {
         for (size_t j = 0 ; j < 3 ; ++j)
         {
-            error += std::abs(refinvmatrix[j][i] - inverse[i][j]);
+            error += std::abs(refinvmatrix[i][j] - inverse[i][j]);
         }
     }
     

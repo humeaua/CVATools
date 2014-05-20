@@ -36,7 +36,7 @@ namespace Utilities
             NewtonSolver(const functor & f, const functor & deriv_, const NewtonParams & params = NewtonParams()) : BaseSolver<functor>(f), m_deriv(deriv_), m_NewtonParams(params)
             {}
             
-            ~NewtonSolver()
+            virtual ~NewtonSolver()
             {}
             
             virtual double Solve() const

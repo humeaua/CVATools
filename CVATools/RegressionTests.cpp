@@ -29,6 +29,7 @@
 
 #include "Analytic.h"
 #include "NewtonSolver.h"
+#include "BisectionSolver.h"
 
 //  Declaration of all the regression tests
 
@@ -728,6 +729,7 @@ bool RegressionTest::NewtonSolver(std::ostream &os) const
     params.m_dFirstGuess = 2.0;
     
     Utilities::Solvers::NewtonSolver<double(double)> solver(MySqrt, MySqrtDeriv, params);
+    Utilities::Solvers::BisectionSolver<double(double)> solver2(MySqrt);
     
     double ref = 1.0;
     const double tolerance = params.m_dTolerance;

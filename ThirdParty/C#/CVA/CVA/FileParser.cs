@@ -85,7 +85,6 @@ namespace CVA
 			catch (Exception excep) {
 				throw new MyException ("Exception caught in ParseBody : " + excep);
 			}
-			return "";
 		}
 
 		private void PrintXMLType(ref XmlReader reader)
@@ -250,6 +249,7 @@ namespace CVA
 					Console.WriteLine ("MyException Caught {0}", excep);
 				}
 				catch (Exception excep) {
+					throw new MyException ("Exception caught : " + excep.Message);
 					//try
 					//{
 					//fileoutput.WriteLine("Exception caught");
@@ -269,7 +269,7 @@ namespace CVA
 		{
 			//	Load document
 			NameTable nametable = new NameTable();
-			object html = nametable.Add ("HTML");
+			//object html = nametable.Add ("HTML");
 			object body = nametable.Add ("body");
 
 			// Create the reader.
@@ -316,7 +316,7 @@ namespace CVA
 			}
 		}
 
-		public void ParsePlayer(ref string cFilePath)
+		public void ParsePlayer(ref string cFilePath, ref Player player)
 		{
 			string cSearchedString = "/events/events_scorecard.sps?EventID";
 			string cBegin = @"""newsdate"">";
@@ -328,8 +328,8 @@ namespace CVA
 					int iFirst = line.IndexOf (cBegin) + cBegin.Length + 1;
 					int iLast = line.IndexOf (cBegin);
 
-					string cTournamentName = line.Substring (iFirst, iLast - iFirst);
-
+					//string cTournamentName = line.Substring (iFirst, iLast - iFirst);
+					player.TournamentsPlayed++;
 				}
 			}
 			/*

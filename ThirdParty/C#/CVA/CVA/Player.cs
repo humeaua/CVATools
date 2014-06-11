@@ -14,7 +14,7 @@ namespace CVA
 		private double dTotalPoints;
 
 		private double dAverage;
-		private List<PlayerResult> sResults;
+		private List<PlayerResult> sResults; // should be replaced by dictionary
 		#endregion
 
 		// Constructors
@@ -129,6 +129,12 @@ namespace CVA
 			{
 				iRanking = value; 
 			}
+		}
+
+		public int TournamentsPlayed
+		{
+			get{ return iNTournamentsPlayed; }
+			set { iNTournamentsPlayed = value; }
 		}
 
 		public void Print()

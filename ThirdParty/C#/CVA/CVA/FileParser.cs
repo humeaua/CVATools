@@ -146,8 +146,8 @@ namespace CVA
 						switch (reader.NodeType) {
 						case XmlNodeType.Element:
 						{
-							switch (reader.Name.ToUpper ()) {
-							case "BODY":
+							if (reader.Name.ToUpper() == "BODY")
+							{
 								if (reader.AttributeCount == 4)
  								{
 									// 4 attributes : leftmargin, topmargin, marginheight, marginwidth 
@@ -166,9 +166,6 @@ namespace CVA
 									}
 									break;
 								}
-
-							default:
-								break;
 							}
 						}
 							break;

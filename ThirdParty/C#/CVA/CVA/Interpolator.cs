@@ -90,22 +90,19 @@ namespace CVA
 
 		public double Interp(double x)
 		{
-			switch (cExtrapolationMethod.ToUpper ()) 
+			if (cExtrapolationMethod.ToUpper() == "NEAR")
 			{
-			case "NEAR":
 				if (x <= Variables [0])
 					return Values [0];
 				if (x >= Variables [Variables.Count - 1])
 					return Values [Variables.Count - 1];
-			default:
-				break;
 			}
-			switch (cInterpolationMethod.ToUpper()) 
+			if (cInterpolationMethod.ToUpper() == "LINEAR" || cInterpolationMethod.ToUpper() == "LIN")
 			{
-			case "LINEAR":
-			case "LIN":
 				return InterpLin (x);
-			default:
+			}
+			else
+			{
 				throw new MyException ("Interpolation Type not recognized. Must input a correct interpolation type");
 			}
 		}

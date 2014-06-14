@@ -16,9 +16,14 @@ namespace Finance
         PayoffMargrabe::PayoffMargrabe(double dK) : dK_(dK)
         {}
         
-        double PayoffMargrabe::pay2(double s1, double s2) const
+        double PayoffMargrabe::operator()(const double s1, const double s2) const
         {
             return std::max(s1 - dK_ * s2, 0.0);
+        }
+        
+        BasePayoff2D * PayoffMargrabe::clone() const
+        {
+            return new PayoffMargrabe(*this);
         }
     }
 }

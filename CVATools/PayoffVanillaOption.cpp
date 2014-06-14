@@ -15,13 +15,13 @@ namespace Finance
 {
     namespace Payoff
     {
-        PayoffVanillaOption::PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType) : dStrike_(dStrike), eOptionType_(eOptionType), Finance::Payoff::Payoff()
+        PayoffVanillaOption::PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType) : dStrike_(dStrike), eOptionType_(eOptionType)
         {}
         
         PayoffVanillaOption::~PayoffVanillaOption()
         {}
         
-        double PayoffVanillaOption::pay1(double dS) const
+        double PayoffVanillaOption::operator()(const double dS) const
         {
             switch (eOptionType_)
             {
@@ -42,6 +42,11 @@ namespace Finance
                     throw EXCEPTION("Option Type not understood");
                 }
             }
+        }
+        
+        BasePayoff1D * PayoffVanillaOption::clone() const
+        {
+            return new PayoffVanillaOption(*this);
         }
     }
 }

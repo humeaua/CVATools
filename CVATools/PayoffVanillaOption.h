@@ -9,23 +9,24 @@
 #ifndef CVATools_PayoffVanillaOption_h
 #define CVATools_PayoffVanillaOption_h
 
-#include "Payoff.h"
+#include "BasePayoff.h"
 #include "VanillaOptionType.h"
 
 namespace Finance
 {
     namespace Payoff
     {
-        class PayoffVanillaOption : public Payoff
+        class PayoffVanillaOption : public BasePayoff1D
         {
         protected:
             double dStrike_;
             VanillaOptionType eOptionType_;
-            
-            virtual double pay1(double dS) const;
         public:
             PayoffVanillaOption(double dStrike, VanillaOptionType eOptionType_);
             virtual ~PayoffVanillaOption();
+            
+            virtual double operator()(const double dS) const;
+            virtual BasePayoff1D * clone() const;
         };
     }
 }

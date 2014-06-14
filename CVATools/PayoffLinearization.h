@@ -10,7 +10,7 @@
 #define __CVATools__PayoffLinearization__
 
 #include <iostream>
-#include "Payoff.h"
+#include "BasePayoff.h"
 #include "DiffusionProcess.h"
 #include "Matrix.h"
 #include "LinearRegression.h"
@@ -29,7 +29,7 @@ namespace Maths
         
         //  Method that return a pair of double - the two regression coefficients on the constant and on S_t
         virtual std::pair<double, double> Linearise(const Finance::Processes::DiffusionProcess & sDiffusionProcess,
-                                                    const Finance::Payoff::Payoff & sPayoff,
+                                                    const Finance::Payoff::BasePayoff1D & sPayoff,
                                                     std::vector<double>& dSimulationDates) const;
     };
 }

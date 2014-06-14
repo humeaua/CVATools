@@ -10,20 +10,21 @@
 #define __CVATools__PutSpread__
 
 #include <iostream>
-#include "Payoff.h"
+#include "BasePayoff.h"
 
 namespace Finance
 {
     namespace Payoff
     {
-        class PutSpread : public Payoff
+        class PutSpread : public BasePayoff1D
         {
         protected:
             double dStrike_, dLeftSpread_, dRightSpread_;
-            
-            virtual double pay1(double s1) const;
         public:
             PutSpread(double dStrike, double dLeftSpread, double dRightSpread);
+            
+            virtual double operator()(const double s1) const;
+            virtual BasePayoff1D * clone() const;
         };
     }
 }

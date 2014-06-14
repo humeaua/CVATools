@@ -16,7 +16,7 @@ namespace Finance
         DigitalCall::DigitalCall(double dStrike) : dStrike_(dStrike)
         {}
         
-        double DigitalCall::pay1(double s1) const
+        double DigitalCall::operator()(const double s1) const
         {
             if (s1 > dStrike_)
             {
@@ -28,12 +28,17 @@ namespace Finance
             }
         }
         
+        BasePayoff1D * DigitalCall::clone() const
+        {
+            return new DigitalCall(*this);
+        }
+        
         DigitalPut::DigitalPut(double strike) : dStrike_(strike)
         {}
         
-        double DigitalPut::pay1(double s1) const
+        double DigitalPut::operator()(const double S) const
         {
-            if (s1 < dStrike_)
+            if (S < dStrike_)
             {
                 return 1.0;
             }
@@ -41,6 +46,11 @@ namespace Finance
             {
                 return 0.0;
             }
+        }
+        
+        BasePayoff1D * DigitalPut::clone() const
+        {
+            return new DigitalPut(*this);
         }
     }
 }

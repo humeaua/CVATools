@@ -10,20 +10,21 @@
 #define __CVATools__CallSpread__
 
 #include <iostream>
-#include "Payoff.h"
+#include "BasePayoff.h"
 
 namespace Finance
 {
     namespace Payoff
     {
-        class CallSpread : public Payoff
+        class CallSpread : public BasePayoff1D
         {
         protected:
             double dStrike_, dLeftSpread_, dRightSpread_;
-            
-            virtual double pay1(double s1) const;
         public:
             CallSpread(double dStrike, double dLeftSpread, double dRightSpread);
+            
+            virtual double operator()(double s1) const;
+            virtual BasePayoff1D * clone() const;
         };
     }
 }

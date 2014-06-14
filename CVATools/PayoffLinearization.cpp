@@ -56,7 +56,7 @@ namespace Maths
     }
     
     std::pair<double, double> PayoffLinearization::Linearise(const Finance::Processes::DiffusionProcess &sDiffusionProcess,
-                                                             const Finance::Payoff::Payoff & sPayoff,
+                                                             const Finance::Payoff::BasePayoff1D & sPayoff,
                                                              std::vector<double> &dSimulationDates) const
     {
         //  Simulate the stock price
@@ -69,8 +69,7 @@ namespace Maths
         
         for (std::size_t iPath = 0 ; iPath < iNPaths_ ; ++iPath)
         {
-            const std::vector<double> & S = std::vector<double>(1, dFinalUnderlying.at(iPath));
-            dPayoff.at(iPath) = sPayoff.pay(S);
+            dPayoff.at(iPath) = sPayoff(dFinalUnderlying.at(iPath));
         }
         
         std::vector<double> bla = LeastSquareRegression::ComputeRegCoefs(sRegressionData, dPayoff);

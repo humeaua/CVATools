@@ -10,31 +10,33 @@
 #define __CVATools__Digital__
 
 #include <iostream>
-#include "Payoff.h"
+#include "BasePayoff.h"
 #include "VanillaOptionType.h"
 
 namespace Finance
 {
     namespace Payoff
     {
-        class DigitalCall : public Payoff
+        class DigitalCall : public BasePayoff1D
         {
         protected:
             double dStrike_;
-            
-            double pay1(double s1) const;
         public:
             DigitalCall(double dStrike);
+            
+            virtual double operator()(const double s1) const;
+            virtual BasePayoff1D * clone() const;
         };
         
-        class DigitalPut : public Payoff
+        class DigitalPut : public BasePayoff1D
         {
         protected:
             double dStrike_;
-            
-            double pay1(double s1) const;
         public:
             DigitalPut(double dStrike);
+            
+            virtual double operator()(double s1) const;
+            virtual BasePayoff1D * clone() const;
         };
     }
 }

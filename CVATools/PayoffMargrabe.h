@@ -9,21 +9,22 @@
 #ifndef CVATools_PayoffMargrabe_h
 #define CVATools_PayoffMargrabe_h
 
-#include "Payoff2D.h"
+#include "BasePayoff.h"
 
 namespace Finance
 {
     namespace Payoff
     {
-        class PayoffMargrabe : public Payoff2D
+        class PayoffMargrabe : public BasePayoff2D
         {
         protected:
             double dK_;
             
-            virtual double pay2(double s1, double s2) const;
-            
         public:
             PayoffMargrabe(double dK);
+            
+            virtual double operator()(const double s1, const double s2) const;
+            virtual BasePayoff2D * clone() const;
         };
     }
 }

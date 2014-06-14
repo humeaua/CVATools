@@ -19,10 +19,15 @@ namespace Finance
             REQUIREEXCEPTION(dRightSpread_ >= 0.0, "Right spread has to be positive");
         }
         
-        double CallSpread::pay1(double s1) const
+        double CallSpread::operator()(double s1) const
         {
             //  We buy one call of strike dStrike - dLeftSpread and sell one call of strike dStrike + dRightSpread
             return std::max(s1 - dStrike_ + dLeftSpread_, 0.0) - std::max(s1 - dStrike_ - dRightSpread_, 0.0);
+        }
+        
+        BasePayoff1D * CallSpread::clone() const
+        {
+            return new CallSpread(*this);
         }
     }
 }

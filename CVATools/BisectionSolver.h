@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "BaseSolver.h"
+#include "Exception.h"
 
 namespace Utilities
 {
@@ -36,7 +37,7 @@ namespace Utilities
             
             virtual double Solve() const
             {
-                
+                throw EXCEPTION("Not yet implemented");
             }
             
         private:

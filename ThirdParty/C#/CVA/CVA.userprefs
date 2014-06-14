@@ -1,12 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CVA/FileParser.cs">
     <Files>
       <File FileName="CVA/Program.cs" Line="1" Column="1" />
-      <File FileName="CVA/FileParser.cs" Line="331" Column="8" />
-      <File FileName="CVA/Interpolator.cs" Line="100" Column="4" />
-      <File FileName="CVA/EnumToString.cs" Line="43" Column="21" />
-      <File FileName="CVA/Player.cs" Line="70" Column="52" />
+      <File FileName="CVA/FileParser.cs" Line="1" Column="1" />
+      <File FileName="CVA/Interpolator.cs" Line="1" Column="1" />
+      <File FileName="CVA/EnumToString.cs" Line="1" Column="1" />
+      <File FileName="CVA/Player.cs" Line="57" Column="23" />
       <File FileName="CVA/PlayerResult.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

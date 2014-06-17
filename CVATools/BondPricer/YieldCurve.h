@@ -44,6 +44,8 @@ namespace Finance
             
             //  the following method apply an exponential shift  - shift * exp(t / tau) on the yield curve
             virtual void ApplyExponentialShift(double dShift, double dTau);
+            
+            virtual const std::string & Ccy() const;
         };
     }
 }

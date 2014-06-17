@@ -7,3 +7,14 @@
 //
 
 #include "DeterministicModel.h"
+
+namespace Finance
+{
+    namespace Models
+    {
+        double DeterministicModel::GetFXSpot(const std::string &domesticCurrency, const std::string &foreignCurrency) const
+        {
+            return Finance::Market::FXMarket::GetSpot(foreignCurrency, domesticCurrency);
+        }
+    }
+}

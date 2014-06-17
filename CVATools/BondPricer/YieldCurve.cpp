@@ -147,5 +147,10 @@ namespace Finance
         {
             return sToday_;
         }
+        
+        const std::string & YieldCurve::Ccy() const
+        {
+            return cCCY_;
+        }
     }
 }

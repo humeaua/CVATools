@@ -5,47 +5,175 @@
 #include <iostream>
 
 #include "TestUDT.h"
+#include <cmath>
 
 using namespace fadbad;
 
 class UDT
 {
 public:
-	UDT(){/*std::cout<<"UDT()"<<std::endl;*/} // default constructor
-	UDT(const UDT&){/*std::cout<<"UDT(UDT&)"<<std::endl;*/} // copy constructor
-	UDT(const double&){/*std::cout<<"UDT(UDT&)"<<std::endl;*/} // copy constructor
-	UDT(const int){/*std::cout<<"UDT(int)"<<std::endl;*/} // initialize-with-int constructor
-	UDT& operator=(const UDT&){ return *this; }
-	UDT& operator=(const double&){ return *this; }
-	UDT& operator+=(const UDT&){ return *this; }
-	UDT& operator+=(const double&){ return *this; }
-	UDT& operator-=(const UDT&){ return *this; }
-	UDT& operator-=(const double&){ return *this; }
+    
+    // default constructor
+	UDT() : x(0)
+    {}
+    
+    // copy constructor
+	UDT(const UDT& rhs) : x(rhs.x)
+    {}
+    
+    // copy constructor
+	UDT(const double& x) : x(x)
+    {}
+    
+	UDT& operator=(const UDT& rhs)
+    {
+        x = rhs.x;
+        return *this;
+    }
+    
+	UDT& operator=(const double&a)
+    {
+        x = a;
+        return *this;
+    }
+    
+	UDT& operator+=(const UDT& rhs)
+    {
+        x += rhs.x;
+        return *this;
+    }
+    
+	UDT& operator+=(const double& a)
+    {
+        x += a;
+        return *this;
+    }
+    
+	UDT& operator-=(const UDT& rhs)
+    {
+        x -= rhs.x;
+        return *this;
+    }
+    
+	UDT& operator-=(const double& a)
+    {
+        x -= a;
+        return *this;
+    }
+    
+//private:
+    double x;
 };
 
-UDT operator + (const UDT&, const UDT&) {/* std::cout<<"UDT+UDT"<<std::endl;*/return UDT(); }
-UDT operator - (const UDT&, const UDT&) {/* std::cout<<"UDT-UDT"<<std::endl;*/return UDT(); }
-UDT operator * (const UDT&, const UDT&) {/* std::cout<<"UDT*UDT"<<std::endl;*/return UDT(); }
-UDT operator / (const UDT&, const UDT&) {/* std::cout<<"UDT/UDT"<<std::endl;*/return UDT(); }
-UDT operator + (const UDT&, const double&) {/* std::cout<<"UDT+UDT"<<std::endl;*/return UDT(); }
-UDT operator - (const UDT&, const double&) {/* std::cout<<"UDT-UDT"<<std::endl;*/return UDT(); }
-UDT operator * (const UDT&, const double&) {/* std::cout<<"UDT*UDT"<<std::endl;*/return UDT(); }
-UDT operator / (const UDT&, const double&) {/* std::cout<<"UDT/UDT"<<std::endl;*/return UDT(); }
-UDT operator + (const double&, const UDT&) {/* std::cout<<"UDT+UDT"<<std::endl;*/return UDT(); }
-UDT operator - (const double&, const UDT&) {/* std::cout<<"UDT-UDT"<<std::endl;*/return UDT(); }
-UDT operator * (const double&, const UDT&) {/* std::cout<<"UDT*UDT"<<std::endl;*/return UDT(); }
-UDT operator / (const double&, const UDT&) {/* std::cout<<"UDT/UDT"<<std::endl;*/return UDT(); }
-UDT Exp(const UDT&) {/* std::cout<<"Exp(UDT)"<<std::endl;*/return UDT(); }
-UDT Sqr(const UDT&) {/* std::cout<<"Sqr(UDT)"<<std::endl;*/return UDT(); }
-UDT Sin(const UDT&) {/* std::cout<<"Sin(UDT)"<<std::endl;*/return UDT(); }
-UDT Cos(const UDT&) {/* std::cout<<"Cos(UDT)"<<std::endl;*/return UDT(); }
+UDT operator + (const UDT& lhs, const UDT& rhs)
+{
+    return UDT(lhs.x + rhs.x);
+}
 
-bool operator==(const UDT&,const UDT&){return true;}
-bool operator!=(const UDT&,const UDT&){return true;}
-bool operator<(const UDT&,const UDT&){return true;}
-bool operator>(const UDT&,const UDT&){return true;}
-bool operator<=(const UDT&,const UDT&){return true;}
-bool operator>=(const UDT&,const UDT&){return true;}
+UDT operator - (const UDT& lhs, const UDT&rhs)
+{
+    return UDT(lhs.x + rhs.x);
+}
+
+UDT operator * (const UDT&lhs, const UDT&rhs)
+{
+    return UDT(lhs.x * rhs.x);
+}
+
+UDT operator / (const UDT&lhs, const UDT&rhs)
+{
+    return UDT(lhs.x / rhs.x);
+}
+
+UDT operator + (const UDT&lhs, const double&a)
+{
+    return UDT(lhs.x + a);
+}
+
+UDT operator - (const UDT&lhs, const double&a)
+{
+    return UDT(lhs.x - a);
+}
+
+UDT operator * (const UDT&lhs, const double&a)
+{
+    return UDT(lhs.x * a);
+}
+
+UDT operator / (const UDT&lhs, const double&a)
+{
+    return UDT(lhs.x / a);
+}
+
+UDT operator + (const double& a, const UDT& lhs)
+{
+    return UDT(lhs.x + a);
+}
+
+UDT operator - (const double& a, const UDT& lhs)
+{
+    return UDT(lhs.x - a);
+}
+
+UDT operator * (const double& a, const UDT& lhs)
+{
+    return UDT(lhs.x * a);
+}
+
+UDT operator / (const double& a, const UDT& lhs)
+{
+    return UDT(lhs.x / a);
+}
+
+UDT Exp(const UDT& u)
+{
+    return UDT(exp(u.x));
+}
+
+UDT Sqr(const UDT& u)
+{
+    return UDT(sqrt(u.x));
+}
+
+UDT Sin(const UDT& u)
+{
+    return UDT(sin(u.x));
+}
+
+UDT Cos(const UDT& u)
+{
+    return UDT(cos(u.x));
+}
+
+bool operator==(const UDT& lhs,const UDT&rhs)
+{
+    return lhs.x == rhs.x;
+}
+
+bool operator!=(const UDT& lhs, const UDT& rhs)
+{
+    return lhs.x != rhs.x;
+}
+
+bool operator<(const UDT& lhs, const UDT& rhs)
+{
+    return lhs.x < rhs.x;
+}
+
+bool operator>(const UDT& lhs, const UDT& rhs)
+{
+    return lhs.x > rhs.x;
+}
+
+bool operator<=(const UDT& lhs, const UDT& rhs)
+{
+    return lhs.x <= rhs.x;
+}
+
+bool operator>=(const UDT& lhs, const UDT& rhs)
+{
+    return lhs.x == rhs.x;
+}
 
 namespace fadbad
 {

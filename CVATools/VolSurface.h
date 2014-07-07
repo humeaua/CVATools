@@ -23,15 +23,18 @@ namespace Finance
             std::vector<VolSmile> m_VolSurface;
             std::vector<double> m_Expiries;
             
+            double m_Spot;
+            
         private:
             
             virtual bool CheckButterflySpreadArbitrage() const;
             virtual bool CheckCalendarSpreadArbitrage() const;
             
         public:
-            VolatilitySurface(const std::vector<VolSmile> & VolSurface);
+            VolatilitySurface(const std::vector<VolSmile> & VolSurface, const double & Spot);
             
-            virtual double operator()(double Expiry, double Strike) const;
+            virtual double operator()(const double & Expiry, const double & Strike) const;
+            virtual VolSmile GetSmile(const double & Expiry) const;
             
             virtual bool IsArbitrageFree() const;
         };

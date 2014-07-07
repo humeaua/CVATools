@@ -72,7 +72,7 @@ namespace Utilities {
         return PairOfVector;
     };
     
-    template<class T> bool IsFound(const std::vector<T> & vect, T & value, std::size_t & iWhere)
+    template<class T> bool IsFound(const std::vector<T> & vect, const T & value, std::size_t & iWhere)
     {
         //  Check if the value is in the vector
         for (std::size_t i = 0 ; i < vect.size(); ++i)
@@ -89,7 +89,7 @@ namespace Utilities {
     };
     
     template<>
-    inline bool IsFound(const std::vector<double> & vect, double& value, std::size_t & iWhere)
+    inline bool IsFound(const std::vector<double> & vect, const double& value, std::size_t & iWhere)
     {
         const double dTolerance = 1e-10;
         for (std::size_t i = 0 ; i < vect.size(); ++i)
@@ -207,6 +207,11 @@ namespace Utilities {
     ReturnType StdDev(const std::vector<InputType> & vect)
     {
         return sqrt(Variance<InputType, ReturnType>(vect));
+    }
+    
+    inline bool Pair1stLowerOrEqual(const std::pair<double, double> & lhs, const std::pair<double, double> & rhs)
+    {
+        return lhs.first < rhs.first;
     }
 };
 

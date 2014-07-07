@@ -17,7 +17,7 @@ namespace Finance
 {
     namespace Volatility
     {
-        VolatilitySurface::VolatilitySurface(const std::vector<VolSmile> & VolSurface) : m_VolSurface(VolSurface)
+        VolatilitySurface::VolatilitySurface(const std::vector<VolSmile> & VolSurface, const double & Spot) : m_VolSurface(VolSurface), m_Spot(Spot)
         {
             for (std::vector<VolSmile>::const_iterator volSmile = m_VolSurface.begin() ; volSmile != m_VolSurface.end() ; ++volSmile)
             {
@@ -25,7 +25,7 @@ namespace Finance
             }
         }
         
-        double VolatilitySurface::operator()(double Expiry, double Strike) const
+        double VolatilitySurface::operator()(const double & Expiry, const double & Strike) const
         {
             std::size_t iExpiry = 0;
             if (Utilities::IsFound(m_Expiries, Expiry, iExpiry))
@@ -34,56 +34,81 @@ namespace Finance
             }
             else
             {
-                /*//  Linear interpolation of the variance, spline cubic over the log strike
-                std::vector<long> lExpiries(VolSurface_.size(), 0L);
-                std::map<long, std::map<double, double> >::const_iterator it = VolSurface_.begin();
-                for (std::size_t iExpiry = 0 ; iExpiry < VolSurface_.size() ; ++iExpiry, ++it)
+                return GetSmile(Expiry).operator()(Strike);
+            }
+        }
+        
+        VolSmile VolatilitySurface::GetSmile(const double &Expiry) const
+        {
+            //  Linear interpolation of the variance, spline cubic over the log strike
+            int iIndex = Utilities::FindInVector(m_Expiries, Expiry);
+            
+            if (iIndex != -1 && iIndex < m_Expiries.size() - 1)
+            {
+                //  lExpiry is between lExpiries[iIndex] and lExpiries[iIndex + 1]
+                const VolSmile & VolSmile0 = m_VolSurface[iIndex];
+                
+                const VolSmile & VolSmile1 = m_VolSurface[iIndex + 1];
+                
+                REQUIREEXCEPTION(VolSmile0.size() == VolSmile1.size(), "Vol Smiles are not the same size");
+                
+                std::vector<double> dStrikes;
+                std::vector<std::pair<double, double> > StrikesAndVols;
+                const std::vector<double> logStrikes0 = VolSmile0.LogStrikes(), logStrikes1 = VolSmile1.LogStrikes(), Volatilities0 = VolSmile0.Volatilities(), Volatilities1 = VolSmile1.Volatilities();
+                
+                const double Expiry0 = m_Expiries[iIndex], Expiry1 = m_Expiries[iIndex + 1];
+                //  Linear interpolation of the low of the forward ref, should be ok for now
+                const double NewForwardRef = exp((log(VolSmile0.FwdRef()) * (Expiry - Expiry0) + log(VolSmile1.FwdRef()) * (Expiry - Expiry1)) / (Expiry0 - Expiry1));
+                
+                // Build the strike vector
+                std::vector<double>::const_iterator oldStrike = logStrikes0.begin();
+                for ( ; oldStrike != logStrikes0.end() ; ++oldStrike)
                 {
-                    lExpiries[iExpiry] = it->first;
+                    dStrikes.push_back(*oldStrike + log(VolSmile0.FwdRef() / NewForwardRef));
+                }
+                oldStrike = logStrikes1.begin();
+                for ( ; oldStrike != logStrikes1.end() ; ++oldStrike)
+                {
+                    dStrikes.push_back(*oldStrike + log(VolSmile1.FwdRef() / NewForwardRef));
                 }
                 
-                int iIndex = Utilities::FindInVector(lExpiries, lExpiry);
-                
-                if (iIndex != -1)
+                // Interpolate linearly in variance : check for arbitrage free conditions
+                // I think the smile I build is arbitrable
+                for (std::size_t i = 0 ; i < dStrikes.size() ; ++i)
                 {
-                    //  lExpiry is between lExpiries[iIndex] and lExpiries[iIndex + 1]
-                    const std::map<double,double> VolSmile0 = VolSurface_.find(lExpiries[iIndex])->second;
-                    std::map<double, double>::const_iterator iter0 = VolSmile0.begin();
+                    const double dVol0 = VolSmile0(dStrikes[i]), dVol1 = VolSmile1(dStrikes[i]);
+                    double dVol = dVol0 * dVol0 * (Expiry - Expiry0) + dVol1 * dVol1 * (Expiry - Expiry1);
+                    dVol /= Expiry0 - Expiry1;
                     
-                    const std::map<double, double> VolSmile1 = VolSurface_.find(lExpiries[iIndex])->second;
-                    std::map<double, double>::const_iterator iter1 = VolSmile1.begin();
-                    
-                    REQUIREEXCEPTION(VolSmile0.size() == VolSmile1.size(), "Vol Smiles are not the same size");
-                    
-                    std::vector<double> dStrikes(VolSmile0.size(), 0.0), dVols(VolSmile0.size(), 0.0);
-                    std::vector<double>::iterator iterVol = dVols.begin();
-                    for (std::vector<double>::iterator iterStrike = dStrikes.begin() ; iterStrike != dStrikes.end() ; ++iterStrike, ++iter0, ++iterVol)
+                    if (dVol < 0.0)
                     {
-                        REQUIREEXCEPTION(iter0->first > 0.0, "Strike is negative");
-                        *iterStrike = log(iter0->first / dSpot_);
-                        *iterVol = iter0->second * iter0->second * (lExpiry - lExpiries[iIndex]) + iter1->second * iter1->second * (lExpiries[iIndex + 1] - lExpiry) ;
-                        *iterVol /= (lExpiries[iIndex + 1] - lExpiries[iIndex]);
-                        *iterVol *= lExpiry / 365.0; // ACT365FIXED day count convention
-                        
                         // Build error message just in case
                         std::stringstream Expiry, Strike;
-                        Expiry << lExpiry;
-                        Strike << dSpot_ * exp(*iterStrike);
+                        Expiry << Expiry;
+                        Strike << dStrikes[i];
                         
-                        REQUIREEXCEPTION(*iterVol >= 0.0, "Volatility is negative : Expiry : " + Expiry.str() + " Strike : " + Strike.str());
+                        
+                        throw EXCEPTION("Volatility is negative : Expiry : " + Expiry.str() + " Strike : " + Strike.str());
                     }
-                    
-                    //Utilities::Interp::InterExtrapolation1D Interp(dStrikes, dVols, Utilities::Interp::HERMITE_SPLINE_CUBIC);
-                    Utilities::Interp::HermiteSplineCubicInterpolator Interp(dStrikes, dVols);
-                    return sqrt(Interp(dStrike) * 365.0 / lExpiry); // return the volatility, not the variance
-                    throw EXCEPTION("Not yet implemented");
+                    StrikesAndVols.push_back(std::make_pair(dStrikes[i], dVol));
                 }
-                else
+                
+                //  Sort the vector of pair as we pushed back the first smile then the second (think of a better solution by comparing the moneyness directly if too slow)
+                std::sort(StrikesAndVols.begin(), StrikesAndVols.end(), Utilities::Pair1stLowerOrEqual);
+                
+                //  Add vol in the vector
+                std::vector<double> dVols(StrikesAndVols.size());
+                for (std::size_t i = 0 ; i < StrikesAndVols.size() ; ++i)
                 {
-                    //  Extrapolation Error ?
-                    throw EXCEPTION("Index not found in Volatility surface");
-                }*/
-                throw EXCEPTION("Not yet implemented");
+                    dVols[i] = StrikesAndVols[i].second;
+                }
+                
+                return VolSmile(dStrikes, dVols, NewForwardRef, Expiry);
+            }
+            else
+            {
+                //  Extrapolation Error ?
+                throw EXCEPTION("Index not found in Volatility surface");
             }
         }
         

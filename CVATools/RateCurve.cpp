@@ -17,17 +17,16 @@ namespace Finance
         {}
 
         //  Computation of spot discount factor
-        double RateCurve::Spot(const Utilities::Date::MyDate &SpotDate) const
+        double RateCurve::operator()(const Utilities::Date::MyDate & date1) const
         {
             //  Assuming ACT365FIXED day count convention for discount factors
-            double dt = SpotDate.Diff(Finance::Base::YieldCurve::Today());
+            double dt = date1.Diff(Finance::Base::YieldCurve::Today());
             return exp(-Finance::Base::YieldCurve::operator()(dt) * dt);
         }
         
-        //  Computation of forward discount factor
-        double RateCurve::Forward(const Utilities::Date::MyDate &FixingDate, const Utilities::Date::MyDate &SettleDate, const Finance::Market::Market &Market) const
+        const Utilities::Date::MyDate & RateCurve::Today() const
         {
-            return Spot(SettleDate, Market) / Spot(FixingDate, Market);
+            return Base::YieldCurve::Today();
         }
     }
 }

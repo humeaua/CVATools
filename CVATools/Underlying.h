@@ -27,23 +27,11 @@ namespace Finance
     {
         class Underlying
         {
-        protected:
+        public:
             //  Need for now two declaration of the methods depending on the signatures of the methods as I do not know yet how to handle the arguments
-            virtual double Spot(const Utilities::Date::MyDate & SpotDate, const Finance::Market::Market & Market) const = 0;
-            virtual double Spot(const Utilities::Date::MyDate & SpotDate) const = 0;
-            
-            virtual double Forward(const Utilities::Date::MyDate & FixingDate,
-                                   const Utilities::Date::MyDate & SettleDate,
-                                   const Finance::Market::Market & Market) const = 0;
-            
-            virtual double Spot(const Utilities::Date::MyDate & SpotDate,
-                                const Finance::Market::Market & Market,
-                                const ModelState & ModelState) const = 0;
-            
-            virtual double Forward(const Utilities::Date::MyDate & FixingDate,
-                                   const Utilities::Date::MyDate & SettleDate,
-                                   const Finance::Market::Market & Market,
-                                   const ModelState & ModelState) const = 0;
+            virtual double operator()(const Utilities::Date::MyDate & date1) const = 0;
+            virtual double operator()(const Utilities::Date::MyDate & date1,
+                                      const Utilities::Date::MyDate & date2) const;
         };
     }
 }

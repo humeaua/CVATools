@@ -22,7 +22,7 @@ namespace Finance
             //  conversion via spot
             const double fxspot = model.GetFXSpot(reportingCurrency, m_Currency);
             
-            return reportingCurrencyRateCurve.Spot(m_payDate) * fxspot * m_dAmount;
+            return reportingCurrencyRateCurve(m_payDate) * fxspot * m_dAmount;
         }
     }
 }

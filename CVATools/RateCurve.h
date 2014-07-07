@@ -19,25 +19,11 @@ namespace Finance
     {
         class RateCurve : public Underlying, public Finance::Base::YieldCurve
         {
-        protected:
-            virtual double Spot(const Utilities::Date::MyDate & SpotDate, const Finance::Market::Market & Market) const = 0;
-            
-            virtual double Forward(const Utilities::Date::MyDate & FixingDate,
-                                   const Utilities::Date::MyDate & SettleDate,
-                                   const Finance::Market::Market & Market) const;
-            
-            virtual double Spot(const Utilities::Date::MyDate & SpotDate,
-                                const Finance::Market::Market & Market,
-                                const ModelState & ModelState) const = 0;
-            
-            virtual double Forward(const Utilities::Date::MyDate & FixingDate,
-                                   const Utilities::Date::MyDate & SettleDate,
-                                   const Finance::Market::Market & Market,
-                                   const ModelState & ModelState) const = 0;
         public:
             RateCurve(const Finance::Base::YieldCurve & DiscountCurve);
-            virtual double Spot(const Utilities::Date::MyDate & SpotDate) const;
+            virtual double operator()(const Utilities::Date::MyDate & date1) const;
             
+            virtual const Utilities::Date::MyDate & Today() const;
         };
     }
 }

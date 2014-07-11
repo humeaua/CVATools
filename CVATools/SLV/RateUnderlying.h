@@ -25,10 +25,16 @@ namespace SLV
     class RateUnderlying
     {
         std::tr1::shared_ptr<Finance::Base::YieldCurve> m_YieldCurve;
+        bool m_IsDummy;
     public:
-        RateUnderlying(const Finance::Base::YieldCurve & m_YieldCurve);
+        RateUnderlying(const Finance::Base::YieldCurve & m_YieldCurve, bool isDummy);
         
         virtual RateUnderlying * clone() const;
+        
+        virtual bool IsDummy() const
+        {
+            return m_IsDummy;
+        }
     };
 }
 

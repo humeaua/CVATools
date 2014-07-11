@@ -11,7 +11,7 @@
 
 namespace SLV
 {
-    RateUnderlying::RateUnderlying(const Finance::Base::YieldCurve & yieldCurve) : m_YieldCurve(yieldCurve.clone())
+    RateUnderlying::RateUnderlying(const Finance::Base::YieldCurve & yieldCurve, bool isDummy) : m_YieldCurve(yieldCurve.clone()), m_IsDummy(isDummy)
     {}
     
     RateUnderlying * RateUnderlying::clone() const

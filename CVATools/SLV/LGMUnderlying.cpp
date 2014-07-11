@@ -10,7 +10,7 @@
 
 namespace SLV
 {
-    LGM1FUnderlying::LGM1FUnderlying(const Finance::Base::YieldCurve & yieldCurve) : RateUnderlying(yieldCurve)
+    LGM1FUnderlying::LGM1FUnderlying(const Finance::Base::YieldCurve & yieldCurve) : RateUnderlying(yieldCurve, false)
     {}
     
     RateUnderlying * LGM1FUnderlying::clone() const

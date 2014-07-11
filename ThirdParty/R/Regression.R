@@ -109,7 +109,7 @@ plot(las, plottype="Cp")
 # the "fraction" can be determined.
 cvlas <- cv.lars(x, y, type="lasso")
 cvlas
-frac <- cvlas$fraction[which.min(cvlas$cv)]
+frac <- cvlas$index[which.min(cvlas$cv)]
 frac
 las.coef <- predict.lars(las, type="coefficients", mode="fraction", s=frac)
 las.coef

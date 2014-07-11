@@ -21,6 +21,9 @@ namespace Finance
         DiffusionProcess::DiffusionProcess(double dX0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor, long long & lSeed) : dX0_(dX0), StochProcessSimulation(bFloorSimulation, bStartFromFloor, bCapSimulation, bStartFromCap, dCap, dFloor), SimulatedProcess(lSeed)
         {}
         
+        DiffusionProcess::DiffusionProcess(const StochProcessSimulation & SimulationParams, long long & lSeed) : SimulatedProcess(lSeed), StochProcessSimulation(SimulationParams)
+        {}
+        
         double DiffusionProcess::getx0() const
         {
             return dX0_;

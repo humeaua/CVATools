@@ -23,6 +23,7 @@ namespace Finance
         {
         public:
             DiffusionProcess(double x0, bool bFloorSimulation, bool bStartFromFloor, bool bCapSimulation, bool bStartFromCap, double dCap, double dFloor, long long & lSeed);
+            DiffusionProcess(const StochProcessSimulation & SimulationParams, long long & lSeed);
             
             double getx0() const;
             

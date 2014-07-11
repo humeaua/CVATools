@@ -59,16 +59,48 @@ Let $T$ be a finite time horizon (the final maturity of the deal we want to pric
 Let $S$ be an asset of drift $\mu_t$ under the domestic risk-neutral probability measure. We assume the following dynamics under $\mathbb{Q}_d$
 
 \begin{equation}
-	\frac{dS_t}{S_t} = \mu_t dt + \sigma(S_t,t) e^{X_t} dW_t
+	\frac{dS_t}{S_t} = \mu_t dt + \sigma(S_t,t) \Sigma_t dW_t
 \end{equation}
 
-\noindent where $(S,t) \mapsto \sigma(S,t)$ is the local volatility function (deterministic function of spot and time, calibrated to the vanilla option market at time $0$. We will develop later a methodology to calibrate that function $\sigma$. $X$ is an Ornstein-Ulhenbeck process so that : 
+\noindent where $(S,t) \mapsto \sigma(S,t)$ is the local volatility function (deterministic function of spot and time, calibrated to the vanilla option market at time $0$). We will develop later a methodology to calibrate that function $\sigma$. $\Sigma$ is an $\mathcal{F}_t$ adapted process
+
+\noindent This additional constraint equation comes from the Markovian projection theorem. In order to calibrate the function $\sigma(t,S)$ to the vanilla option market, we have to use the Dupire Local volatility function $\sigma_D(t,S)$ equal to 
 
 \begin{equation}
-	\forall t \in [0,T], \mathbb{E}\left[e^{2X_t}\right] = 1
+	\begin{aligned}
+		\sigma_D(T,K)^2 &= \mathbb{E}^{\mathbb{Q}_d^T}\left[\sigma(T,S_T)^2 \Sigma_t^2\middle|S_T=K\right]\\
+		&= \sigma(T,K)^2 \mathbb{E}^{\mathbb{Q}_d^T}\left[\Sigma_t^2\middle| S_T= K \right]
+	\end{aligned}
 \end{equation}
 
-\noindent The goal of the stochastic volatility would be to calibrate to the forward smile (to be consistent with the 
+\noindent Then
+
+\begin{equation}
+	\sigma(T,K)^2 = \frac{\sigma_D(T,K)^2}{\mathbb{E}^{\mathbb{Q}_d^T}\left[\Sigma^2_t\middle| S_T= K \right]}
+\end{equation}
+
+\noindent The calibration of the Dupire Local volatility function equal to 
+
+\begin{equation}
+\begin{aligned}
+	\sigma_D(T,K)^2 &= \frac{\frac{\partial C}{\partial K} + \mu_T K \frac{\partial C}{\partial K} + \left(\mu_T - r_d(T)\right) C}{\frac{1}{2}K^2 \frac{\partial^2 C}{\partial K^2}} + A(T)\\
+	A(T) &= \frac{KB_d(0,T) \left[Cov^{\mathbb{Q}_d^T}\left(-\mu_T, \textbf{1}_{S_T>K}\right) + \frac{1}{K} Cov^{\mathbb{Q}_d^T}\left(r_d(T)-\mu_T, \left(S_T-K\right)^+\right)\right]}{\frac{1}{2}K^2 \frac{\partial^2 C}{\partial K^2}}
+\end{aligned}
+\end{equation}
+
+\noindent where $A(T)$ is the stochastic-rate correction of the Dupire Local volatility function, is already exposed in a large number of papers.\\
+
+\noindent We will additionnally set the following condition for the stochastic volatility process $\Sigma$ 
+\begin{equation}
+	\forall t \in [0,T], \mathbb{E}\left[\Sigma_t^2 \right] = 1
+\end{equation}
+
+\noindent The goal of the stochastic volatility would be to calibrate to the forward smile (to be consistent with the forward start option)
+
+\subsection{Examples of stochastic volatility models}
+\subsubsection{Heston model}
+\subsubsection{Lognormal model}
+\subsubsection{Schöbel and Zhu model}
 
 \subsection{Stochastic volatility part}
 Let us assume that $X$ follows the following dynamics under the domestic risk-neutral probability measure
@@ -244,7 +276,14 @@ In this section, we will develop a method to calibrate the SLV models in a highe
 	\mathbb{E}^{\mathbb{Q}_T^d}\left[e^{2X_T}\middle| S_T=K\right] = \frac{\mathbb{E}^{\mathbb{Q}_T^d}\left[e^{2X_T} \textbf{1}_{S_T=K}\right]}{\mathbb{Q}_T^d(S_T = K)}
 \end{equation}
 
-\noindent Re-writting the above equation as a function of log-spot $y_t = \log\left(S_t\right)$ yields
+\noindent and 
+
+\begin{equation}
+	\label{eq:SLVEquationstochRates}
+	\mathbb{E}^{\mathbb{Q}_T^d} \left[ \left(K r_d(T) - S_T r_f(T)\right) \textbf{1}_{\{S_T > K\}}\right] 
+\end{equation}
+
+\noindent Re-writting the first equation as a function of log-spot $y_t = \log\left(S_t\right)$ yields
 
 \begin{equation}
 	\label{eq:SLVEquationlogspot}
@@ -317,6 +356,16 @@ As we want to compute a $S_T$-measurable integral, we can approximate
 
 \paragraph{Estimation via Monte-Carlo}
 
+In this paragraph, we will focus on the estimation of the integral described in equation \ref{eq:SLVEquationstochRates}. Thie description is based on \cite{DeelstraRayee2012}. As the equation \ref{eq:SLVEquationstochRates} is based on an expectation under the $T$-forward neutral domestic probability measure, we need to have the dynamics of all the factors under that probability measure.
+
+\begin{equation}
+	\begin{aligned}
+		\frac{dS_t}{S_t} &= (r_t^d-r_t^f - \text{drift term due to change of measure}) dt + \sigma(S_t, t) e^{X_t} dW^{S,T,d}_t\\
+		dr_t^d &= \left(\theta^d(t) - \lambda^d r_t^d - \left(\sigma_t^d\right)^2 \beta^d(t,T) \right) dt + \sigma_t^d dW^{d,T,d}_t\\
+		dr_t^f &= \left(\theta^f(t) - \lambda^f r_t^f - \rho^{f,S} \sigma^f(t) b^f(t,T) \sigma(t,S_t)  - \sigma^d(t) \beta^d(t,T) \sigma^f(t,T) \beta^f(t,T) \rho^{f,d}\right) dt + \sigma_t^f dW^{f,T,d}_t
+	\end{aligned}
+\end{equation}
+
 \section{Overview of the methodology proposed in \cite{Clark2010}}
 \subsection{Main equations}
 
@@ -380,6 +429,60 @@ Let us assume of sequence of timepoints $\{t_0 = 0, t_1, t_2, \dots, t_N = T_{ca
 \section{Solving the SLV calibration PDE}
 In this section we will develop numerical methods to solve equation (\ref{eq:SLVCalibrationPDE})
 
+\section{How to set the correlation between factors}
+
+\subsection{FX-FX correlations}
+The correlations between FX spot rates are calibrated on the cross FX volatility market slice if it is quoted and estimated using historical data if it is not. We can distinguish two kind of calibration
+
+\begin{itemize}
+	\item Calibration on the ATM forward volatility
+	\item Calibration on the Full Smile
+\end{itemize}
+
+\subsubsection{Calibration on the ATM}
+Let $X_i$ be the number of domestic currency units corresponding to 1 FORi currency unit. We will call $X_{21}$ the number of FOR2 currency units corresponding to 1 FOR1 currency unit.
+
+\noindent Then 
+
+\begin{equation}
+	X_{21} = \frac{X_2}{X_1}
+\end{equation}
+
+\noindent Using the volatilities, this equality transposes to 
+
+\begin{equation}
+	\sigma_{12} ^2= \sigma_1^2 + \sigma_2^2 - 2 \rho_{1,2} \sigma_1 \sigma_2
+\end{equation}
+
+\noindent And then correlation between the FX spots rates $X_1$ and $X_2$ is equal to 
+
+\begin{equation}
+	\rho_{12}(T) = \frac{\sigma_1(T)^2 + \sigma_2(T)^2 - \sigma_{12}(T)^2}{2 \sigma_1(T) \sigma_2(T)}
+\end{equation} 
+
+\noindent where $\sigma_i(T)$ is the ATM volatility at time $T$.\\
+
+\noindent We have to ensure that 
+
+\begin{equation}
+	\forall T, |\rho_{12}(T)| \leq 1
+\end{equation}
+
+\noindent but we will see that the positiveness of the full correlation matrix leads to much straighter conditions on this correlation.
+
+\subsubsection{Local correlation - calibration on the full smile}
+
+\subsection{Rate-FX correlations}
+
+\subsection{Rate-Rate correlations}
+
+\subsection{FX-FX stoch vol correlations}
+
+\subsection{FX stoch vol-IR correlations}
+
+\subsection{FX stoch vol correlations}
+
+\section{What needs to be done when the correlation matrix is not semi-definite positive?}
 \begin{thebibliography}{9}
 
 \bibitem{AbergelTachet2011}
@@ -405,6 +508,11 @@ In this section we will develop numerical methods to solve equation (\ref{eq:SLV
  \emph{Foreign Exchange option pricing : A Practitioner's Guide},
  Wiley Finance,
  ,2010
+
+\bibitem{DeelstraRayee2012}
+ Griselda Deelstra, Grégory Rayée,
+ \emph{Local Volatility Pricing Models for Long dated FX Derivatives},
+ 4th April 2012
 \end{thebibliography}
 
 \end{document}

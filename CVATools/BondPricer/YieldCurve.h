@@ -46,6 +46,8 @@ namespace Finance
             virtual void ApplyExponentialShift(double dShift, double dTau);
             
             virtual const std::string & Ccy() const;
+            
+            virtual YieldCurve * clone() const;
         };
     }
 }

@@ -152,5 +152,10 @@ namespace Finance
         {
             return cCCY_;
         }
+        
+        YieldCurve * YieldCurve::clone() const
+        {
+            return new YieldCurve(*this);
+        }
     }
 }

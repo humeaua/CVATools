@@ -29,6 +29,8 @@ namespace SLV
         
         //  returns the conditional expectation of the square of the stoch that appear in the Dupire Formula (markovian projection theorem)
         virtual double conditionalExpectation(double t0, double Sigma0, double S0) const;
+        
+        virtual StochVol * clone() const;
     };
 }
 

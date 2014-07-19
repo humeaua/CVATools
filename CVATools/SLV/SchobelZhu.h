@@ -31,6 +31,11 @@ namespace SLV
         virtual double conditionalExpectation(double t0, double Sigma0, double S0) const;
         
         virtual StochVol * clone() const;
+        
+        virtual double MeanReversionLevel(double t0) const;
+    private:
+        double m_MRSpeed;
+        double m_VolVol;
     };
 }
 

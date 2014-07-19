@@ -37,4 +37,14 @@ namespace SLV
     {
         throw EXCEPTION("Method not implemented in abstract class. Use derived classes");
     }
+    
+    const RatePtr & StochVol::GetDomUnd() const
+    {
+        return m_DomUnd;
+    }
+    
+    void StochVol::SetDomUnd(const RatePtr &domUnd)
+    {
+        m_DomUnd = domUnd;
+    }
 }

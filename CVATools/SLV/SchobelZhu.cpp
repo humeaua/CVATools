@@ -37,6 +37,12 @@ namespace SLV
     
     StochVol * SchobelZhu::clone() const
     {
-        return new StochVol(*this);
+        return new SchobelZhu(*this);
+    }
+    
+    double SchobelZhu::MeanReversionLevel(double t0) const
+    {
+        //  to be implemented
+        return 0.0;
     }
 }

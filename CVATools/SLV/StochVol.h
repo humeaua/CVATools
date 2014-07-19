@@ -10,9 +10,12 @@
 #define __CVATools__StochVol__
 
 #include <iostream>
+#include <tr1/memory>
 
 namespace SLV
 {
+    class RateUnderlying;
+    typedef std::tr1::shared_ptr<RateUnderlying> RatePtr;
     class StochVol
     {
     public:
@@ -30,6 +33,11 @@ namespace SLV
         virtual double conditionalExpectation(double t0, double Sigma0, double S0) const;
         
         virtual StochVol * clone() const;
+        
+        virtual void SetDomUnd(const RatePtr & domUnd);
+        virtual const RatePtr & GetDomUnd() const;
+    private:
+        RatePtr m_DomUnd;
     };
 }
 

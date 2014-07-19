@@ -19,7 +19,9 @@ namespace SLV
                            const Finance::Payoff::BasePayoff1D & basePayoff,
                            const RateUnderlying & domesticUnderlying,
                            const RateUnderlying & foreignUnderlying) : m_StochVol(stochVol.clone()), m_Payoff(basePayoff.clone()), m_DomesticUnderlying(domesticUnderlying.clone()), m_ForeignUnderlying(foreignUnderlying.clone())
-    {}
+    {
+        m_StochVol->SetDomUnd(m_DomesticUnderlying);
+    }
     
     size_t Underlying::GetNbFactors() const
     {

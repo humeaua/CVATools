@@ -53,23 +53,42 @@
 \date{\today}
 \maketitle
 
+\section{General definitions}
+\subsection{Term-structures}
+
+As we work in finance, most of the coefficients exposed in the following models will be piecewise constant.
+
+\begin{definition}
+	A term-structure of coefficients (or just term-structure when there is no ambiguity) is a piecewise-constant coefficient.
+\end{definition}
+
+\begin{definition}
+	If $t \mapsto \gamma_t$ is a term-structure, we will denote by $\Gamma^k(t,s)$, for $t<s$ (or just $\Gamma^k$ is there is no ambiguity), the following quantity
+
+\begin{equation}
+	\Gamma^k(t,s) = \frac{1}{s-t} \int_t^s \gamma^k_u du
+\end{equation}
+\end{definition}
+
 \section{The Model}
 \subsection{General description}
 Let $T$ be a finite time horizon (the final maturity of the deal we want to price, for example)
 Let $S$ be an asset of drift $\mu_t$ under the domestic risk-neutral probability measure. We assume the following dynamics under $\mathbb{Q}_d$
 
 \begin{equation}
-	\frac{dS_t}{S_t} = \mu_t dt + \sigma(S_t,t) \Sigma_t dW_t
+	\frac{dS_t}{S_t} = \mu_t dt + \sigma(S_t,t). \Sigma_t \cdot dW_t^S
 \end{equation}
 
-\noindent where $(S,t) \mapsto \sigma(S,t)$ is the local volatility function (deterministic function of spot and time, calibrated to the vanilla option market at time $0$). We will develop later a methodology to calibrate that function $\sigma$. $\Sigma$ is an $\mathcal{F}_t$ adapted process
+\noindent where $(S,t) \mapsto \sigma(S,t)$ is the local volatility function (deterministic function of spot and time, calibrated to the vanilla option market at time $0$) and $W^S$ is a Wiener process under the domestic risk neutral probability measure. \\
+
+\noindent We will develop later a methodology to calibrate that function $\sigma$. $\Sigma$ is an $\mathcal{F}_t$-measurable process.
 
 \noindent This additional constraint equation comes from the Markovian projection theorem. In order to calibrate the function $\sigma(t,S)$ to the vanilla option market, we have to use the Dupire Local volatility function $\sigma_D(t,S)$ equal to 
 
 \begin{equation}
 	\begin{aligned}
-		\sigma_D(T,K)^2 &= \mathbb{E}^{\mathbb{Q}_d^T}\left[\sigma(T,S_T)^2 \Sigma_t^2\middle|S_T=K\right]\\
-		&= \sigma(T,K)^2 \mathbb{E}^{\mathbb{Q}_d^T}\left[\Sigma_t^2\middle| S_T= K \right]
+		\sigma_D(T,K)^2 &= \mathbb{E}^{\mathbb{Q}_d^T}\left[\sigma(T,S_T)^2 \Sigma_T^2\middle|S_T=K\right]\\
+		&= \sigma(T,K)^2 \mathbb{E}^{\mathbb{Q}_d^T}\left[\Sigma_T^2\middle| S_T= K \right]
 	\end{aligned}
 \end{equation}
 
@@ -92,15 +111,59 @@ Let $S$ be an asset of drift $\mu_t$ under the domestic risk-neutral probability
 
 \noindent We will additionnally set the following condition for the stochastic volatility process $\Sigma$ 
 \begin{equation}
+	\label{eq:AdditionalConditionStochVol}
 	\forall t \in [0,T], \mathbb{E}\left[\Sigma_t^2 \right] = 1
 \end{equation}
 
 \noindent The goal of the stochastic volatility would be to calibrate to the forward smile (to be consistent with the forward start option)
 
 \subsection{Examples of stochastic volatility models}
+We will give in this subsection some practical examples of stochastic volatility models.
+
 \subsubsection{Heston model}
+
+The stochastic volatility process follows under the domestic risk-neutral probability measure
+
+\begin{equation}
+\begin{aligned}
+	&d\Sigma_t = \left(\theta_\Sigma(t) - \lambda_\Sigma \Sigma_t\right) dt + \alpha_\Sigma \sqrt{\Sigma_t}dW_t^\Sigma\\
+	&d\langle W^S, W^\Sigma \rangle_t = \rho_{S,\Sigma} dt
+\end{aligned}
+\end{equation}
+
+\noindent The coefficients $\lambda_\Sigma$, $\alpha_\Sigma$ and $\rho_{S,\Sigma}$ are kept constant for simplicity. An extension with term-structure of coefficients may be easy to introduce (because we will be working in a Monte-Carlo framework or PDEs most of the time).\\
+
+\noindent $\theta_\Sigma(t)$ is calibrated such as \ref{eq:AdditionalConditionStochVol} is satisfied.
+
 \subsubsection{Lognormal model}
+
+The stochastic volatility is lognormally distributed
+
+\begin{equation}
+	\begin{aligned}
+		&\Sigma_t = e^{X_t}\\
+		&dX_t = \left(\theta_X(t) - \lambda_X X_t\right) dt + \alpha_X dW_t^X\\
+		&d\langle W^X, W^S\rangle_t = \rho_{S,X} dt
+	\end{aligned}
+\end{equation}
+
+\noindent The coefficients $\lambda_X$, $\alpha_X$ and $\rho_{S,X}$ are kept constant for simplicity. An extension with term-structure of coefficients may be easy to introduce (because we will be working in a Monte-Carlo framework or PDEs most of the time).\\
+
+\noindent $\theta_X(t)$ is calibrated such as \ref{eq:AdditionalConditionStochVol} is satisfied.
+
 \subsubsection{Schöbel and Zhu model}
+The stochastic volatility is normally distributed
+
+\begin{equation}
+	\begin{aligned}
+		&d\Sigma_t = \left(\theta_\Sigma(t) - \lambda_\Sigma \Sigma_t\right) dt + \alpha_\Sigma dW_t^\Sigma\\
+		&d\langle W^\Sigma, W^S\rangle_t = \rho_{S,\Sigma} dt
+	\end{aligned}
+\end{equation}
+
+\noindent The coefficients $\lambda_\Sigma$, $\alpha_\Sigma$ and $\rho_{S,\Sigma}$ are kept constant for simplicity. An extension with term-structure of coefficients may be easy to introduce (because we will be working in a Monte-Carlo framework or PDEs most of the time).\\
+
+\noindent $\theta_\Sigma(t)$ is calibrated such as \ref{eq:AdditionalConditionStochVol} is satisfied
 
 \subsection{Stochastic volatility part}
 Let us assume that $X$ follows the following dynamics under the domestic risk-neutral probability measure

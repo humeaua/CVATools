@@ -81,7 +81,7 @@ Let $S$ be an asset of drift $\mu_t$ under the domestic risk-neutral probability
 
 \noindent where $(S,t) \mapsto \sigma(S,t)$ is the local volatility function (deterministic function of spot and time, calibrated to the vanilla option market at time $0$) and $W^S$ is a Wiener process under the domestic risk neutral probability measure. \\
 
-\noindent We will develop later a methodology to calibrate that function $\sigma$. $\Sigma$ is an $\mathcal{F}_t$-measurable process.
+\noindent We will develop later a methodology to calibrate that function $\sigma$. $\left(\Sigma_t\right)_{t \leq T}$ is an $\left(\mathcal{F}_t\right)_{t \leq T}$-measurable process.
 
 \noindent This additional constraint equation comes from the Markovian projection theorem. In order to calibrate the function $\sigma(t,S)$ to the vanilla option market, we have to use the Dupire Local volatility function $\sigma_D(t,S)$ equal to 
 
@@ -163,7 +163,97 @@ The stochastic volatility is normally distributed
 
 \noindent The coefficients $\lambda_\Sigma$, $\alpha_\Sigma$ and $\rho_{S,\Sigma}$ are kept constant for simplicity. An extension with term-structure of coefficients may be easy to introduce (because we will be working in a Monte-Carlo framework or PDEs most of the time).\\
 
-\noindent $\theta_\Sigma(t)$ is calibrated such as \ref{eq:AdditionalConditionStochVol} is satisfied
+\noindent $\theta_\Sigma(t)$ is calibrated such as \ref{eq:AdditionalConditionStochVol} is satisfied.
+
+\noindent Under the $T$-forward domestic measure, the stochastic volatility satisfies
+
+\begin{equation}
+\begin{aligned}
+	d\Sigma_t &= \left(\theta_{\Sigma,T,d}(t) - \lambda_\Sigma \Sigma_t\right) dt + \alpha_\Sigma dW_t^{\Sigma,T,d}\\
+	\theta_{\Sigma,T,d}(t) &= \theta_\Sigma(t) -\int_{0}^{t}  \rho_{d,\Sigma}(u) b_d(u,T) \sigma_d(u) du
+\end{aligned}
+\end{equation}
+
+where $\sigma_d(u)$ is the term-structure of volatility of the domestic interest-rate (in a one-factor model), $\rho_{d, \Sigma}(u)$ is the term-structure of correlation between the domestic interest rate and the foreign exchange stochastic volatility, and $b_d(u,T)$ is a function that we will try to find in the next section.
+
+\subsection{Interest-rate models}
+We will focus, in this section, in the derivation of the function $b_d(u,T)$ in simple one-factor models
+
+\begin{definition}
+Let $f(t,T)$ be the instantaneous forward rate between $t$ and $T$
+\begin{equation}
+	f(t,T) = -\frac{\partial \ln B(t,T)}{\partial T}
+\end{equation}
+\end{definition}
+
+\begin{definition}
+	The short-rate $r_t$ at time $t$ is equal to 
+\begin{equation}
+	r_t = f(t,t)
+\end{equation}
+\end{definition}
+
+\subsubsection{Linear Gaussian Markov 1-factor Model (LGM1F)}
+
+It satisfies under the currency risk-neutral measure
+
+\begin{equation}	
+	df(t,T) = \mu(t,T) dt + \sigma_f(t,T) dW_t
+\end{equation}
+
+\noindent It then can be shown that 
+
+\begin{equation}
+	\mu(t,T) = \sigma_f(t,T) \int_t^T \sigma_f(t,s) ds 
+\end{equation}
+
+\noindent Then $r_t$ satisfies the following SDE
+
+\begin{equation}
+\begin{aligned}
+	dr_t &= d(f(t,t))\\
+	&= \left.\frac{\partial f(t,T)}{\partial T}\right|_{T=t} + \left. df(t,T) \right|_{T=t}\\
+	&= \left.\frac{\partial f(t,T)}{\partial T}\right|_{T=t} + \sigma_f(t,t) dW_t
+\end{aligned}
+\end{equation}
+
+\noindent We will now specify the function $\sigma_f(t,T)$
+
+\begin{equation}
+	\sigma_f(t,T) = \sigma(t) \exp\left(-\int_t^T \lambda_u du \right)
+\end{equation}
+
+\noindent where $\sigma(t)$ is a term-structure of volatility and $\lambda_t$ is a term-structure of mean-reversion that we will calibrate. The zero-coupon bond price satisfies
+
+\begin{equation}
+	B(t,T) = \exp\left(a(t,T) + b(t,T) r_t\right)
+\end{equation}
+
+\noindent where $b$ is the above function that we wanted to find in the previous section.
+
+\subsubsection{Linear Gaussian Markov 1-factor Stochastic volatility model (LGM1FSV)}
+
+\begin{equation}	
+	df(t,T) = \mu(t,T) dt + \sigma_f(t,T) \sqrt{v_t} dW_t
+\end{equation}
+
+\noindent Let us assume for simplicity that 
+\begin{equation}
+\begin{aligned}
+	&dr_t = \left(\theta_r(t) - \lambda_r r_t\right) dt + \sigma_r(t) \sqrt{v_t} dW_t^r\\
+	&dv_t = \kappa \left(\theta_v - v_t \right) dt + \sigma_v  \sqrt{v_t} dW_t^v \\
+	&d\langle W^v, W^r \rangle_t = \rho_{r,v} dt
+\end{aligned}
+\end{equation}
+
+\noindent Let us apply Itô's formula to $h(r_t, v_t, t) \in \mathcal{C}^{1,2}\left(\mathbb{R}^2 \times \mathbb{R}_+\right)$
+
+\begin{equation}
+	dh(r_t, v_t, t) = \frac{\partial h}{\partial t} dt + \frac{\partial h}{\partial r} dr_t + \frac{\partial h}{\partial v} dv_t + \frac{1}{2} \frac{\partial^2 h}{\partial r^2} v_t \sigma_r^2(t) dt + \frac{1}{2} \frac{\partial^2 h}{\partial v^2} v_t \sigma_v^2 dt + \frac{\partial^2 h}{\partial v \partial r} \rho_{r,v} \sigma_r(t) \sigma_v v_t dt
+\end{equation}
+
+\subsubsection{Calibration of models}
+
 
 \subsection{Stochastic volatility part}
 Let us assume that $X$ follows the following dynamics under the domestic risk-neutral probability measure

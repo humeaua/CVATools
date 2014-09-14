@@ -1,0 +1,126 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{amsthm} % to enable the proofs
+\usepackage{graphicx} % to enable the graphics
+\usepackage{mathtools}
+
+\usepackage{bbm}
+
+\usepackage[hidelinks]{hyperref}
+
+% to be read by all users : how to number theorems and definitions : 
+% done by A. Humeau on 4/10/2012
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{notation}{Notation}[section]
+
+% end of environment addition
+
+\usepackage{geometry}
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+\usepackage[utf8]{inputenc}
+
+% to insert code in the report
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{white}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+%end of addition to insert code in the report
+
+\bibliographystyle{plain}
+
+\DeclareMathOperator*{\mysup}{sup}
+
+\begin{document}
+
+\title{Linear Gaussian Markov Model with Stochastic volatility}
+\author{Alexandre Humeau}
+\date{\today}
+\maketitle
+
+\section{The model}
+
+\subsection{Why adding stochastic volatility}
+
+\begin{itemize}
+	\item Replication tentative of the swaption smile for pricing of more complex interest-rate derivatives
+\end{itemize}
+
+\subsection{Main equations}
+
+Let $f(t,T)$ be the instantaneous forward rate between $t$ and $T$, we assume without loss of any generality under the risk neutral measure $\mathbb{Q}$ (depending on the currency)
+
+\begin{equation}
+	\mathrm{d}f(t,T) =\mu_f(t,T) \mathrm{d}t + \sigma_f(t,T) \cdot \left( \sqrt{v} \mathrm{d}W_t \right)
+\end{equation}
+
+\noindent where $\cdot$ represents the scalar product and $v$ is a stochastic volatility process that we will define later in the document.
+
+\begin{remark}
+	When dealing with multi-currency frameworks, I will write a separate document as it depends highly on the model put on the FX.
+\end{remark}
+
+\begin{remark}
+	The number of factors $N$ in the rate model is equal to the dimensionality of the considered vectors $v = \left(v_1, \dots, v_N\right)$, $\sigma_f = \left(\sigma_{f,1}, \dots, \sigma_{f,N}\right)$
+\end{remark}
+
+\begin{proposition}[Heath-Jarrow-Morton 1992]
+	The absence of arbitrage imples that the drift term $\mu_f$ is equal to 
+	\begin{equation}
+		\mu_f(t,T) = \sum_{i=1}^{N} v_i(t) \sigma_{f,i}(t,T) \int_t^T \sigma_{f,i}(t,u) du
+	\end{equation}
+\end{proposition}
+
+\begin{remark}
+	For a general specification of $\sigma_{f,i} (t, T )$, the dynamics of the forward rate
+curve will be path-dependent, which significantly complicates derivatives pricing
+and the application of standard econometric techniques
+\end{remark}
+
+\begin{proposition}[Ritchken-Sankarasubramanian]
+	If the volatility vector of functions can be factored as 
+	\begin{equation}
+		\sigma_{f,i}(t,T) = \mathcal{P}_n(T-t) e^{-\int_t^T \lambda_u du}
+	\end{equation}
+	with a regular function $u \mapsto \lambda_u$, and $\tau \mapsto \mathcal{P}(\tau)$ a polynomial function of the variable, then the Heath-Jarrow-Morton model is markovian.
+\end{proposition}
+
+\begin{proof}
+	Check if all the conditions are reunited, and check the regularity of the function
+\end{proof}
+
+\begin{remark}	
+	For simplicity in the calibration, we will set the degree of the polynomial to be $1$ and we are left with the following formula, 
+	\begin{equation}
+		\sigma_{f,i}(t,T) = \left(\alpha_{1,i} + \alpha_{2,i} (T-t) \right) e^{-\lambda_i (T-t)}
+	\end{equation}
+	we can also consider a term-structure of coefficients and have the follozing formula
+	\begin{equation}
+		\sigma_{f,i}(t,T) = \alpha_{1,i}(t) e^{-\lambda_i (T-t)}
+	\end{equation}
+\end{remark}
+
+\section{Stochastic volatility models}
+\subsection{Log-normal stochastic volatility}
+
+\subsection{Heston-like stochastic volatility}
+
+\begin{thebibliography}{9}
+	\bibitem{TrolleSchwartz2008} A General Stochastic Volatility Model for the Pricing of Interest Rate Derivatives, published by the Oxford University Press on behalf of The Society for Financial Studies
+\end{thebibliography}
+
+\end{document}

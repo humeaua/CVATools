@@ -21,6 +21,7 @@
 
 #include "StatisticGatherer.h"
 #include "Wrapper.h"
+#include "HullWhiteTree.h"
 
 #define NUM_THREADS 5
 
@@ -115,6 +116,7 @@ void DisplayChoices(size_t & iTest)
     std::cout << "28- Exo DM louis matrices" << std::endl;
     std::cout << "30- Exception Testing" << std::endl;
     std::cout << "33- Design patterns and derivative pricing" << std::endl;
+    std::cout << "34- Hull-White Tree pricer" << std::endl;
     std::cin >> iTest;
 }
 
@@ -592,6 +594,15 @@ int _main()
     else if (iTest == 33)
     {
         std::tr1::shared_ptr<Maths::StatisticGatherer> wrapper(new Maths::StatisticMean);
+    }
+    else if (iTest == 34)
+    {
+        std::map<double, double> zeros = getInputZeroCoupons();
+        HWTreeOutput hwOutput = HWTreePricer(0.002, 0.0115, 100, 1, zeros, 0.1, 0.5, 5, 0.3, PUT, false);
+        HWTreeOutput hwOutput1 = HWTreePricer(0.002, 0.0115, 100, 1, zeros, 0.1, 0.5, 5, hwOutput.bondPrice, PUT, false);
+        //HWTreeOutput hwOutput1 = HWTreePricer(0.002, 0.0115, 1000, 1, zeros, 0.1, 0.5, 5, 0.3, CALL, false);
+        doGreeks(hwOutput1, 0.002, 0.0115, 100, 1, zeros, 0.1, 0.5, 5, hwOutput.bondPrice, PUT, false);
+        
     }
     return 0;
 }

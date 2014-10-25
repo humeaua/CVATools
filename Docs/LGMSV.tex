@@ -118,6 +118,91 @@ and the application of standard econometric techniques
 \subsection{Log-normal stochastic volatility}
 
 \subsection{Heston-like stochastic volatility}
+\subsubsection{Main equations}
+Let us assume that under the risk-neutral domestic probability measure, the domestic short rate evolves with the following dynamics
+\begin{equation}
+\begin{aligned}
+	\mathrm{d}r_t &= \lambda (\theta - r_t) \mathrm{d}t + \sigma \sqrt{v_t} \mathrm{d}W_t^r\\
+	\mathrm{d}v_t &= a (b- v_t) \mathrm{d}t + \sigma_v \sqrt{v_t} dW_t^v\\
+	\mathrm{d}\langle W^r, W^v \rangle_t &= \rho dt\\
+\end{aligned}
+\end{equation}
+
+\noindent As $f(t,t) = r_t$ we will be able to derive the dynamic of the domestic instantaneous forward rate under the risk neutral measure.
+\subsubsection{PDE Approach}
+Let us derive the price of a zero-coupon bond of maturity $T$ denoted at time $t$ by $B(t,T)$
+
+\noindent We have
+
+\begin{equation*}
+	B(t,T) = \mathbb{E}\left[e^{-\int_t^T r_s \mathrm{d}s}\middle|\mathcal{F}_t\right]
+\end{equation*}
+
+\noindent As we are in an affine model, we can look for an exponentially affine function of the state variables $r_t$ and $x_t$
+
+\begin{equation}
+	B(t,T) = e^{\alpha_T(t) + \beta_T(t) r_t + \gamma_T(t) v_t} = f(t, r_t, v_t)
+\end{equation}
+
+\noindent with the following boundary conditions
+
+\begin{equation}
+\begin{aligned}
+	\alpha_T(T) &= 0\\
+	\beta_T(T) &= 0\\
+	\gamma_T(T) &= 0
+\end{aligned}
+\end{equation}
+
+\begin{proposition}
+	The function $f$ satisfies the following 2-dimensional PDE
+	\begin{equation}
+		\frac{\partial f}{\partial t} + \lambda(\theta - r) \frac{\partial f}{\partial r} + \frac{1}{2} \sigma^2 v \frac{\partial^2 f}{\partial r^2} + a (b-v) \frac{\partial f}{\partial v} + \frac{1}{2} \sigma_v^2 v \frac{\partial^2 f}{\partial v} + \rho \sigma \sigma_v v \frac{\partial^2 f}{\partial r \partial v} = rf
+	\end{equation}
+\end{proposition}
+
+\begin{proof}
+	Portfolio replication
+\end{proof}
+
+\noindent Some more calculations will be now helpful to derive ODEs on $\alpha$, $\beta$ and $\gamma$
+
+\begin{equation*}
+\begin{aligned}
+	\frac{\partial f}{\partial t}(t,r,v) &= \left[\alpha'_T(t) + \beta'_T(t) r + \gamma'_T(t) v\right] f(t,r,v)\\
+	\frac{\partial f}{\partial r}(t,r,v) &= \beta_T(t) f(t,r,v)\\
+	\frac{\partial f}{\partial v}(t,r,v) &= \gamma_T(t) f(t,r,v)\\
+	\frac{\partial^2 f}{\partial r^2}(t,r,v) &= \beta^2_T(t) f(t,r,v)\\
+	\frac{\partial^2 f}{\partial v^2}(t,r,v) &= \gamma^2_T(t) f(t,r,v)\\
+	\frac{\partial^2 f}{\partial v \partial r}(t,r,v) &= \gamma_T(t) \beta_T(t) f(t,r,v)\\
+\end{aligned}
+\end{equation*}
+
+\noindent We are left with the following ODEs
+
+\begin{equation*}
+\begin{aligned}
+	&\alpha'_T(t) + \lambda \theta \beta_T(t) + a b \gamma_T(t) = 0\\
+	&\beta'_T(t) - \lambda \beta_T(t) = 1\\
+	&\gamma'_T(t) + \frac{1}{2} \sigma^2 \beta_T^2(t) - a \gamma_T(t) + \frac{1}{2} \sigma_v^2 \gamma_T^2(t) + \rho \sigma \sigma_v \gamma_T(t) \beta_T(t) = 0
+\end{aligned}
+\end{equation*}
+
+\noindent It yields
+
+\begin{equation}
+	\beta_T(t) = \frac{1 - e^{-\lambda (T-t)}}{\lambda}
+\end{equation}
+
+\begin{remark}
+ This expression can easily extended to term-structure of mean-reversion $\lambda_t$, in this case the function $\beta_T$ is equal to 
+
+\begin{equation}
+	\beta_T(t) = \int_t^T e^{-\int_t^s \lambda_u du} ds
+\end{equation}
+\end{remark}
+
+Let us now solve the Ricatti equation that solves the function $\gamma_T$
 
 \begin{thebibliography}{9}
 	\bibitem{TrolleSchwartz2008} A General Stochastic Volatility Model for the Pricing of Interest Rate Derivatives, published by the Oxford University Press on behalf of The Society for Financial Studies

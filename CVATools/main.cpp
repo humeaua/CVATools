@@ -117,8 +117,27 @@ void DisplayChoices(size_t & iTest)
     std::cout << "30- Exception Testing" << std::endl;
     std::cout << "33- Design patterns and derivative pricing" << std::endl;
     std::cout << "34- Hull-White Tree pricer" << std::endl;
+    std::cout << "35- Virtual methods with defaults arguments" << std::endl;
     std::cin >> iTest;
 }
+
+class A
+{
+public:
+    virtual void f(const int i = 1) const
+    {
+        std::cout << "A.f()" << i << std::endl;
+    }
+};
+
+class B : public A
+{
+public:
+    void f(const int i) const
+    {
+        std::cout << "B.f()" << i << std::endl;
+    }
+};
 
 int _main()
 {
@@ -603,6 +622,11 @@ int _main()
         //HWTreeOutput hwOutput1 = HWTreePricer(0.002, 0.0115, 1000, 1, zeros, 0.1, 0.5, 5, 0.3, CALL, false);
         doGreeks(hwOutput1, 0.002, 0.0115, 100, 1, zeros, 0.1, 0.5, 5, hwOutput.bondPrice, PUT, false);
         
+    }
+    else if (iTest == 35)
+    {
+        std::tr1::shared_ptr<A> a(new B);
+        a->f();
     }
     return 0;
 }

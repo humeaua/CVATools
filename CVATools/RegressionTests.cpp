@@ -768,18 +768,21 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Newton Solver", &RegressionTest::NewtonSolver));
 }
 
-bool RegressionTestLauncher::Launch(std::ostream &out)
+RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : m_out(out)
+{
+    FillMap();
+}
+
+bool RegressionTestLauncher::Launch() const
 {
     bool result = true;
-    //  Fill Map
-    FillMap();
     
     //  Iterate along the map
     auto it = m_mapping.begin();
     for ( ; it != m_mapping.end() ; ++it)
     {
-        out << "Regression Test " << it->first << std::endl;
-        result = (m_regTest.*(it->second))(out);
+        m_out << "Regression Test " << it->first << std::endl;
+        result = (m_regTest.*(it->second))(m_out);
         if (!result)
         {
             return result;

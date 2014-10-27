@@ -146,8 +146,8 @@ int _main()
     
     if (iTest == 0)
     {
-        RegressionTestLauncher launcher;
-        bool bSucceeded = launcher.Launch(std::cout);
+        RegressionTestLauncher launcher(std::cout);
+        bool bSucceeded = launcher.Launch();
         std::cout << "Regresssion Tests : " ;
 
         if (bSucceeded)

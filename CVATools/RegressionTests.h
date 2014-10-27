@@ -32,13 +32,15 @@ public:
 class RegressionTestLauncher
 {
 public:
-    bool Launch(std::ostream &out);
+    RegressionTestLauncher(std::ostream & out);
+    bool Launch() const;
     
 private:
     void FillMap();
     std::map<std::string, RegressionTestFunction> m_mapping;
     
     RegressionTest m_regTest;
+    std::ostream & m_out;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

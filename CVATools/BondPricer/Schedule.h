@@ -26,7 +26,7 @@ namespace Finance
             std::vector<double> dCoverageFromToday_;
             
         public:
-            Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency);
+            Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency, const DateShifter& fixDS, const DateShifter & payDS);
             
             virtual std::vector<EventOfSchedule> GetSchedule() const;
             virtual std::vector<double> GetCoverageFromToday() const;

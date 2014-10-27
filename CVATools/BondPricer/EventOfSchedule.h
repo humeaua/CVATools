@@ -17,22 +17,29 @@ namespace Finance
 {
     namespace Base
     {
+        class DateShifter;
         class EventOfSchedule
         {
         protected:
             //  the pay date is the end date
-            Utilities::Date::MyDate sStart_, sEnd_;
+            Utilities::Date::MyDate sFix_, sStart_, sEnd_, sPay_;
             
             Finance::Base::MyBasis eBasis_;
             
         public:
             
-            EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis);
+            EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis,
+                            const Utilities::Date::MyDate & sFix, const Utilities::Date::MyDate & sPay);
+            
+            EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis,
+                            const DateShifter & fixDS, const DateShifter & payDS);
             
             virtual double GetCoverage() const;
             virtual double GetPayingDateDF(const Finance::Base::YieldCurve & sYieldCurve) const;
-            virtual Utilities::Date::MyDate GetEndDate() const;
-            virtual Utilities::Date::MyDate GetStartDate() const;
+            virtual const Utilities::Date::MyDate & GetEndDate() const;
+            virtual const Utilities::Date::MyDate &  GetStartDate() const;
+            virtual const Utilities::Date::MyDate &  GetFixingDate() const;
+            virtual const Utilities::Date::MyDate &  GetPaymentDate() const;
             virtual ::Finance::Base::MyBasis GetBasis() const;
         };
     }

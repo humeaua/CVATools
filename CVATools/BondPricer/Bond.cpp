@@ -9,6 +9,7 @@
 #include "Bond.h"
 #include "Schedule.h"
 #include "Require.h"
+#include "DateShifter.h"
 
 namespace Finance
 {
@@ -24,7 +25,7 @@ namespace Finance
                         //  Output
                         std::vector<Base::Coupon> & vCoupons)
         {
-            Finance::Base::Schedule sSchedule(sStart, sEnd, eBasis, eFrequency);
+            Finance::Base::Schedule sSchedule(sStart, sEnd, eBasis, eFrequency, Finance::Base::DateShifter(0, Utilities::Date::DAY),Finance::Base::DateShifter(0, Utilities::Date::DAY));
             
             std::vector<Finance::Base::EventOfSchedule> vSchedule = sSchedule.GetSchedule();
             REQUIREEXCEPTION(vSchedule.size() == dCoupons.size(), "CreateBond : Coupon and Schedule do not have the same size. Cannot create Bond");
@@ -45,7 +46,7 @@ namespace Finance
                         //  Output
                         std::vector<Base::Coupon> & vCoupons)
         {
-            Finance::Base::Schedule sSchedule(sStart, sEnd, eBasis, eFrequency);
+            Finance::Base::Schedule sSchedule(sStart, sEnd, eBasis, eFrequency, Finance::Base::DateShifter(0, Utilities::Date::DAY),Finance::Base::DateShifter(0, Utilities::Date::DAY));
             
             std::vector<Finance::Base::EventOfSchedule> vSchedule = sSchedule.GetSchedule();
             REQUIREEXCEPTION(vSchedule.size() == dCoupons.size(), "Coupon and Schedule do not have the same size. Cannot create Bond");

@@ -10,18 +10,32 @@
 #include "EventOfSchedule.h"
 #include "Coverage.h"
 #include "DiscountFactor.h"
+#include "DateShifter.h"
 
 namespace Finance
 {
     namespace Base
     {
-        EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis) :
+        EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis,
+                                         const Utilities::Date::MyDate & sFix, const Utilities::Date::MyDate & sPay) :
         
         sStart_(sStart),
         sEnd_(sEnd),
-        eBasis_(eBasis)
+        eBasis_(eBasis),
+        sFix_(sFix),
+        sPay_(sPay)
         
         {}
+        
+        EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis,
+                                        const DateShifter & fixDS, const DateShifter & payDS) :
+        sStart_(sStart),
+        sEnd_(sEnd),
+        eBasis_(eBasis)
+        {
+            sFix_ = fixDS.Shift(sStart);
+            sPay_ = payDS.Shift(sEnd);
+        }
         
         double EventOfSchedule::GetCoverage() const
         {
@@ -32,17 +46,27 @@ namespace Finance
         double EventOfSchedule::GetPayingDateDF(const YieldCurve & sYieldCurve) const
         {
             Instruments::DF sDF(sYieldCurve);
-            return sDF(sEnd_);
+            return sDF(sPay_);
         }
         
-        Utilities::Date::MyDate EventOfSchedule::GetEndDate() const
+        const Utilities::Date::MyDate &  EventOfSchedule::GetEndDate() const
         {
             return sEnd_;
         }
         
-        Utilities::Date::MyDate EventOfSchedule::GetStartDate() const
+        const Utilities::Date::MyDate &  EventOfSchedule::GetStartDate() const
         {
             return sStart_;
+        }
+        
+        const Utilities::Date::MyDate & EventOfSchedule::GetFixingDate() const
+        {
+            return sFix_;
+        }
+        
+        const Utilities::Date::MyDate & EventOfSchedule::GetPaymentDate() const
+        {
+            return sPay_;
         }
         
         MyBasis EventOfSchedule::GetBasis() const

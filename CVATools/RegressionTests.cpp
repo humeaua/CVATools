@@ -763,7 +763,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Interpolation", &RegressionTest::Interpolation));
 #endif
     m_mapping.insert(std::make_pair("Time Statistics", &RegressionTest::TimeStatistics));
-    m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
+    //m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
     m_mapping.insert(std::make_pair("Matrix inversion", &RegressionTest::MatrixInversion));
     m_mapping.insert(std::make_pair("Newton Solver", &RegressionTest::NewtonSolver));
 }

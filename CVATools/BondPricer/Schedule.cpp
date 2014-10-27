@@ -14,7 +14,12 @@ namespace Finance
 {
     namespace Base
     {
-        Schedule::Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency) : eFrequency_(eFrequency)
+        Schedule::Schedule(const Utilities::Date::MyDate & sStart,
+                           const Utilities::Date::MyDate & sEnd,
+                           ::Finance::Base::MyBasis eBasis,
+                           ::Finance::Base::MyFrequency eFrequency,
+                           const DateShifter & fixDS,
+                           const DateShifter & payDS) : eFrequency_(eFrequency)
         {
             Utilities::Date::MyDate sCurrentStart, sCurrentEnd = sStart;
             std::pair<std::size_t, Utilities::Date::TimeUnits> NumberAndUnitToAdd = ::Finance::Base::Frequency::ParseFrequency(eFrequency_);
@@ -34,8 +39,7 @@ namespace Finance
             
             while (sCurrentEnd <= sEnd)
             {
-                EventOfSchedule sEvent(sCurrentStart, sCurrentEnd, eBasis);
-                sSchedule_.push_back(sEvent);
+                sSchedule_.push_back(EventOfSchedule(sCurrentStart, sCurrentEnd, eBasis, fixDS, payDS));
                 
                 // Vect of coverage from today
                 Coverage sCoverageFromToday(eBasis, sTodayDate, sCurrentEnd);

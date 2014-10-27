@@ -19,7 +19,7 @@ namespace Finance
                        Finance::Base::MyBasis eBasis) :
         dCoupon_(dCoupon),
         bIsFixedRate_(bIsFixedRate),
-        Finance::Base::EventOfSchedule(sStart, sEnd, eBasis)
+        Finance::Base::EventOfSchedule(sStart, sEnd, eBasis, sStart, sEnd)
         
         {}
         

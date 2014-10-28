@@ -10,7 +10,7 @@
 #define __CVATools__RegressionTests__
 
 #include <iostream>
-#include <map>
+#include <tr1/unordered_map>
 
 class RegressionTest;
 typedef bool (RegressionTest::* RegressionTestFunction)(std::ostream &) const;
@@ -37,7 +37,7 @@ public:
     
 private:
     void FillMap();
-    std::map<std::string, RegressionTestFunction> m_mapping;
+    std::tr1::unordered_map<std::string, RegressionTestFunction> m_mapping;
     
     RegressionTest m_regTest;
     std::ostream & m_out;

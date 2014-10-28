@@ -479,7 +479,7 @@ namespace Utilities
         
         long GetDate(const tm & stime)
         {
-            return GetDate(stime);
+            return GetDate(MyDate(stime));
         }
         
         //  Does not seem to work at first sight

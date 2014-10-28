@@ -23,13 +23,13 @@ namespace Finance
         protected:
             std::vector<EventOfSchedule> sSchedule_;
             ::Finance::Base::MyFrequency eFrequency_;
-            std::vector<double> dCoverageFromToday_;
+            std::vector<double> dCoverage_;
             
         public:
             Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency, const DateShifter& fixDS, const DateShifter & payDS);
             
-            virtual std::vector<EventOfSchedule> GetSchedule() const;
-            virtual std::vector<double> GetCoverageFromToday() const;
+            virtual const std::vector<EventOfSchedule> & GetSchedule() const;
+            virtual const std::vector<double> & GetCoverage() const;
         };
     }
 }

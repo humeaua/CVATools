@@ -26,24 +26,13 @@ namespace Finance
             sCurrentStart = sStart;
             sCurrentEnd.Add( NumberAndUnitToAdd.first, NumberAndUnitToAdd.second);
             
-            //  Computation of vector of coverage from today date
-            
-            //  Initialization of Today Date
-            std::time_t lToday;
-            std::tm *stm;
-            time(&lToday);
-            
-            stm = localtime(&lToday);
-            static Utilities::Date::MyDate sTodayDate(*stm);
-            sTodayDate.Add(1900, Utilities::Date::YEAR);
-            
+            //  Computation of vector of coverage from today date            
             while (sCurrentEnd <= sEnd)
             {
                 sSchedule_.push_back(EventOfSchedule(sCurrentStart, sCurrentEnd, eBasis, fixDS, payDS));
                 
                 // Vect of coverage from today
-                Coverage sCoverageFromToday(eBasis, sTodayDate, sCurrentEnd);
-                dCoverageFromToday_.push_back(sCoverageFromToday.ComputeCoverage());
+                dCoverage_.push_back(Coverage(eBasis, sCurrentStart, sCurrentEnd).ComputeCoverage());
                 
                 //  Update current
                 sCurrentStart = sCurrentEnd;
@@ -51,14 +40,14 @@ namespace Finance
             }
         }
         
-        std::vector<EventOfSchedule> Schedule::GetSchedule() const
+        const std::vector<EventOfSchedule> & Schedule::GetSchedule() const
         {
             return sSchedule_;
         }
         
-        std::vector<double> Schedule::GetCoverageFromToday() const
+        const std::vector<double> & Schedule::GetCoverage() const
         {
-            return dCoverageFromToday_;
+            return dCoverage_;
         }
     }
 }

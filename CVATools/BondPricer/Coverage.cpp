@@ -44,7 +44,6 @@ namespace Finance
         {
             double dCoverage = 0.0;
             Utilities::Date::MyDate sStart(sStart0), sEnd(sEnd0);
-            long lStart = Utilities::Date::GetDate(sStart), lEnd = Utilities::Date::GetDate(sEnd);
             
             switch (eBasis)
             {
@@ -71,23 +70,30 @@ namespace Finance
                 case _A0:
                 case _MM:
                 {
+                    const long lStart = Utilities::Date::GetDate(sStart), lEnd = Utilities::Date::GetDate(sEnd);
                     dCoverage = (lEnd - lStart) / 360.0;
                     break;
                 }
                 case ACT365FIXED:
                 {
+                    const long lStart = Utilities::Date::GetDate(sStart), lEnd = Utilities::Date::GetDate(sEnd);
+                    
                     dCoverage = (lEnd - lStart) / 365.0;
                     break;
                 }
                 case ACT365:
                 case _A5:
                 {
+                    const long lStart = Utilities::Date::GetDate(sStart), lEnd = Utilities::Date::GetDate(sEnd);
+                    
                     dCoverage = (lEnd - lStart) / (sStart.IsLeapYear() ? 366.0 : 365.0);
                     break;
                 }
                 case ACT364:
                 case _A4:
                 {
+                    const long lStart = Utilities::Date::GetDate(sStart), lEnd = Utilities::Date::GetDate(sEnd);
+                    
                     dCoverage = (lEnd - lStart) / 364.0;
                     break;
                 }

@@ -12,12 +12,14 @@
 #include "Date.h"
 #include "Basis.h"
 #include "YieldCurve.h"
+#include <tr1/memory>
 
 namespace Finance
 {
     namespace Base
     {
-        class DateShifter;
+        class IDateShifter;
+        typedef std::tr1::shared_ptr<IDateShifter> DateShifter_Ptr;
         class EventOfSchedule
         {
         protected:
@@ -32,7 +34,7 @@ namespace Finance
                             const Utilities::Date::MyDate & sFix, const Utilities::Date::MyDate & sPay);
             
             EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis,
-                            const DateShifter & fixDS, const DateShifter & payDS);
+                            const DateShifter_Ptr & fixDS, const DateShifter_Ptr & payDS);
             
             virtual double GetCoverage() const;
             virtual double GetPayingDateDF(const Finance::Base::YieldCurve & sYieldCurve) const;

@@ -357,9 +357,10 @@ namespace Utilities
             return static_cast<double>(lToday - lFuture) / 365.0;
         }
         
-        MyDate MyDate::Add(long iUnit, const TimeUnits& eTimeUnit)
+        MyDate MyDate::Add(long iUnit, const TimeUnits& eTimeUnit) const
         {
             int iDay;
+            MyDate copy = *this;
             if (eTimeUnit == WEEK)
             {
                 iUnit *= 7;
@@ -371,38 +372,38 @@ namespace Utilities
                     {
                         for (iDay = 0; iDay < iUnit ; ++iDay)
                         {
-                            *this = next_date(*this);
+                            copy = next_date(copy);
                         }
                     }
                     else
                     {
                         for (iDay = 0 ; iDay > iUnit ; --iDay)
                         {
-                            *this = previous_date(*this);
+                            copy = previous_date(copy);
                         }
                     }
                     break;
                     
                 case MONTH:
-                    iMonth_ += iUnit;
+                    copy.iMonth_ += iUnit;
                     if (iMonth_ > 0)
                     {
                         while (iMonth_ > 11) {
-                            iMonth_ -= 12;
-                            iYear_ ++;
+                            copy.iMonth_ -= 12;
+                            copy.iYear_ ++;
                         }
                     }
                     else
                     {
                         while (iMonth_ < 0) {
-                            iMonth_ += 12;
-                            iYear_ --;
+                            copy.iMonth_ += 12;
+                            copy.iYear_ --;
                         }
                     }
                     break;
                     
                 case YEAR:
-                    iYear_ += iUnit;
+                    copy.iYear_ += iUnit;
                     if (iYear_ < 0)
                     {
                         throw EXCEPTION("Year cannot be negative");
@@ -414,14 +415,14 @@ namespace Utilities
                     {
                         for (std::size_t i = 0 ; i < iUnit ; ++i)
                         {
-                            *this = this->NextBusinessDay();
+                            copy = copy.NextBusinessDay();
                         }
                     }
                     else if (iUnit < 0)
                     {
                         for (std::size_t i = 0 ; i > iUnit ; --i)
                         {
-                            *this = this->PreviousBusinessDay();
+                            copy = copy.PreviousBusinessDay();
                         }
                     }
                     break;
@@ -429,7 +430,12 @@ namespace Utilities
                     throw EXCEPTION("Could not interpret unit");
                     break;
             }
-            return *this;
+            return copy;
+        }
+        
+        MyDate MyDate::Add(const Utilities::Date::MyTenor &tenor) const
+        {
+            return this->Add(tenor.GetLag(), tenor.GetTimeUnit());
         }
         
         MyDate::~MyDate()
@@ -554,6 +560,36 @@ namespace Utilities
         MyDate InitialiseTodayDate()
         {
             return Utilities::Date::MyDate();
+        }
+        
+        MyTenor::MyTenor(const std::string & tenor)
+        {
+            Parse(tenor);
+        }
+        
+        void MyTenor::Parse(const std::string &tenor)
+        {
+            throw EXCEPTION("Not yet implemented");
+        }
+        
+        const long & MyTenor::GetLag() const
+        {
+            return m_lag;
+        }
+        
+        const TimeUnits & MyTenor::GetTimeUnit() const
+        {
+            return m_timeUnit;
+        }
+        
+        long & MyTenor::GetLag()
+        {
+            return m_lag;
+        }
+        
+        TimeUnits & MyTenor::GetTimeUnit()
+        {
+            return m_timeUnit;
         }
     }
 }

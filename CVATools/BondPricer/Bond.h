@@ -17,7 +17,13 @@ namespace Finance
 {
     namespace Instruments
     {
-        void CreateBond(//  Inputs
+        class Bond
+        {
+        protected:
+            std::vector<Base::Coupon> vCoupons_;
+            bool bIsNotionalRepaidBack_;
+            double dNotional_;
+            void Create(//  Inputs
                         const std::vector<double> & dCoupons,
                         const Utilities::Date::MyDate & sStart,
                         const Utilities::Date::MyDate & sEnd,
@@ -26,22 +32,6 @@ namespace Finance
                         bool bIsFixedRate,
                         //  Output
                         std::vector<Base::Coupon> & vCoupons);
-        
-        void CreateBond(//  Inputs
-                        const std::vector<double> & dCoupons,
-                        const Utilities::Date::MyDate & sStart,
-                        const Utilities::Date::MyDate & sEnd,
-                        Finance::Base::MyBasis eBasis,
-                        Finance::Base::MyFrequency eFrequency,
-                        const std::vector<bool> & bIsFixedRate,
-                        //  Output
-                        std::vector<Base::Coupon> & vCoupons);
-        
-        class Bond {
-        protected:
-            std::vector<Base::Coupon> vCoupons_;
-            bool bIsNotionalRepaidBack_;
-            double dNotional_;
         public:
             Bond(double dNotional, bool bIsNotionalRepaidBack);
             Bond(double dNotional, bool bIsNotionalRepaidBack, const std::vector<Base::Coupon> & vCoupons);

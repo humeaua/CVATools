@@ -10,21 +10,45 @@
 #define __CVATools__DateShifter__
 
 #include <iostream>
+#include <tr1/memory>
 #include "Date.h"
 
 namespace Finance
 {
     namespace Base
     {
-        class DateShifter
+        class IDateShifter
         {
-            DateShifter(const DateShifter & );
+        public:
+            virtual Utilities::Date::MyDate GetSpotDate(const Utilities::Date::MyDate & date) const = 0;
+            virtual Utilities::Date::MyDate TenorDate(const Utilities::Date::MyDate & date, const Utilities::Date::MyTenor & tenor) const = 0;
+            virtual Utilities::Date::MyDate GetFixingDate(const Utilities::Date::MyDate & date) const = 0;
+            virtual Utilities::Date::MyDate GetPaymentDate(const Utilities::Date::MyDate & date) const = 0;
+        };
+        
+        typedef std::tr1::shared_ptr<IDateShifter> DateShifter_Ptr;
+        
+        class DateShifterDummy : public IDateShifter
+        {
+        public:
+            Utilities::Date::MyDate GetSpotDate(const Utilities::Date::MyDate & date) const;
+            Utilities::Date::MyDate TenorDate(const Utilities::Date::MyDate & date, const Utilities::Date::MyTenor & tenor) const;
+            Utilities::Date::MyDate GetFixingDate(const Utilities::Date::MyDate & date) const;
+            Utilities::Date::MyDate GetPaymentDate(const Utilities::Date::MyDate & date) const;
+        };
+        
+        class DateShifterSimple : public IDateShifter
+        {
+            DateShifterSimple(const DateShifterSimple & );
         protected:
             int m_lag;
             Utilities::Date::TimeUnits m_timeUnit;
         public:
-            DateShifter(const int & lag, const Utilities::Date::TimeUnits & m_timeUnit);
-            virtual Utilities::Date::MyDate Shift(const Utilities::Date::MyDate & input) const;
+            DateShifterSimple(const int & lag, const Utilities::Date::TimeUnits & m_timeUnit);
+            Utilities::Date::MyDate GetSpotDate(const Utilities::Date::MyDate & date) const;
+            Utilities::Date::MyDate TenorDate(const Utilities::Date::MyDate & date, const Utilities::Date::MyTenor & tenor) const;
+            Utilities::Date::MyDate GetFixingDate(const Utilities::Date::MyDate & date) const;
+            Utilities::Date::MyDate GetPaymentDate(const Utilities::Date::MyDate & date) const;
         };
     }
 }

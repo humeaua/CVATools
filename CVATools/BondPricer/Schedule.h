@@ -13,11 +13,15 @@
 #include "YieldCurve.h"
 #include "Frequency.h"
 #include "EventOfSchedule.h"
+#include <tr1/memory>
 
 namespace Finance
 {
     namespace Base
     {
+        class IDateShifter;
+        typedef std::tr1::shared_ptr<IDateShifter> DateShifter_Ptr;
+        
         class Schedule
         {
         protected:
@@ -26,7 +30,7 @@ namespace Finance
             std::vector<double> dCoverage_;
             
         public:
-            Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency, const DateShifter& fixDS, const DateShifter & payDS);
+            Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency, const DateShifter_Ptr& fixDS, const DateShifter_Ptr & payDS);
             
             virtual const std::vector<EventOfSchedule> & GetSchedule() const;
             virtual const std::vector<double> & GetCoverage() const;

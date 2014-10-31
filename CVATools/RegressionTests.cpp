@@ -559,22 +559,10 @@ bool RegressionTest::Date(std::ostream & os) const
     Utilities::Date::MyDate sToday(3,2,2014);
     
     os << "Today is " << sToday.Print() << std::endl;
-
-#ifdef DEBUG
-        os << "Add one day" << std::endl;
-        os << "New date is " << sToday.Add(1, Utilities::Date::DAY).Print() << std::endl;
-        os << "Add one week" << std::endl;
-        os << "New date is " << sToday.Add(1, Utilities::Date::WEEK).Print() << std::endl;
-        os << "Add one month " << std::endl;
-        os << "New date is " << sToday.Add(1, Utilities::Date::MONTH).Print() << std::endl;
-        os << "Add one year " << std::endl;
-        os << "New date is " << sToday.Add(1, Utilities::Date::YEAR).Print() << std::endl;
-#else
-        sToday.Add(1, Utilities::Date::DAY);
-        sToday.Add(1, Utilities::Date::WEEK);
-        sToday.Add(1, Utilities::Date::MONTH);
-        sToday.Add(1, Utilities::Date::YEAR);
-#endif
+    sToday = sToday.Add(1, Utilities::Date::DAY);
+    sToday = sToday.Add(1, Utilities::Date::WEEK);
+    sToday = sToday.Add(1, Utilities::Date::MONTH);
+    sToday = sToday.Add(1, Utilities::Date::YEAR);
     Utilities::Date::MyDate finalDate(11, 3, 2015);
     //os << "Test of add function : " ;
     if (sToday == finalDate)
@@ -763,7 +751,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Interpolation", &RegressionTest::Interpolation));
 #endif
     m_mapping.insert(std::make_pair("Time Statistics", &RegressionTest::TimeStatistics));
-    m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
+    //m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
     m_mapping.insert(std::make_pair("Matrix inversion", &RegressionTest::MatrixInversion));
     m_mapping.insert(std::make_pair("Newton Solver", &RegressionTest::NewtonSolver));
 }

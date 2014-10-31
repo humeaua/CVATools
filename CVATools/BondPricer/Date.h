@@ -15,14 +15,14 @@ namespace Utilities
 {    
     namespace Date
     {
-        typedef enum TimeUnits_
+        enum TimeUnits
         {
             DAY,
             WEEK,
             MONTH,
             YEAR,
             BUSINESSDAY
-        }TimeUnits;
+        };
         
         std::tm Add(const std::tm &sDate, long lUnit, TimeUnits eTimeUnit);
         
@@ -30,6 +30,8 @@ namespace Utilities
         long GetDate(const std::tm & sTime);
         bool IsLeapYear(long lYear);
         std::tm CorrectTime(const std::tm& sTime);
+        
+        class MyTenor;
         
         class MyDate
         {
@@ -67,7 +69,9 @@ namespace Utilities
             virtual MyDate operator --(); // prefix
             virtual MyDate operator --(int); // postfix
             
-            virtual MyDate Add(long iUnit, const TimeUnits& eTimeUnit);
+            //Add must be const, should not alter the original date
+            virtual MyDate Add(long iUnit, const TimeUnits& eTimeUnit) const;
+            virtual MyDate Add(const MyTenor & tenor) const;
             
             virtual std::string Print() const;
             
@@ -90,6 +94,21 @@ namespace Utilities
         
         long GetDate(const MyDate & sDate);
         MyDate InitialiseTodayDate();
+        
+        class MyTenor
+        {
+            void Parse(const std::string & tenor);
+        protected:
+            long m_lag;
+            TimeUnits m_timeUnit;
+        public:
+            MyTenor(const std::string & tenor);
+            
+            const long & GetLag() const;
+            const TimeUnits & GetTimeUnit() const;
+            long & GetLag();
+            TimeUnits & GetTimeUnit();
+        };
     }
 }
 #endif

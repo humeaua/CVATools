@@ -18,8 +18,8 @@ namespace Finance
                            const Utilities::Date::MyDate & sEnd,
                            ::Finance::Base::MyBasis eBasis,
                            ::Finance::Base::MyFrequency eFrequency,
-                           const DateShifter & fixDS,
-                           const DateShifter & payDS) : eFrequency_(eFrequency)
+                           const DateShifter_Ptr & fixDS,
+                           const DateShifter_Ptr & payDS) : eFrequency_(eFrequency)
         {
             Utilities::Date::MyDate sCurrentStart, sCurrentEnd = sStart;
             std::pair<std::size_t, Utilities::Date::TimeUnits> NumberAndUnitToAdd = ::Finance::Base::Frequency::ParseFrequency(eFrequency_);

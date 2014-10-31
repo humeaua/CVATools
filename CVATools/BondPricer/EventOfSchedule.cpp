@@ -28,13 +28,13 @@ namespace Finance
         {}
         
         EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis,
-                                        const DateShifter & fixDS, const DateShifter & payDS) :
+                                        const DateShifter_Ptr & fixDS, const DateShifter_Ptr & payDS) :
         sStart_(sStart),
         sEnd_(sEnd),
         eBasis_(eBasis)
         {
-            sFix_ = fixDS.Shift(sStart);
-            sPay_ = payDS.Shift(sEnd);
+            sFix_ = fixDS->GetFixingDate(sStart);
+            sPay_ = payDS->GetPaymentDate(sEnd);
         }
         
         double EventOfSchedule::GetCoverage() const

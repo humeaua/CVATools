@@ -563,8 +563,8 @@ bool RegressionTest::Date(std::ostream & os) const
     sToday = sToday.Add(1, Utilities::Date::WEEK);
     sToday = sToday.Add(1, Utilities::Date::MONTH);
     sToday = sToday.Add(1, Utilities::Date::YEAR);
-    Utilities::Date::MyDate finalDate(11, 3, 2015);
-    //os << "Test of add function : " ;
+    sToday = sToday.Add(1, Utilities::Date::BUSINESSDAY);
+    Utilities::Date::MyDate finalDate(12, 3, 2015);
     if (sToday == finalDate)
     {
         os << "SUCCEEDED" << std::endl;

@@ -96,7 +96,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "0- Regression Tests" << std::endl;
     std::cout << "4- Two Asset simulation" << std::endl;
     std::cout << "7- Kernel Estimation" << std::endl;
-    std::cout << "8- Business Day" << std::endl;
     std::cout << "9- Mu Parser Test" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "11- Fibonacci Series" << std::endl;
@@ -239,22 +238,6 @@ int _main()
         {
             std::cout << "Error : " << e.what() << std::endl;
         }
-    }
-    else if (iTest == 8)
-    {
-        Utilities::Date::MyDate sToday;
-        Utilities::Date::MyDate sNextBD = sToday.NextBusinessDay(), sPrevBD = sToday.PreviousBusinessDay();
-        
-        std::tm Today = sToday.Totm();
-        
-        std::cout << "WeekDay : " << Today.tm_wday << std::endl;
-        
-        std::cout << "Today " << std::endl;
-        sToday.Print();
-        std::cout << "Next Business Day" << std::endl;
-        sNextBD.Print();
-        std::cout << "Previous Business Day" << std::endl;
-        sPrevBD.Print();
     }
     else if (iTest == 9)
     {

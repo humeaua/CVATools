@@ -99,8 +99,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "9- Mu Parser Test" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "11- Fibonacci Series" << std::endl;
-    std::cout << "12- Smart pointers" << std::endl;
-    std::cout << "14- Cracking the coding interview" << std::endl;
     std::cout << "15- Debye Function" << std::endl;
     std::cout << "16- Sobol Sequences" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
@@ -298,41 +296,6 @@ int _main()
             
             std::cout << "nth Element of Fibonacci series is : " << iNOld << std::endl;
         }
-    }
-    else if (iTest == 12)
-    {
-        std::auto_ptr<Utilities::Date::MyDate> pDate(new Utilities::Date::MyDate());
-        
-        std::cout << "Date" << std::endl;
-        std::cout << "Day : " << pDate->GetDay() << std::endl;
-        std::cout << "Month : " << pDate->GetMonth() << std::endl;
-        std::cout << "Year : " << pDate->GetYear() << std::endl;
-        std::cout << std::endl;
-        
-        std::tr1::shared_ptr<Utilities::Date::MyDate> pDate0(new Utilities::Date::MyDate());
-        
-        std::cout << "Date0" << std::endl;
-        std::cout << "Day : " << pDate0->GetDay() << std::endl;
-        std::cout << "Month : " << pDate0->GetMonth() << std::endl;
-        std::cout << "Year : " << pDate0->GetYear() << std::endl;
-        std::cout << std::endl;
-        
-        std::tr1::shared_ptr<Utilities::Date::MyDate> pDate1(new Utilities::Date::MyDate(20,7,2012));
-        pDate0.swap(pDate1);
-        
-        std::cout << "Date0" << std::endl;
-        std::cout << "Day : " << pDate0->GetDay() << std::endl;
-        std::cout << "Month : " << pDate0->GetMonth() << std::endl;
-        std::cout << "Year : " << pDate0->GetYear() << std::endl;
-        std::cout << std::endl;
-    }
-    else if (iTest == 14)
-    {
-        //  cracking the coding interview
-        std::string cString = "ALEXANDRE";
-        cString.append(" HUMEAU");
-        std::cout << cString << std::endl;
-        //char[] cCharArray = cString.to
     }
     else if (iTest == 15)
     {

@@ -43,7 +43,7 @@ namespace Utilities
                     I = mat(0,0) * mat(1,1) - mat(1,0) * mat(0,1);
             
             double det = mat(0,0) * A + mat(0,1) * B + mat(0,2) * C;
-            if (fabs(det) < std::numeric_limits<double>::epsilon())
+            if (std::abs(det) < std::numeric_limits<double>::epsilon())
             {
                 throw EXCEPTION("Cannot inverse singular matrix");
             }
@@ -79,7 +79,7 @@ namespace Utilities
         REQUIREEXCEPTION(a.getcols() == a.getrows(), "a is not a square matrix");
         REQUIREEXCEPTION(a.getrows() == b.getrows(), "b must the same number of rows as a");
         int i,icol,irow,j,k,l,ll;
-        size_t n = a.getcols(), m = b.getcols();
+        int n = static_cast<int>(a.getcols()), m = static_cast<int>(b.getcols());
         double big,dum,pivinv,temp;
         //The integer arrays ipiv, indxr, and indxc are used for book-keeping on the pivoting
         std::vector<int> indxc(n,0), indxr(n,0), ipiv(n,0);
@@ -148,7 +148,9 @@ namespace Utilities
             for (ll=0;ll<n;ll++)
             {
                 //Next, we reduce the rows...
-                if (ll != icol) { //...except for the pivot one, of course.
+                if (ll != icol)
+                {
+                    //...except for the pivot one, of course.
                     dum=a(ll,icol);
                     a(ll,icol)=0.0;
                     for (l=1;l<=n;l++)
@@ -165,7 +167,7 @@ namespace Utilities
         //This is the end of the main loop over columns of the reduction. It only remains to unscramble
         //the solution in view of the column interchanges. We do this by interchanging pairs of
         //   columns in the reverse order that the permutation was built up.
-        for (size_t l=n-1;static_cast<int>(l)>=0;l--)
+        for (int l=n-1;l>=0;l--)
         {
             if (indxr.at(l) != indxc.at(l))
             {
@@ -340,7 +342,7 @@ namespace Utilities
                 //Sum off-diagonal elements.
                 for (iq=ip+1;iq<n;iq++)
                 {
-                    sm += fabs(dMatrix(ip,iq));
+                    sm += std::abs(dMatrix(ip,iq));
                 }
             }
             if (sm == 0.0)
@@ -362,21 +364,21 @@ namespace Utilities
                 {
                     g=100.0*fabs(dMatrix(ip,iq));
                     //After four sweeps, skip the rotation if the off-diagonal element is small.
-                    if (i > 4 && (float)(fabs(EigenValues.at(ip))+g) == (float)fabs(EigenValues.at(ip)) && (float)(fabs(EigenValues.at(iq))+g) == (float)fabs(EigenValues.at(iq)))
+                    if (i > 4 && (float)(std::abs(EigenValues.at(ip))+g) == (float)std::abs(EigenValues.at(ip)) && (float)(std::abs(EigenValues.at(iq))+g) == (float)std::abs(EigenValues.at(iq)))
                     {
                         copy(ip,iq)=0.0;
                     }
                     else if (fabs(dMatrix(ip,iq)) > tresh)
                     {
                         h=EigenValues.at(iq)-EigenValues.at(ip);
-                        if ((float)(fabs(h)+g) == (float)fabs(h))
+                        if ((float)(std::abs(h)+g) == (float)std::abs(h))
                         {
                             t=(dMatrix(ip,iq))/h; //t = 1/(2θ)
                         }
                         else
                         {
                             theta=0.5*h/(dMatrix(ip,iq)); //Equation (11.1.10).
-                            t=1.0/(fabs(theta)+sqrt(1.0+theta*theta));
+                            t=1.0/(std::abs(theta)+sqrt(1.0+theta*theta));
                             if (theta < 0.0) t = -t;
                         }
                         c=1.0/sqrt(1+t*t);

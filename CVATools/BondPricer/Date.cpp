@@ -86,7 +86,7 @@ namespace Utilities
         
         bool MyDate::IsBusinessDay() const
         {
-            std::size_t iWhere = 0;
+            int iWhere = 0;
             long lDate = GetDate(*this);
             return !IsWeekendDay() || Utilities::IsFound(Holidays, lDate, iWhere);
         }

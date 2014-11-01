@@ -27,7 +27,7 @@ namespace Finance
         
         double VolatilitySurface::operator()(const double & Expiry, const double & Strike) const
         {
-            std::size_t iExpiry = 0;
+            int iExpiry = 0;
             if (Utilities::IsFound(m_Expiries, Expiry, iExpiry))
             {
                 return m_VolSurface[iExpiry](Strike);

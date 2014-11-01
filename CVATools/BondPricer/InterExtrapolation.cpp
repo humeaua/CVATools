@@ -23,7 +23,7 @@ namespace Utilities
         
         void Interpolator::FindIndex(double dVariable, int & iValue1) const
         {
-            size_t iValue = 0;
+            int iValue = 0;
             std::size_t iNValues = dValues_.size();
             
             // if the variable is not in the variable vector, we find the index s.t. variables[index] < variable <= variables[index + 1]
@@ -200,7 +200,7 @@ namespace Utilities
         void LeftContinuousInterpolator::FindIndex(double dVariable, int &iValue1) const
         {
             // if the variable is not in the variable vector, we find the index s.t. variables[index] < variable <= variables[index + 1]
-            if (!IsFound(dVariables_, dVariable, (std::size_t&)iValue1))
+            if (!IsFound(dVariables_, dVariable, iValue1))
             {
                 iValue1 = Utilities::FindInVector(dVariables_, dVariable);
             }

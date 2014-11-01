@@ -72,36 +72,36 @@ namespace Utilities {
         return PairOfVector;
     };
     
-    template<class T> bool IsFound(const std::vector<T> & vect, const T & value, std::size_t & iWhere)
+    template<class T> bool IsFound(const std::vector<T> & vect, const T & value, int & iWhere)
     {
         //  Check if the value is in the vector
         for (std::size_t i = 0 ; i < vect.size(); ++i)
         {
             if (vect.at(i) == value)
             {
-                iWhere = i;
+                iWhere = static_cast<int>(i);
                 return true;
             }
         }
         //  If not found return the size of the vector
-        iWhere = vect.size();
+        iWhere = static_cast<int>(vect.size());
         return false;
     };
     
     template<>
-    inline bool IsFound(const std::vector<double> & vect, const double& value, std::size_t & iWhere)
+    inline bool IsFound(const std::vector<double> & vect, const double& value, int & iWhere)
     {
         const double dTolerance = 1e-10;
         for (std::size_t i = 0 ; i < vect.size(); ++i)
         {
             if (std::abs(vect.at(i) - value) < dTolerance)
             {
-                iWhere = i;
+                iWhere = static_cast<int>(i);
                 return true;
             }
         }
         //  If not found return the size of the vector
-        iWhere = vect.size();
+        iWhere = static_cast<int>(vect.size());
         return false;
     }
     

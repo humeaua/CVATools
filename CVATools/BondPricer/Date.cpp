@@ -17,10 +17,8 @@ namespace Utilities
         int DaysAtBeginningOfEachMonth[] = {/*Jan*/0, /*Feb*/31, /*Mar*/59, /*Apr*/90, /*May*/120, /*Jun*/151, /*Jul*/181, /*Aug*/212, /*Sep*/243, /*Oct*/273, /*Nov*/304, /*Dec*/334};
         std::vector<long> Holidays;
         
-        MyDate::MyDate()
-        {
-            SetLocalDate();
-        }
+        MyDate::MyDate() : iYear_(0), iMonth_(0), iDay_(0)
+        {}
         
         MyDate::MyDate(double dDate)
         {
@@ -48,13 +46,6 @@ namespace Utilities
             iDay_ = sDate.tm_mday;
             iMonth_ = sDate.tm_mon;
             iYear_ = sDate.tm_year;
-        }
-        
-        MyDate::MyDate(const MyDate& date)
-        {
-            iDay_ = date.GetDay();
-            iMonth_ = date.GetMonth();
-            iYear_ = date.GetYear();
         }
         
         int MyDate::GetDay() const

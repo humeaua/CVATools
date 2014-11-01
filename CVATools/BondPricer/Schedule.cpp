@@ -21,22 +21,22 @@ namespace Finance
                            const DateShifter_Ptr & fixDS,
                            const DateShifter_Ptr & payDS) : eFrequency_(eFrequency)
         {
-            Utilities::Date::MyDate sCurrentStart, sCurrentEnd = sStart;
+            Utilities::Date::MyDate sCurrentStart = sStart;
             std::pair<std::size_t, Utilities::Date::TimeUnits> NumberAndUnitToAdd = ::Finance::Base::Frequency::ParseFrequency(eFrequency_);
-            sCurrentStart = sStart;
-            sCurrentEnd.Add( NumberAndUnitToAdd.first, NumberAndUnitToAdd.second);
+            Utilities::Date::MyDate sCurrentEnd = sStart.Add( NumberAndUnitToAdd.first, NumberAndUnitToAdd.second);
             
             //  Computation of vector of coverage from today date            
             while (sCurrentEnd <= sEnd)
             {
-                sSchedule_.push_back(EventOfSchedule(sCurrentStart, sCurrentEnd, eBasis, fixDS, payDS));
+                EventOfSchedule event(sCurrentStart, sCurrentEnd, eBasis, fixDS, payDS);
+                sSchedule_.push_back(event);
                 
                 // Vect of coverage from today
                 dCoverage_.push_back(Coverage(eBasis, sCurrentStart, sCurrentEnd).ComputeCoverage());
                 
                 //  Update current
                 sCurrentStart = sCurrentEnd;
-                sCurrentEnd.Add(NumberAndUnitToAdd.first, NumberAndUnitToAdd.second);
+                sCurrentEnd = sCurrentEnd.Add(NumberAndUnitToAdd.first, NumberAndUnitToAdd.second);
             }
         }
         

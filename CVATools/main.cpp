@@ -537,25 +537,6 @@ int _main()
             std::cout << "New MyException caught : " << excep.what() << std::endl;
         }
     }
-    else if (iTest == 32)
-    {
-        Utilities::Matrix<double> matrix(3,3), inverse(3,3);
-        matrix(0,0) = matrix(0,1) = matrix(0,2) = 1;
-        matrix(1,0) = 3;
-        matrix(1,1) = 4;
-        matrix(1,2) = 5;
-        matrix(2,0) = 6;
-        matrix(2,1) = 12;
-        matrix(2,2) = 20;
-        
-        Utilities::matrixinverse(inverse, matrix);
-        
-        std::cout << "Original matrix" << std::endl;
-        matrix.print(std::cout);
-        
-        std::cout << "Inversed matrix" << std::endl;
-        inverse.print(std::cout);
-    }
     else if (iTest == 33)
     {
         std::tr1::shared_ptr<Maths::StatisticGatherer> wrapper(new Maths::StatisticMean);

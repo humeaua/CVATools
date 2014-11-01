@@ -274,8 +274,6 @@ bool RegressionTest::PayoffLinearization(std::ostream & os) const
         return false;
     }
     
-    //os << "beta_1 : " << dRegCoefs.first << std::endl;
-    //os << "beta_2 : " << dRegCoefs.second << std::endl;
     return true;
 }
 
@@ -301,13 +299,31 @@ bool RegressionTest::Interpolation(std::ostream & os) const
     {
         double var = 0.1 * (i+1);
         dErrorlin               += std::abs(lin(var) - valuesreflin[i]);
-        //  needs to fix extrapolation of log lin df interpolation
+    }
+    for (int i = 0 ; i < 39 ;  i++)
+    {
+        double var = 0.1 * (i+1);
         dErrorloglindf          += std::abs(loglindf(var) - valuesrefloglindf[i]);
+    }
+    for (int i = 0 ; i < 39 ;  i++)
+    {
+        double var = 0.1 * (i+1);
         dErrorleftcontinuous    += std::abs(leftcontinuous(var) - valuesrefleftcontinuous[i]);
+    }
+    for (int i = 0 ; i < 39 ;  i++)
+    {
+        double var = 0.1 * (i+1);
         dErrorrightcontinuous   += std::abs(rightcontinuous(var) - valuesrefrightcontinuous[i]);
+    }
+    for (int i = 0 ; i < 39 ;  i++)
+    {
+        double var = 0.1 * (i+1);
         dErrorhermite           += std::abs(hermite(var) - valueshermite[i]);
+    }
+    for (int i = 0 ; i < 39 ;  i++)
+    {
+        double var = 0.1 * (i+1);
         dErrorhermite5          += std::abs(hermite5(var) - valueshermite5[i]);
-        //std::cout << std::setprecision(9) << loglindf(var) << "," ;//<< ";" << valuesrefleftcontinuous[i] << "," << dErrorleftcontinuous << std::endl;
     }
     
     const double dTolerance = 1e-5;
@@ -747,9 +763,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Date", &RegressionTest::Date));
     m_mapping.insert(std::make_pair("Process Path Simulation", &RegressionTest::ProcessPathSimulation));
     m_mapping.insert(std::make_pair("Payoff linearization", &RegressionTest::PayoffLinearization));
-#ifdef DEBUG
     m_mapping.insert(std::make_pair("Interpolation", &RegressionTest::Interpolation));
-#endif
     m_mapping.insert(std::make_pair("Time Statistics", &RegressionTest::TimeStatistics));
     m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
     m_mapping.insert(std::make_pair("Matrix inversion", &RegressionTest::MatrixInversion));

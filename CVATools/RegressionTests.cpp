@@ -299,31 +299,10 @@ bool RegressionTest::Interpolation(std::ostream & os) const
     {
         double var = 0.1 * (i+1);
         dErrorlin               += std::abs(lin(var) - valuesreflin[i]);
-    }
-    for (int i = 0 ; i < 39 ;  i++)
-    {
-        double var = 0.1 * (i+1);
         dErrorloglindf          += std::abs(loglindf(var) - valuesrefloglindf[i]);
-    }
-    os.precision(15);
-    for (int i = 0 ; i < 39 ;  i++)
-    {
-        double var = 0.1 * (i+1);
         dErrorleftcontinuous    += std::abs(leftcontinuous(var) - valuesrefleftcontinuous[i]);
-    }
-    for (int i = 0 ; i < 39 ;  i++)
-    {
-        double var = 0.1 * (i+1);
         dErrorrightcontinuous   += std::abs(rightcontinuous(var) - valuesrefrightcontinuous[i]);
-    }
-    for (int i = 0 ; i < 39 ;  i++)
-    {
-        double var = 0.1 * (i+1);
         dErrorhermite           += std::abs(hermite(var) - valueshermite[i]);
-    }
-    for (int i = 0 ; i < 39 ;  i++)
-    {
-        double var = 0.1 * (i+1);
         dErrorhermite5          += std::abs(hermite5(var) - valueshermite5[i]);
     }
     

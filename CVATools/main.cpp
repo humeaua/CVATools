@@ -69,24 +69,6 @@ int main ()
 int _main();
 void DisplayChoices(size_t & iTest);
 
-//////////////////////////////////
-//  Class declaration
-//////////////////////////////////
-class FileWriter : public std::vector<std::string>
-{
-public:
-    FileWriter(const std::vector<std::string> & stringvect) : std::vector<std::string>(stringvect)
-    {}
-    
-    virtual void Write(std::ostream & out = std::cout) const
-    {
-        for (std::vector<std::string>::const_iterator it = begin(); it != end(); ++it)
-        {
-            out << *it << std::endl;
-        }
-    }
-};
-
 ///////////////////////////////////
 //  Main functions
 ///////////////////////////////////
@@ -96,22 +78,18 @@ void DisplayChoices(size_t & iTest)
     std::cout << "0- Regression Tests" << std::endl;
     std::cout << "4- Two Asset simulation" << std::endl;
     std::cout << "7- Kernel Estimation" << std::endl;
-    std::cout << "9- Mu Parser Test" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "11- Fibonacci Series" << std::endl;
     std::cout << "15- Debye Function" << std::endl;
     std::cout << "16- Sobol Sequences" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
     std::cout << "19- Random number one step generation" << std::endl;
-    std::cout << "20- FileWriter" << std::endl;
     std::cout << "22- Golf" << std::endl;
     std::cout << "23- Tournament writer" << std::endl;
     std::cout << "24- Player Reader" << std::endl;
     std::cout << "25- Directory reader" << std::endl;
-    std::cout << "26- Player Data Base" << std::endl;
     std::cout << "27- HTTP Fetcher" << std::endl;
     std::cout << "28- Exo DM louis matrices" << std::endl;
-    std::cout << "30- Exception Testing" << std::endl;
     std::cout << "33- Design patterns and derivative pricing" << std::endl;
     std::cout << "34- Hull-White Tree pricer" << std::endl;
     std::cout << "35- Virtual methods with defaults arguments" << std::endl;
@@ -236,11 +214,6 @@ int _main()
         {
             std::cout << "Error : " << e.what() << std::endl;
         }
-    }
-    else if (iTest == 9)
-    {
-        mu::Test::ParserTester sParserTester;
-        sParserTester.Run();
     }
     else if (iTest == 10)
     {
@@ -375,12 +348,6 @@ int _main()
         
         std::cout << std::endl;
     }
-    else if (iTest == 20)
-    {
-        // File writer
-        FileWriter sWriter(std::vector<std::string>(10, "10"));
-        sWriter.Write();
-    }
     else if (iTest == 22)
     {
         // Golf
@@ -416,26 +383,6 @@ int _main()
             Golf::Tournament sTourChampionship2013("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Tournaments/TourChampionship2013.csv");
             
             sTourChampionship2013.Print();
-        }
-        catch(const Utilities::MyException & sException)
-        {
-            std::cout << "MyException caught : " << sException.what() << std::endl;
-        }
-        catch (const std::exception & sException)
-        {
-            std::cout << "std::exception caught " << sException.what() << std::endl;
-        }
-        catch(...)
-        {
-            std::cout << "Unknown exception caught" << std::endl;
-        }
-    }
-    else if (iTest == 24)
-    {
-        try
-        {
-            Golf::Player sTigerWoods("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players/Tiger_Woods.csv");
-            sTigerWoods.Print();
         }
         catch(const Utilities::MyException & sException)
         {

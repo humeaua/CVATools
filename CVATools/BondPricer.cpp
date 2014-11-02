@@ -234,6 +234,8 @@ namespace Finance
                 const Utilities::Date::MyDate& sTodayDate = sYieldCurve_.Today();
                 
                 int iFind = Utilities::FindInVector(sStartDates, sTodayDate);
+                
+                REQUIREEXCEPTION(iFind!=-1,"Today not found in start dates");
                 return vCoupons_[iFind].GetPayingDateDF(sYieldCurve_) * Finance::Base::GetCoverage(sTodayDate, vCoupons_[iFind].GetEndDate(), vCoupons_[iFind].GetBasis()) * vCoupons_[iFind].GetCoupon();
             }
             else

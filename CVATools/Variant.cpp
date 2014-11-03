@@ -55,6 +55,9 @@ namespace Utilities
     
     bool Variant::operator==(const Variant & sRight)
     {
-        return (fabs(sRight.GetDouble() - d) < std::numeric_limits<double>::epsilon() && sRight.GetInt() == i && sRight.GetLong() == l && sRight.GetString() == c);
+        return (std::abs(sRight.GetDouble() - d) < std::numeric_limits<double>::epsilon()
+                && sRight.GetInt() == i
+                && sRight.GetLong() == l
+                && sRight.GetString() == c);
     }
 }

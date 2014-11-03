@@ -81,7 +81,7 @@ namespace Utilities
     }
     
     // Getter
-    std::map<double, std::map<std::size_t, std::vector<double> > > SimulationDataMultiDim::GetData() const
+    const std::map<double, std::map<std::size_t, std::vector<double> > > & SimulationDataMultiDim::GetData() const
     {
         return dData_;
     }
@@ -97,12 +97,12 @@ namespace Utilities
             }
             else
             {
-                throw EXCEPTION("SimulationDataMultiDim::GetData : Could not find Path");
+                throw EXCEPTION("Could not find Path");
             }
         }
         else
         {
-            throw EXCEPTION("SimulationDataMultiDim::GetData : Could not find Date");
+            throw EXCEPTION("Could not find Date");
         }
     }
 }

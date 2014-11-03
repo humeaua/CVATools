@@ -41,9 +41,9 @@ namespace Utilities {
     };
     
     template <class T, class U>
-    T get(const std::vector<T>& v,
+    const T& get(const std::vector<T>& v,
           size_t i,
-          U& defaultValue)
+          const U& defaultValue)
     {
         if (v.empty()) 
         {
@@ -114,7 +114,7 @@ namespace Utilities {
         
         for (std::size_t i = 0 ; i < vect1.size() ; ++i)
         {
-            if (fabs(vect1.at(i) - vect2.at(i)) > tolerance)
+            if (std::abs(vect1.at(i) - vect2.at(i)) > tolerance)
             {
                 return false;
             }

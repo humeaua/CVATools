@@ -35,7 +35,7 @@ namespace Utilities
         virtual void Put(double dDate, std::size_t iPath, std::size_t iDimension, double dValue);
         
         // Getter
-        virtual std::map<double, std::map<std::size_t, std::vector<double> > > GetData() const;
+        virtual const std::map<double, std::map<std::size_t, std::vector<double> > > & GetData() const;
         virtual Utilities::MyVector<double> GetData(double dDate, std::size_t iPath) const;
         
         template<typename Functor>
@@ -53,24 +53,7 @@ namespace Utilities
                     }
                 }
             }
-        };
-        template<typename T>
-        void Apply(const T& t)
-        {
-            std::map<double, std::map<std::size_t, std::vector<double> > >::iterator itDates = dData_.begin();
-            for ( ; itDates != dData_.end() ; ++itDates)
-            {
-                std::map<std::size_t, std::vector<double> >::iterator itPaths = itDates->second.begin();
-                for ( ; itPaths != itDates->second.end() ; ++itPaths)
-                {
-                    for (std::size_t iDim = 0 ; iDim < itPaths->second.size() ; ++iDim)
-                    {
-                        itPaths->second.at(iDim) = t(itPaths->second.at(iDim));
-                    }
-                }
-            }
-        }
-    };
+        };    };
 }
 
 #endif

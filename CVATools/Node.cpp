@@ -11,10 +11,8 @@
 
 namespace Utilities
 {
-    Binary_tree::Binary_tree()
-    {
-        root = NULL;
-    }
+    Binary_tree::Binary_tree() : root(NULL)
+    {}
     
     tree* Binary_tree::insert2(tree *temp,tree *newnode)
     {

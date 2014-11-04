@@ -6,8 +6,6 @@
 // Test for error conditions in programs.
 #ifndef Seminaire_Require_h
 #define Seminaire_Require_h
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
 
 namespace Utilities {

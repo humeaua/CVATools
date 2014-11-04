@@ -9,6 +9,7 @@
 #include "NewtonRaphson.h"
 #include <cmath>
 #include "Require.h"
+#include "Exception.h"
 
 namespace Maths
 {

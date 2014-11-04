@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "Vector.h"
+#include "Exception.h"
 
 namespace Utilities
 {

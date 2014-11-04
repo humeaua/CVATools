@@ -8,6 +8,7 @@
 
 #include "FXMarket.h"
 #include "Require.h"
+#include "Exception.h"
 
 namespace Finance
 {

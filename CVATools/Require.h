@@ -8,8 +8,7 @@
 #define Seminaire_Require_h
 #include <cstdio>
 #include <cstdlib>
-#include <fstream>
-#include "Exception.h"
+#include <iostream>
 
 namespace Utilities {
     

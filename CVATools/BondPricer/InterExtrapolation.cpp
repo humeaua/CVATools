@@ -11,6 +11,7 @@
 #include "VectorUtilities.h"
 #include <cmath>
 #include "Require.h"
+#include "Exception.h"
 
 namespace Utilities
 {

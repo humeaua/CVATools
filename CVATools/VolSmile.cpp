@@ -12,6 +12,7 @@
 #include "MathFunctions.h"
 #include "VectorUtilities.h"
 #include <sstream>
+#include "Exception.h"
 
 namespace Finance
 {

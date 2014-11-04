@@ -10,6 +10,7 @@
 #include "YieldCurve.h"
 #include "VectorUtilities.h"
 #include <stdexcept>
+#include "Exception.h"
 
 namespace Finance
 {

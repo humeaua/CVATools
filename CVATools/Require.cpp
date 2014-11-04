@@ -7,6 +7,8 @@
 //
 
 #include "Require.h"
+#include "Exception.h"
+#include <fstream>
 
 namespace Utilities {
     

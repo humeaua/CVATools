@@ -30,8 +30,8 @@ namespace SLV
         std::tr1::shared_ptr<Finance::Payoff::BasePayoff1D> m_Payoff;
         std::tr1::shared_ptr<RateUnderlying> m_DomesticUnderlying, m_ForeignUnderlying;
     public:
-        Underlying(const class StochVol & StochVol,
-                   const class Finance::Payoff::BasePayoff1D & BasePayoff,
+        Underlying(const StochVol & StochVol,
+                   const Finance::Payoff::BasePayoff1D & BasePayoff,
                    const RateUnderlying & domesticUnderlying,
                    const RateUnderlying & foreignUnderlying);
         

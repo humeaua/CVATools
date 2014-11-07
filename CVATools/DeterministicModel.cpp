@@ -7,6 +7,7 @@
 //
 
 #include "DeterministicModel.h"
+#include "Exception.h"
 
 namespace Finance
 {
@@ -14,7 +15,14 @@ namespace Finance
     {
         double DeterministicModel::GetFXSpot(const std::string &domesticCurrency, const std::string &foreignCurrency) const
         {
-            return Finance::Market::FXMarket::GetSpot(foreignCurrency, domesticCurrency);
+            if (Market::FXMarket * fxMarket = dynamic_cast<Market::FXMarket*>(m_Market.get()))
+            {
+                return fxMarket->GetSpot(foreignCurrency, domesticCurrency);
+            }
+            else
+            {
+                throw EXCEPTION("Cannot dynamic_cast market to Market::FXMarket");
+            }
         }
     }
 }

@@ -81,7 +81,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "11- Fibonacci Series" << std::endl;
     std::cout << "15- Debye Function" << std::endl;
-    std::cout << "16- Sobol Sequences" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
     std::cout << "19- Random number one step generation" << std::endl;
     std::cout << "22- Golf" << std::endl;
@@ -288,23 +287,6 @@ int _main()
         }
         Utilities::PrintCpp sPrintCPP("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/DebyeFunction.csv", false, 10);
         sPrintCPP.PrintInFile(dXY);
-    }
-    else if (iTest == 16)
-    {
-        //  Generation of quasi-random number using sobol sequences
-        int dim_num = 1110;
-        long long int seed = 110;
-        std::vector<double> quasi1(dim_num, 0.0), quasi2(dim_num, 0.0);
-        i8_sobol (dim_num,&seed,Utilities::GetPointer(quasi1));
-        i8_sobol(dim_num, &seed, Utilities::GetPointer(quasi2));
-        
-        std::vector<std::pair<double, double> > dPairOfRandomNumber;
-        for (std::size_t i = 0 ; i < dim_num ; ++i)
-        {
-            dPairOfRandomNumber.push_back(std::make_pair(quasi1[i], quasi2[i]));
-        }
-        Utilities::PrintCpp sPrintCPP("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/SobolSequence.csv", false, 10);
-        sPrintCPP.PrintInFile(dPairOfRandomNumber);
     }
     else if (iTest == 17)
     {

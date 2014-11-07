@@ -67,50 +67,39 @@ namespace Maths
     }
     
     // Approximation of the Debye function
-    double DebyeFunction(double x, double k)
+    DebyeFunction::DebyeFunction() : m_epsilon(0.001), m_nbStepInt(0.001), m_error(1e-10)
+    {}
+    
+    double DebyeFunction::operator()(double x, double k) const
     {
-        
-#ifndef EPSILON
-#define EPSILON 0.001
-#endif
-        
         // Check for exception values
         REQUIREEXCEPTION(k < 3, "Cannot compute Debye function for k >= 2");
-        REQUIREEXCEPTION(fabs(x) > EPSILON, "x is too small");
-        
-#ifndef NBSTEPINT
-#define NBSTEPINT 0.001
-#endif
+        REQUIREEXCEPTION(fabs(x) > m_epsilon, "x is too small");
         
         double dRes = 0.0;
         if (x > 0)
         {
             // case i = 0
-            dRes += pow(EPSILON,k-1.0);
-            double dx = EPSILON;
-            for ( dx = EPSILON ; dx < x ; dx += NBSTEPINT)
+            dRes += pow(m_epsilon,k-1.0);
+            double dx = m_epsilon;
+            for ( dx = m_epsilon ; dx < x ; dx += m_nbStepInt)
             {
-                dRes += pow(dx, k) / (exp(dx)-1.0) * NBSTEPINT;
+                dRes += pow(dx, k) / (exp(dx)-1.0) * m_nbStepInt;
             }
-            dx -= NBSTEPINT;
+            dx -= m_nbStepInt;
             dRes += pow(dx, k) / (exp(dx)-1.0) * (x - dx);
         }
         else
-        {
-            
-#ifndef ERROR
-#define ERROR 1e-10
-#endif
-            
-            REQUIREEXCEPTION(fabs(k - static_cast<int>(k)) > ERROR,  "Power has to be an integer when computing Debye function for negative value");
+        { 
+            REQUIREEXCEPTION(fabs(k - static_cast<int>(k)) > m_error,  "Power has to be an integer when computing Debye function for negative value");
             // case i = 0
-            dRes -= pow(EPSILON,k-1.0);
-            double dx = EPSILON;
-            for ( dx = EPSILON ; dx < x ; dx -= NBSTEPINT)
+            dRes -= pow(m_epsilon,k-1.0);
+            double dx = m_epsilon;
+            for ( dx = m_epsilon ; dx < x ; dx -= m_nbStepInt)
             {
-                dRes -= pow(dx, k) / (exp(dx)-1.0) * NBSTEPINT;
+                dRes -= pow(dx, k) / (exp(dx)-1.0) * m_nbStepInt;
             }
-            dx -= NBSTEPINT;
+            dx -= m_nbStepInt;
             dRes += pow(dx, k) / (exp(dx)-1.0) * (x - dx);
             
         }

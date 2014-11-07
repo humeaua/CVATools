@@ -34,6 +34,7 @@ namespace Maths
     
     double FrankCopula::KendallTau() const
     {
-        return 1.0 + 4.0 * (Maths::DebyeFunction(-dTheta_, 1.0) - 1.0) / dTheta_;
+        Maths::DebyeFunction debyeFunction;
+        return 1.0 + 4.0 * (debyeFunction(-dTheta_, 1.0) - 1.0) / dTheta_;
     }
 }

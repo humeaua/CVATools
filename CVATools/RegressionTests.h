@@ -29,6 +29,7 @@ public:
     bool NewtonSolver(std::ostream & os) const;
     bool Ticker(std::ostream & os) const;
     bool Sobol(std::ostream & os) const;
+    bool DebyeFunction(std::ostream & os) const;
 };
 
 class RegressionTestLauncher

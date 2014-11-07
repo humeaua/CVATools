@@ -15,7 +15,12 @@ namespace Maths
 {
     double AccCumNorm(double x);
     
-    double DebyeFunction(double x, double k);
+    struct DebyeFunction
+    {
+        double m_epsilon, m_nbStepInt, m_error;
+        DebyeFunction();
+        double operator()(double x, double k) const;
+    };
 }
 
 #endif /* defined(__CVATools__MathFunctions__) */

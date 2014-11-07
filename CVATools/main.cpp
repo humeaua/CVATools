@@ -13,9 +13,7 @@
 #include "VectorUtilities.h"
 
 #include <tr1/memory>
-#include "MathFunctions.h"
 #include "Printcpp.h"
-#include "Sobol.h"
 #include "dirent.h"
 #include "PlayerDataBase.h"
 
@@ -80,7 +78,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "7- Kernel Estimation" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "11- Fibonacci Series" << std::endl;
-    std::cout << "15- Debye Function" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
     std::cout << "19- Random number one step generation" << std::endl;
     std::cout << "22- Golf" << std::endl;
@@ -88,7 +85,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "24- Player Reader" << std::endl;
     std::cout << "25- Directory reader" << std::endl;
     std::cout << "27- HTTP Fetcher" << std::endl;
-    std::cout << "28- Exo DM louis matrices" << std::endl;
     std::cout << "33- Design patterns and derivative pricing" << std::endl;
     std::cout << "34- Hull-White Tree pricer" << std::endl;
     std::cout << "35- Virtual methods with defaults arguments" << std::endl;
@@ -269,25 +265,6 @@ int _main()
             std::cout << "nth Element of Fibonacci series is : " << iNOld << std::endl;
         }
     }
-    else if (iTest == 15)
-    {
-        // Debye function testing for Frank copula
-        std::size_t k = 1;
-        std::vector<std::pair<double, double> > dXY;
-        try
-        {
-            for (double x = 0.01 ; x < 10.0 ; x += 0.01)
-            {
-                dXY.push_back(std::make_pair(x, Maths::DebyeFunction(x, k)));
-            }
-        }
-        catch(const Utilities::MyException & e)
-        {
-            std::cout << "Exception caught" << e.what() << std::endl;
-        }
-        Utilities::PrintCpp sPrintCPP("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Output/DebyeFunction.csv", false, 10);
-        sPrintCPP.PrintInFile(dXY);
-    }
     else if (iTest == 17)
     {
         // Thinking in C++ - Volume 2
@@ -424,47 +401,6 @@ int _main()
         //  HTTP Fetcher
         /*HttpFetcher sHTTP;
         sHTTP.simpleGetRequest("http://stackoverflow.com/questions/7168933/get-page-contents-in-c");*/
-    }
-    else if (iTest == 28)
-    {
-        int n = 3, nrot ;
-        Utilities::Matrix<double> a (n,n), eigenvectors(4,4);
-        Utilities::MyVector<double> dEigenValues(0.0, n);
-        a(0,0) = a(n-1,0) = a(0,n-1) = a(n-1,n-1) = 2;
-        for (int i = 1 ; i < n - 1 ; ++i)
-        {
-            a(0,i) = a(i,0) = a(i,n-1) = a(n-1, i) = 1;
-        }
-        
-        Utilities::Eigendecomposition_jacobi(a, eigenvectors, dEigenValues, &nrot);
-        
-        for (int i = 0 ; i < n ; ++i)
-        {
-            std::cout << dEigenValues.at(i) << std::endl;
-        }
-    }
-    else if (iTest == 30)
-    {
-        //  Old require exception
-        try
-        {
-            int i = 0 ;
-            Utilities::requireException(i == 1, "i is not equal to 1", "main");
-        }
-        catch (Utilities::MyException & excep)
-        {
-            std::cout << "Old MyException caught : " << excep.what() << std::endl;
-        }
-        //  New require exception
-        try
-        {
-            int i = 0 ;
-            REQUIREEXCEPTION(i==1, "i is not equal to 1");
-        }
-        catch (const Utilities::MyException & excep)
-        {
-            std::cout << "New MyException caught : " << excep.what() << std::endl;
-        }
     }
     else if (iTest == 33)
     {

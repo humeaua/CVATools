@@ -27,6 +27,7 @@ public:
     bool AnalyticFormulae(std::ostream & os) const;
     bool MatrixInversion(std::ostream & os) const;
     bool NewtonSolver(std::ostream & os) const;
+    bool Ticker(std::ostream & os) const;
 };
 
 class RegressionTestLauncher

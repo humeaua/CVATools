@@ -30,6 +30,7 @@
 #include "Analytic.h"
 #include "NewtonSolver.h"
 #include "BisectionSolver.h"
+#include "Ticker.h"
 
 //  Declaration of all the regression tests
 
@@ -729,6 +730,25 @@ bool RegressionTest::NewtonSolver(std::ostream &os) const
     return true;
 }
 
+bool RegressionTest::Ticker(std::ostream &os) const
+{
+    Utilities::Ticker<double> tick("tickdouble");
+    
+    double res = tick.Instance();
+    std::string name = tick.Name();
+    
+    if (name == "tickdouble.1" && res == 0)
+    {
+        os << "SUCCEEDED" << std::endl;
+        return true;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+        return false;
+    }
+}
+
 /////////////////////////////////////////////////////
 //
 //      Regression test launcher
@@ -747,6 +767,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
     m_mapping.insert(std::make_pair("Matrix inversion", &RegressionTest::MatrixInversion));
     m_mapping.insert(std::make_pair("Newton Solver", &RegressionTest::NewtonSolver));
+    m_mapping.insert(std::make_pair("Ticker", &RegressionTest::Ticker));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : m_out(out)

@@ -22,10 +22,10 @@ namespace Utilities
         
         static T m_Object;
     protected:
-        static size_t m_Tick;
+        size_t m_Tick;
         std::string m_Name;
     public:
-        Ticker(const std::string & name) : m_Name(name)
+        Ticker(const std::string & name) : m_Name(name), m_Tick(0)
         {}
         
         ~Ticker()
@@ -33,8 +33,13 @@ namespace Utilities
         
         static T& Instance()
         {
-            m_Tick++;
             return m_Object;
+        }
+        
+        void Store(const T& value)
+        {
+            m_Object = value;
+            m_Tick++;
         }
         
         std::string Name() const
@@ -44,9 +49,6 @@ namespace Utilities
             return ss.str();
         }
     };
-    
-    template<class T>
-    size_t Ticker<T>::m_Tick = 0;
     
     template<class T>
     T Ticker<T>::m_Object = T(0);

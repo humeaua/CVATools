@@ -739,10 +739,11 @@ bool RegressionTest::Ticker(std::ostream &os) const
 {
     Utilities::Ticker<double> tick("tickdouble");
     
+    tick.Store(10.0);
     double res = tick.Instance();
     std::string name = tick.Name();
-    
-    if (name == "tickdouble.1" && res == 0)
+    const double tolerance = 1e-10;
+    if (name == "tickdouble.1" && std::abs(res - 10.0) < tolerance)
     {
         os << "SUCCEEDED" << std::endl;
         return true;

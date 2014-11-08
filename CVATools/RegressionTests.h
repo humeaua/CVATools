@@ -10,7 +10,7 @@
 #define __CVATools__RegressionTests__
 
 #include <iostream>
-#include <tr1/unordered_map>
+#include "HashTable.h"
 
 class RegressionTest;
 typedef bool (RegressionTest::* RegressionTestFunction)(std::ostream &) const;
@@ -40,7 +40,7 @@ public:
     
 private:
     void FillMap();
-    std::tr1::unordered_map<std::string, RegressionTestFunction> m_mapping;
+    Utilities::HashTable<std::string, RegressionTestFunction> m_mapping;
     
     RegressionTest m_regTest;
     std::ostream & m_out;

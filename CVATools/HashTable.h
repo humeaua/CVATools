@@ -12,7 +12,7 @@
 #include <iostream>
 #include <tr1/unordered_map>
 
-namespace Utiliites {
+namespace Utilities {
     
     template<class C, class D> class HashTable : public std::tr1::unordered_map<C, D>
     {

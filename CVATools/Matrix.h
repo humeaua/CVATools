@@ -364,6 +364,34 @@ namespace Utilities
                                    Utilities::MyVector<double> & EigenValues,
                                    int * nrot);
     
-    void eigsrt(MyVector<double>& d, Matrix<double> & v);
+    template<class T>
+    void eigsrt(MyVector<T>& d, Matrix<T> & v)
+    //Given the eigenvalues d[1..n] and eigenvectors v[1..n][1..n] as output from jacobi
+    //(§11.1) or tqli (§11.3), this routine sorts the eigenvalues into descending order, and rearranges
+    //the columns of v correspondingly. The method is straight insertion.
+    {
+        const size_t n=v.getrows();
+        size_t k;
+        for (size_t i=0;i<n-1;i++)
+        {
+            T p=d.at(k=i);
+            for (size_t j=i+1;j<n;j++)
+            {
+                if (d.at(j) >= p)
+                {
+                    p=d.at(k=j);
+                }
+            }
+            if (k != i)
+            {
+                d.at(k)=d.at(i);
+                d.at(i)=p;
+                for (size_t j=0;j<n;j++)
+                {
+                    std::swap(v(j,i),v(j,k));
+                }
+            }
+        }
+    }
 }
 #endif

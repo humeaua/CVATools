@@ -422,36 +422,4 @@ namespace Utilities
         }
         throw EXCEPTION("Too many iterations in routine jacobi");
     }
-    
-    void eigsrt(MyVector<double>& d, Matrix<double> & v)
-    //Given the eigenvalues d[1..n] and eigenvectors v[1..n][1..n] as output from jacobi
-    //(§11.1) or tqli (§11.3), this routine sorts the eigenvalues into descending order, and rearranges
-    //the columns of v correspondingly. The method is straight insertion.
-    {
-        int k,j,i;
-        float p;
-        size_t n=v.getrows();
-        for (i=0;i<n-1;i++)
-        {
-            p=d.at(k=i);
-            for (j=i+1;j<n;j++)
-            {
-                if (d.at(j) >= p)
-                {
-                    p=d.at(k=j);
-                }
-            }
-            if (k != i)
-            {
-                d.at(k)=d.at(i);
-                d.at(i)=p;
-                for (j=1;j<=n;j++)
-                {
-                    p=v(j,i);
-                    v(j,i)=v(j,k);
-                    v(j,k)=p;
-                }
-            }
-        }
-    }
 }

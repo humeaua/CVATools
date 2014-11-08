@@ -18,7 +18,7 @@
 namespace Utilities {
     
     template<class T>
-    inline int FindInVector(const std::vector<T> & vect, T value, bool bSort = false)
+    inline int FindInVector(const std::vector<T> & vect, const T & value, bool bSort = false)
     {
         std::vector<T> copy = vect;
         

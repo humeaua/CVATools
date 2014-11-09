@@ -107,7 +107,7 @@ namespace Utilities {
     
     // May change this function to a template version
     template<typename T>
-    bool AreEqual(const std::vector<T> & vect1, const std::vector<T> & vect2, T tolerance)
+    bool AreEqual(const std::vector<T> & vect1, const std::vector<T> & vect2, const T & tolerance)
     {
         if (vect1.size() != vect2.size())
             return false;
@@ -129,12 +129,7 @@ namespace Utilities {
         REQUIREEXCEPTION(iEnd < iN, "End is out of the data");
         REQUIREEXCEPTION(iBegin <= iEnd, "End is before beginning of data");
         
-        std::vector<T> result;
-        for (std::size_t i = iBegin ; i <= iEnd ; ++i)
-        {
-            result.push_back(vect.at(i));
-        }
-        return result;
+        return std::vector<T>(vect.begin() + iBegin, vect.begin() + iEnd + 1);
     }
     
     //  Function to get a pointer from a vector

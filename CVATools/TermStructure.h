@@ -16,7 +16,8 @@
 
 //  This file creates a termstructure template
 
-namespace Finance {
+namespace Finance
+{
     namespace Base
     {
         template<class T, class U>
@@ -38,12 +39,12 @@ namespace Finance {
                 SetTermStructure(TVariables, UValues);
             }
             
-            virtual std::vector<T> GetVariables() const
+            virtual const std::vector<T> & GetVariables() const
             {
                 return TVariables_;
             }
             
-            virtual std::vector<U> GetValues() const
+            virtual const std::vector<U> & GetValues() const
             {
                 return UValues_;
             }
@@ -69,12 +70,12 @@ namespace Finance {
                 return Size() > 1;
             }
             
-            virtual U operator ()(const T& variable) const
+            virtual const U & operator ()(const T& variable) const
             {
                 //  Flat extrapolation on the left
-                if (variable < TVariables_[0])
+                if (variable < TVariables_.front())
                 {
-                    return UValues_[0];
+                    return UValues_.front();
                 }
                 for (std::size_t i = 0 ; i < TVariables_.size() - 1 ; ++i)
                 {
@@ -90,7 +91,7 @@ namespace Finance {
                 {
                     return UValues_.back();
                 }
-                throw EXCEPTION("TermStructure<U,V>::operator(const T&) : error getting term-structure");
+                throw EXCEPTION("error getting term-structure");
             }
             
             virtual void MergeTermStructure(TermStructure<T,U> & sTermStructure)
@@ -160,7 +161,7 @@ namespace Finance {
                 }
             }
             
-            TermStructure<double, U> operator = (U& value)
+            TermStructure<double, U> operator = (const U& value)
             {
                 TVariables_.clear();
                 UValues_.clear();
@@ -169,11 +170,11 @@ namespace Finance {
                 return *this;
             }
             
-            TermStructure<T,U> operator *= (TermStructure<T,U> & sTermstructure)
+            TermStructure<T,U> operator *= (const TermStructure<T,U> & sTermstructure)
             {
                 MergeTermStructure(sTermstructure);
                 
-                std::vector<U> UValuesTS = sTermstructure.GetValues();
+                std::vector<U> & UValuesTS = sTermstructure.GetValues();
                 
                 for (std::size_t i = 0 ; i < TVariables_.size() ; ++i)
                 {

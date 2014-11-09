@@ -124,7 +124,7 @@ namespace Utilities {
     
     template<class T> std::vector<T> Subset(const std::vector<T> & vect, std::size_t iBegin, std::size_t iEnd)
     {
-        std::size_t iN = vect.size();
+        const std::size_t iN = vect.size();
         REQUIREEXCEPTION(iBegin < iN, "Begin is out of the data");
         REQUIREEXCEPTION(iEnd < iN, "End is out of the data");
         REQUIREEXCEPTION(iBegin <= iEnd, "End is before beginning of data");

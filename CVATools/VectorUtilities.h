@@ -112,14 +112,7 @@ namespace Utilities {
         if (vect1.size() != vect2.size())
             return false;
         
-        for (std::size_t i = 0 ; i < vect1.size() ; ++i)
-        {
-            if (std::abs(vect1.at(i) - vect2.at(i)) > tolerance)
-            {
-                return false;
-            }
-        }
-        return true;
+        return std::equal(vect1.begin(), vect1.end(), vect2.begin());
     }
     
     template<class T> std::vector<T> Subset(const std::vector<T> & vect, std::size_t iBegin, std::size_t iEnd)

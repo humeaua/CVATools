@@ -84,11 +84,10 @@ namespace Finance
         
         YieldCurve YieldCurve::operator + (const YieldCurve & sYieldCurve)
         {
-            const double dTolerance = 0.001;
             YieldCurve sResult;
             
             //  Test if the pillars in the yield curve are equal
-            const bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_, dTolerance);
+            const bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_);
             
             if (bPillarAreEqual)
             {

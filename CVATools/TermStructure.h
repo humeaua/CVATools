@@ -185,15 +185,7 @@ namespace Finance {
             template<typename V>
             bool IsSameTermStructure(const TermStructure<T, V> & sTermStructure) const
             {
-                if (sTermStructure.Size() != Size())
-                {
-                    return false;
-                }
-                else
-                {
-                    std::vector<T> sTSVariables = sTermStructure.GetVariables();
-                    return Utilities::AreEqual(TVariables_, sTSVariables, std::numeric_limits<T>::epsilon());
-                }
+                return Utilities::AreEqual(TVariables_, sTermStructure.GetVariables());
             }
             
             std::size_t Size() const

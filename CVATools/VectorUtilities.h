@@ -107,7 +107,7 @@ namespace Utilities {
     
     // May change this function to a template version
     template<typename T>
-    bool AreEqual(const std::vector<T> & vect1, const std::vector<T> & vect2, const T & tolerance)
+    bool AreEqual(const std::vector<T> & vect1, const std::vector<T> & vect2)
     {
         if (vect1.size() != vect2.size())
             return false;

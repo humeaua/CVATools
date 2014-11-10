@@ -43,7 +43,6 @@ namespace Utilities
         public:
             MyDate(int day, int month, int year);
             MyDate(const std::tm& sDate);
-            MyDate(double dDate);
             virtual ~MyDate();
             
             virtual bool IsValid() const;

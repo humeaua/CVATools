@@ -18,16 +18,6 @@ namespace Utilities
         int DaysAtBeginningOfEachMonth[] = {/*Jan*/0, /*Feb*/31, /*Mar*/59, /*Apr*/90, /*May*/120, /*Jun*/151, /*Jul*/181, /*Aug*/212, /*Sep*/243, /*Oct*/273, /*Nov*/304, /*Dec*/334};
         std::vector<long> Holidays;
         
-        MyDate::MyDate(double dDate)
-        {
-            SetLocalDate();
-            //  Bond Basis (30/360) convention
-            const int iYear = static_cast<int>(dDate), iMonth = static_cast<int>((dDate - iYear) * 12), iDay = static_cast<int>((dDate - iYear - iMonth / 12.0) * 30);
-            iYear_ += iYear;
-            iMonth_ += iMonth;
-            iDay_ += iDay;
-        }
-        
         bool MyDate::IsLeapYear() const
         {
             return ((iYear_ % 400 == 0) || ((iYear_ % 4 == 0) && (iYear_ % 100 != 0)));
@@ -128,11 +118,6 @@ namespace Utilities
             // This function will check the given date is valid or not.
             // If the date is not valid then it will return the value false.
             // Need some more checks on the year, though
-            
-            if (iYear_ < 0)
-            {
-                return false;
-            }
             
             if (iMonth_ > 12 || iMonth_ < 1)
             {
@@ -386,7 +371,7 @@ namespace Utilities
                     }
                     else
                     {
-                        while (iMonth_ < 0) {
+                        while (static_cast<int>(iMonth_) < 0) {
                             copy.iMonth_ += 12;
                             copy.iYear_ --;
                         }
@@ -395,7 +380,7 @@ namespace Utilities
                     
                 case YEAR:
                     copy.iYear_ += iUnit;
-                    if (iYear_ < 0)
+                    if (static_cast<int>(iYear_) < 0)
                     {
                         throw EXCEPTION("Year cannot be negative");
                     }

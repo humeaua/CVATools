@@ -118,6 +118,10 @@ namespace Utilities
             // This function will check the given date is valid or not.
             // If the date is not valid then it will return the value false.
             // Need some more checks on the year, though
+            if (static_cast<int>(iYear_) < 0)
+            {
+                return false;
+            }
             
             if (iMonth_ > 12 || iMonth_ < 1)
             {

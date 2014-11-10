@@ -17,7 +17,7 @@ namespace Finance
 {
     namespace Instruments
     {
-        DF::DF()
+        DF::DF(const Utilities::Date::MyDate & sToday) : m_initialYieldCurve(sToday)
         {}
         
         DF::DF(const Base::YieldCurve & sInitialYieldCurve) : m_initialYieldCurve(sInitialYieldCurve)

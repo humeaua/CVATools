@@ -24,7 +24,7 @@ namespace Finance
             std::string cName_;
             Utilities::Date::MyDate sToday_;
         public:
-            YieldCurve();
+            YieldCurve(const Utilities::Date::MyDate & sToday);
             YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName, const std::pair<std::vector<double>, std::vector<double> > & YC);
             
             virtual std::string GetCurrency() const;

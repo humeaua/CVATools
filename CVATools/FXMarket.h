@@ -24,7 +24,7 @@ namespace Finance
             std::vector<RateMarket> ForeignRateMarkets;
             std::vector<double> SpotFXs;
         public:
-            FXMarket(const std::string & cMarketName);
+            FXMarket(const std::string & cMarketName, const Utilities::Date::MyDate & today);
             FXMarket(const RateMarket& DomesticRateMarket,
                      const std::vector<RateMarket> & ForeignRateMarkets,
                      const std::vector<double> & SpotFxs,

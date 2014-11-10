@@ -35,14 +35,14 @@ namespace Golf
     public:
         Player();
         Player(const std::string & cFirstName, const std::string & cLastName);
-        Player(const std::string & cCSVFile);
+        Player(const std::string & cCSVFile, const Utilities::Date::MyDate & today);
         
         virtual ~Player();
         
         virtual double Average() const;
-        virtual void ComputeTotalPoints(DiscountType eDiscountType = OWGR, const Utilities::Date::MyDate & sObservationDate = Utilities::Date::MyDate());
+        virtual void ComputeTotalPoints(DiscountType eDiscountType, const Utilities::Date::MyDate & sObservationDate);
         
-        virtual void LoadFromFile(const std::string cFileName, DiscountType eDiscountType = OWGR, const Utilities::Date::MyDate & sDate = Utilities::Date::MyDate());
+        virtual void LoadFromFile(const std::string cFileName, DiscountType eDiscountType, const Utilities::Date::MyDate & sDate);
         
         virtual std::pair<std::string, std::string> GetName() const;
         

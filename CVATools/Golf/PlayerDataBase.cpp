@@ -19,13 +19,7 @@ namespace Golf
     }
     
     PlayerDataBase::~PlayerDataBase()
-    {
-        //for (std::size_t i = 0 ; i < sPlayers_.size() ; ++i)
-        //{
-        //    sPlayers_[i].~Player();
-        //}
-        sPlayers_.clear();
-    }
+    {}
     
     void PlayerDataBase::LoadFromDirectory(const std::string & cDirectoryName, DiscountType eDiscountType, const Utilities::Date::MyDate & sDate)
     {

@@ -36,11 +36,11 @@ namespace Utilities
         class MyDate
         {
         protected:
-            int iYear_;
-            int iMonth_;
-            int iDay_;
+            unsigned int iYear_;
+            unsigned int iMonth_;
+            unsigned int iDay_;
+            unsigned long m_ExcelDate;
         public:
-            MyDate();
             MyDate(int day, int month, int year);
             MyDate(const std::tm& sDate);
             MyDate(double dDate);
@@ -92,7 +92,6 @@ namespace Utilities
         MyDate next_date(const MyDate& d);
         
         long GetDate(const MyDate & sDate);
-        MyDate InitialiseTodayDate();
         
         class MyTenor
         {

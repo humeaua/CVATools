@@ -18,9 +18,6 @@ namespace Utilities
         int DaysAtBeginningOfEachMonth[] = {/*Jan*/0, /*Feb*/31, /*Mar*/59, /*Apr*/90, /*May*/120, /*Jun*/151, /*Jul*/181, /*Aug*/212, /*Sep*/243, /*Oct*/273, /*Nov*/304, /*Dec*/334};
         std::vector<long> Holidays;
         
-        MyDate::MyDate() : iYear_(0), iMonth_(0), iDay_(0)
-        {}
-        
         MyDate::MyDate(double dDate)
         {
             SetLocalDate();
@@ -275,7 +272,9 @@ namespace Utilities
         {
             if (!d.IsValid())
             {
-                return MyDate();
+                std::stringstream ss;
+                ss << "Date " << d.Print() << " is not valid";
+                throw EXCEPTION(ss.str());
             }
             // return the default date
             MyDate pdat = MyDate((d.GetDay() - 1),d.GetMonth(),d.GetYear());
@@ -547,11 +546,6 @@ namespace Utilities
             sMyDate.Add(lUnit, eTimeUnit);
             
             return sMyDate.Totm();
-        }
-        
-        MyDate InitialiseTodayDate()
-        {
-            return Utilities::Date::MyDate();
         }
         
         MyTenor::MyTenor(const std::string & tenor)

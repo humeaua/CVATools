@@ -13,7 +13,7 @@ namespace Finance
     namespace Market
     {
         //  Change Constructor of Rate Market to use a real date and not necessarily the date initialized by the computer
-        RateMarket::RateMarket(const std::string & cMarketName) : Finance::Base::YieldCurve(), Market(Utilities::Date::MyDate())
+        RateMarket::RateMarket(const std::string & cMarketName, const Utilities::Date::MyDate & today) : Finance::Base::YieldCurve(today), Market(today)
         {
             Load(cMarketName);
         }

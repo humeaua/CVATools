@@ -16,7 +16,7 @@ namespace Finance
 {
     namespace Base
     {
-        YieldCurve::YieldCurve() : Utilities::Interp::LogLinDFInterpolator(std::vector<double>(), std::vector<double>())
+        YieldCurve::YieldCurve(const Utilities::Date::MyDate & sToday) : Utilities::Interp::LogLinDFInterpolator(std::vector<double>(), std::vector<double>()), sToday_(sToday)
         {}
         
         YieldCurve::YieldCurve(const Utilities::Date::MyDate & sToday, const std::string & cCCY, const std::string & cName,const std::pair<std::vector<double>, std::vector<double> > & YC) :
@@ -84,7 +84,7 @@ namespace Finance
         
         YieldCurve YieldCurve::operator + (const YieldCurve & sYieldCurve)
         {
-            YieldCurve sResult;
+            YieldCurve sResult(sToday_);
             
             //  Test if the pillars in the yield curve are equal
             const bool bPillarAreEqual = Utilities::AreEqual(sYieldCurve.dVariables_, this->dVariables_);

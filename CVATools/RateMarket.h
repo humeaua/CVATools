@@ -22,7 +22,7 @@ namespace Finance
         protected:
             virtual void Load(const std::string & cMarketName);
         public:
-            RateMarket(const std::string & cMarketName);
+            RateMarket(const std::string & cMarketName, const Utilities::Date::MyDate & today);
             RateMarket(const Finance::Base::YieldCurve & yc);
         };
     }

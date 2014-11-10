@@ -31,11 +31,10 @@ namespace Finance
                                         const DateShifter_Ptr & fixDS, const DateShifter_Ptr & payDS) :
         sStart_(sStart),
         sEnd_(sEnd),
-        eBasis_(eBasis)
-        {
-            sFix_ = fixDS->GetFixingDate(sStart);
-            sPay_ = payDS->GetPaymentDate(sEnd);
-        }
+        eBasis_(eBasis),
+        sFix_(fixDS->GetFixingDate(sStart)),
+        sPay_(payDS->GetPaymentDate(sEnd))
+        {}
         
         double EventOfSchedule::GetCoverage() const
         {

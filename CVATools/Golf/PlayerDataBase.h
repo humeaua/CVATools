@@ -20,7 +20,7 @@ namespace Golf
     protected:
         std::vector<Player> sPlayers_;
     public:
-        PlayerDataBase(const std::string & cDirectoryName, DiscountType eDiscountType = OWGR, const Utilities::Date::MyDate & sDate = Utilities::Date::MyDate());
+        PlayerDataBase(const std::string & cDirectoryName, DiscountType eDiscountType, const Utilities::Date::MyDate & sDate);
         virtual ~PlayerDataBase();
 
         virtual void LoadFromDirectory(const std::string & cDirectoryName, DiscountType eDiscountType, const Utilities::Date::MyDate & sDate);

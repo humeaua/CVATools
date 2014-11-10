@@ -21,9 +21,9 @@ namespace Golf
     Player::Player(const std::string & cFirstName, const std::string & cLastName) : cFirstName_(cFirstName), cLastName_(cLastName), dTotalPoints_(0.0), iNTournamentsPlayed_(0)
     {}
     
-    Player::Player(const std::string & cCSVFile) : dTotalPoints_(0.0), iNTournamentsPlayed_(0)
+    Player::Player(const std::string & cCSVFile, const Utilities::Date::MyDate & today) : dTotalPoints_(0.0), iNTournamentsPlayed_(0)
     {
-        LoadFromFile(cCSVFile);
+        LoadFromFile(cCSVFile, OWGR, today);
     }
     
     Player::~Player()

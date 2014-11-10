@@ -17,7 +17,7 @@ namespace Golf {
     Tournament::Tournament(const TournamentResults & mResults, const Utilities::Date::MyDate & sDate) : mResults_(mResults), sDate_(sDate)
     {}
     
-    Tournament::Tournament(const std::string & cFileName)
+    Tournament::Tournament(const std::string & cFileName, const Utilities::Date::MyDate & date) : sDate_(date)
     {
         LoadFromFile(cFileName);
     }

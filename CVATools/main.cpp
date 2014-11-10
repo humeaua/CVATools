@@ -339,7 +339,7 @@ int _main()
     {
         try
         {
-            Golf::Tournament sTourChampionship2013("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Tournaments/TourChampionship2013.csv");
+            Golf::Tournament sTourChampionship2013("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Tournaments/TourChampionship2013.csv", Utilities::Date::MyDate(20,9,2013));
             
             sTourChampionship2013.Print();
         }
@@ -385,7 +385,8 @@ int _main()
     }
     else if (iTest == 26)
     {
-        Golf::PlayerDataBase sDataBase ("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players", Golf::TENNIS);
+        Utilities::Date::MyDate today(20,9,2013);
+        Golf::PlayerDataBase sDataBase ("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players", Golf::TENNIS, today);
         
         std::cout << std::endl;
         

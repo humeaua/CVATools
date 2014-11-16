@@ -671,8 +671,8 @@ bool RegressionTest::MatrixInversion(std::ostream &os) const
     Utilities::matrixinverse(inverse, matrix);
     
 #ifdef DEBUG
-    inverse.print(os);
-    refinvmatrix.print(os);
+    os << inverse;
+    os << refinvmatrix;
 #endif
     
     const double tolerance = 1e-8;

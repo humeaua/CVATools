@@ -1,0 +1,122 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{amsthm} % to enable the proofs
+\usepackage{graphicx} % to enable the graphics
+\usepackage{mathtools}
+
+\usepackage{bbm}
+
+\usepackage[hidelinks]{hyperref}
+
+% to be read by all users : how to number theorems and definitions : 
+% done by A. Humeau on 4/10/2012
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{notation}{Notation}[section]
+
+% end of environment addition
+
+\usepackage{geometry}
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+\usepackage[utf8]{inputenc}
+
+% to insert code in the report
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{white}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+%end of addition to insert code in the report
+
+\bibliographystyle{plain}
+
+\DeclareMathOperator*{\mysup}{sup}
+
+\begin{document}
+
+\title{Libor Market Model}
+\author{Alexandre Humeau}
+\date{\today}
+\maketitle
+
+\noindent Let us consider a set of dates $(T_i = T_\alpha + (i - \alpha) \delta)_{i=\alpha,\dots,\beta}$ and the Libor associated to the period $\left[T_i, T_{i+1}\right]$
+
+\begin{equation*}
+	L_t^i = \frac{1}{\delta} \left(\frac{B\left(t,T_i\right)}{B\left(t,T_{i+1}\right)}-1\right)
+\end{equation*}
+
+\noindent The $T_i$-forward probability measure is denoted by $\mathbb{Q}^i$ (associated to the numeraire $B(t,T_i)$.
+
+\begin{proposition}
+	$L_t^i$ is a lognormal martingale of volatiliy $\sigma_i(t) = c_i g(T_i-t)$ under $\mathbb{Q}^{i+1}$
+\end{proposition}
+
+Which probability can we take to price a product dependent on all the libors ? $\mathbb{Q}^\beta$ the terminal probability.
+
+\begin{equation}
+	\frac{dL_t^i}{L_t^i} = \gamma^i(t) dW_t + \text{drift}^i_t dt
+\end{equation}
+
+where $\gamma^i$ is a vectorial volatility function such that $\sigma_i(t) = \|\gamma^i(t)\|$ (function from $\mathbb{R}_+$ to $\mathbb{R}^d$) and $W$ a $d$- dimensional Wiener process
+
+\begin{equation*}
+	\left.\frac{d\mathbb{Q}^{i+1}}{d\mathbb{Q}^i} \right|_{\mathcal{F}_{T_i}} = \frac{B\left(T_i,T_{i+1}\right)}{B\left(T_i,T_i\right)}\frac{B\left(0,T_i\right)}{B\left(0,T_{i+1}\right)} = \frac{1}{1 + \delta L_{T_i}^i}\frac{B\left(0,T_i\right)}  {B\left(0,T_{i+1}\right)}
+\end{equation*}
+
+\begin{equation*}
+	\xi_t^i = \mathbb{E}^{\mathbb{Q}^i} \left[\frac{d\mathbb{Q}^{i+1}}{d\mathbb{Q}^i}\middle|\mathcal{F}_t\right] =  \frac{1}{1 + \delta L_{t}^i}\frac{B\left(0,T_i\right)}  {B\left(0,T_{i+1}\right)}
+\end{equation*}
+
+\begin{proposition}
+	Let $X_t$ be a $\mathbb{Q}^{i+1}$ martingale, then $X_t \xi_t^i$ is a $\mathbb{Q}^{i}$ martingale
+\end{proposition}
+
+\noindent We know that $L^{\beta-2}$ is a $\mathbb{Q}^{\beta-1}$ martingale, then $L^{\beta-2} \left(1 + \delta L^{\beta-1}\right)$ is a $\mathbb{Q}^{\beta}$ martingale. Applying Itô's formula yields
+
+\begin{equation*}
+	\left(1 + \delta L^{\beta-1}_t\right) dL^{\beta-2} _t + \delta L^{\beta-2}_t dL^{\beta-1}_t + \delta d\langle L^{\beta-2}, L^{\beta-1}\rangle_t
+\end{equation*}
+
+\noindent Taking the drifts,
+
+\begin{equation*}
+	\left(1 + \delta L^{\beta-1}_t\right) \text{drift}^{\beta-2}_t L^{\beta-2}_t+ \delta \gamma^{\beta-1}(t)\cdot\gamma^{\beta-2}(t)  L^{\beta-1}_t L^{\beta-2}_t= 0
+\end{equation*}
+
+\noindent since $\text{drift}_t^{\beta-1} = 0$. Then
+
+\begin{equation}
+	\text{drift}^{\beta-2}_t = -\frac{\delta \gamma^{\beta-1}(t)\cdot\gamma^{\beta-2}(t)  L^{\beta-1}_t}{\left(1 + \delta L^{\beta-1}_t\right)}	
+\end{equation}
+
+The general formula is then the following
+
+\begin{theorem}
+	\begin{equation}
+	\begin{aligned}
+		\forall k \in [\alpha,\beta], \text{drift}_t^k &= -\delta \sum_{i=k+1}^{\beta-1} \frac{L_t^i \gamma^k(t) \cdot \gamma^i(t)}{1 + \delta L_t^i}\\
+		&= -\delta \sum_{i=k+1}^{\beta-1} \frac{L_t^i \rho^{i,k}(t)\sigma^k(t) \sigma^i(t)}{1 + \delta L_t^i}
+	\end{aligned}
+	\end{equation}
+	where $\rho^{i,k}(t)$ is the correlation between libors $i$ and $k$
+\end{theorem}
+
+\begin{thebibliography}{9}
+	\bibitem{BraceGatarekMusiela}
+	A. Brace, D. Gatarek, M. Musiela, \emph{The market model of interest rate dynamics}, 1997, Mathematical Science, 127-155
+\end{thebibliography}
+
+\end{document}

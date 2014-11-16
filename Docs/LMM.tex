@@ -52,6 +52,8 @@
 \date{\today}
 \maketitle
 
+\section{Derivation}
+
 \noindent Let us consider a set of dates $(T_i = T_\alpha + (i - \alpha) \delta)_{i=\alpha,\dots,\beta}$ and the Libor associated to the period $\left[T_i, T_{i+1}\right]$
 
 \begin{equation*}
@@ -114,6 +116,21 @@ The general formula is then the following
 	where $\rho^{i,k}(t)$ is the correlation between libors $i$ and $k$
 \end{theorem}
 
+\section{Calibration}
+
+\begin{proposition}
+We have the following pricing formula for the caplet of strike $K$ on the $i$-th Libor
+
+\begin{equation}
+\begin{aligned}
+	C_i(0) &= \delta B\left(0,T_{i+1}\right)\mathbb{E}^{\mathbb{Q}^{i+1}} \left[\left(L^i_{T_i}-K\right)^+\right]\\
+	&= \delta B\left(0,T_{i+1}\right) B\&S\left(L^i_0, K, \int_0^{T_i} \sigma_i(s)^2 ds\right)
+\end{aligned}
+\end{equation}
+
+\noindent where $(F,K,V) \mapsto B\&S(F,K,V)$ is the Black-Scholes formula
+
+\end{proposition}
 \begin{thebibliography}{9}
 	\bibitem{BraceGatarekMusiela}
 	A. Brace, D. Gatarek, M. Musiela, \emph{The market model of interest rate dynamics}, 1997, Mathematical Science, 127-155

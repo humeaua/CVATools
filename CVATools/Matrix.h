@@ -34,8 +34,6 @@ namespace Utilities
         
         virtual size_t getrows() const;
         virtual size_t getcols() const;
-        friend std::ostream & operator<<(std::ostream & os, const Matrix<T>& matrix);
-        
         class row;
         const row & operator[](size_t index) const;
         row & operator[](size_t index);
@@ -159,20 +157,6 @@ namespace Utilities
     size_t Matrix<T>::getcols() const
     {
         return m_colsize;
-    }
-    
-    template<typename T>
-    std::ostream & operator<<(std::ostream & os, const Matrix<T> & matrix)
-    {
-        for (int i=0; i<matrix.getrows(); i++)
-        {
-            for (int j=0; j<matrix.getcols(); j++)
-            {
-                os << matrix(i,j) << '\t';
-            }
-            os << std::endl;
-        }
-        return os;
     }
     
     template<typename T>
@@ -347,4 +331,19 @@ namespace Utilities
         }
     }
 }
+
+template<typename T>
+std::ostream & operator<<(std::ostream & os, const Utilities::Matrix<T> & matrix)
+{
+    for (int i=0; i<matrix.getrows(); i++)
+    {
+        for (int j=0; j<matrix.getcols(); j++)
+        {
+            os << matrix(i,j) << '\t';
+        }
+        os << std::endl;
+    }
+    return os;
+}
+            
 #endif

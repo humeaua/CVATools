@@ -572,6 +572,18 @@ bool RegressionTest::Date(std::ostream & os) const
         os << "FAILED" << std::endl;
         return false;
     }
+    Utilities::Date::MyTenor tenor(2,Utilities::Date::DAY);
+    sToday = sToday.Add(tenor);
+    Utilities::Date::MyDate date(14,3,2015);
+    if (sToday == date)
+    {
+        os << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        os << "FAILED" << std::endl;
+        return false;
+    }
     return true;
 }
 
@@ -814,7 +826,7 @@ bool RegressionTest::DebyeFunction(std::ostream &os) const
 void RegressionTestLauncher::FillMap()
 {
     m_mapping.insert(std::make_pair("Analytic", &RegressionTest::AnalyticFormulae));
-    m_mapping.insert(std::make_pair("VolatilitySurface", &RegressionTest::VolatilitySurfaceInterpolation));
+    //m_mapping.insert(std::make_pair("VolatilitySurface", &RegressionTest::VolatilitySurfaceInterpolation));
     m_mapping.insert(std::make_pair("Date", &RegressionTest::Date));
     m_mapping.insert(std::make_pair("Process Path Simulation", &RegressionTest::ProcessPathSimulation));
     m_mapping.insert(std::make_pair("Payoff linearization", &RegressionTest::PayoffLinearization));

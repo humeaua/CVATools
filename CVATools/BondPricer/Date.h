@@ -71,8 +71,6 @@ namespace Utilities
             virtual MyDate Add(long iUnit, const TimeUnits& eTimeUnit) const;
             virtual MyDate Add(const MyTenor & tenor) const;
             
-            //virtual std::string ToStr() const;
-            
             virtual double Diff(const MyDate & sDate) const;
             virtual void SetLocalDate();
             
@@ -100,6 +98,7 @@ namespace Utilities
             TimeUnits m_timeUnit;
         public:
             MyTenor(const std::string & tenor);
+            MyTenor(const long & lag, const TimeUnits & timeUnit);
             
             const long & GetLag() const;
             const TimeUnits & GetTimeUnit() const;

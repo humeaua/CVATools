@@ -415,7 +415,8 @@ namespace Utilities
         
         MyDate MyDate::Add(const Utilities::Date::MyTenor &tenor) const
         {
-            return this->Add(tenor.GetLag(), tenor.GetTimeUnit());
+            MyDate copy = Add(tenor.GetLag(), tenor.GetTimeUnit());
+            return copy;
         }
         
         MyDate::~MyDate()
@@ -534,6 +535,9 @@ namespace Utilities
         {
             Parse(tenor);
         }
+        
+        MyTenor::MyTenor(const long & lag, const TimeUnits & timeUnit) : m_lag(lag), m_timeUnit(timeUnit)
+        {}
         
         void MyTenor::Parse(const std::string &tenor)
         {

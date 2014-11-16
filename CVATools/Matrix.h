@@ -19,11 +19,8 @@ namespace Utilities
     class Matrix
     {
     public:
-        Matrix(std::size_t N, std::size_t M);
-        Matrix(std::size_t N, std::size_t M, const T& value);
-        Matrix(std::size_t N, bool bIsIdentity);
-        Matrix(int N, bool bIsIdentity);
-        Matrix(const Matrix& m);
+        Matrix();
+        Matrix(std::size_t N, std::size_t M, const T& value = T());
         
         template <size_t M>
         Matrix(T dData[][M], int N);
@@ -66,59 +63,15 @@ namespace Utilities
     };
     
     template<typename T>
-    Matrix<T>::Matrix(std::size_t N, std::size_t M)
-    {
-        static T init;
-        m_rowsize = static_cast<int>(N);
-        m_colsize = static_cast<int>(M);
-        m_data.resize(m_rowsize*m_colsize, init);
-    }
+    Matrix<T>::Matrix() : m_rowsize(0), m_colsize(0), m_data(0)
+    {}
     
     template<typename T>
     Matrix<T>::Matrix(std::size_t N, std::size_t M,const T& value)
     {
-        m_rowsize = static_cast<int>(N);
-        m_colsize = static_cast<int>(M);
-        m_data.resize(m_rowsize*m_colsize, value);
-    }
-    
-    template<typename T>
-    Matrix<T>::Matrix(std::size_t N, bool bIsIdentity)
-    {
-        m_rowsize = static_cast<int>(N);
-        m_colsize = static_cast<int>(N);
-        m_data.resize(m_rowsize*m_colsize, T());
-        if (bIsIdentity)
-        {
-            for (std::size_t i = 0 ; i < N ; ++i)
-            {
-                (*this)(i,i) = 1.0;
-            }
-        }
-    }
-    
-    template<typename T>
-    Matrix<T>::Matrix(int N, bool bIsIdentity)
-    {
         m_rowsize = N;
-        m_colsize = N;
-        m_data.resize(m_rowsize*m_colsize, T());
-        if (bIsIdentity)
-        {
-            for (std::size_t i = 0 ; i < N ; ++i)
-            {
-                (*this)(i,i) = 1.0;
-            }
-        }
-    }
-    
-    template<typename T>
-    Matrix<T>::Matrix(const Matrix& m)
-    {
-        m_rowsize = m.m_rowsize;
-        m_colsize = m.m_colsize;
-        m_data.resize(m_rowsize*m_colsize);
-        m_data = m.m_data;
+        m_colsize = M;
+        m_data.resize(m_rowsize*m_colsize, value);
     }
     
     template<typename T>
@@ -140,8 +93,8 @@ namespace Utilities
     template<typename T>
     Matrix<T>::Matrix(const std::vector<std::vector<T> > & data)
     {
-        m_rowsize = static_cast<int>(data.size());
-        m_colsize = static_cast<int>(data.front().size());
+        m_rowsize = data.size();
+        m_colsize = data.front().size();
         m_data.resize(m_colsize * m_rowsize);
         for (std::size_t i = 0 ; i < m_rowsize; ++i)
         {
@@ -156,8 +109,8 @@ namespace Utilities
     void Matrix<T>::Reallocate(std::size_t N, std::size_t M)
     {
         m_data.clear();
-        m_rowsize = static_cast<int>(N);
-        m_colsize = static_cast<int>(M);
+        m_rowsize = N;
+        m_colsize = M;
         m_data.resize(m_rowsize * m_colsize, T());
     }
     

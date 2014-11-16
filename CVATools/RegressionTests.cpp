@@ -556,7 +556,7 @@ bool RegressionTest::Date(std::ostream & os) const
 {
     Utilities::Date::MyDate sToday(3,2,2014);
     
-    os << "Today is " << sToday.Print() << std::endl;
+    os << "Today is " << sToday << std::endl;
     sToday = sToday.Add(1, Utilities::Date::DAY);
     sToday = sToday.Add(1, Utilities::Date::WEEK);
     sToday = sToday.Add(1, Utilities::Date::MONTH);
@@ -645,7 +645,6 @@ bool RegressionTest::AnalyticFormulae(std::ostream & os) const
     }
     return true;
 }
-
 
 bool RegressionTest::MatrixInversion(std::ostream &os) const
 {

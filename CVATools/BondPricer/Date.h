@@ -71,7 +71,7 @@ namespace Utilities
             virtual MyDate Add(long iUnit, const TimeUnits& eTimeUnit) const;
             virtual MyDate Add(const MyTenor & tenor) const;
             
-            virtual std::string Print() const;
+            //virtual std::string ToStr() const;
             
             virtual double Diff(const MyDate & sDate) const;
             virtual void SetLocalDate();
@@ -108,4 +108,6 @@ namespace Utilities
         };
     }
 }
+
+std::ostream & operator<<(std::ostream & os, const Utilities::Date::MyDate & date);
 #endif

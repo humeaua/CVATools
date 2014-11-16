@@ -262,7 +262,7 @@ namespace Utilities
             if (!d.IsValid())
             {
                 std::stringstream ss;
-                ss << "Date " << d.Print() << " is not valid";
+                ss << "Date " << d << " is not valid";
                 throw EXCEPTION(ss.str());
             }
             // return the default date
@@ -421,13 +421,6 @@ namespace Utilities
         MyDate::~MyDate()
         {}
         
-        std::string MyDate::Print() const
-        {
-            std::stringstream out;
-            out << iDay_ << "/" << iMonth_ << "/" << iYear_;
-            return out.str();
-        }
-        
         long MyDate::GetDays1900() const
         {
             return GetDate(*this);
@@ -567,4 +560,10 @@ namespace Utilities
             return m_timeUnit;
         }
     }
+}
+
+std::ostream & operator<<(std::ostream & os, const Utilities::Date::MyDate & date)
+{
+    os << date.GetDay() << "/" << date.GetMonth() << "/" << date.GetYear();
+    return os;
 }

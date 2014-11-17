@@ -405,7 +405,7 @@ int _main()
     }
     else if (iTest == 33)
     {
-        std::tr1::shared_ptr<Maths::StatisticGatherer> wrapper(new Maths::StatisticMean);
+        std::tr1::shared_ptr<Maths::StatisticGatherer> wrapper(new Maths::Statistic<Maths::MEAN>);
     }
     else if (iTest == 34)
     {

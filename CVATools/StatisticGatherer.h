@@ -14,6 +14,12 @@
 
 namespace Maths
 {
+    enum StatisticType
+    {
+        MEAN,
+        STANDARD_DEVIATION
+    };
+    
     class StatisticGatherer
     {
     public:
@@ -24,18 +30,31 @@ namespace Maths
         virtual ~StatisticGatherer();
     };
     
-    class StatisticMean : public StatisticGatherer
+    template<StatisticType stat>
+    class Statistic : public StatisticGatherer
     {
     public:
-        StatisticMean();
-        virtual void DumpOneResult(double result);
-        virtual Utilities::Matrix<double> GetResultsSoFar() const;
+        Statistic() : m_PathsDone(0), m_runningSum(0.0), m_SumOfSquares(0.0)
+        {}
+        Utilities::Matrix<double> GetResultsSoFar() const;
         
-        virtual StatisticGatherer * clone() const;
-        virtual ~StatisticMean();
+        void DumpOneResult(double result)
+        {
+            m_runningSum += result;
+            m_SumOfSquares += result * result;
+            m_PathsDone++;
+        }
+        
+        StatisticGatherer * clone() const
+        {
+            return new Statistic(*this);
+        }
+        
+        ~Statistic()
+        {}
     protected:
         size_t m_PathsDone;
-        double m_runningSum;
+        double m_runningSum, m_SumOfSquares;
     };
 }
 

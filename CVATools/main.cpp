@@ -85,7 +85,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "24- Player Reader" << std::endl;
     std::cout << "25- Directory reader" << std::endl;
     std::cout << "27- HTTP Fetcher" << std::endl;
-    std::cout << "33- Design patterns and derivative pricing" << std::endl;
     std::cout << "34- Hull-White Tree pricer" << std::endl;
     std::cout << "35- Virtual methods with defaults arguments" << std::endl;
     std::cin >> iTest;
@@ -402,10 +401,6 @@ int _main()
         //  HTTP Fetcher
         /*HttpFetcher sHTTP;
         sHTTP.simpleGetRequest("http://stackoverflow.com/questions/7168933/get-page-contents-in-c");*/
-    }
-    else if (iTest == 33)
-    {
-        std::tr1::shared_ptr<Maths::StatisticGatherer> wrapper(new Maths::Statistic<Maths::MEAN>);
     }
     else if (iTest == 34)
     {

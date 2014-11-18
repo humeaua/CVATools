@@ -14,19 +14,15 @@ namespace Maths
     {}
     
     template<>
-    Utilities::Matrix<double> Statistic<MEAN>::GetResultsSoFar() const
+    double Statistic<MEAN>::GetResultsSoFar() const
     {
-        Utilities::Matrix<double> res(1,1);
-        res(0,0) = m_runningSum / m_PathsDone;
-        return res;
+        return m_runningSum / m_PathsDone;
     }
     
     template<>
-    Utilities::Matrix<double> Statistic<STANDARD_DEVIATION>::GetResultsSoFar() const
+    double Statistic<STANDARD_DEVIATION>::GetResultsSoFar() const
     {
-        Utilities::Matrix<double> res(1,1);
         const double average = m_runningSum / m_PathsDone;
-        res(0,0) = m_SumOfSquares / m_PathsDone - average * average;
-        return res;
+        return m_SumOfSquares / m_PathsDone - average * average;
     }
 }

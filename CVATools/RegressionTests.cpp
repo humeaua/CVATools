@@ -33,6 +33,7 @@
 #include "Ticker.h"
 #include "Sobol.h"
 #include "MathFunctions.h"
+#include "StatisticGatherer.h"
 
 //  Declaration of all the regression tests
 
@@ -817,6 +818,36 @@ bool RegressionTest::DebyeFunction(std::ostream &os) const
     }
 }
 
+bool RegressionTest::Statistic(std::ostream &os) const
+{
+    std::vector<std::tr1::shared_ptr<Maths::StatisticGatherer> > vect;
+    vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Statistic<Maths::MEAN>));
+    vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Statistic<Maths::STANDARD_DEVIATION>));
+    vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Moment<3>));
+    
+    double refvalues[] = {9.75,33.3125,1901.25};
+    const double tolerance = 1e-10;
+    
+    for (size_t i = 0 ; i < vect.size() ; ++i)
+    {
+        for (double x = 0 ; x < 20 ; x += 0.5)
+        {
+            vect[i]->DumpOneResult(x);
+        }
+        
+        if (std::abs(vect[i]->GetResultsSoFar()-refvalues[i]) > tolerance)
+        {
+            os << std::setprecision(15) << "Results : " << vect[i]->GetResultsSoFar() << std::endl;
+            os << std::setprecision(15) << "RefValues : " << refvalues[i] << std::endl;
+            os << "FAILED" << std::endl;
+            return false;
+        }
+    }
+    
+    os << "SUCCEEDED" << std::endl;
+    return true;
+}
+
 /////////////////////////////////////////////////////
 //
 //      Regression test launcher
@@ -838,6 +869,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Ticker", &RegressionTest::Ticker));
     m_mapping.insert(std::make_pair("Sobol", &RegressionTest::Sobol));
     m_mapping.insert(std::make_pair("Debye Function", &RegressionTest::DebyeFunction));
+    m_mapping.insert(std::make_pair("Statistic", &RegressionTest::Statistic));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : m_out(out)

@@ -18,7 +18,9 @@ namespace Maths
     enum StatisticType
     {
         MEAN,
-        STANDARD_DEVIATION
+        STANDARD_DEVIATION,
+        MAX,
+        MIN
     };
     
     class StatisticGatherer
@@ -39,12 +41,7 @@ namespace Maths
         {}
         double GetResultsSoFar() const;
         
-        void DumpOneResult(double result)
-        {
-            m_runningSum += result;
-            m_SumOfSquares += result * result;
-            m_PathsDone++;
-        }
+        void DumpOneResult(double result);
         
         StatisticGatherer * clone() const
         {

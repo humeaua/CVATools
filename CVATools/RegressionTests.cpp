@@ -824,8 +824,10 @@ bool RegressionTest::Statistic(std::ostream &os) const
     vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Statistic<Maths::MEAN>));
     vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Statistic<Maths::STANDARD_DEVIATION>));
     vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Moment<3>));
+    vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Statistic<Maths::MIN>));
+    vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Statistic<Maths::MAX>));
     
-    double refvalues[] = {9.75,33.3125,1901.25};
+    double refvalues[] = {9.75,33.3125,1901.25,0,19.5};
     const double tolerance = 1e-10;
     
     for (size_t i = 0 ; i < vect.size() ; ++i)

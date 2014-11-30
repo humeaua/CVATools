@@ -31,6 +31,7 @@ public:
     bool Sobol(std::ostream & os) const;
     bool DebyeFunction(std::ostream & os) const;
     bool Statistic(std::ostream & os) const;
+    bool muParser(std::ostream & os) const;
 };
 
 class RegressionTestLauncher

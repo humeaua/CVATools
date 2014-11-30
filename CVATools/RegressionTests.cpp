@@ -34,6 +34,7 @@
 #include "Sobol.h"
 #include "MathFunctions.h"
 #include "StatisticGatherer.h"
+#include "muParser.h"
 
 //  Declaration of all the regression tests
 
@@ -850,6 +851,50 @@ bool RegressionTest::Statistic(std::ostream &os) const
     return true;
 }
 
+namespace {
+    // Function callback
+    double MySqr(double a_fVal)
+    {
+        return a_fVal*a_fVal;
+    }
+}
+
+bool RegressionTest::muParser(std::ostream &os) const
+{
+    // Example suggested in http://muparser.beltoforion.de/mup_example.html#idExample
+    try
+    {
+        double fVal = 1;
+        mu::Parser p;
+        p.DefineVar("a", &fVal);
+        p.DefineFun("MySqr", MySqr);
+        p.SetExpr("MySqr(a)*_pi+min(10,a)");
+        
+        const double refValues[] = {0,4.14159265358979,14.5663706143592,31.2743338823081,54.2654824574367,83.5398163397448,119.097335529233,160.9380400259,209.061929829747,263.469004940773,324.159265358979,390.132711084365,462.38934211693,540.929158456675,625.752160103599,716.858347057703,814.247719318987,917.92027688745,1027.87601976309,1144.11494794592,1266.63706143592,1395.4423602331,1530.53084433746,1671.902513749,1819.55736846772,1973.49540849362,2133.7166338267,2300.22104446696,2473.0086404144,2652.07942166902,2837.43338823081,3029.07054009979,3226.99087727595,3431.19439975928,3641.6811075498,3858.4510006475,4081.50407905237,4310.84034276443,4546.45979178366,4788.36242611007,5036.54824574367,5291.01725068444,5551.76944093239,5818.80481648753,6092.12337734984,6371.72512351933,6657.610054996,6949.77817177985,7248.22947387088,7552.96396126909,7863.98163397448,8181.28249198705,8504.8665353068,8834.73376393373,9170.88417786784,9513.31777710913,9862.03456165759,10217.0345315132,10578.3176866761,10945.8840271461,11319.7335529233,11699.8662640076,12086.2821603992,12478.9812420979,12877.9635091038,13283.2289614169,13694.7775990371,14112.6094219646,14536.7244301992,14967.122623741,15403.80400259,15846.7685667461,16296.0163162095,16751.54725098,17213.3613710577,17681.4586764426,18155.8391671346,18636.5028431339,19123.4497044403,19616.6797510539,20116.1929829747,20621.9894002026,21134.0690027378,21652.4317905801,22177.0777637296,22708.0069221863,23245.2192659501,23788.7147950211,24338.4935093994,24894.5554090848,25456.9004940773,26025.5287643771,26600.440219984,27181.6348608981,27769.1126871194,28362.8736986479,28962.9178954835,29569.2452776264,30181.8558450764,30800.7495978336};
+        
+        const double tolerance = 1e-8;
+        double error = 0.0;
+        
+        for (std::size_t a=0; a<100; ++a)
+        {
+            fVal = a;  // Change value of variable a
+            error += std::abs(p.Eval()-refValues[a]);
+        }
+        
+        if (error > tolerance)
+        {
+            os << "muParser error " << error << " is above tolerance " << tolerance << std::endl;
+            return false;
+        }
+    }
+    catch (const std::exception &e)
+    {
+        os << "muParser failed with error : " << e.what() << std::endl;
+        return false;
+    }
+    return true;
+}
+
 /////////////////////////////////////////////////////
 //
 //      Regression test launcher
@@ -872,6 +917,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Sobol", &RegressionTest::Sobol));
     m_mapping.insert(std::make_pair("Debye Function", &RegressionTest::DebyeFunction));
     m_mapping.insert(std::make_pair("Statistic", &RegressionTest::Statistic));
+    m_mapping.insert(std::make_pair("muParser", &RegressionTest::muParser));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : m_out(out)

@@ -939,7 +939,7 @@ bool RegressionTestLauncher::Launch() const
         {
             return result;
         }
-        std::cout << std::endl;
+        m_out << std::endl;
     }
     return result;
 }

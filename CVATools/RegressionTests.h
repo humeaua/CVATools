@@ -43,7 +43,6 @@ public:
 private:
     void FillMap();
     Utilities::HashTable<std::string, RegressionTestFunction> m_mapping;
-    
     RegressionTest m_regTest;
     std::ostream & m_out;
 };

@@ -38,7 +38,10 @@
 
 //  Declaration of all the regression tests
 
-bool RegressionTest::BondPricing(std::ostream & os) const
+RegressionTest::RegressionTest(std::ostream & os) : m_out(os)
+{}
+
+bool RegressionTest::BondPricing() const
 {
     //////////////////////////////////////////////////////////////
     //                                                          //
@@ -80,84 +83,84 @@ bool RegressionTest::BondPricing(std::ostream & os) const
         const double dRefBondPrice = 0.717563489599423;
         const double dTolerance = 1.0e-10;
         
-        os << "Test Bond Price : ";
+        m_out << "Test Bond Price : ";
 
         if (fabs(dBondPrice - dRefBondPrice) < dTolerance)
         {
-            os << "SUCCEEDED" << std::endl;
+            m_out << "SUCCEEDED" << std::endl;
         }
         else
         {
-            os << "FAILED" << std::endl;
+            m_out << "FAILED" << std::endl;
             return false;
         }
         
-        os << "Test Bond Yield : ";
+        m_out << "Test Bond Yield : ";
         const double dPriceToYield = sBondPricer.PriceToYield(dBondPrice);
         const double dRefYield = 0.0272162086597243;
         if (fabs(dPriceToYield - dRefYield) < dTolerance)
         {
-            os << "SUCCEEDED" << std::endl;
+            m_out << "SUCCEEDED" << std::endl;
         }
         else
         {
-            os << "FAILED" << std::endl;
+            m_out << "FAILED" << std::endl;
             return false;
         }
         
-        os << "Test Bond I-Spread : ";
+        m_out << "Test Bond I-Spread : ";
         const double dISpread = sBondPricer.I_Spread(dBondPrice);
         const double dRefISpread =-0.000364158958578442;
         if (fabs(dISpread - dRefISpread) < dTolerance)
         {
-            os << "SUCCEEDED" << std::endl;
+            m_out << "SUCCEEDED" << std::endl;
         }
         else
         {
-            os << "FAILED" << std::endl;
+            m_out << "FAILED" << std::endl;
             return false;
         }
         
-        os << "Test Bond Z-Spread : ";
+        m_out << "Test Bond Z-Spread : ";
         const double dZSpread = sBondPricer.Z_Spread(dBondPrice);	
         const double dRefZSpread = 0.000384933028693842;
         if (fabs(dZSpread - dRefZSpread) < dTolerance)
         {
-            os << "SUCCEEDED" << std::endl;
+            m_out << "SUCCEEDED" << std::endl;
         }
         else
         {
-            os << "FAILED" << std::endl;
+            m_out << "FAILED" << std::endl;
             return false;
         }
     }
     catch(const Utilities::MyException & e)
     {
-        os << "MyException caught : " << std::endl;
-        os << e.what() << std::endl;
+        m_out << "MyException caught : " << std::endl;
+        m_out << e.what() << std::endl;
         return false;
     }
     catch(const std::exception & e)
     {
-        os << "Exception caught : " << std::endl;
-        os << e.what() << std::endl;
+        m_out << "Exception caught : " << std::endl;
+        m_out << e.what() << std::endl;
         return false;
     }
     catch(...)
     {
-        os << "Unknown exception caught" << std::endl;
+        m_out << "Unknown exception caught" << std::endl;
         return false;
     }
     return true;
 }
 
-bool RegressionTest::TimeStatistics(std::ostream & os) const
+bool RegressionTest::TimeStatistics() const
 {
     try
     {
         // Regression Test Statistics Time
         std::size_t iNTimes = 10;
-        os << std::endl;
+        m_out << std::endl;
         std::vector<double> dData(1000000, 1.0);
         double dTimeOld = 0.0, dTimeNew = 0.0;
         for (size_t iTimes = 0; iTimes < iNTimes ; ++iTimes)
@@ -178,18 +181,18 @@ bool RegressionTest::TimeStatistics(std::ostream & os) const
             }
             dTimeNew += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
         }
-        os << "Mean old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
-        os << "Mean time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
+        m_out << "Mean old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
+        m_out << "Mean time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
         
-        os << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
-        os << "Computation mean : ";
+        m_out << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
+        m_out << "Computation mean : ";
         if (dTimeNew < 1.25 * dTimeOld)
         {
-            os << "SUCCEEDED" << std::endl;
+            m_out << "SUCCEEDED" << std::endl;
         }
         else
         {
-            os << "FAILED" << std::endl;
+            m_out << "FAILED" << std::endl;
             return false;
         }
         
@@ -213,41 +216,41 @@ bool RegressionTest::TimeStatistics(std::ostream & os) const
             }
             dTimeNew += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
         }
-        os << "Variance old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
-        os << "Variance time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
+        m_out << "Variance old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
+        m_out << "Variance time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
         
-        os << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
-        os << "Computation variance : ";
+        m_out << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
+        m_out << "Computation variance : ";
         //  New algorithm seems to be around 3 times slower
         if (3.0 * dTimeNew > dTimeOld)
         {
-            os << "SUCCEEDED" << std::endl;
+            m_out << "SUCCEEDED" << std::endl;
         }
         else
         {
-            os << "FAILED" << std::endl;
+            m_out << "FAILED" << std::endl;
             return false;
         }
     }
     catch (const Utilities::MyException & excep)
     {
-        os << "MyException caught : " << excep.what() << std::endl;
+        m_out << "MyException caught : " << excep.what() << std::endl;
         return false;
     }
     catch (const std::exception & excep)
     {
-        os << "std::exception caught : " << excep.what() << std::endl;
+        m_out << "std::exception caught : " << excep.what() << std::endl;
         return false;
     }
     catch (...)
     {
-        os << "Unknown exception caught" << std::endl;
+        m_out << "Unknown exception caught" << std::endl;
         return false;
     }
     return true;
 }
 
-bool RegressionTest::PayoffLinearization(std::ostream & os) const
+bool RegressionTest::PayoffLinearization() const
 {
     // Payoff Linearisation
     Finance::Payoff::PayoffVanillaOption sPayoff(1.0, ::Finance::Payoff::CALL);
@@ -268,21 +271,21 @@ bool RegressionTest::PayoffLinearization(std::ostream & os) const
     const double dRefConstant = -0.467719463611643, dRefCoefStock = 0.628602529249528;
     const std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
     const double dEpsilon = 1e-6;
-    os << "Payoff linearization : " ;
+    m_out << "Payoff linearization : " ;
     if (fabs(dRegCoefs.first - dRefCoefStock) < dEpsilon && fabs(dRegCoefs.second - dRefConstant) < dEpsilon)
     {
-        os << "SUCCEDEED" << std::endl;
+        m_out << "SUCCEDEED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
     
     return true;
 }
 
-bool RegressionTest::Interpolation(std::ostream & os) const
+bool RegressionTest::Interpolation() const
 {
     double variables[] = {1.0, 2.0, 3.0, 3.5}, values[] = {1.0, 0.0, 1.0, 1.0};
     std::vector<double> vectvar(variables, variables + 4), vectvalues(values, values + 4);
@@ -312,70 +315,70 @@ bool RegressionTest::Interpolation(std::ostream & os) const
     }
     
     const double dTolerance = 1e-5;
-    os << "Linear interpolation : ";
+    m_out << "Linear interpolation : ";
     if (dErrorlin < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Log-lin DF interpolation : ";
+    m_out << "Log-lin DF interpolation : ";
     if (dErrorloglindf < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Left continuous interpolation : ";
+    m_out << "Left continuous interpolation : ";
     if (dErrorleftcontinuous < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Right continuous interpolation : ";
+    m_out << "Right continuous interpolation : ";
     if (dErrorrightcontinuous < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Hermite spline cubic interpolation  : ";
+    m_out << "Hermite spline cubic interpolation  : ";
     if (dErrorhermite < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Hermite degree 5 interpolation  : ";
+    m_out << "Hermite degree 5 interpolation  : ";
     if (dErrorhermite5 < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
     return true;
 }
 
-bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os) const
+bool RegressionTest::VolatilitySurfaceInterpolation() const
 {
     const double dFwdRef = 1.0, T = 1.0;
     const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
@@ -389,22 +392,22 @@ bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os) const
     }
     catch (const Utilities::MyException & excep)
     {
-        os << excep.what() << std::endl;
+        m_out << excep.what() << std::endl;
         return false;
     }
     catch (const std::exception & excep)
     {
-        os << excep.what() << std::endl;
+        m_out << excep.what() << std::endl;
         return false;
     }
     catch (...)
     {
-        os << "Unknown exception caught" << std::endl;
+        m_out << "Unknown exception caught" << std::endl;
         return false;
     }
     
-    os << "Non-Arbitrageability of smile : " << volSmile.IsArbitrageFree() << std::endl;
-    os << "SVI Parametrisation arbitrable ? " << sviParameterSolver.IsArbitrable(T) << std::endl;
+    m_out << "Non-Arbitrageability of smile : " << volSmile.IsArbitrageFree() << std::endl;
+    m_out << "SVI Parametrisation arbitrable ? " << sviParameterSolver.IsArbitrable(T) << std::endl;
 
     
     double dVolHermiteInterp[] = {0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.199955909,0.199689734,0.199081336,0.198094904,0.196754089,0.19512155,0.193282206,0.191329615,0.189354987,0.187438405,0.185641902,0.184004098,0.182536136,0.181218712,0.18,0.177819828,0.175742583,0.173828076,0.172080715,0.170466648,0.168928276,0.167396491,0.165800937,0.164078559,0.162180664,0.160078705,0.15776894,0.155276176,0.152656598,0.15,0.14717476,0.14340999,0.138521685,0.132949327,0.127473701,0.122974304,0.120221805,0.119701462,0.121463895,0.125,0.129374691,0.134125924,0.138991353,0.143745486,0.148209001,0.152256557,0.15582327,0.158909988,0.161587532,0.164,0.166327361,0.168636065,0.170945902,0.173265008,0.175592626,0.177921568,0.180240405,0.1825354,0.18479223,0.186997494,0.189140045,0.191212151,0.193210507,0.195137106,0.197,0.198859901,0.200861613,0.203076471,0.205502719,0.208085317,0.210733763,0.21333809,0.215783199,0.217961653,0.21978509,0.221194336,0.222168368,0.222732195,0.22296377,0.223,0.223,0.223,0.223,0.223,0.223,0.223,0.223,0.223,0.223};
@@ -421,50 +424,50 @@ bool RegressionTest::VolatilitySurfaceInterpolation(std::ostream & os) const
         dErrorSmileSkew += std::abs(volSmile.skew(dStrike) - dSmileSkew[i]);
     }
     const double dTolerance = 1e-06;
-    os << "Hermite Interpolation of smile : ";
+    m_out << "Hermite Interpolation of smile : ";
     if (dErrorInterpHermite < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "SVI Parametrisation of smile : " ;
+    m_out << "SVI Parametrisation of smile : " ;
     if (dErrorSVIParabola < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED. Error = " << dErrorSVIParabola << std::endl;
+        m_out << "FAILED. Error = " << dErrorSVIParabola << std::endl;
         return false;
     }
-    os << "Smile skew : " ;
+    m_out << "Smile skew : " ;
     if (dErrorSmileSkew < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Convexity of smile : " ;
+    m_out << "Convexity of smile : " ;
     if (dErrorSmileConvexity < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
     return true;
 }
 
-bool RegressionTest::ProcessPathSimulation(std::ostream & os) const
+bool RegressionTest::ProcessPathSimulation() const
 {
     const double dX0 = 1.0;
     
@@ -500,65 +503,65 @@ bool RegressionTest::ProcessPathSimulation(std::ostream & os) const
         dDiffCEV += std::abs(dRefValuesCEV[iDate] - ResultsCEV[iDate]);
     }
     
-    os << "Square Root process Simulation : ";
+    m_out << "Square Root process Simulation : ";
     if (dDiffSquareRoot < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Ornstein Ulhenbeck process Simulation : ";
+    m_out << "Ornstein Ulhenbeck process Simulation : ";
     if (dDiffOU < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Black Scholes process Simulation : ";
+    m_out << "Black Scholes process Simulation : ";
     if (dDiffBS < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "Stochastic correlation process Simulation : ";
+    m_out << "Stochastic correlation process Simulation : ";
     if (dDiffSC < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
-    os << "CEV process Simulation : ";
+    m_out << "CEV process Simulation : ";
     if (dDiffCEV < dTolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
     return true;
 }
 
 //  Regression test for date
-bool RegressionTest::Date(std::ostream & os) const
+bool RegressionTest::Date() const
 {
     Utilities::Date::MyDate sToday(3,2,2014);
     
-    os << "Today is " << sToday << std::endl;
+    m_out << "Today is " << sToday << std::endl;
     sToday = sToday.Add(1, Utilities::Date::DAY);
     sToday = sToday.Add(1, Utilities::Date::WEEK);
     sToday = sToday.Add(1, Utilities::Date::MONTH);
@@ -567,11 +570,11 @@ bool RegressionTest::Date(std::ostream & os) const
     Utilities::Date::MyDate finalDate(12, 3, 2015);
     if (sToday == finalDate)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
     Utilities::Date::MyTenor tenor(2,Utilities::Date::DAY);
@@ -579,17 +582,17 @@ bool RegressionTest::Date(std::ostream & os) const
     Utilities::Date::MyDate date(14,3,2015);
     if (sToday == date)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
     return true;
 }
 
-bool RegressionTest::AnalyticFormulae(std::ostream & os) const
+bool RegressionTest::AnalyticFormulae() const
 {
     const double dFwdRef = 1.0, T = 1.0, spot = 1.0;
     const double strikes[] = {0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.4}, vols[] = {0.20, 0.180, 0.150, 0.125, 0.164, 0.197, 0.223};
@@ -629,38 +632,38 @@ bool RegressionTest::AnalyticFormulae(std::ostream & os) const
     error += std::abs(sAnalytic.DigitalPrice(dFwdRef, 0.9 * dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) - Digital90SmileRef);
     error += std::abs(sAnalytic.AsianOption(spot, dFwdRef, Finance::Payoff::CALL, volatility, T, rate, observationTimesvect, pastFixings) - AsianOptionRef);
     
-    bool bOutput = false;
-    if (bOutput)
+#ifdef _DEBUG
     {
-        os << std::setprecision(9);
-        os << "ATMFCallRef = " << sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
-        os << " ATMFPutRef = " << sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::PUT) << ",";
-        os << " Call110Ref = " << sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
-        os << " PUT110Ref = " << sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::PUT) << ",";
-        os << " DigitalnoSmileATMFRef = " << sAnalytic.DigitalPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
-        os << " DigitalSmileATMFRef =" << sAnalytic.DigitalPrice(dFwdRef, dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) << ",";
-        os << " VegaATMFRef = " << sAnalytic.VegaVanillaOption(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
-        os << " Digital90NoSmileRef = " << sAnalytic.DigitalPrice(dFwdRef, 0.9 *dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
-        os << " Digital90SmileRef = " << sAnalytic.DigitalPrice(dFwdRef, 0.9 * dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) ;
-        os << " Asian option = " << sAnalytic.AsianOption(spot, dFwdRef, Finance::Payoff::CALL, volatility, T, rate, observationTimesvect, pastFixings) << std::endl;
-        os << ";" << std::endl;
+        m_out << std::setprecision(9);
+        m_out << "ATMFCallRef = " << sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        m_out << " ATMFPutRef = " << sAnalytic.VanillaPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::PUT) << ",";
+        m_out << " Call110Ref = " << sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        m_out << " PUT110Ref = " << sAnalytic.VanillaPrice(dFwdRef, 1.1 * dFwdRef, volatility, T, rate, Finance::Payoff::PUT) << ",";
+        m_out << " DigitalnoSmileATMFRef = " << sAnalytic.DigitalPrice(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        m_out << " DigitalSmileATMFRef =" << sAnalytic.DigitalPrice(dFwdRef, dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) << ",";
+        m_out << " VegaATMFRef = " << sAnalytic.VegaVanillaOption(dFwdRef, dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        m_out << " Digital90NoSmileRef = " << sAnalytic.DigitalPrice(dFwdRef, 0.9 *dFwdRef, volatility, T, rate, Finance::Payoff::CALL) << ",";
+        m_out << " Digital90SmileRef = " << sAnalytic.DigitalPrice(dFwdRef, 0.9 * dFwdRef, volSmile, T, rate, Finance::Payoff::CALL) ;
+        m_out << " Asian option = " << sAnalytic.AsianOption(spot, dFwdRef, Finance::Payoff::CALL, volatility, T, rate, observationTimesvect, pastFixings) << std::endl;
+        m_out << ";" << std::endl;
     }
+#endif
     
     const double tolerance = 1e-06;
    
     if (error < tolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
     return true;
 }
 
-bool RegressionTest::MatrixInversion(std::ostream &os) const
+bool RegressionTest::MatrixInversion() const
 {
     Utilities::Matrix<double> matrix(3,3), inverse(3,3), refinvmatrix(3,3);
     matrix(0,0) = matrix(0,1) = matrix(0,2) = 1;
@@ -684,8 +687,8 @@ bool RegressionTest::MatrixInversion(std::ostream &os) const
     Utilities::matrixinverse(inverse, matrix);
     
 #ifdef DEBUG
-    os << inverse;
-    os << refinvmatrix;
+    m_out << inverse;
+    m_out << refinvmatrix;
 #endif
     
     const double tolerance = 1e-8;
@@ -700,11 +703,11 @@ bool RegressionTest::MatrixInversion(std::ostream &os) const
     
     if (error < tolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
     return true;
@@ -725,7 +728,7 @@ namespace
     }
 }
 
-bool RegressionTest::NewtonSolver(std::ostream &os) const
+bool RegressionTest::NewtonSolver() const
 {
     Utilities::Solvers::NewtonParams params;
     params.m_dFirstGuess = 2.0;
@@ -738,17 +741,17 @@ bool RegressionTest::NewtonSolver(std::ostream &os) const
     const double calc = solver.Solve();
     if (std::abs(calc - ref) < tolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
     }
     else
     {
-        os << "FAILED";
+        m_out << "FAILED";
         return false;
     }
     return true;
 }
 
-bool RegressionTest::Ticker(std::ostream &os) const
+bool RegressionTest::Ticker() const
 {
     Utilities::Ticker<double> tick("tickdouble");
     
@@ -758,17 +761,17 @@ bool RegressionTest::Ticker(std::ostream &os) const
     const double tolerance = 1e-10;
     if (name == "tickdouble.1" && std::abs(res - 10.0) < tolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
         return true;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
 }
 
-bool RegressionTest::Sobol(std::ostream &os) const
+bool RegressionTest::Sobol() const
 {
     const int dim_num = 1110;
     long long int seed = 110;
@@ -784,17 +787,17 @@ bool RegressionTest::Sobol(std::ostream &os) const
     const double tolerance = 1e-10;
     if (error < tolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
         return true;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
 }
 
-bool RegressionTest::DebyeFunction(std::ostream &os) const
+bool RegressionTest::DebyeFunction() const
 {
     std::size_t k = 1;
     std::vector<std::pair<double, double> > dXY;
@@ -809,17 +812,17 @@ bool RegressionTest::DebyeFunction(std::ostream &os) const
     const double tolerance = 1e-10;
     if (error < tolerance)
     {
-        os << "SUCCEEDED" << std::endl;
+        m_out << "SUCCEEDED" << std::endl;
         return true;
     }
     else
     {
-        os << "FAILED" << std::endl;
+        m_out << "FAILED" << std::endl;
         return false;
     }
 }
 
-bool RegressionTest::Statistic(std::ostream &os) const
+bool RegressionTest::Statistic() const
 {
     std::vector<std::tr1::shared_ptr<Maths::StatisticGatherer> > vect;
     vect.push_back(std::tr1::shared_ptr<Maths::StatisticGatherer>(new Maths::Statistic<Maths::MEAN>));
@@ -840,14 +843,14 @@ bool RegressionTest::Statistic(std::ostream &os) const
         
         if (std::abs(vect[i]->GetResultsSoFar()-refvalues[i]) > tolerance)
         {
-            os << std::setprecision(15) << "Results : " << vect[i]->GetResultsSoFar() << std::endl;
-            os << std::setprecision(15) << "RefValues : " << refvalues[i] << std::endl;
-            os << "FAILED" << std::endl;
+            m_out << std::setprecision(15) << "Results : " << vect[i]->GetResultsSoFar() << std::endl;
+            m_out << std::setprecision(15) << "RefValues : " << refvalues[i] << std::endl;
+            m_out << "FAILED" << std::endl;
             return false;
         }
     }
     
-    os << "SUCCEEDED" << std::endl;
+    m_out << "SUCCEEDED" << std::endl;
     return true;
 }
 
@@ -859,7 +862,7 @@ namespace {
     }
 }
 
-bool RegressionTest::muParser(std::ostream &os) const
+bool RegressionTest::muParser() const
 {
     // Example suggested in http://muparser.beltoforion.de/mup_example.html#idExample
     try
@@ -883,15 +886,16 @@ bool RegressionTest::muParser(std::ostream &os) const
         
         if (error > tolerance)
         {
-            os << "muParser error " << error << " is above tolerance " << tolerance << std::endl;
+            m_out << "muParser error " << error << " is above tolerance " << tolerance << std::endl;
             return false;
         }
     }
     catch (const std::exception &e)
     {
-        os << "muParser failed with error : " << e.what() << std::endl;
+        m_out << "muParser failed with error : " << e.what() << std::endl;
         return false;
     }
+    m_out << "SUCCEDED" << std::endl;
     return true;
 }
 
@@ -920,7 +924,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("muParser", &RegressionTest::muParser));
 }
 
-RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : m_out(out)
+RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)
 {
     FillMap();
 }
@@ -934,7 +938,7 @@ bool RegressionTestLauncher::Launch() const
     for ( ; it != m_mapping.end() ; ++it)
     {
         m_out << "Regression Test " << it->first << std::endl;
-        result = (m_regTest.*(it->second))(m_out);
+        result = ((*this).*(it->second))();
         if (!result)
         {
             return result;

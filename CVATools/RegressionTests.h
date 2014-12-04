@@ -13,28 +13,31 @@
 #include "HashTable.h"
 
 class RegressionTest;
-typedef bool (RegressionTest::* RegressionTestFunction)(std::ostream &) const;
+typedef bool (RegressionTest::* RegressionTestFunction)() const;
 
 class RegressionTest {
+protected:
+    std::ostream & m_out;
 public:
-    bool BondPricing(std::ostream & os) const;
-    bool TimeStatistics(std::ostream & os) const;
-    bool PayoffLinearization(std::ostream & os) const;
-    bool Interpolation(std::ostream & os) const;
-    bool VolatilitySurfaceInterpolation(std::ostream & os) const;
-    bool ProcessPathSimulation(std::ostream & os) const;
-    bool Date(std::ostream & os) const;
-    bool AnalyticFormulae(std::ostream & os) const;
-    bool MatrixInversion(std::ostream & os) const;
-    bool NewtonSolver(std::ostream & os) const;
-    bool Ticker(std::ostream & os) const;
-    bool Sobol(std::ostream & os) const;
-    bool DebyeFunction(std::ostream & os) const;
-    bool Statistic(std::ostream & os) const;
-    bool muParser(std::ostream & os) const;
+    RegressionTest(std::ostream & os);
+    bool BondPricing() const;
+    bool TimeStatistics() const;
+    bool PayoffLinearization() const;
+    bool Interpolation() const;
+    bool VolatilitySurfaceInterpolation() const;
+    bool ProcessPathSimulation() const;
+    bool Date() const;
+    bool AnalyticFormulae() const;
+    bool MatrixInversion() const;
+    bool NewtonSolver() const;
+    bool Ticker() const;
+    bool Sobol() const;
+    bool DebyeFunction() const;
+    bool Statistic() const;
+    bool muParser() const;
 };
 
-class RegressionTestLauncher
+class RegressionTestLauncher : public RegressionTest
 {
 public:
     RegressionTestLauncher(std::ostream & out);
@@ -43,8 +46,6 @@ public:
 private:
     void FillMap();
     Utilities::HashTable<std::string, RegressionTestFunction> m_mapping;
-    RegressionTest m_regTest;
-    std::ostream & m_out;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

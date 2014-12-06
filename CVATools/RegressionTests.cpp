@@ -899,6 +899,34 @@ bool RegressionTest::muParser() const
     return true;
 }
 
+bool RegressionTest::MyException() const
+{
+    int line = 0;
+    try
+    {
+        line = __LINE__ + 1;
+        throw EXCEPTION("Dummy Exception");
+    }
+    catch (const Utilities::MyException & e)
+    {
+        std::stringstream ss;
+        ss << "Dummy Exception in function : MyException (line " << line << ") in RegressionTests.cpp";
+        const std::string message = ss.str();
+        if (strcmp(e.what(), message.c_str())!=0)
+        {
+            m_out << "My Exception failed : messages are not the same" << std::endl;
+            m_out << "Message : " << message.c_str() << std::endl;
+            m_out << "Exception message : " << e.what() << std::endl;
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
+}
+
 /////////////////////////////////////////////////////
 //
 //      Regression test launcher
@@ -922,6 +950,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Debye Function", &RegressionTest::DebyeFunction));
     m_mapping.insert(std::make_pair("Statistic", &RegressionTest::Statistic));
     m_mapping.insert(std::make_pair("muParser", &RegressionTest::muParser));
+    m_mapping.insert(std::make_pair("Exception", &RegressionTest::MyException));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

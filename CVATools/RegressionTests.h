@@ -35,6 +35,7 @@ public:
     bool DebyeFunction() const;
     bool Statistic() const;
     bool muParser() const;
+    bool MyException() const;
 };
 
 class RegressionTestLauncher : public RegressionTest

@@ -77,18 +77,7 @@ namespace Utilities {
         return Split(s, cMatch, removeEmpty, fullMatch);
     }
     
-    std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems)
-    {
-        std::stringstream ss(s);
-        std::string item;
-        while (std::getline(ss, item, delim))
-        {
-            elems.push_back(item);
-        }
-        return elems;
-    }
-    
-    std::string ToUpper(const std::string & s)
+    std::string ToUpperCopy(const std::string & s)
     {
         std::string res(s);
         for (std::string::iterator it = res.begin() ; it !=res.end() ; ++it)
@@ -96,5 +85,13 @@ namespace Utilities {
             toupper(*it);
         }
         return res;
+    }
+    
+    void ToUpper(std::string & s)
+    {
+        for (std::string::iterator it = s.begin() ; it !=s.end() ; ++it)
+        {
+            toupper(*it);
+        }
     }
 }

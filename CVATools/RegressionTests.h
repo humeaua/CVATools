@@ -36,6 +36,7 @@ public:
     bool Statistic() const;
     bool muParser() const;
     bool MyException() const;
+    bool PayoffParser() const;
 };
 
 class RegressionTestLauncher : public RegressionTest

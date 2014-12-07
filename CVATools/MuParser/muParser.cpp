@@ -281,46 +281,46 @@ namespace mu
   /** \brief Initialize the default functions. */
   void Parser::InitFun()
   {
-    // trigonometric functions
-    DefineFun(_T("sin"), Sin);
-    DefineFun(_T("cos"), Cos);
-    DefineFun(_T("tan"), Tan);
-    // arcus functions
-    DefineFun(_T("asin"), ASin);
-    DefineFun(_T("acos"), ACos);
-    DefineFun(_T("atan"), ATan);
-    // hyperbolic functions
-    DefineFun(_T("sinh"), Sinh);
-    DefineFun(_T("cosh"), Cosh);
-    DefineFun(_T("tanh"), Tanh);
-    // arcus hyperbolic functions
-    DefineFun(_T("asinh"), ASinh);
-    DefineFun(_T("acosh"), ACosh);
-    DefineFun(_T("atanh"), ATanh);
-    // Logarithm functions
-    DefineFun(_T("log2"), Log2);
-    DefineFun(_T("log10"), Log10);
-    DefineFun(_T("log"), Log10);
-    DefineFun(_T("ln"), Ln);
-    // misc
-    DefineFun(_T("exp"), Exp);
-    DefineFun(_T("sqrt"), Sqrt);
-    DefineFun(_T("sign"), Sign);
-    DefineFun(_T("rint"), Rint);
-    DefineFun(_T("abs"), Abs);
-    // To change the number of args 
-    // finance functions 
-    DefineFun(_T("AccCumNorm"), Maths::AccCumNorm);
-    DefineFun(_T("BS"), BS);
-    DefineFun(_T("BSN"), BSN);
-    DefineFun(_T("CallSpread"), CallSpread);
-    DefineFun(_T("PutSpread"), PutSpread);
-                
-    // Functions with variable number of arguments
-    DefineFun(_T("sum"), Sum);
-    DefineFun(_T("avg"), Avg);
-    DefineFun(_T("min"), Min);
-    DefineFun(_T("max"), Max);
+      // trigonometric functions
+      DefineFun(_T("SIN"), Sin);
+      DefineFun(_T("COS"), Cos);
+      DefineFun(_T("TAN"), Tan);
+      // arcus functions
+      DefineFun(_T("ASIN"), ASin);
+      DefineFun(_T("ACOS"), ACos);
+      DefineFun(_T("ATAN"), ATan);
+      // hyperbolic functions
+      DefineFun(_T("SINH"), Sinh);
+      DefineFun(_T("COSH"), Cosh);
+      DefineFun(_T("TANH"), Tanh);
+      // arcus hyperbolic functions
+      DefineFun(_T("ASINH"), ASinh);
+      DefineFun(_T("ACOSH"), ACosh);
+      DefineFun(_T("ATANH"), ATanh);
+      // Logarithm functions
+      DefineFun(_T("LOG2"), Log2);
+      DefineFun(_T("LOG10"), Log10);
+      DefineFun(_T("LOG"), Log10);
+      DefineFun(_T("LN"), Ln);
+      // misc
+      DefineFun(_T("EXP"), Exp);
+      DefineFun(_T("SQRT"), Sqrt);
+      DefineFun(_T("SIGN"), Sign);
+      DefineFun(_T("RINT"), Rint);
+      DefineFun(_T("ABS"), Abs);
+      // To change the number of args
+      // finance functions
+      DefineFun(_T("ACCCUMNORM"), Maths::AccCumNorm);
+      DefineFun(_T("BS"), BS);
+      DefineFun(_T("BSN"), BSN);
+      DefineFun(_T("CALLSPREAD"), CallSpread);
+      DefineFun(_T("PUTSPREAD"), PutSpread);
+      
+      // Functions with variable number of arguments
+      DefineFun(_T("SUM"), Sum);
+      DefineFun(_T("AVG"), Avg);
+      DefineFun(_T("MIN"), Min);
+      DefineFun(_T("MAX"), Max);
   }
 
   //---------------------------------------------------------------------------
@@ -331,8 +331,8 @@ namespace mu
   */
   void Parser::InitConst()
   {
-    DefineConst(_T("_pi"), (value_type)PARSER_CONST_PI);
-    DefineConst(_T("_e"), (value_type)PARSER_CONST_E);
+    DefineConst(_T("_PI"), (value_type)PARSER_CONST_PI);
+    DefineConst(_T("_E"), (value_type)PARSER_CONST_E);
   }
 
   //---------------------------------------------------------------------------

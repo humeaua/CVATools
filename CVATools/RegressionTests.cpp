@@ -35,6 +35,7 @@
 #include "MathFunctions.h"
 #include "StatisticGatherer.h"
 #include "muParser.h"
+#include "PayoffParser.h"
 
 //  Declaration of all the regression tests
 
@@ -869,9 +870,9 @@ bool RegressionTest::muParser() const
     {
         double fVal = 1;
         mu::Parser p;
-        p.DefineVar("a", &fVal);
-        p.DefineFun("MySqr", MySqr);
-        p.SetExpr("MySqr(a)*_pi+min(10,a)");
+        p.DefineVar("A", &fVal);
+        p.DefineFun("MYSQR", MySqr);
+        p.SetExpr("MYSQR(a)*_pi+min(10,a)");
         
         const double refValues[] = {0,4.14159265358979,14.5663706143592,31.2743338823081,54.2654824574367,83.5398163397448,119.097335529233,160.9380400259,209.061929829747,263.469004940773,324.159265358979,390.132711084365,462.38934211693,540.929158456675,625.752160103599,716.858347057703,814.247719318987,917.92027688745,1027.87601976309,1144.11494794592,1266.63706143592,1395.4423602331,1530.53084433746,1671.902513749,1819.55736846772,1973.49540849362,2133.7166338267,2300.22104446696,2473.0086404144,2652.07942166902,2837.43338823081,3029.07054009979,3226.99087727595,3431.19439975928,3641.6811075498,3858.4510006475,4081.50407905237,4310.84034276443,4546.45979178366,4788.36242611007,5036.54824574367,5291.01725068444,5551.76944093239,5818.80481648753,6092.12337734984,6371.72512351933,6657.610054996,6949.77817177985,7248.22947387088,7552.96396126909,7863.98163397448,8181.28249198705,8504.8665353068,8834.73376393373,9170.88417786784,9513.31777710913,9862.03456165759,10217.0345315132,10578.3176866761,10945.8840271461,11319.7335529233,11699.8662640076,12086.2821603992,12478.9812420979,12877.9635091038,13283.2289614169,13694.7775990371,14112.6094219646,14536.7244301992,14967.122623741,15403.80400259,15846.7685667461,16296.0163162095,16751.54725098,17213.3613710577,17681.4586764426,18155.8391671346,18636.5028431339,19123.4497044403,19616.6797510539,20116.1929829747,20621.9894002026,21134.0690027378,21652.4317905801,22177.0777637296,22708.0069221863,23245.2192659501,23788.7147950211,24338.4935093994,24894.5554090848,25456.9004940773,26025.5287643771,26600.440219984,27181.6348608981,27769.1126871194,28362.8736986479,28962.9178954835,29569.2452776264,30181.8558450764,30800.7495978336};
         
@@ -921,10 +922,36 @@ bool RegressionTest::MyException() const
         }
         else
         {
+            m_out << "SUCCEEDED" << std::endl;
             return true;
         }
     }
-    
+}
+
+bool RegressionTest::PayoffParser() const
+{
+    try
+    {
+        Finance::Payoff::PayoffParser payoff1 ("max(s-1,0)"), payoff2("MAX(S-1,0)");
+        
+        const double tolerance = 1e-14;
+        for (double x = 0 ; x < 10 ; ++x)
+        {
+            if (std::abs(payoff1(x)-payoff2(x)) > tolerance)
+            {
+                std::stringstream ss;
+                ss << std::setprecision(15) <<"Not the same payoff. Payoff1 : " << payoff1(x) << " / Payoff 2 : " << payoff2(x) << std::endl;
+                throw EXCEPTION("Not the same payoff");
+            }
+        }
+    }
+    catch (const std::exception & e)
+    {
+        m_out << "std::exception caught : " << e.what() << std::endl;
+        return false;
+    }
+    m_out << "SUCCEEDED" << std::endl;
+    return true;
 }
 
 /////////////////////////////////////////////////////
@@ -951,6 +978,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Statistic", &RegressionTest::Statistic));
     m_mapping.insert(std::make_pair("muParser", &RegressionTest::muParser));
     m_mapping.insert(std::make_pair("Exception", &RegressionTest::MyException));
+    m_mapping.insert(std::make_pair("PayoffParser", &RegressionTest::PayoffParser));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

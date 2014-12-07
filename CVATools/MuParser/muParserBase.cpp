@@ -33,6 +33,7 @@
 #include <deque>
 #include <sstream>
 #include <locale>
+#include "StringUtilities.h"
 
 #ifdef MUP_USE_OPENMP
   #include <omp.h>
@@ -411,6 +412,7 @@ namespace mu
   void ParserBase::SetExpr(const string_type &a_sExpr)
   {
     // Check locale compatibility
+      const string_type expr = Utilities::ToUpperCopy(a_sExpr);
     std::locale loc;
       if (m_pTokenReader->GetArgSep()==std::use_facet<std::numpunct<char_type> >(loc).decimal_point())
       Error(ecLOCALE);
@@ -420,7 +422,7 @@ namespace mu
     // when calling tellg on a stringstream created from the expression after 
     // reading a value at the end of an expression. (mu::Parser::IsVal function)
     // (tellg returns -1 otherwise causing the parser to ignore the value)
-    string_type sBuf(a_sExpr + _T(" ") );
+    string_type sBuf(expr + _T(" ") );
     m_pTokenReader->SetFormula(sBuf);
     ReInit();
   }

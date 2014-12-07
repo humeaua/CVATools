@@ -9,6 +9,8 @@
 #include <iostream>
 #include "StringUtilities.h"
 #include <sstream>
+#include <algorithm>
+#include <locale>
 
 namespace Utilities {
     
@@ -80,18 +82,12 @@ namespace Utilities {
     std::string ToUpperCopy(const std::string & s)
     {
         std::string res(s);
-        for (std::string::iterator it = res.begin() ; it !=res.end() ; ++it)
-        {
-            toupper(*it);
-        }
+        std::transform(res.begin(), res.end(), res.begin(), ::toupper);
         return res;
     }
     
     void ToUpper(std::string & s)
     {
-        for (std::string::iterator it = s.begin() ; it !=s.end() ; ++it)
-        {
-            toupper(*it);
-        }
+        std::transform(s.begin(), s.end(), s.begin(), ::toupper);
     }
 }

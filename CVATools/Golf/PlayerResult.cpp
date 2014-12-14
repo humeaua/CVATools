@@ -9,18 +9,8 @@
 #include "PlayerResult.h"
 #include <iostream>
 
-PlayerResult::PlayerResult(const std::string & tournamentName, size_t position, size_t score, double rankingPoints) : m_tournamentName(tournamentName), m_position(position), m_score(score), m_rankingPoints(rankingPoints), m_missedCut(m_rankingPoints == 0.0)
+PlayerResult::PlayerResult(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, size_t position, size_t score, double rankingPoints) : TournamentID(tournamentName, tournamentDate), m_position(position), m_score(score), m_rankingPoints(rankingPoints), m_missedCut(m_rankingPoints == 0.0)
 {}
-
-const std::string & PlayerResult::TournamentName() const
-{
-    return m_tournamentName;
-}
-
-std::string & PlayerResult::TournamentName()
-{
-    return m_tournamentName;
-}
 
 const size_t & PlayerResult::Position() const
 {

@@ -10,23 +10,20 @@
 #define __CVATools__PlayerResult__
 
 #include <iostream>
+#include "TournamentID.h"
 
-class PlayerResult
+class PlayerResult : public TournamentID
 {
 protected:
-    std::string m_tournamentName;
     size_t m_position;
     size_t m_score;
     
     double m_rankingPoints;
     bool m_missedCut;
 public:
-    PlayerResult(const std::string & tournamentName, size_t position, size_t score, double rankingPoints);
+    PlayerResult(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, size_t position, size_t score, double rankingPoints);
     
-    // Getters and Setters
-    const std::string & TournamentName() const;
-    std::string & TournamentName();
-    
+    // Getters and Setter
     const size_t & Position() const;
     size_t & Position();
     

@@ -957,7 +957,7 @@ bool RegressionTest::PayoffParser() const
 
 bool RegressionTest::PlayerResultTest() const
 {
-    PlayerResult result1("Tournament1", 30, 288, 1.5);
+    PlayerResult result1("Tournament1", Utilities::Date::MyDate(30,9,2014), 30, 288, 1.5);
     
     if (result1.MissedCut())
     {

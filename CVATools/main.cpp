@@ -15,51 +15,11 @@
 #include <tr1/memory>
 #include "Printcpp.h"
 #include "dirent.h"
-#include "PlayerDataBase.h"
 
 #include "StatisticGatherer.h"
 #include "Wrapper.h"
 #include "HullWhiteTree.h"
-
-#define NUM_THREADS 5
-
-/*int main (int argc, const char * argv[])
-{
-
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
-}*/
-
-/*void *PrintHello(void *threadid);
-void *PrintHello(void *threadid)
-{
-    long tid;
-    tid = (long)threadid;
-    std::cout << "Hello World! Thread ID, " << tid << std::endl;
-    pthread_exit(NULL);
-}
-
-int main ()
-{
-    pthread_t threads[NUM_THREADS];
-    int rc;
-    int i;
-    for( i=0; i < NUM_THREADS; i++ )
-    {
-        std::cout << "main() : creating thread, " << i << std::endl;
-        rc = pthread_create(&threads[i], NULL, 
-                            PrintHello, (void *)i);
-        if (rc)
-        {
-            std::cout << "Error:unable to create thread," << rc << std::endl;
-            exit(-1);
-        }
-        
-        //pthread_join(threads[i], NULL);
-    }
-    pthread_exit(NULL);
-}*/
+#include <set>
 
 //////////////////////////////////
 //  Forward Declaration
@@ -80,11 +40,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "11- Fibonacci Series" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
     std::cout << "19- Random number one step generation" << std::endl;
-    std::cout << "22- Golf" << std::endl;
-    std::cout << "23- Tournament writer" << std::endl;
-    std::cout << "24- Player Reader" << std::endl;
-    std::cout << "25- Directory reader" << std::endl;
-    std::cout << "27- HTTP Fetcher" << std::endl;
     std::cout << "34- Hull-White Tree pricer" << std::endl;
     std::cout << "35- Virtual methods with defaults arguments" << std::endl;
     std::cin >> iTest;
@@ -305,102 +260,6 @@ int _main()
         }
         
         std::cout << std::endl;
-    }
-    else if (iTest == 22)
-    {
-        // Golf
-        try
-        {
-            Golf::OfficialWorldGolfRankings sOGWR;
-            
-            Utilities::Interp::LinearInterpolator sOWGRDiscountCurve = sOGWR.GetDiscountCurve(Golf::OWGR), sTennisDiscountCurve = sOGWR.GetDiscountCurve(Golf::TENNIS);
-            
-            for (double dT = -2.5 ; dT < 1.0 ; dT += 0.041)
-            {
-                std::cout << dT << ";" << sOWGRDiscountCurve(dT) << ";" << sTennisDiscountCurve(dT) << std::endl;
-            }
-            
-        }
-        catch (const Utilities::MyException & sException)
-        {
-            std::cout << "MyException caught : " << sException.what() << std::endl;
-        }
-        catch (const std::exception & sException)
-        {
-            std::cout << "std::exception caught " << sException.what() << std::endl;
-        }
-        catch (...)
-        {
-            std::cout << "Unknown exception caught" << std::endl;
-        }
-    }
-    else if (iTest == 23)
-    {
-        try
-        {
-            Golf::Tournament sTourChampionship2013("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Tournaments/TourChampionship2013.csv", Utilities::Date::MyDate(20,9,2013));
-            
-            sTourChampionship2013.Print();
-        }
-        catch(const Utilities::MyException & sException)
-        {
-            std::cout << "MyException caught : " << sException.what() << std::endl;
-        }
-        catch (const std::exception & sException)
-        {
-            std::cout << "std::exception caught " << sException.what() << std::endl;
-        }
-        catch(...)
-        {
-            std::cout << "Unknown exception caught" << std::endl;
-        }
-    }
-    else if (iTest == 25)
-    {
-        DIR *dir;
-        struct dirent *ent;
-        std::string cDirectory = "/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players";
-        if ((dir = opendir (cDirectory.c_str())) != NULL)
-        {
-            /* print all the files and directories within directory */
-            while ((ent = readdir (dir)) != NULL)
-            {
-                std::string str = ent->d_name;
-                unsigned long found = str.find_last_of(".");
-                std::string cLastChar = str.substr(found+1, str.size());
-                if (cLastChar == "csv" || cLastChar == "CSV")
-                {
-                    printf ("%s\n", ent->d_name);
-                }
-            }
-            closedir (dir);
-        }
-        else
-        {
-            /* could not open directory */
-            perror ("");
-            return EXIT_FAILURE;
-        }
-    }
-    else if (iTest == 26)
-    {
-        Utilities::Date::MyDate today(20,9,2013);
-        Golf::PlayerDataBase sDataBase ("/Users/alexhum49/Documents/Workspace/CVA/CVATools/Input/Golf/Players", Golf::TENNIS, today);
-        
-        std::cout << std::endl;
-        
-        sDataBase.ComputeRanking();
-        
-        for (std::size_t i = 0 ; i < sDataBase.GetDataBase().size() ; ++i)
-        {
-            sDataBase.GetDataBase()[i].PrintName();
-        }
-    }
-    else if (iTest == 27)
-    {
-        //  HTTP Fetcher
-        /*HttpFetcher sHTTP;
-        sHTTP.simpleGetRequest("http://stackoverflow.com/questions/7168933/get-page-contents-in-c");*/
     }
     else if (iTest == 34)
     {

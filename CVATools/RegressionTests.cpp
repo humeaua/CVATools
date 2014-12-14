@@ -36,6 +36,7 @@
 #include "StatisticGatherer.h"
 #include "muParser.h"
 #include "PayoffParser.h"
+#include "PlayerResult.h"
 
 //  Declaration of all the regression tests
 
@@ -896,7 +897,7 @@ bool RegressionTest::muParser() const
         m_out << "muParser failed with error : " << e.what() << std::endl;
         return false;
     }
-    m_out << "SUCCEDED" << std::endl;
+    m_out << "SUCCEEDED" << std::endl;
     return true;
 }
 
@@ -954,6 +955,37 @@ bool RegressionTest::PayoffParser() const
     return true;
 }
 
+bool RegressionTest::PlayerResultTest() const
+{
+    PlayerResult result1("Tournament1", 30, 288, 1.5);
+    
+    if (result1.MissedCut())
+    {
+        m_out << "Missed Cut is true" << std::endl;
+        return false;
+    }
+    
+    if (result1.Position() != 30)
+    {
+        m_out << "Position is not 30" << std::endl;
+        return false;
+    }
+    
+    if (result1.Score() != 288)
+    {
+        m_out << "Score is not 288" << std::endl;
+        return false;
+    }
+    
+    if (result1.RankingPoints() != 1.5)
+    {
+        m_out << "Ranking points is not 1.5" << std::endl;
+        return false;
+    }
+    m_out << "SUCCEEDED" << std::endl;
+    return true;
+}
+
 /////////////////////////////////////////////////////
 //
 //      Regression test launcher
@@ -979,6 +1011,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("muParser", &RegressionTest::muParser));
     m_mapping.insert(std::make_pair("Exception", &RegressionTest::MyException));
     m_mapping.insert(std::make_pair("PayoffParser", &RegressionTest::PayoffParser));
+    m_mapping.insert(std::make_pair("PlayerResults", &RegressionTest::PlayerResultTest));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

@@ -37,6 +37,9 @@ public:
     bool muParser() const;
     bool MyException() const;
     bool PayoffParser() const;
+    
+    //  Golf unit testing
+    bool PlayerResultTest() const;
 };
 
 class RegressionTestLauncher : public RegressionTest

@@ -33,8 +33,7 @@ public:
     const double & RankingPoints() const;
     double & RankingPoints();
 
-    const bool & MissedCut() const;
-    bool& MissedCut();
+    bool MissedCut() const;
 };
 
 #endif /* defined(__CVATools__PlayerResult__) */

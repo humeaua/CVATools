@@ -9,7 +9,7 @@
 #include "PlayerResult.h"
 #include <iostream>
 
-PlayerResult::PlayerResult(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, size_t position, size_t score, double rankingPoints) : TournamentID(tournamentName, tournamentDate), m_position(position), m_score(score), m_rankingPoints(rankingPoints), m_missedCut(m_rankingPoints == 0.0)
+PlayerResult::PlayerResult(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, size_t position, size_t score, double rankingPoints) : TournamentID(tournamentName, tournamentDate), m_position(position), m_score(score), m_rankingPoints(rankingPoints)
 {}
 
 const size_t & PlayerResult::Position() const
@@ -42,12 +42,7 @@ double & PlayerResult::RankingPoints()
     return m_rankingPoints;
 }
 
-const bool & PlayerResult::MissedCut() const
+bool PlayerResult::MissedCut() const
 {
-    return m_missedCut;
-}
-
-bool & PlayerResult::MissedCut()
-{
-    return m_missedCut;
+    return m_rankingPoints == 0;
 }

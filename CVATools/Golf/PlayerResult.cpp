@@ -12,6 +12,9 @@
 PlayerResult::PlayerResult(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, size_t position, size_t score, double rankingPoints) : TournamentID(tournamentName, tournamentDate), m_position(position), m_score(score), m_rankingPoints(rankingPoints)
 {}
 
+PlayerResult::PlayerResult(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate) : TournamentID(tournamentName, tournamentDate), m_position(0), m_score(0), m_rankingPoints(0)
+{}
+
 const size_t & PlayerResult::Position() const
 {
     return m_position;

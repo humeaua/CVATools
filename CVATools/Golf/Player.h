@@ -14,14 +14,20 @@
 #include "PlayerResult.h"
 #include "PlayerID.h"
 
+class Tournament;
+
 class Player : public PlayerID
 {
+private:
+    bool IsCorrectPlayer(const std::pair<PlayerID,PlayerResult> & player) const;
 protected:
     std::vector<PlayerResult> m_results;
+    
+    virtual void AddResult(const PlayerResult & result);
 public:
     Player(const std::string & name);
     
-    virtual void AddResult(const PlayerResult & result);
+    void AddResult(const Tournament & tournament);
 };
 
 #endif /* defined(__CVATools__Player__) */

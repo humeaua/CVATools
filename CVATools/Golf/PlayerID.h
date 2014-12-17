@@ -17,6 +17,13 @@ protected:
     std::string m_name;
 public:
     PlayerID(const std::string & name);
+    
+    const std::string & Name() const;
 };
+
+inline bool operator==(const PlayerID& lhs, const PlayerID& rhs)
+{
+    return lhs.Name() == rhs.Name();
+}
 
 #endif /* defined(__CVATools__PlayerID__) */

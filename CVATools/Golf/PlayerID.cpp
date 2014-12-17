@@ -10,3 +10,8 @@
 
 PlayerID::PlayerID(const std::string & name) : m_name(name)
 {}
+
+const std::string & PlayerID::Name() const
+{
+    return m_name;
+}

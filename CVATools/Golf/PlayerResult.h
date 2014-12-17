@@ -22,6 +22,7 @@ protected:
     bool m_missedCut;
 public:
     PlayerResult(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, size_t position, size_t score, double rankingPoints);
+    PlayerResult(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate);
     
     // Getters and Setter
     const size_t & Position() const;

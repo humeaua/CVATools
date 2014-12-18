@@ -20,9 +20,9 @@ void Player::AddResult(const PlayerResult &result)
 
 void Player::AddResult(const Tournament &tournament)
 {
-    const Players & playersInTournament = tournament.Players();
+    const Tournament::Players & playersInTournament = tournament.GetPlayers();
     
-    Players::const_iterator iter;
+    Tournament::Players::const_iterator iter;
     PairComparatorFirst<PlayerID, PlayerResult> comp(m_name);
     iter = std::find_if(playersInTournament.begin(), playersInTournament.end(), comp);
     if (iter != playersInTournament.end())

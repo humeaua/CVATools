@@ -16,7 +16,12 @@ void Tournament::AddPlayer(const PlayerID &player)
     m_players.push_back(std::pair<PlayerID, PlayerResult>(player,PlayerResult(m_tournamentName, m_tournamentDate)));
 }
 
-const Players & Tournament::Players() const
+const Tournament::Players & Tournament::GetPlayers() const
+{
+    return m_players;
+}
+
+Tournament::Players & Tournament::GetPlayers()
 {
     return m_players;
 }

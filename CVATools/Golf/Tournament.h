@@ -15,13 +15,11 @@
 #include "PlayerResult.h"
 #include <vector>
 
-typedef std::vector<std::pair<PlayerID, PlayerResult> > Players;
-
 class Tournament : public TournamentID
 {
-protected:
-    Players m_players;
 public:
+    typedef std::vector<std::pair<PlayerID, PlayerResult> > Players;
+    
     Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate);
     
     template<class Simulator>
@@ -30,9 +28,19 @@ public:
         tournamentSimulator.Simulate(*this);
     }
     
+    template<class Simulator>
+    void Rank(const Simulator & tournamentSimulator)
+    {
+        tournamentSimulator.Rank(*this);
+    }
+    
     void AddPlayer(const PlayerID & player);
     
-    const Players & Players() const;
+    const Players & GetPlayers() const;
+    Players & GetPlayers();
+    
+protected:
+    Players m_players;
 };
 
 #endif /* defined(__CVATools__Tournament__) */

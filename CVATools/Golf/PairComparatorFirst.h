@@ -24,11 +24,6 @@ public:
     {
         return rhs.first == m_str;
     }
-    
-    bool operator<(const std::pair<ID, Object> & rhs) const
-    {
-        return rhs.first > m_str;
-    }
 };
 
 #endif /* defined(__CVATools__StringComparator__) */

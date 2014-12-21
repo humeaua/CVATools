@@ -30,9 +30,3 @@ void Player::AddResult(const Tournament &tournament)
         AddResult(iter->second);
     }
 }
-
-bool Player::IsCorrectPlayer(const std::pair<PlayerID, PlayerResult> &player) const
-{
-    // Assume that the name is unique
-    return player.first.Name() == m_name;
-}

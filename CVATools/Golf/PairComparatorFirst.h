@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-template<class ID, class Object>
+template<class ID, class Object, class Cast = ID>
 class PairComparatorFirst
 {
 private:
@@ -22,7 +22,7 @@ public:
     
     bool operator()(const std::pair<ID, Object> & rhs) const
     {
-        return rhs.first == m_str;
+        return (const Cast&)rhs.first == m_str;
     }
 };
 

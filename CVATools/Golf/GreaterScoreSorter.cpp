@@ -20,4 +20,13 @@ void GreaterScoreSorter::Rank(Tournament & tournament) const
 {
     Tournament::Players & players = tournament.GetPlayers();
     std::sort(players.begin(), players.end(), ScoreGreaterThan);
+    
+    for (size_t i = 0 ; i < players.size() ; ++i)
+    {
+        players[i].second.Position() = i;
+        //   Adapt the ranking point system
+        //players[i].second.RankingPoints() =
+    }
+    
+    
 }

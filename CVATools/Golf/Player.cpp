@@ -30,3 +30,8 @@ void Player::AddResult(const Tournament &tournament)
         AddResult(iter->second);
     }
 }
+
+const std::vector<PlayerResult> & Player::Results() const
+{
+    return m_results;
+}

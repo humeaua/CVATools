@@ -37,7 +37,7 @@
 #include "muParser.h"
 #include "PayoffParser.h"
 
-#include "PlayerResult.h"
+#include "Player.h"
 #include "Tournament.h"
 #include "GreaterScoreSorter.h"
 #include "DummyRandomSimulator.h"
@@ -993,12 +993,15 @@ bool RegressionTest::PlayerResultTest() const
 bool RegressionTest::DummyTournament() const
 {
     Tournament tournament("dummy",Utilities::Date::MyDate(18,12,2014));
-    
-    for (size_t i = 0 ; i < 100 ; ++i)
+    const size_t numPlayers = 100;
+    std::vector<Player> players(numPlayers,std::string("")); // empty string is a char*
+    for (size_t i = 0 ; i < numPlayers ; ++i)
     {
         std::stringstream ss;
         ss << "Player " << i;
-        tournament.AddPlayer(PlayerID(ss.str()));
+        players[i] = Player(ss.str());
+        
+        tournament.AddPlayer(players[i]);
     }
     
     tournament.Simulate(DummyRandomSimulator(0));
@@ -1006,12 +1009,12 @@ bool RegressionTest::DummyTournament() const
     tournament.Rank(GreaterScoreSorter());
     
     size_t refValues[] = {2146335337,2139642574,2132723841,2116969294,2097549478,2091824407,2085187937,2064010129,2055540383,2042297871,2002830094,1950367213,1906706780,1846443803,1840335376,1830665860,1809249219,1797288065,1793547003,1791277536,1789614810,1779175845,1741849297,1734177661,1731106012,1719408956,1710028745,1671889999,1669187896,1664792818,1643550337,1579802159,1567674295,1566369460,1559526673,1514888112,1500357984,1462087311,1461728458,1370738826,1359072203,1294600846,1290446329,1269870926,1163120341,1152891831,1094100450,1073226880,1046126087,1040043610,1028169396,1009021007,1006609540,1002898451,968021766,926881476,899316322,897787792,892086236,890459872,838023412,822784415,819516268,810662187,809673979,792526220,764058775,763654014,679469414,675891343,664835076,631361083,608455363,590294128,569022154,525706991,520932930,515529753,496586426,480849991,428300259,422527594,400151788,393860762,309696691,250591794,247074805,210367714,205711490,158379552,145532761,115120654,77268269,68362598,66433441,57271926,52107318,28925691,27706653,19932546};
-    Tournament::Players & players = tournament.GetPlayers();
+    Tournament::Players & tournamentPlayers = tournament.GetPlayers();
     
     size_t error = 0;
-    for (size_t player = 0 ; player < players.size() ; ++player)
+    for (size_t player = 0 ; player < tournamentPlayers.size() ; ++player)
     {
-        error += fabs(players[player].second.Score() - refValues[player]);
+        error += fabs(tournamentPlayers[player].second.Score() - refValues[player]);
 #ifdef _DEBUG
         m_out << players[player].first.Name() << ":" << players[player].second.Score() << std::endl;
 #endif
@@ -1019,7 +1022,33 @@ bool RegressionTest::DummyTournament() const
     
     if (error < 1)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_out << "Score : SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    
+    size_t error2 = 0;
+    for (size_t player = 0 ; player < players.size() ; ++player)
+    {
+        players[player].AddResult(tournament);
+    }
+    
+    const size_t rank[] = {76,97,61,59,90,2,49,30,93,94,10,12,43,50,20,82,31,86,36,67,39,11,71,74,63,44,99,0,98,16,15,53,91,4,81,14,84,25,33,3,83,47,51,6,54,88,5,60,38,95,78,52,87,58,26,68,27,21,48,65,41,96,22,66,24,73,13,9,28,37,18,7,35,89,45,8,57,56,62,17,77,34,55,85,79,70,75,64,23,69,29,72,1,40,42,46,19,80,92,32};
+    
+    for (size_t player = 0 ; player < players.size() ; ++player)
+    {
+#ifdef _DEBUG
+        m_out << players[player].Results()[0].Position() << ",";
+#endif
+        error2 += fabs(rank[player] - players[player].Results()[0].Position());
+    }
+    
+    if (error2 < 1)
+    {
+        m_out << "Rank : SUCCEEDED" << std::endl;
         return true;
     }
     else

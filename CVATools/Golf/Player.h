@@ -26,6 +26,8 @@ public:
     Player(const std::string & name);
     
     void AddResult(const Tournament & tournament);
+    
+    const std::vector<PlayerResult> & Results() const;
 };
 
 #endif /* defined(__CVATools__Player__) */

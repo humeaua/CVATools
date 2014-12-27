@@ -13,7 +13,7 @@
 bool PGATour::IsFlagShipEvent(const Tournament &tournament) const
 {
     const std::string tournamentName = Utilities::ToUpperCopy(tournament.TournamentName());
-    return tournamentName == "Players";
+    return tournamentName == "PLAYERS";
 }
 
 double PGATour::MinimumRankingPoints(const Tournament &tournament) const

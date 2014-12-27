@@ -7,18 +7,12 @@
 //
 
 #include "MargrabeOptionVasicek.h"
-#include "GaussianKernel.h"
 #include "RegressionTests.h"
 #include "MuParser/muParserTest.h"
 #include "VectorUtilities.h"
 
-#include <tr1/memory>
 #include "Printcpp.h"
-#include "dirent.h"
 
-#include "StatisticGatherer.h"
-#include "Wrapper.h"
-#include "HullWhiteTree.h"
 #include <set>
 
 //////////////////////////////////
@@ -35,7 +29,6 @@ void DisplayChoices(size_t & iTest)
     std::cout << "Choose the test : " << std::endl;
     std::cout << "0- Regression Tests" << std::endl;
     std::cout << "4- Two Asset simulation" << std::endl;
-    std::cout << "7- Kernel Estimation" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
     std::cin >> iTest;
@@ -43,7 +36,7 @@ void DisplayChoices(size_t & iTest)
 
 int _main()
 {
-    std::size_t iTest = 1;
+    std::size_t iTest = -1;
     DisplayChoices(iTest);
     
     if (iTest == 0)
@@ -119,28 +112,6 @@ int _main()
         //{
         //    std::cout << i << " " << firstvect[i] << std::endl;
         //}
-    }
-    else if (iTest == 7)
-    {
-        try
-        {
-            std::vector<std::pair<double, double> > dXY;
-            for (std::size_t i = 0 ; i < 10 ; ++i)
-            {
-                dXY.push_back(std::make_pair(i, i));
-            }
-            //  Bandwidth seems to have a floor effect : the estimated function is a piecewise constant function now with point to spaced
-            Maths::GaussianKernel sGaussianKernel(0.1, 1.0e-9);
-            
-            for (double x = 0 ; x < 11 ; x += 0.01)
-            {
-                std::cout << x << ";" << sGaussianKernel.Estimate(dXY, x) << std::endl;
-            }
-        }
-        catch (const std::exception & e)
-        {
-            std::cout << "Error : " << e.what() << std::endl;
-        }
     }
     else if (iTest == 10)
     {

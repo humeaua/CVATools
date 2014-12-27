@@ -38,6 +38,7 @@ public:
     bool MyException() const;
     bool PayoffParser() const;
     bool DefaultArguments() const;
+    bool GaussianKernel() const;
     
     //  Golf unit testing
     bool PlayerResultTest() const;

@@ -959,6 +959,43 @@ bool RegressionTest::PayoffParser() const
     return true;
 }
 
+namespace DefaultArgs{
+    class A
+    {
+    public:
+        virtual int f(const int i = 1) const
+        {
+            return i;
+        }
+    };
+    
+    class B : public A
+    {
+    public:
+        int f(const int i) const
+        {
+            return i;
+        }
+    };
+}
+
+bool RegressionTest::DefaultArguments() const
+{
+    std::tr1::shared_ptr<DefaultArgs::A> a(new DefaultArgs::B);
+    int result = a->f();
+
+    if (std::abs(result - 1) < 1)
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
+    else
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+}
+
 bool RegressionTest::PlayerResultTest() const
 {
     PlayerResult result1("Tournament1", Utilities::Date::MyDate(30,9,2014), 30, 288, 1.5);
@@ -1083,6 +1120,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("muParser", &RegressionTest::muParser));
     m_mapping.insert(std::make_pair("Exception", &RegressionTest::MyException));
     m_mapping.insert(std::make_pair("PayoffParser", &RegressionTest::PayoffParser));
+    m_mapping.insert(std::make_pair("DefaultArguments", &RegressionTest::DefaultArguments));
     m_mapping.insert(std::make_pair("PlayerResults", &RegressionTest::PlayerResultTest));
     m_mapping.insert(std::make_pair("DummyTournament", &RegressionTest::DummyTournament));
 }

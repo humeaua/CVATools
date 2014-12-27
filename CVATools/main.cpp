@@ -37,31 +37,9 @@ void DisplayChoices(size_t & iTest)
     std::cout << "4- Two Asset simulation" << std::endl;
     std::cout << "7- Kernel Estimation" << std::endl;
     std::cout << "10- My Vector Test" << std::endl;
-    std::cout << "11- Fibonacci Series" << std::endl;
     std::cout << "17- Thinking in C++" << std::endl;
-    std::cout << "19- Random number one step generation" << std::endl;
-    std::cout << "34- Hull-White Tree pricer" << std::endl;
-    std::cout << "35- Virtual methods with defaults arguments" << std::endl;
     std::cin >> iTest;
 }
-
-class A
-{
-public:
-    virtual void f(const int i = 1) const
-    {
-        std::cout << "A.f()" << i << std::endl;
-    }
-};
-
-class B : public A
-{
-public:
-    void f(const int i) const
-    {
-        std::cout << "B.f()" << i << std::endl;
-    }
-};
 
 int _main()
 {
@@ -195,30 +173,6 @@ int _main()
             std::cout << vect0Add.at(i) << std::endl;
         }
     }
-    else if (iTest == 11)
-    {
-        // Fibonacci series
-        std::cout << "Enter n : " << std::endl;
-        std::size_t n = 0;
-        std::cin >> n;
-        
-        if (n == 0 || n == 1)
-        {
-            std::cout << "nth Element of Fibonacci series is : 1 " << std::endl;
-        }
-        else
-        {
-            std::size_t iNOld = 1, iNVeryOld = 1, iTemp;
-            for (std::size_t i = 0 ; i < n - 1; i++)
-            {
-                iTemp = iNOld;
-                iNOld += iNVeryOld;
-                iNVeryOld = iTemp;
-            }
-            
-            std::cout << "nth Element of Fibonacci series is : " << iNOld << std::endl;
-        }
-    }
     else if (iTest == 17)
     {
         // Thinking in C++ - Volume 2
@@ -260,20 +214,6 @@ int _main()
         }
         
         std::cout << std::endl;
-    }
-    else if (iTest == 34)
-    {
-        std::map<double, double> zeros = getInputZeroCoupons();
-        HWTreeOutput hwOutput = HWTreePricer(0.002, 0.0115, 100, 1, zeros, 0.1, 0.5, 5, 0.3, PUT, false);
-        HWTreeOutput hwOutput1 = HWTreePricer(0.002, 0.0115, 100, 1, zeros, 0.1, 0.5, 5, hwOutput.bondPrice, PUT, false);
-        //HWTreeOutput hwOutput1 = HWTreePricer(0.002, 0.0115, 1000, 1, zeros, 0.1, 0.5, 5, 0.3, CALL, false);
-        doGreeks(hwOutput1, 0.002, 0.0115, 100, 1, zeros, 0.1, 0.5, 5, hwOutput.bondPrice, PUT, false);
-        
-    }
-    else if (iTest == 35)
-    {
-        std::tr1::shared_ptr<A> a(new B);
-        a->f();
     }
     return 0;
 }

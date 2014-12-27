@@ -37,6 +37,7 @@ public:
     bool muParser() const;
     bool MyException() const;
     bool PayoffParser() const;
+    bool DefaultArguments() const;
     
     //  Golf unit testing
     bool PlayerResultTest() const;

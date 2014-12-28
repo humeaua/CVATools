@@ -106,3 +106,22 @@ namespace Utilities
         }
     }
 }
+
+std::ostream& operator<<(std::ostream & os, const Utilities::SimulationDataMultiDim & obj)
+{
+    const std::map<double, std::map<size_t, std::vector<double> > > & data = obj.GetData();
+    for (std::map<double, std::map<size_t, std::vector<double> > >::const_iterator itDate = data.begin() ; itDate != data.end() ; ++itDate)
+    {
+        os << "Date " << itDate->first << std::endl;
+        for (std::map<size_t, std::vector<double> >::const_iterator itPath = itDate->second.begin() ; itPath != itDate->second.end() ; ++itPath)
+        {
+            os << "Path " << itPath->first << std::endl;
+            for (size_t i = 0 ; i < itPath->second.size() ; ++i)
+            {
+                os << i << " : " << itPath->second[i] << std::endl;
+            }
+        }
+    }
+    
+    return os;
+}

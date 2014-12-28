@@ -38,6 +38,9 @@
 #include "PayoffParser.h"
 #include "GaussianKernel.h"
 
+#include "Printcpp.h"
+#include "MargrabeOptionVasicek.h"
+
 #include "Player.h"
 #include "Tournament.h"
 #include "GreaterScoreSorter.h"
@@ -1038,6 +1041,81 @@ bool RegressionTest::GaussianKernel() const
     return true;
 }
 
+bool RegressionTest::MargrabeOptionVasicek() const
+{
+    //  Definition of 3x3 correlation matrix
+    Utilities::Matrix<double> sCorrelMatrix(3,3);
+    sCorrelMatrix(0,0) = 1.0;
+    sCorrelMatrix(1,1) = 1.0;
+    sCorrelMatrix(2,2) = 1.0;
+    double dRho12 = 0.2, dRho13 = 0.2, dRho23 = 0.2;
+    sCorrelMatrix(1,0) = dRho12;
+    sCorrelMatrix(0,1) = dRho12;
+    sCorrelMatrix(2,0) = dRho13;
+    sCorrelMatrix(0,2) = dRho13;
+    sCorrelMatrix(2,1) = dRho23;
+    sCorrelMatrix(1,2) = dRho23;
+    Utilities::Matrix<double> sCholDec(3,3);
+    //CholeskiDecomposition(sCorrelMatrix, sCholDec);
+    
+    //std::cout << sCholDec(0,0) << " " << sCholDec(0,1) << " " << sCholDec(0,2) << std::endl;
+    //std::cout << sCholDec(1,1) << " " << sCholDec(1,1) << " " << sCholDec(1,2) << std::endl;
+    //std::cout << sCholDec(2,0) << " " << sCholDec(2,1) << " " << sCholDec(2,2) << std::endl;
+    
+    //  Definition of vector of initial values
+    Utilities::MyVector<double> dInitialValues(3,0.0);
+    // values for stocks are ln(S_1) and ln(S_2)
+    dInitialValues.at(0) = log(100);
+    dInitialValues.at(1) = log(100);
+    dInitialValues.at(2) = 0.02; // value for initial short rate
+    long long lSeed = 0;
+    
+    Finance::Option::MargrabeOptionVasicek sOption(1.0, 1, sCorrelMatrix, dInitialValues, 0.05, 0.03, 0.01, 0.2, 0.3, lSeed);
+    
+    //  Simulation Values
+    std::vector<double> dDates;
+    std::size_t iNDates = 2, iNPaths = 1;
+    for (std::size_t i = 0 ; i < iNDates; ++i)
+    {
+        dDates.push_back(static_cast<double>(i) / (iNDates-1));
+    }
+    
+    Utilities::SimulationDataMultiDim sData = sOption.simulate(dDates, iNPaths);
+#ifdef _DEBUG
+    m_out << "Printing of the simulated data " << std::endl;
+    m_out << std::setprecision(15) << sData << std::endl;
+#endif
+    
+    const double refValues[] = {4.60644557974016,
+        4.68799906707437,
+        0.0263054037476569,
+        0.0309189871480756};
+    
+    double error = 0;
+    const std::map<double, std::map<size_t, std::vector<double> > > & data = sData.GetData();
+    std::map<double, std::map<size_t, std::vector<double> > >::const_iterator it = data.begin();
+    ++it;
+    
+    std::map<size_t, std::vector<double> >::const_iterator it2 = it->second.find(0);
+    
+    for (size_t i = 0 ; i < 4 ; ++i)
+    {
+        error += std::abs(it2->second[i] - refValues[i]);
+    }
+    
+    const double tolerance = 1e-08;
+    if (error < tolerance)
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
+    else
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+}
+
 bool RegressionTest::PlayerResultTest() const
 {
     PlayerResult result1("Tournament1", Utilities::Date::MyDate(30,9,2014), 30, 288, 1.5);
@@ -1164,6 +1242,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("PayoffParser", &RegressionTest::PayoffParser));
     m_mapping.insert(std::make_pair("DefaultArguments", &RegressionTest::DefaultArguments));
     m_mapping.insert(std::make_pair("GaussianKernel", &RegressionTest::GaussianKernel));
+    m_mapping.insert(std::make_pair("MargrabeOption", &RegressionTest::MargrabeOptionVasicek));
     m_mapping.insert(std::make_pair("PlayerResults", &RegressionTest::PlayerResultTest));
     m_mapping.insert(std::make_pair("DummyTournament", &RegressionTest::DummyTournament));
 }

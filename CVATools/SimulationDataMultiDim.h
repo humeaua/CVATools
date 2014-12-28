@@ -53,7 +53,10 @@ namespace Utilities
                     }
                 }
             }
-        };    };
+        };
+    };
 }
+
+std::ostream& operator<<(std::ostream & os, const Utilities::SimulationDataMultiDim & obj);
 
 #endif

@@ -39,6 +39,7 @@ public:
     bool PayoffParser() const;
     bool DefaultArguments() const;
     bool GaussianKernel() const;
+    bool MargrabeOptionVasicek() const;
     
     //  Golf unit testing
     bool PlayerResultTest() const;

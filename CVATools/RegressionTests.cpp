@@ -45,6 +45,8 @@
 #include "Tournament.h"
 #include "GreaterScoreSorter.h"
 #include "DummyRandomSimulator.h"
+#include "Rankings.h"
+#include "PointsSystemStaticData.h"
 
 //  Declaration of all the regression tests
 
@@ -1206,13 +1208,20 @@ bool RegressionTest::DummyTournament() const
     if (error2 < 1)
     {
         m_out << "Rank : SUCCEEDED" << std::endl;
-        return true;
     }
     else
     {
         m_out << "FAILED" << std::endl;
         return false;
     }
+    
+    /*Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
+    Utilities::Date::MyDate tomorrow(19,12,2014);
+    rankings.Compute(std::vector<Tournament>(1, tournament), tomorrow);
+    
+    Rankings::RealRanking realRanking = rankings.GetSortedRanking();
+    */
+    return true;
 }
 
 /////////////////////////////////////////////////////

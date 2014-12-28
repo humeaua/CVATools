@@ -10,23 +10,35 @@
 #define __CVATools__Rankings__
 
 #include <iostream>
-#include "Player.h"
+#include "PlayerID.h"
 #include <vector>
+#include "PlayerRanking.h"
+#include "InterExtrapolation.h"
 
 class Tournament;
 
 class Rankings
 {
+    void ComputeRealRanking(const Utilities::Date::MyDate & computedDate);
 public:
-    typedef std::vector<std::pair<Player, double> > Ranking;
+    Rankings(Utilities::Interp::Interpolator & interpolator);
+    typedef std::vector<std::pair<PlayerID, PlayerRanking> > Ranking;
+    typedef std::vector<std::pair<PlayerID, double>> RealRanking;
     
     const Ranking & GetRanking() const;
     Ranking & GetRanking();
     
-    void Compute(const std::vector<Tournament> & tournamentsThisWeek);
+    // The following method sorts the players according to their OWGR rankings
+    RealRanking GetSortedRanking() const;
+    
+    void Compute(const std::vector<Tournament> & tournamentsThisWeek,
+                 const Utilities::Date::MyDate & computedDate);
     
 protected:
+    Utilities::Interp::Interpolator & m_interpolator;
     Ranking m_ranking;
+    
+    RealRanking m_realRanking; // real ranking published on OWGR
 };
 
 #endif /* defined(__CVATools__Rankings__) */

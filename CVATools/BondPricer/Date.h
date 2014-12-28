@@ -39,7 +39,6 @@ namespace Utilities
             unsigned int iYear_;
             unsigned int iMonth_;
             unsigned int iDay_;
-            unsigned long m_ExcelDate;
         public:
             MyDate(int day, int month, int year);
             MyDate(const std::tm& sDate);

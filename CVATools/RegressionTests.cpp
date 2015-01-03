@@ -1219,8 +1219,81 @@ bool RegressionTest::DummyTournament() const
     Utilities::Date::MyDate tomorrow(19,12,2014);
     rankings.Compute(std::vector<Tournament>(1, tournament), tomorrow);
     
-    Rankings::RealRanking realRanking = rankings.GetSortedRanking();
-    */
+    Rankings::RealRanking realRanking = rankings.GetSortedRanking();*/
+    
+    return true;
+}
+
+bool RegressionTest::StaticDataRanking() const
+{
+    //  Test of static data used in the ranking
+    
+    m_out << "Interpolator : " ;
+    Utilities::Interp::Interpolator & linear = PointsSystemStaticData::GetOWGRInterpolator();
+    
+    const double refValuesInterpolator[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0.971428571428571,0.914285714285714,0.857142857142857,0.8,0.742857142857142,0.685714285714285,0.628571428571428,0.571428571428571,0.514285714285714,0.457142857142857,0.399999999999999,0.342857142857142,0.285714285714285,0.228571428571428,0.171428571428571,0.114285714285714,0.0571428571428563,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    double errorInterpolator = 0;
+    int i = 0;
+    for (double x = -2 ; x < 4.0 ; x += 0.1, i++)
+    {
+        errorInterpolator += std::abs(refValuesInterpolator[i] - linear(x));
+#ifdef _DEBUG
+        m_out << std::setprecision(15) << linear(x) << "," ;
+#endif
+    }
+    const double tolerance = 1e-10;
+    if (errorInterpolator > tolerance)
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        m_out << "SUCCEEDED" << std::endl;
+    }
+    
+    m_out << "Home Rating Value : ";
+    std::vector<double> & homeRatingValue = PointsSystemStaticData::GetHomeRatingValues();
+    const double refValuesHomeRating[] = {8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+    double errorHomeRating = 0.0;
+    for (size_t i = 0 ; i < homeRatingValue.size() ; ++i)
+    {
+        errorHomeRating += std::abs(refValuesHomeRating[i]-homeRatingValue[i]);
+#ifdef _DEBUG
+        m_out << homeRatingValue[i] << "," ;
+#endif
+    }
+    if (errorHomeRating > tolerance || homeRatingValue.size() != 30)
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        m_out << "SUCCEEDED" << std::endl;
+    }
+    
+    m_out << "World Event Rating Value : ";
+    std::vector<double> & worldEventRatingValue = PointsSystemStaticData::GetEventRatingValues();
+    const double refValueEventRating[] = {45,37,32,27,24,21,20,19,18,17,16,15,14,13,12,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,9,9,9,9,8,8,8,8,8,7,7,7,7,7,7,7,6,6,6,6,6,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+    double errorEventRating = 0.0;
+    for (size_t i = 0 ; i < worldEventRatingValue.size() ; ++i)
+    {
+        errorEventRating += std::abs(refValueEventRating[i]-worldEventRatingValue[i]);
+#ifdef _DEBUG
+        m_out << worldEventRatingValue[i] << "," ;
+#endif
+    }
+    if (errorHomeRating > tolerance || worldEventRatingValue.size() != 200)
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        m_out << "SUCCEEDED" << std::endl;
+    }
+    
     return true;
 }
 
@@ -1254,6 +1327,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("MargrabeOption", &RegressionTest::MargrabeOptionVasicek));
     m_mapping.insert(std::make_pair("PlayerResults", &RegressionTest::PlayerResultTest));
     m_mapping.insert(std::make_pair("DummyTournament", &RegressionTest::DummyTournament));
+    m_mapping.insert(std::make_pair("StaticDataRanking", &RegressionTest::StaticDataRanking));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

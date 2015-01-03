@@ -44,6 +44,7 @@ public:
     //  Golf unit testing
     bool PlayerResultTest() const;
     bool DummyTournament() const;
+    bool StaticDataRanking() const;
 };
 
 class RegressionTestLauncher : public RegressionTest

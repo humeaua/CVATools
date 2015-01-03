@@ -39,7 +39,11 @@ public:
     const Players & GetPlayers() const;
     Players & GetPlayers();
     
+    const double & PointsTo1st() const;
+    double & PointsTo1st();
+    
 protected:
+    double m_PointsTo1st;
     Players m_players;
 };
 

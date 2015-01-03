@@ -47,6 +47,7 @@
 #include "DummyRandomSimulator.h"
 #include "Rankings.h"
 #include "PointsSystemStaticData.h"
+#include "RankingPointSystem.h"
 
 //  Declaration of all the regression tests
 
@@ -1215,11 +1216,15 @@ bool RegressionTest::DummyTournament() const
         return false;
     }
     
-    /*Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
+    
+    Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
     Utilities::Date::MyDate tomorrow(19,12,2014);
+    
+    RankingPointSystem rankingPtSystem(rankings);
+    tournament.PointsTo1st() = rankingPtSystem.TotalRatingValue(tournament);
     rankings.Compute(std::vector<Tournament>(1, tournament), tomorrow);
     
-    Rankings::RealRanking realRanking = rankings.GetSortedRanking();*/
+    Rankings::RealRanking realRanking = rankings.GetSortedRanking();
     
     return true;
 }

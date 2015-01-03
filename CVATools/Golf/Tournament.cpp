@@ -8,7 +8,7 @@
 
 #include "Tournament.h"
 
-Tournament::Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate) : TournamentID(tournamentName, tournamentDate)
+Tournament::Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate) : TournamentID(tournamentName, tournamentDate), m_PointsTo1st(0.0)
 {}
 
 void Tournament::AddPlayer(const PlayerID &player)
@@ -24,4 +24,14 @@ const Tournament::Players & Tournament::GetPlayers() const
 Tournament::Players & Tournament::GetPlayers()
 {
     return m_players;
+}
+
+const double & Tournament::PointsTo1st() const
+{
+    return m_PointsTo1st;
+}
+
+double & Tournament::PointsTo1st()
+{
+    return m_PointsTo1st;
 }

@@ -34,6 +34,8 @@ public:
     void Compute(const std::vector<Tournament> & tournamentsThisWeek,
                  const Utilities::Date::MyDate & computedDate);
     
+    Rankings * clone() const;
+    
 protected:
     Utilities::Interp::Interpolator & m_interpolator;
     Ranking m_ranking;

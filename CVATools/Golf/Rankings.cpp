@@ -95,3 +95,8 @@ void Rankings::Compute(const std::vector<Tournament> &tournamentsThisWeek, const
     //  At the end compute the ranking of the players
     ComputeRealRanking(computedDate);
 }
+
+Rankings * Rankings::clone() const
+{
+    return new Rankings(*this);
+}

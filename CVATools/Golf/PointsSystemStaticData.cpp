@@ -12,6 +12,7 @@ std::auto_ptr<Utilities::Interp::Interpolator> PointsSystemStaticData::m_interpo
 std::auto_ptr<std::vector<double> > PointsSystemStaticData::m_eventRatingValues;
 std::auto_ptr<std::vector<double> > PointsSystemStaticData::m_homeRatingValues;
 std::auto_ptr<Utilities::Interp::Interpolator> PointsSystemStaticData::m_totalRatingTo1stPointInterpolator;
+std::auto_ptr<std::vector<double> > PointsSystemStaticData::m_pointComparedTo1st;
 
 Utilities::Interp::Interpolator & PointsSystemStaticData::GetOWGRInterpolator()
 {
@@ -456,4 +457,77 @@ Utilities::Interp::Interpolator & PointsSystemStaticData::GetTotalRatingToFirstP
         m_totalRatingTo1stPointInterpolator.reset(new Utilities::Interp::LinearInterpolator(variables, values));
     }
     return *m_totalRatingTo1stPointInterpolator;
+}
+
+std::vector<double> & PointsSystemStaticData::PointsComparedTo1st()
+{
+    if (m_pointComparedTo1st.get() == NULL)
+    {
+        m_pointComparedTo1st.reset(new std::vector<double>());
+        m_pointComparedTo1st->push_back(100);
+        m_pointComparedTo1st->push_back(60);
+        m_pointComparedTo1st->push_back(40);
+        m_pointComparedTo1st->push_back(30);
+        m_pointComparedTo1st->push_back(24);
+        m_pointComparedTo1st->push_back(20);
+        m_pointComparedTo1st->push_back(18);
+        m_pointComparedTo1st->push_back(15);
+        m_pointComparedTo1st->push_back(14);
+        m_pointComparedTo1st->push_back(13);
+        m_pointComparedTo1st->push_back(12);
+        m_pointComparedTo1st->push_back(11);
+        m_pointComparedTo1st->push_back(10);
+        m_pointComparedTo1st->push_back(9.5);
+        m_pointComparedTo1st->push_back(9);
+        m_pointComparedTo1st->push_back(8.5);
+        m_pointComparedTo1st->push_back(8);
+        m_pointComparedTo1st->push_back(7.5);
+        m_pointComparedTo1st->push_back(7);
+        m_pointComparedTo1st->push_back(6.5);
+        m_pointComparedTo1st->push_back(6);
+        m_pointComparedTo1st->push_back(5.8);
+        m_pointComparedTo1st->push_back(5.6);
+        m_pointComparedTo1st->push_back(5.4);
+        m_pointComparedTo1st->push_back(5.2);
+        m_pointComparedTo1st->push_back(5);
+        m_pointComparedTo1st->push_back(4.8);
+        m_pointComparedTo1st->push_back(4.6);
+        m_pointComparedTo1st->push_back(4.5);
+        m_pointComparedTo1st->push_back(4.4);
+        m_pointComparedTo1st->push_back(4.3);
+        m_pointComparedTo1st->push_back(4.2);
+        m_pointComparedTo1st->push_back(4.1);
+        m_pointComparedTo1st->push_back(4);
+        m_pointComparedTo1st->push_back(3.9);
+        m_pointComparedTo1st->push_back(3.8);
+        m_pointComparedTo1st->push_back(3.7);
+        m_pointComparedTo1st->push_back(3.6);
+        m_pointComparedTo1st->push_back(3.5);
+        m_pointComparedTo1st->push_back(3.4);
+        m_pointComparedTo1st->push_back(3.3);
+        m_pointComparedTo1st->push_back(3.2);
+        m_pointComparedTo1st->push_back(3.1);
+        m_pointComparedTo1st->push_back(3);
+        m_pointComparedTo1st->push_back(2.9);
+        m_pointComparedTo1st->push_back(2.8);
+        m_pointComparedTo1st->push_back(2.7);
+        m_pointComparedTo1st->push_back(2.6);
+        m_pointComparedTo1st->push_back(2.5);
+        m_pointComparedTo1st->push_back(2.4);
+        m_pointComparedTo1st->push_back(2.3);
+        m_pointComparedTo1st->push_back(2.2);
+        m_pointComparedTo1st->push_back(2.1);
+        m_pointComparedTo1st->push_back(2);
+        m_pointComparedTo1st->push_back(1.9);
+        m_pointComparedTo1st->push_back(1.8);
+        m_pointComparedTo1st->push_back(1.7);
+        m_pointComparedTo1st->push_back(1.6);
+        m_pointComparedTo1st->push_back(1.5);
+        m_pointComparedTo1st->push_back(1.5);
+        m_pointComparedTo1st->push_back(1.5);
+        m_pointComparedTo1st->push_back(1.5);
+        m_pointComparedTo1st->push_back(1.5);
+        m_pointComparedTo1st->push_back(1.5);
+    }
+    return *m_pointComparedTo1st;
 }

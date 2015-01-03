@@ -11,11 +11,19 @@
 
 #include <iostream>
 
+class Tournament;
+
 class PointSystem
 {
+protected:
+    virtual double HomeRatingValue(const Tournament & tournament) const = 0;
+    virtual double WorldEventRatingValue(const Tournament & tournament) const = 0;
+    
 public:
-    virtual double HomeRatingValue() const = 0;
-    virtual double WorldEventRatingValue() const = 0;
+    virtual double TotalRatingValue(const Tournament & tournament) const
+    {
+        return HomeRatingValue(tournament) + WorldEventRatingValue(tournament);
+    }
 };
 
 #endif /* defined(__CVATools__PointSystem__) */

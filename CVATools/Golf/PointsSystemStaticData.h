@@ -18,11 +18,19 @@ private:
     static std::auto_ptr<Utilities::Interp::Interpolator> m_interpolator;
     static std::auto_ptr<std::vector<double> > m_eventRatingValues;
     static std::auto_ptr<std::vector<double> > m_homeRatingValues;
+    static std::auto_ptr<Utilities::Interp::Interpolator> m_totalRatingTo1stPointInterpolator;
+    
+    // Disable Copy
+    PointsSystemStaticData();
+    PointsSystemStaticData(const PointsSystemStaticData &);
+    PointsSystemStaticData & operator= (const PointsSystemStaticData &);
 public:
     static Utilities::Interp::Interpolator & GetOWGRInterpolator();
     
     static std::vector<double> & GetEventRatingValues();
     static std::vector<double> & GetHomeRatingValues();
+    
+    static Utilities::Interp::Interpolator & GetTotalRatingToFirstPointInterpolator();
 };
 
 #endif /* defined(__CVATools__PointsSystemStaticData__) */

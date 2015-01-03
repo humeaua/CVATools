@@ -11,6 +11,7 @@
 std::auto_ptr<Utilities::Interp::Interpolator> PointsSystemStaticData::m_interpolator;
 std::auto_ptr<std::vector<double> > PointsSystemStaticData::m_eventRatingValues;
 std::auto_ptr<std::vector<double> > PointsSystemStaticData::m_homeRatingValues;
+std::auto_ptr<Utilities::Interp::Interpolator> PointsSystemStaticData::m_totalRatingTo1stPointInterpolator;
 
 Utilities::Interp::Interpolator & PointsSystemStaticData::GetOWGRInterpolator()
 {
@@ -165,4 +166,294 @@ std::vector<double> & PointsSystemStaticData::GetHomeRatingValues()
         }
     }
     return *m_homeRatingValues;
+}
+
+Utilities::Interp::Interpolator & PointsSystemStaticData::GetTotalRatingToFirstPointInterpolator()
+{
+    if (m_totalRatingTo1stPointInterpolator.get() == NULL)
+    {
+        std::vector<double> variables, values;
+        
+        variables.push_back(0);
+        values.push_back(6);
+        
+        variables.push_back(1);
+        values.push_back(7);
+        
+        variables.push_back(5);
+        values.push_back(7);
+        
+        variables.push_back(6);
+        values.push_back(8);
+        
+        variables.push_back(10);
+        values.push_back(8);
+        
+        variables.push_back(11);
+        values.push_back(9);
+        
+        variables.push_back(15);
+        values.push_back(9);
+        
+        variables.push_back(16);
+        values.push_back(10);
+        
+        variables.push_back(20);
+        values.push_back(10);
+        
+        variables.push_back(21);
+        values.push_back(11);
+        
+        variables.push_back(25);
+        values.push_back(11);
+        
+        variables.push_back(26);
+        values.push_back(12);
+        
+        variables.push_back(30);
+        values.push_back(12);
+        
+        variables.push_back(31);
+        values.push_back(13);
+        
+        variables.push_back(35);
+        values.push_back(13);
+        
+        variables.push_back(36);
+        values.push_back(14);
+        
+        variables.push_back(40);
+        values.push_back(14);
+        
+        variables.push_back(41);
+        values.push_back(15);
+        
+        variables.push_back(45);
+        values.push_back(15);
+        
+        variables.push_back(46);
+        values.push_back(16);
+        
+        variables.push_back(50);
+        values.push_back(16);
+        
+        variables.push_back(51);
+        values.push_back(17);
+        
+        variables.push_back(55);
+        values.push_back(17);
+        
+        variables.push_back(56);
+        values.push_back(18);
+        
+        variables.push_back(60);
+        values.push_back(18);
+        
+        variables.push_back(61);
+        values.push_back(19);
+        
+        variables.push_back(65);
+        values.push_back(19);
+        
+        variables.push_back(66);
+        values.push_back(20);
+        
+        variables.push_back(70);
+        values.push_back(20);
+        
+        variables.push_back(71);
+        values.push_back(21);
+        
+        variables.push_back(75);
+        values.push_back(21);
+        
+        variables.push_back(76);
+        values.push_back(22);
+        
+        variables.push_back(85);
+        values.push_back(22);
+        
+        variables.push_back(86);
+        values.push_back(23);
+        
+        variables.push_back(90);
+        values.push_back(23);
+        
+        variables.push_back(91);
+        values.push_back(24);
+        
+        variables.push_back(105);
+        values.push_back(24);
+        
+        variables.push_back(106);
+        values.push_back(26);
+        
+        variables.push_back(120);
+        values.push_back(26);
+        
+        variables.push_back(121);
+        values.push_back(28);
+        
+        variables.push_back(135);
+        values.push_back(28);
+        
+        variables.push_back(136);
+        values.push_back(30);
+        
+        variables.push_back(150);
+        values.push_back(30);
+        
+        variables.push_back(151);
+        values.push_back(32);
+        
+        variables.push_back(165);
+        values.push_back(32);
+        
+        variables.push_back(166);
+        values.push_back(34);
+        
+        variables.push_back(180);
+        values.push_back(34);
+        
+        variables.push_back(181);
+        values.push_back(36);
+        
+        variables.push_back(195);
+        values.push_back(36);
+        
+        variables.push_back(196);
+        values.push_back(38);
+        
+        variables.push_back(210);
+        values.push_back(38);
+        
+        variables.push_back(211);
+        values.push_back(40);
+        
+        variables.push_back(225);
+        values.push_back(40);
+        
+        variables.push_back(226);
+        values.push_back(42);
+        
+        variables.push_back(240);
+        values.push_back(42);
+        
+        variables.push_back(241);
+        values.push_back(44);
+        
+        variables.push_back(255);
+        values.push_back(44);
+        
+        variables.push_back(256);
+        values.push_back(46);
+        
+        variables.push_back(285);
+        values.push_back(46);
+        
+        variables.push_back(286);
+        values.push_back(48);
+        
+        variables.push_back(315);
+        values.push_back(48);
+        
+        variables.push_back(316);
+        values.push_back(50);
+        
+        variables.push_back(345);
+        values.push_back(50);
+        
+        variables.push_back(346);
+        values.push_back(52);
+        
+        variables.push_back(375);
+        values.push_back(52);
+        
+        variables.push_back(376);
+        values.push_back(54);
+        
+        variables.push_back(405);
+        values.push_back(54);
+        
+        variables.push_back(406);
+        values.push_back(56);
+        
+        variables.push_back(435);
+        values.push_back(56);
+        
+        variables.push_back(436);
+        values.push_back(58);
+        
+        variables.push_back(465);
+        values.push_back(58);
+        
+        variables.push_back(466);
+        values.push_back(60);
+        
+        variables.push_back(495);
+        values.push_back(60);
+        
+        variables.push_back(496);
+        values.push_back(62);
+        
+        variables.push_back(525);
+        values.push_back(62);
+        
+        variables.push_back(526);
+        values.push_back(64);
+        
+        variables.push_back(555);
+        values.push_back(64);
+        
+        variables.push_back(556);
+        values.push_back(66);
+        
+        variables.push_back(585);
+        values.push_back(66);
+        
+        variables.push_back(586);
+        values.push_back(68);
+        
+        variables.push_back(630);
+        values.push_back(68);
+        
+        variables.push_back(631);
+        values.push_back(70);
+        
+        variables.push_back(675);
+        values.push_back(70);
+        
+        variables.push_back(676);
+        values.push_back(72);
+        
+        variables.push_back(720);
+        values.push_back(72);
+        
+        variables.push_back(721);
+        values.push_back(74);
+        
+        variables.push_back(765);
+        values.push_back(74);
+        
+        variables.push_back(766);
+        values.push_back(76);
+        
+        variables.push_back(810);
+        values.push_back(76);
+        
+        variables.push_back(811);
+        values.push_back(78);
+        
+        variables.push_back(905);
+        values.push_back(78);
+        
+        variables.push_back(906);
+        values.push_back(80);
+        
+        variables.push_back(1000);
+        values.push_back(80);
+        
+        m_totalRatingTo1stPointInterpolator.reset(new Utilities::Interp::LinearInterpolator(variables, values));
+    }
+    return *m_totalRatingTo1stPointInterpolator;
 }

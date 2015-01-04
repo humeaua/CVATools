@@ -1322,6 +1322,28 @@ bool RegressionTest::StaticDataRanking() const
         m_out << "SUCCEEDED" << std::endl;
     }
     
+    m_out << "Points compared to 1st : ";
+    const std::vector<double> & pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
+    const double refValuesPointsComparedTo1st[] = {100,60,40,30,24,20,18,16,15,14,13,12,11,10,9.5,9,8.5,8,7.5,7,6.5,6,5.8,5.6,5.4,5.2,5,4.8,4.6,4.5,4.4,4.3,4.2,4.1,4,3.9,3.8,3.7,3.6,3.5,3.4,3.3,3.2,3.1,3,2.9,2.8,2.7,2.6,2.5,2.4,2.3,2.2,2.1,2,1.9,1.8,1.7,1.6,1.5,1.5,1.5,1.5,1.5,1.5};
+    double errorPointsComparedTo1st = 0.0;
+    for (size_t i = 0 ; i < pointsComparedTo1st.size() ; ++i)
+    {
+        errorPointsComparedTo1st += std::abs(pointsComparedTo1st[i] - refValuesPointsComparedTo1st[i]);
+#ifdef _DEBUG
+        m_out << pointsComparedTo1st[i] << "," ;
+#endif
+    }
+    
+    if (errorPointsComparedTo1st > tolerance)
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        m_out << "SUCCEEDED" << std::endl;
+    }
+    
     return true;
 }
 

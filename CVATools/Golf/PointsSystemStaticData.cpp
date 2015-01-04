@@ -471,6 +471,7 @@ std::vector<double> & PointsSystemStaticData::PointsComparedTo1st()
         m_pointComparedTo1st->push_back(24);
         m_pointComparedTo1st->push_back(20);
         m_pointComparedTo1st->push_back(18);
+        m_pointComparedTo1st->push_back(16);
         m_pointComparedTo1st->push_back(15);
         m_pointComparedTo1st->push_back(14);
         m_pointComparedTo1st->push_back(13);

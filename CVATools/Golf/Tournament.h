@@ -15,6 +15,8 @@
 #include "PlayerResult.h"
 #include <vector>
 
+class PointSystem;
+
 class Tournament : public TournamentID
 {
 public:
@@ -39,8 +41,8 @@ public:
     const Players & GetPlayers() const;
     Players & GetPlayers();
     
-    const double & PointsTo1st() const;
-    double & PointsTo1st();
+    const double & GetPointsTo1st() const;
+    void SetPointsTo1st(const PointSystem & pointSystem);
     
 protected:
     double m_PointsTo1st;

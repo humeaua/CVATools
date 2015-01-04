@@ -54,15 +54,30 @@ void Rankings::ComputeRealRanking(const Utilities::Date::MyDate &computedDate)
     {
         double mean = 0;
         
-        const std::vector<std::pair<Utilities::Date::MyDate, double> > results = m_ranking[i].second.GetResults();
+        const std::vector<std::pair<Utilities::Date::MyDate, double> > & results = m_ranking[i].second.GetResults();
         for (size_t tournament = 0 ; tournament < results.size() ; ++tournament)
         {
             const double diffInYear = computedDate.Diff(results[tournament].first);
             mean += results[tournament].second * m_interpolator(diffInYear);
         }
-        
-        m_realRanking[i].second = mean;
+        const size_t nbTournamentPlayed = AdaptNumberTournamentPlayed(m_ranking[i].second, computedDate);
+        m_realRanking[i].second = mean / nbTournamentPlayed;
     }
+}
+
+size_t Rankings::AdaptNumberTournamentPlayed(const PlayerRanking &playerRanking, const Utilities::Date::MyDate &computedDate) const
+{
+    size_t nbTournamentPlayed = 0;
+    const std::vector<std::pair<Utilities::Date::MyDate, double> > & results = playerRanking.GetResults();
+    for (size_t tournament = 0 ; tournament < results.size() ; ++tournament)
+    {
+        const double diffInYear = computedDate.Diff(results[tournament].first);
+        if (m_interpolator(diffInYear))
+        {
+            nbTournamentPlayed++;
+        }
+    }
+    return std::max(static_cast<unsigned long>(40), std::min(nbTournamentPlayed,static_cast<unsigned long>(52)));
 }
 
 void Rankings::Compute(const std::vector<Tournament> &tournamentsThisWeek, const Utilities::Date::MyDate & computedDate)
@@ -99,4 +114,14 @@ void Rankings::Compute(const std::vector<Tournament> &tournamentsThisWeek, const
 Rankings * Rankings::clone() const
 {
     return new Rankings(*this);
+}
+
+std::ostream & operator<<(std::ostream & os, const Rankings & rankings)
+{
+    const Rankings::RealRanking & realRanking = rankings.GetSortedRanking();
+    for (size_t i = 0 ; i < realRanking.size() ; ++i)
+    {
+        os << realRanking[i].first << " : " << realRanking[i].second << std::endl;
+    }
+    return os;
 }

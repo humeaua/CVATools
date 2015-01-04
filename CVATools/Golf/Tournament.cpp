@@ -7,6 +7,8 @@
 //
 
 #include "Tournament.h"
+#include "PointsSystemStaticData.h"
+#include "PointSystem.h"
 
 Tournament::Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate) : TournamentID(tournamentName, tournamentDate), m_PointsTo1st(0.0)
 {}
@@ -26,12 +28,13 @@ Tournament::Players & Tournament::GetPlayers()
     return m_players;
 }
 
-const double & Tournament::PointsTo1st() const
+const double & Tournament::GetPointsTo1st() const
 {
     return m_PointsTo1st;
 }
 
-double & Tournament::PointsTo1st()
+void Tournament::SetPointsTo1st(const PointSystem &pointSystem)
 {
-    return m_PointsTo1st;
+    const Utilities::Interp::Interpolator & interpolator = PointsSystemStaticData::GetTotalRatingToFirstPointInterpolator();
+    m_PointsTo1st = interpolator(pointSystem.TotalRatingValue(*this));
 }

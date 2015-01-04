@@ -1164,6 +1164,10 @@ bool RegressionTest::DummyTournament() const
         tournament.AddPlayer(players[i]);
     }
     
+    Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
+    RankingPointSystem rankingPtSystem(rankings);
+    tournament.SetPointsTo1st(rankingPtSystem);
+    
     tournament.Simulate(DummyRandomSimulator(0));
     
     tournament.Rank(GreaterScoreSorter());
@@ -1216,15 +1220,12 @@ bool RegressionTest::DummyTournament() const
         return false;
     }
     
-    
-    Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
     Utilities::Date::MyDate tomorrow(19,12,2014);
-    
-    RankingPointSystem rankingPtSystem(rankings);
-    tournament.PointsTo1st() = rankingPtSystem.TotalRatingValue(tournament);
     rankings.Compute(std::vector<Tournament>(1, tournament), tomorrow);
     
-    Rankings::RealRanking realRanking = rankings.GetSortedRanking();
+#ifdef _DEBUG
+    m_out << rankings << std::endl;
+#endif
     
     return true;
 }

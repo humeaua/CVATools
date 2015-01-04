@@ -20,6 +20,7 @@ class Tournament;
 class Rankings
 {
     void ComputeRealRanking(const Utilities::Date::MyDate & computedDate);
+    size_t AdaptNumberTournamentPlayed(const PlayerRanking & playerRanking, const Utilities::Date::MyDate & computedDate) const;
 public:
     Rankings(Utilities::Interp::Interpolator & interpolator);
     typedef std::vector<std::pair<PlayerID, PlayerRanking> > Ranking;
@@ -42,5 +43,7 @@ protected:
     
     RealRanking m_realRanking; // real ranking published on OWGR
 };
+
+std::ostream & operator<<(std::ostream & os, const Rankings & rankings);
 
 #endif /* defined(__CVATools__Rankings__) */

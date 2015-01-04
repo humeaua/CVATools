@@ -26,4 +26,6 @@ inline bool operator==(const PlayerID& lhs, const PlayerID& rhs)
     return lhs.Name() == rhs.Name();
 }
 
+std::ostream & operator <<(std::ostream & os, const PlayerID & playerId);
+
 #endif /* defined(__CVATools__PlayerID__) */

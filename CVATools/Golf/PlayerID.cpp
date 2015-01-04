@@ -15,3 +15,9 @@ const std::string & PlayerID::Name() const
 {
     return m_name;
 }
+
+std::ostream & operator<<(std::ostream & os, const PlayerID & playerId)
+{
+    os << playerId.Name();
+    return os;
+}

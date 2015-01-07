@@ -1152,7 +1152,7 @@ bool RegressionTest::PlayerResultTest() const
 
 bool RegressionTest::DummyTournament() const
 {
-    Tournament tournament("dummy",Utilities::Date::MyDate(18,12,2014));
+    Tournament tournament("dummy",Utilities::Date::MyDate(18,12,2014), PGATOUR);
     const size_t numPlayers = 100;
     std::vector<Player> players(numPlayers,std::string("")); // empty string is a char*
     for (size_t i = 0 ; i < numPlayers ; ++i)

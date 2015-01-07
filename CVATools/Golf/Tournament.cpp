@@ -11,6 +11,7 @@
 #include "PointSystem.h"
 #include "Exception.h"
 #include "PGATour.h"
+#include "EuropeanTour.h"
 
 Tournament::Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, const TourType& tourType) : TournamentID(tournamentName, tournamentDate), m_PointsTo1st(0.0)
 {
@@ -55,6 +56,10 @@ void Tournament::SetTour(const TourType &tourType)
     {
         case PGATOUR:
             m_tour.reset(new PGATour);
+            break;
+            
+        case EUROPEANTOUR:
+            m_tour.reset(new EuropeanTour);
             break;
             
         default:

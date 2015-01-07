@@ -24,6 +24,6 @@ double PGATour::MinimumRankingPoints(const Tournament &tournament) const
     }
     else
     {
-        return 24.0; // to be done properly need to take into account the total rating values
+        return 24.0;
     }
 }

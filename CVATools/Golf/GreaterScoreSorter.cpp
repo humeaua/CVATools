@@ -30,13 +30,29 @@ void GreaterScoreSorter::Rank(Tournament & tournament) const
         //   Adapt the ranking point system
         if (i < pointsComparedTo1st.size())
         {
-            players[i].second.RankingPoints() = tournament.GetPointsTo1st() * pointsComparedTo1st[i] * 0.01;
+            const double points = tournament.GetPointsTo1st() * pointsComparedTo1st[i] * 0.01;
+            if (points >= 1.0)
+            {
+                players[i].second.RankingPoints() = points;
+            }
+            else
+            {
+                // If the number of points is below 1, then it is 0
+                players[i].second.RankingPoints() = 0.0;
+            }
         }
         else
         {
-            players[i].second.RankingPoints() = tournament.GetPointsTo1st() * pointsComparedTo1st.back() * 0.01;
+            const double points = tournament.GetPointsTo1st() * pointsComparedTo1st.back() * 0.01;
+            if (points >= 1.0)
+            {
+                players[i].second.RankingPoints() = points;
+            }
+            else
+            {
+                // If the number of points is below 1, then it is 0
+                players[i].second.RankingPoints() = 0.0;
+            }
         }
     }
-    
-    
 }

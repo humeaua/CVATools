@@ -10,10 +10,6 @@
 #define __CVATools__RegressionTests__
 
 #include <iostream>
-#include "HashTable.h"
-
-class RegressionTest;
-typedef bool (RegressionTest::* RegressionTestFunction)() const;
 
 class RegressionTest {
 protected:
@@ -45,17 +41,6 @@ public:
     bool PlayerResultTest() const;
     bool DummyTournament() const;
     bool StaticDataRanking() const;
-};
-
-class RegressionTestLauncher : public RegressionTest
-{
-public:
-    RegressionTestLauncher(std::ostream & out);
-    bool Launch() const;
-    
-private:
-    void FillMap();
-    Utilities::HashTable<std::string, RegressionTestFunction> m_mapping;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

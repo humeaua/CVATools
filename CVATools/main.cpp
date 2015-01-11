@@ -6,20 +6,13 @@
 //  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
 //
 
-#include "MargrabeOptionVasicek.h"
-#include "RegressionTests.h"
-#include "MuParser/muParserTest.h"
-#include "VectorUtilities.h"
-
-#include "Printcpp.h"
-
-#include <set>
+#include "RegressionTestLauncher.h"
+#include "Exception.h"
 
 //////////////////////////////////
 //  Forward Declaration
 //////////////////////////////////
 int _main();
-
 
 ///////////////////////////////////
 //  Main functions

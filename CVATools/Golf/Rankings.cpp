@@ -10,15 +10,6 @@
 #include "Tournament.h"
 #include "PairComparatorFirst.h"
 
-namespace {
-    //template<class C, class D>
-    //inline bool GreaterSecond(const std::pair<C, D> & lhs, const std::pair<C, D> & rhs)
-    inline bool GreaterSecond(const std::pair<PlayerID, double> & lhs, const std::pair<PlayerID, double> & rhs)
-    {
-        return lhs.second > rhs.second;
-    }
-}
-
 Rankings::Rankings(Utilities::Interp::Interpolator & interpolator) : m_interpolator(interpolator)
 {}
 
@@ -35,7 +26,12 @@ Rankings::Ranking & Rankings::GetRanking()
 Rankings::RealRanking Rankings::GetSortedRanking() const
 {
     RealRanking realRanking = m_realRanking;
-    std::sort(realRanking.begin(), realRanking.end(), GreaterSecond);
+    std::sort(realRanking.begin(), realRanking.end(),
+              [](const std::pair<PlayerID, double> &left, const std::pair<PlayerID, double> &right)
+    {
+        return left.second < right.second;
+    }
+              );
     
     return realRanking;
 }

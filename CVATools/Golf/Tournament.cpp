@@ -12,8 +12,9 @@
 #include "Exception.h"
 #include "PGATour.h"
 #include "EuropeanTour.h"
+#include "ChallengeTour.h"
 
-Tournament::Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, const TourType& tourType) : TournamentID(tournamentName, tournamentDate), m_PointsTo1st(0.0)
+Tournament::Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, const TourType& tourType) : TournamentID(tournamentName, tournamentDate), m_PointsTo1st(0.0), m_tourType(tourType)
 {
     SetTour(tourType);
 }
@@ -60,6 +61,10 @@ void Tournament::SetTour(const TourType &tourType)
             
         case EUROPEANTOUR:
             m_tour.reset(new EuropeanTour);
+            break;
+            
+        case CHALLENGETOUR:
+            m_tour.reset(new ChallengeTour);
             break;
             
         default:

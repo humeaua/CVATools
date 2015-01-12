@@ -49,6 +49,7 @@ protected:
     double m_PointsTo1st;
     Players m_players;
     Tour_ptr m_tour;
+    TourType m_tourType;
 private:
     void PostProcessTourPoints();
     void SetTour(const TourType & tourType);

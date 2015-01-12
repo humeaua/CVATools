@@ -27,7 +27,8 @@ typedef std::tr1::shared_ptr<Tour> Tour_ptr;
 enum TourType
 {
     PGATOUR,
-    EUROPEANTOUR
+    EUROPEANTOUR,
+    CHALLENGETOUR
 };
 
 #endif /* defined(__CVATools__Tour__) */

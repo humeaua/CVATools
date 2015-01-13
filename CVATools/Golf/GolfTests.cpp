@@ -248,7 +248,7 @@ bool RegressionTest::StaticDataRanking() const
     return true;
 }
 
-bool RegressionTest::MultipleTournaments() const
+bool RegressionTest::MultipleTournamentsSameWeek() const
 {
     Tournament pgatourTournament("dummyPGA",Utilities::Date::MyDate(18,12,2014), PGATOUR), europeantourTournament("dummyEuro",Utilities::Date::MyDate(18,12,2014), EUROPEANTOUR);
     const size_t numPlayers = 200;

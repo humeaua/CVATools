@@ -41,7 +41,7 @@ public:
     bool PlayerResultTest() const;
     bool DummyTournament() const;
     bool StaticDataRanking() const;
-    bool MultipleTournaments() const;
+    bool MultipleTournamentsSameWeek() const;
     bool CoSanctionedTournament() const;
 };
 

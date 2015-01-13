@@ -41,6 +41,8 @@ public:
     bool PlayerResultTest() const;
     bool DummyTournament() const;
     bool StaticDataRanking() const;
+    bool MultipleTournaments() const;
+    bool CoSanctionedTournament() const;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

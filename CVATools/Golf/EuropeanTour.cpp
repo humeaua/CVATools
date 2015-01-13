@@ -10,20 +10,15 @@
 #include "StringUtilities.h"
 #include "Tournament.h"
 
-bool EuropeanTour::IsFlagShipEvent(const Tournament &tournament) const
+EuropeanTour::EuropeanTour() : Tour("BMW PGA CHAMPIONSHIP")
+{}
+
+double EuropeanTour::MinimumNormalTournament() const
 {
-    const std::string tournamentName = Utilities::ToUpperCopy(tournament.TournamentName());
-    return tournamentName == "BMW PGA CHAMPIONSHIP";
+    return 24.0;
 }
 
-double EuropeanTour::MinimumRankingPoints(const Tournament &tournament) const
+double EuropeanTour::MinimumRankingPointsFlagShipEvent() const
 {
-    if (IsFlagShipEvent(tournament))
-    {
-        return 64.0;
-    }
-    else
-    {
-        return 24.0; // to be done properly need to take into account the total rating values
-    }
+    return 64.0;
 }

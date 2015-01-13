@@ -10,20 +10,15 @@
 #include "StringUtilities.h"
 #include "Tournament.h"
 
-bool ChallengeTour::IsFlagShipEvent(const Tournament &tournament) const
+ChallengeTour::ChallengeTour() : Tour("Grand Final")
+{}
+
+double ChallengeTour::MinimumNormalTournament() const
 {
-    const std::string tournamentName = Utilities::ToUpperCopy(tournament.TournamentName());
-    return tournamentName == "GRAND FINAL";
+    return 12.0;
 }
 
-double ChallengeTour::MinimumRankingPoints(const Tournament &tournament) const
+double ChallengeTour::MinimumRankingPointsFlagShipEvent() const
 {
-    if (IsFlagShipEvent(tournament))
-    {
-        return 17.0;
-    }
-    else
-    {
-        return 12.0;
-    }
+    return 17.0;
 }

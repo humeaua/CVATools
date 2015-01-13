@@ -14,9 +14,11 @@
 
 class EuropeanTour : public Tour
 {
+protected:
+    double MinimumRankingPointsFlagShipEvent() const;
+    double MinimumNormalTournament() const;
 public:
-    bool IsFlagShipEvent(const Tournament & tournament) const;
-    double MinimumRankingPoints(const Tournament & tournament) const;
+    EuropeanTour();
 };
 
 #endif /* defined(__CVATools__EuropeanTour__) */

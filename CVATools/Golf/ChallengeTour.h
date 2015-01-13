@@ -14,9 +14,11 @@
 
 class ChallengeTour : public Tour
 {
+protected:
+    double MinimumRankingPointsFlagShipEvent() const;
+    double MinimumNormalTournament() const;
 public:
-    bool IsFlagShipEvent(const Tournament & tournament) const;
-    double MinimumRankingPoints(const Tournament & tournament) const;
+    ChallengeTour();
 };
 
 #endif /* defined(__CVATools__ChallengeTour__) */

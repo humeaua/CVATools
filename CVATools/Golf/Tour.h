@@ -12,14 +12,20 @@
 #include <iostream>
 #include <tr1/memory>
 
-//  Base class for the tours - should be an interface
+//  Base class for the tours
 class Tournament;
 
 class Tour
 {
+protected:
+    std::string m_flagshipEventName;
+    
+    virtual double MinimumRankingPointsFlagShipEvent() const = 0;
+    virtual double MinimumNormalTournament() const = 0;
 public:
-    virtual bool IsFlagShipEvent(const Tournament & tournament) const = 0;
-    virtual double MinimumRankingPoints(const Tournament & tournament) const = 0;
+    Tour(const std::string & flagshipEvent);
+    virtual bool IsFlagShipEvent(const Tournament & tournament) const;
+    virtual double MinimumRankingPoints(const Tournament & tournament) const;
 };
 
 typedef std::tr1::shared_ptr<Tour> Tour_ptr;

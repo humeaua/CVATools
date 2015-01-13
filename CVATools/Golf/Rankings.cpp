@@ -29,7 +29,7 @@ Rankings::RealRanking Rankings::GetSortedRanking() const
     std::sort(realRanking.begin(), realRanking.end(),
               [](const std::pair<PlayerID, double> &left, const std::pair<PlayerID, double> &right)
     {
-        return left.second < right.second;
+        return left.second > right.second;
     }
               );
     

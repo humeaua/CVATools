@@ -52,7 +52,7 @@ bool RegressionTest::PlayerResultTest() const
 
 bool RegressionTest::DummyTournament() const
 {
-    Tournament tournament("dummy",Utilities::Date::MyDate(18,12,2014), PGATOUR);
+    Tournament tournament("dummy",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,PGATOUR));
     const size_t numPlayers = 100;
     std::vector<Player> players(numPlayers,std::string("")); // empty string is a char*
     for (size_t i = 0 ; i < numPlayers ; ++i)
@@ -250,7 +250,7 @@ bool RegressionTest::StaticDataRanking() const
 
 bool RegressionTest::MultipleTournamentsSameWeek() const
 {
-    Tournament pgatourTournament("dummyPGA",Utilities::Date::MyDate(18,12,2014), PGATOUR), europeantourTournament("dummyEuro",Utilities::Date::MyDate(18,12,2014), EUROPEANTOUR);
+    Tournament pgatourTournament("dummyPGA",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,PGATOUR)), europeantourTournament("dummyEuro",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,EUROPEANTOUR));
     const size_t numPlayers = 200;
     std::vector<Player> players(numPlayers,std::string("")); // empty string is a char*
     for (size_t i = 0 ; i < numPlayers / 2 ; ++i)
@@ -348,6 +348,44 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
 #ifdef _DEBUG
     m_out << rankings << std::endl;
 #endif
+    
+    return true;
+}
+
+bool RegressionTest::CoSanctionedTournament() const
+{
+    std::vector<TourType> tourTypes(2);
+    tourTypes[0] = PGATOUR;
+    tourTypes[1] = CHALLENGETOUR;
+    
+    Tournament tournament("dummyEuro",Utilities::Date::MyDate(14,01,2015), tourTypes);
+    m_out << "CoSanctioned ? ";
+    const bool isCoSanctioned = tournament.CoSanctionedEvent();
+    if (!isCoSanctioned)
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        m_out << "SUCCEEDED" << std::endl;
+    }
+    
+    m_out << "Ranking points : ";
+    Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
+    RankingPointSystem rankingPtSystem(rankings);
+    tournament.SetPointsTo1st(rankingPtSystem);
+    const double rankingPoints = tournament.GetPointsTo1st();
+    const double refValue = 24.0, tolerance = 1e-15;
+    if (std::abs(rankingPoints-refValue) < tolerance)
+    {
+        m_out << "SUCCEEDED" << std::endl;
+    }
+    else
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
     
     return true;
 }

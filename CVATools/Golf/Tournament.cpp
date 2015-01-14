@@ -9,15 +9,11 @@
 #include "Tournament.h"
 #include "PointsSystemStaticData.h"
 #include "PointSystem.h"
-#include "Exception.h"
-#include "PGATour.h"
-#include "EuropeanTour.h"
-#include "ChallengeTour.h"
 
-Tournament::Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, const TourType& tourType) : TournamentID(tournamentName, tournamentDate), m_PointsTo1st(0.0), m_tourType(tourType)
-{
-    SetTour(tourType);
-}
+Tournament::Tournament(const std::string & tournamentName,
+                       const Utilities::Date::MyDate & tournamentDate,
+                       const std::vector<TourType> & tourTypes) : TournamentID(tournamentName, tournamentDate), m_PointsTo1st(0.0), TourAppartenance(tourTypes)
+{}
 
 void Tournament::AddPlayer(const PlayerID &player)
 {
@@ -41,7 +37,7 @@ const double & Tournament::GetPointsTo1st() const
 
 void Tournament::PostProcessTourPoints()
 {
-    m_PointsTo1st = m_tour->MinimumRankingPoints(*this);
+    m_PointsTo1st = TourAppartenance::MinimumRankingPoints(*this);
 }
 
 void Tournament::SetPointsTo1st(const PointSystem &pointSystem)
@@ -49,26 +45,4 @@ void Tournament::SetPointsTo1st(const PointSystem &pointSystem)
     const Utilities::Interp::Interpolator & interpolator = PointsSystemStaticData::GetTotalRatingToFirstPointInterpolator();
     m_PointsTo1st = interpolator(pointSystem.TotalRatingValue(*this));
     PostProcessTourPoints();
-}
-
-void Tournament::SetTour(const TourType &tourType)
-{
-    switch (tourType)
-    {
-        case PGATOUR:
-            m_tour.reset(new PGATour);
-            break;
-            
-        case EUROPEANTOUR:
-            m_tour.reset(new EuropeanTour);
-            break;
-            
-        case CHALLENGETOUR:
-            m_tour.reset(new ChallengeTour);
-            break;
-            
-        default:
-            throw EXCEPTION("Tour Type not recognized");
-            break;
-    }
 }

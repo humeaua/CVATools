@@ -14,16 +14,16 @@
 #include "PlayerID.h"
 #include "PlayerResult.h"
 #include <vector>
-#include "Tour.h"
+#include "TourAppartenance.h"
 
 class PointSystem;
 
-class Tournament : public TournamentID
+class Tournament : public TournamentID, public TourAppartenance
 {
 public:
     typedef std::vector<std::pair<PlayerID, PlayerResult> > Players;
     
-    Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, const TourType & tourType);
+    Tournament(const std::string & tournamentName, const Utilities::Date::MyDate & tournamentDate, const std::vector<TourType> & tourType);
     
     template<class Simulator>
     void Simulate(const Simulator & tournamentSimulator)
@@ -48,11 +48,10 @@ public:
 protected:
     double m_PointsTo1st;
     Players m_players;
-    Tour_ptr m_tour;
-    TourType m_tourType;
+    std::vector<Tour_ptr> m_tours;
+    std::vector<TourType> m_tourType;
 private:
     void PostProcessTourPoints();
-    void SetTour(const TourType & tourType);
 };
 
 #endif /* defined(__CVATools__Tournament__) */

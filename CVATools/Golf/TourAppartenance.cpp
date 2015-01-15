@@ -12,6 +12,7 @@
 #include "ChallengeTour.h"
 #include "Exception.h"
 #include "Tournament.h"
+#include "WebComTour.h"
 
 TourAppartenance::TourAppartenance(const std::vector<TourType> & tourtypes) : m_tourTypes(tourtypes)
 {
@@ -40,6 +41,10 @@ void TourAppartenance::AddTour(const TourType &tourType)
             
         case CHALLENGETOUR:
             m_tours.push_back(std::tr1::shared_ptr<Tour>(new ChallengeTour));
+            break;
+            
+        case WEBCOMTOUR:
+            m_tours.push_back(std::tr1::shared_ptr<Tour>(new WebComTour));
             break;
             
         default:

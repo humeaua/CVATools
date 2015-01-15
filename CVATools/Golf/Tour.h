@@ -34,7 +34,8 @@ enum TourType
 {
     PGATOUR,
     EUROPEANTOUR,
-    CHALLENGETOUR
+    CHALLENGETOUR,
+    WEBCOMTOUR
 };
 
 #endif /* defined(__CVATools__Tour__) */

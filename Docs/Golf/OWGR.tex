@@ -1,0 +1,77 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{amsthm} % to enable the proofs
+\usepackage{graphicx} % to enable the graphics
+\usepackage{mathtools}
+
+\usepackage{bbm}
+
+\usepackage[hidelinks]{hyperref}
+
+% to be read by all users : how to number theorems and definitions : 
+% done by A. Humeau on 4/10/2012
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{notation}{Notation}[section]
+
+% end of environment addition
+
+\usepackage{geometry}
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+\usepackage[utf8]{inputenc}
+
+% to insert code in the report
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{white}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+%end of addition to insert code in the report
+
+\bibliographystyle{plain}
+
+\DeclareMathOperator*{\mysup}{sup}
+
+\begin{document}
+
+\title{Official World Ranking Simulator}
+\author{Alexandre Humeau}
+\date{\today}
+\maketitle
+
+\section{Tournaments}
+\subsection{Stroke Play}
+\subsection{Match Play}
+
+\subsection{To do:}
+\begin{itemize}
+	\item Handle ties in scoring
+	\item Limited field events : Limited field events are defined as less than 30 qualified players. The Strength of Field for a limited field is calculated by using the World Rating only. Points are capped to 2.40 maximum points for last place or first round losers in match play events of less than 30 qualified players.
+\end{itemize}
+
+\section{Rankings}
+\subsection{How does it works ?}
+
+\section{Tours}
+
+Implementation of the different tours with
+
+\subsection{Main tours}
+\subsubsection{Flagship Events}
+\subsection{Other tours}
+
+
+\end{document}

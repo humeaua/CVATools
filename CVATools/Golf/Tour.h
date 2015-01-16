@@ -35,7 +35,8 @@ enum TourType
     PGATOUR,
     EUROPEANTOUR,
     CHALLENGETOUR,
-    WEBCOMTOUR
+    WEBCOMTOUR,
+    ASIANTOUR
 };
 
 #endif /* defined(__CVATools__Tour__) */

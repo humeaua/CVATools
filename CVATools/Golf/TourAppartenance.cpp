@@ -13,6 +13,7 @@
 #include "Exception.h"
 #include "Tournament.h"
 #include "WebComTour.h"
+#include "AsianTour.h"
 
 TourAppartenance::TourAppartenance(const std::vector<TourType> & tourtypes) : m_tourTypes(tourtypes)
 {
@@ -46,6 +47,9 @@ void TourAppartenance::AddTour(const TourType &tourType)
         case WEBCOMTOUR:
             m_tours.push_back(std::tr1::shared_ptr<Tour>(new WebComTour));
             break;
+            
+        case ASIANTOUR:
+            m_tours.push_back(std::tr1::shared_ptr<Tour>(new AsianTour));
             
         default:
             throw EXCEPTION("Tour Type not recognized");

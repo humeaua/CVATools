@@ -36,7 +36,8 @@ enum TourType
     EUROPEANTOUR,
     CHALLENGETOUR,
     WEBCOMTOUR,
-    ASIANTOUR
+    ASIANTOUR,
+    JAPANTOUR
 };
 
 #endif /* defined(__CVATools__Tour__) */

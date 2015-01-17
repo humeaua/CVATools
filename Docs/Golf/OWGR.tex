@@ -8,6 +8,7 @@
 \usepackage{graphicx} % to enable the graphics
 \usepackage{mathtools}
 
+\usepackage{url}
 \usepackage{bbm}
 
 \usepackage[hidelinks]{hyperref}
@@ -28,6 +29,9 @@
 
 \usepackage{geometry}
 \geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+\usepackage{color}
+\definecolor{orange}{RGB}{255,127,0}
 
 \usepackage[utf8]{inputenc}
 
@@ -51,19 +55,192 @@
 \author{Alexandre Humeau}
 \date{\today}
 \maketitle
+\clearpage
+
+\tableofcontents
+\clearpage
 
 \section{Tournaments}
 \subsection{Stroke Play}
 \subsection{Match Play}
+\subsection{Tournament simulators}
 
 \subsection{To do:}
 \begin{itemize}
-	\item Handle ties in scoring
-	\item Limited field events : Limited field events are defined as less than 30 qualified players. The Strength of Field for a limited field is calculated by using the World Rating only. Points are capped to 2.40 maximum points for last place or first round losers in match play events of less than 30 qualified players.
+	\item Handle ties in scoring 
+\textbf{\color{orange} To be implemented}
 \end{itemize}
 
 \section{Rankings}
 \subsection{How does it works ?}
+EFFECTIVE FROM 1ST JANUARY 2013\\
+Official Events from the leading professional tours from around the world are eligible for Ranking Points which are awarded according to the tournaments strength of field and the players finishing position.
+
+Eligible Tours include: PGA TOUR, PGA European Tour, Japan Golf Tour, PGA Tour of Australasia, Sunshine Tour, Asian Tour, Web.com, European Challenge Tour, PGA Tour Canada, PGA Tour China, PGA Tour LatinoAmerica, One Asia, Korean Golf Tour and Asian Development Tour.
+
+\subsubsection{World Ranking Points}
+
+The World Ranking Points for each player are accumulated over a two year “rolling” period with the points awarded for each event maintained for a 13-week period to place additional emphasis on recent performances.
+
+Ranking points are then reduced in equal decrements for the remaining 91 weeks of the two year Ranking period. Each player is then ranked according to his average points per tournament, which is determined by dividing his total number of points by the tournaments he has played over that two-year period.
+
+There is a minimum divisor of 40 tournaments over the two year ranking period and a maximum divisor of a player’s last 52 events.
+
+\subsubsection{Strength of Field}
+
+The Strength of Field for each tours event is determined by using the World Rating and Home Tour Rating.
+
+The World Rating is based on the number of Top-200 World Ranked players competing in the event and a value is allocated to the position within the Top 200.
+
+The Home Tour Rating is based on the number of Top-30 Ranked players using each tours end of year final ranking with a value allocated to the position within the Top 30 Ranked players.
+
+The World and Home Rating* using the values in the charts below are added together to produce the Strength of Field rating. The number of points** allocated to an event is then determined by the Rating Points Structure and which band the total Strength of Field rating falls into.
+
+\subsubsection{World Rating Chart}
+\begin{center}
+\begin{tabular}{ | c | c | }
+\hline
+World Ranking Position &	World Rating Values\\
+\hline
+1st &	45\\
+2nd &	37\\
+3rd	&32\\
+4th	&27\\
+5th	&24\\
+6th	&21\\
+7th	&20\\
+8th	&19\\
+9th	&18\\
+10th&	17\\
+11th&	16\\
+12th&	15\\
+13th&	14\\
+14th&	13\\
+15th&	12\\
+16th to 30th&	11\\
+31st to 34th&	10\\
+35th to 38th	&9\\
+39th to 43rd	&8\\
+44th to 50th	&7\\
+51st to 55th	&6\\
+56th to 60th	&5\\
+61st to 70th	&4\\
+71st to 80th	&3\\
+81st to 100th	&2\\
+101st to 200th& 	1\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Home Rating Chart}
+
+\begin{center}
+\begin{tabular}{ | c | c | }
+\hline
+Home Rank of Player	&Home Rating Values\\
+\hline
+1st	&8\\
+2nd	&7\\
+3rd	&6\\
+4th	&5\\
+5th	&4\\
+6th to 15th	&3\\
+16th to 30th	&1\\
+\hline
+\end{tabular}
+\end{center}
+
+The total Home Tour Rating is limited to 75\% of the total World Rating value. \\
+Points are reduced by 25\% for tournaments curtailed to 36 holes because of inclement weather or other reasons. However a tournament will not be reduced below its minimum points level.
+
+\subsubsection{Minimum Point’s Level}
+
+Each tour has a minimum 1st place point’s level which comes into effect should the 1st place points based on the Strength of Field rating be lower than that awarded to each tour in the chart below:
+
+\begin{center}
+\begin{tabular}{ | c | c | }
+\hline
+
+Tour &	Min 1st Place Points\\
+\hline
+PGA Tour	&24\\
+European Tour	&24\\
+Japan Golf Tour&	16\\
+PGA Tour of Australasia&	16\\
+ Web.com Hybrid Events	&16\\
+Sunshine Tour	&14\\
+Asian Tour	&14\\
+Web.com	&14\\
+European Challenge Tour - Final Series	&13 \\
+European Challenge Tour	&12\\
+Australia State (Lower prizefund)&	6\\
+PGA Tour Canada	&6\\
+PGA Tour China	&6\\
+PGA Tour LatinoAmerica&	6\\
+One Asia	&6\\
+Korean Golf Tour&	6\\
+Asian Development Tour&	6\\
+Sunshine Tour Winter Series-72 Holes&	6\\
+Sunshine Tour Winter Series-54 Holes	&4\\
+\hline
+\end{tabular}
+\end{center}
+
+*Note: The minimum points level for co-sanctioned events are determined using the “average” (
+\textbf{\color{orange} To be implemented}) of each tours minimum 1st place points level rounded up to the nearest whole number. The Home ratings for co-sanctioned events are based on the “home” Tour.
+
+\subsubsection{Major Championships}
+
+The 4 Majors, Masters Tournament, U.S. Open Championship, The Open Championship and US PGA Championship are rated separately and are awarded 100 1st place points. All players who complete all 4 rounds of a Major Championship are awarded Ranking Points to reflect the higher quality of the events.\\
+\textbf{\color{orange} To be implemented}
+
+\subsubsection{World Golf Championships}
+
+The Strength of Field for the World Golf Championships is calculated by using the World Rating and an additional World Rating based on the Top-30 World Ranked with the following values applied:
+\begin{center}
+\begin{tabular}{ | c | c | }
+\hline
+World Rank of Player&	Home Rating Values\\
+\hline
+1st	&8\\
+2nd	&7\\
+3rd	&6\\
+4th	&5\\
+5th	&4\\
+6th to 15th	&3\\
+16th to 30th	&1\\
+\hline
+\end{tabular}
+\end{center}
+
+Total Home Tour Rating Values limited to 75\% of World Rating Values\\
+\textbf{\color{orange} To be implemented}
+
+\subsubsection{Flagship Events}
+
+The Leading 6 tours:  PGA TOUR, PGA European Tour, Japan Golf Tour, PGA Tour of Australasia, Sunshine Tour, Asian Tour and the 2 development Web.com and European Challenge Tour are awarded a flagship event and allocated a higher minimum points levels to reflect their status.
+
+\begin{center}
+\begin{tabular}{ | c | c | }
+\hline
+Flagship Events	&Minimum Points\\
+\hline
+PGA Tour - Players Championship	&80\\
+European Tour - BMW PGA Championship&	64\\
+Japan - Japan Open	&32\\
+South African - South African Open	&32\\
+Australia - Australian Open	&32\\
+Asian Tour - Thailand Golf Championship	&20\\
+Web.com - Tour Championship	&20\\
+Challenge Tour - Grand Final	&17\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Limited Field Events}
+
+Limited field events are defined as less than 30 qualified players. The Strength of Field for a limited field is calculated by using the World Rating only. Points are capped to 2.40 maximum points for last place or first round losers in match play events of less than 30 qualified players.\\
+\textbf{\color{orange} To be implemented}
 
 \section{Tours}
 
@@ -74,4 +251,7 @@ Implementation of the different tours with
 \subsection{Other tours}
 
 
+\begin{thebibliography}{9}
+	\bibitem{OWGRwebsite} www.owgr.com%\url{http://www.owgr.com}
+\end{thebibliography}
 \end{document}

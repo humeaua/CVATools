@@ -13,7 +13,7 @@ JapanTour::JapanTour() : Tour("Japan Open")
 
 double JapanTour::MinimumRankingPointsFlagShipEvent() const
 {
-    return 20.0;
+    return 32.0;
 }
 
 double JapanTour::MinimumNormalTournament() const

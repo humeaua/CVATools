@@ -15,6 +15,7 @@
 #include "WebComTour.h"
 #include "AsianTour.h"
 #include "JapanTour.h"
+#include "SunshineTour.h"
 
 TourAppartenance::TourAppartenance(const std::vector<TourType> & tourtypes) : m_tourTypes(tourtypes)
 {
@@ -55,6 +56,10 @@ void TourAppartenance::AddTour(const TourType &tourType)
             
         case JAPANTOUR:
             m_tours.push_back(std::tr1::shared_ptr<Tour>(new JapanTour));
+            break;
+            
+        case SUNSHINETOUR:
+            m_tours.push_back(std::tr1::shared_ptr<Tour>(new SunshineTour));
             break;
             
         default:

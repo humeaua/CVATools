@@ -24,6 +24,7 @@ protected:
     virtual double MinimumNormalTournament() const = 0;
 public:
     Tour(const std::string & flagshipEvent);
+    virtual ~Tour();
     virtual bool IsFlagShipEvent(const Tournament & tournament) const;
     virtual double MinimumRankingPoints(const Tournament & tournament) const;
 };
@@ -37,7 +38,8 @@ enum TourType
     CHALLENGETOUR,
     WEBCOMTOUR,
     ASIANTOUR,
-    JAPANTOUR
+    JAPANTOUR,
+    SUNSHINETOUR
 };
 
 #endif /* defined(__CVATools__Tour__) */

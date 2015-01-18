@@ -13,6 +13,9 @@
 Tour::Tour(const std::string & flagshipEvent) : m_flagshipEventName(Utilities::ToUpperCopy(flagshipEvent))
 {}
 
+Tour::~Tour()
+{}
+
 bool Tour::IsFlagShipEvent(const Tournament &tournament) const
 {
     return tournament.TournamentName() == m_flagshipEventName;

@@ -36,6 +36,16 @@ Rankings::RealRanking Rankings::GetSortedRanking() const
     return realRanking;
 }
 
+void Rankings::SortRanking()
+{
+    std::sort(m_realRanking.begin(), m_realRanking.end(),
+              [](const std::pair<PlayerID, double> &left, const std::pair<PlayerID, double> &right)
+              {
+                  return left.second > right.second;
+              }
+              );
+}
+
 void Rankings::ComputeRealRanking(const Utilities::Date::MyDate &computedDate)
 {
     if (m_realRanking.size() != m_ranking.size())

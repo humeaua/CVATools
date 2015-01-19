@@ -31,6 +31,7 @@ public:
     
     // The following method sorts the players according to their OWGR rankings
     RealRanking GetSortedRanking() const;
+    void SortRanking();
     
     void Compute(const std::vector<Tournament> & tournamentsThisWeek,
                  const Utilities::Date::MyDate & computedDate);

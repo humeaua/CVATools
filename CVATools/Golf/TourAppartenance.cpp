@@ -7,15 +7,9 @@
 //
 
 #include "TourAppartenance.h"
-#include "PGATour.h"
-#include "EuropeanTour.h"
-#include "ChallengeTour.h"
 #include "Exception.h"
 #include "Tournament.h"
-#include "WebComTour.h"
-#include "AsianTour.h"
-#include "JapanTour.h"
-#include "SunshineTour.h"
+#include "TourFwdDecl.h"
 
 TourAppartenance::TourAppartenance(const std::vector<TourType> & tourtypes) : m_tourTypes(tourtypes)
 {

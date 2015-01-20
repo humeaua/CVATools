@@ -376,7 +376,7 @@ bool RegressionTest::CoSanctionedTournament() const
     RankingPointSystem rankingPtSystem(rankings);
     tournament.SetPointsTo1st(rankingPtSystem);
     const double rankingPoints = tournament.GetPointsTo1st();
-    const double refValue = 24.0, tolerance = 1e-15;
+    const double refValue = 18.0, tolerance = 1e-15;
     if (std::abs(rankingPoints-refValue) < tolerance)
     {
         m_out << "SUCCEEDED" << std::endl;

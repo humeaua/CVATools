@@ -63,12 +63,16 @@ void TourAppartenance::AddTour(const TourType &tourType)
 
 double TourAppartenance::MinimumRankingPoints(const Tournament &tournament) const
 {
-    double max = 0;
+    double avg = 0;
     for (std::vector<Tour_ptr>::const_iterator tour = m_tours.begin() ; tour != m_tours.end() ; ++tour)
     {
-        max = std::max(max, (*tour)->MinimumRankingPoints(tournament));
+        avg += (*tour)->MinimumRankingPoints(tournament);
     }
-    return max;
+    if (m_tours.empty())
+    {
+        throw EXCEPTION("Number of tours is zero");
+    }
+    return avg / m_tours.size();
 }
 
 bool TourAppartenance::CoSanctionedEvent() const

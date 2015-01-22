@@ -41,6 +41,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("StaticDataRanking", &RegressionTest::StaticDataRanking));
     m_mapping.insert(std::make_pair("MultipleTournaments", &RegressionTest::MultipleTournamentsSameWeek));
     m_mapping.insert(std::make_pair("CoSanctionedEvent", &RegressionTest::CoSanctionedTournament));
+    m_mapping.insert(std::make_pair("TieHandler", &RegressionTest::TieHandler));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

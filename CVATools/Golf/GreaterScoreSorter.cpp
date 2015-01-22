@@ -17,11 +17,19 @@ namespace {
     }
 }
 
+GreaterScoreSorter::GreaterScoreSorter(bool useTieHandler) : m_useTieHandler(useTieHandler)
+{}
+
 void GreaterScoreSorter::Rank(Tournament & tournament) const
 {
     Tournament::Players & players = tournament.GetPlayers();
     std::sort(players.begin(), players.end(), ScoreGreaterThan);
     
+    //  Enable Tie handler when the class is fully working
+    if (m_useTieHandler)
+    {
+        m_tieHandler.Update(players);
+    }
     const std::vector<double> & pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
     
     for (size_t i = 0 ; i < players.size() ; ++i)

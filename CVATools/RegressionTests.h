@@ -43,6 +43,7 @@ public:
     bool StaticDataRanking() const;
     bool MultipleTournamentsSameWeek() const;
     bool CoSanctionedTournament() const;
+    bool TieHandler() const;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

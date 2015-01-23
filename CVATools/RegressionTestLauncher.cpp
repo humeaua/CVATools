@@ -61,9 +61,11 @@ bool RegressionTestLauncher::Launch() const
         result = ((*this).*(it->second))();
         if (!result)
         {
+            m_out << "Regression Test Launcher failed : " << it->first << " test failed!!" << std::endl;
             return result;
         }
         m_out << std::endl;
     }
+    m_out << "Regression Test Launcher succeeded : all test succeed" << std::endl;
     return result;
 }

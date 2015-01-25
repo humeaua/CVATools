@@ -10,13 +10,13 @@
 #define __CVATools__JapanTour__
 
 #include <iostream>
-#include "Tour.h"
+#include "MainTour.h"
 
-class JapanTour : public Tour
+class JapanTour : public MainTour
 {
 protected:
     double MinimumRankingPointsFlagShipEvent() const;
-    double MinimumNormalTournament() const;
+    double MinimumRankingPointsNormalTournament() const;
 public:
     JapanTour();
 };

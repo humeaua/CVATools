@@ -10,13 +10,13 @@
 #define __CVATools__PGATour__
 
 #include <iostream>
-#include "Tour.h"
+#include "MainTour.h"
 
-class PGATour : public Tour
+class PGATour : public MainTour
 {
 protected:
     double MinimumRankingPointsFlagShipEvent() const;
-    double MinimumNormalTournament() const;
+    double MinimumRankingPointsNormalTournament() const;
 public:
     PGATour();
 };

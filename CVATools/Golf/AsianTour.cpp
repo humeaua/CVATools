@@ -8,7 +8,7 @@
 
 #include "AsianTour.h"
 
-AsianTour::AsianTour() : Tour("Thailand Golf Championship")
+AsianTour::AsianTour() : MainTour("Thailand Golf Championship")
 {}
 
 double AsianTour::MinimumRankingPointsFlagShipEvent() const
@@ -16,7 +16,7 @@ double AsianTour::MinimumRankingPointsFlagShipEvent() const
     return 20.0;
 }
 
-double AsianTour::MinimumNormalTournament() const
+double AsianTour::MinimumRankingPointsNormalTournament() const
 {
     return 14.0;
 }

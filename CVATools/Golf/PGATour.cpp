@@ -10,10 +10,10 @@
 #include "Tournament.h"
 #include "StringUtilities.h"
 
-PGATour::PGATour() : Tour("The Players")
+PGATour::PGATour() : MainTour("The Players")
 {}
 
-double PGATour::MinimumNormalTournament() const
+double PGATour::MinimumRankingPointsNormalTournament() const
 {
     return 24.0;
 }

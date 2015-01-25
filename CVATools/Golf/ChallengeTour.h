@@ -10,13 +10,13 @@
 #define __CVATools__ChallengeTour__
 
 #include <iostream>
-#include "Tour.h"
+#include "MainTour.h"
 
-class ChallengeTour : public Tour
+class ChallengeTour : public MainTour
 {
 protected:
     double MinimumRankingPointsFlagShipEvent() const;
-    double MinimumNormalTournament() const;
+    double MinimumRankingPointsNormalTournament() const;
 public:
     ChallengeTour();
 };

@@ -10,13 +10,13 @@
 #define __CVATools__SunshineTour__
 
 #include <iostream>
-#include "Tour.h"
+#include "MainTour.h"
 
-class SunshineTour : public Tour
+class SunshineTour : public MainTour
 {
 protected:
     double MinimumRankingPointsFlagShipEvent() const;
-    double MinimumNormalTournament() const;
+    double MinimumRankingPointsNormalTournament() const;
 public:
     SunshineTour();
 };

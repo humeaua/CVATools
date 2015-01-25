@@ -8,7 +8,7 @@
 
 #include "JapanTour.h"
 
-JapanTour::JapanTour() : Tour("Japan Open")
+JapanTour::JapanTour() : MainTour("Japan Open")
 {}
 
 double JapanTour::MinimumRankingPointsFlagShipEvent() const
@@ -16,7 +16,7 @@ double JapanTour::MinimumRankingPointsFlagShipEvent() const
     return 32.0;
 }
 
-double JapanTour::MinimumNormalTournament() const
+double JapanTour::MinimumRankingPointsNormalTournament() const
 {
     return 14.0;
 }

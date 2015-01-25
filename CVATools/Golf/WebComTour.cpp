@@ -8,10 +8,10 @@
 
 #include "WebComTour.h"
 
-WebComTour::WebComTour() : Tour("Tour Championship")
+WebComTour::WebComTour() : MainTour("Tour Championship")
 {}
 
-double WebComTour::MinimumNormalTournament() const
+double WebComTour::MinimumRankingPointsNormalTournament() const
 {
     return 14.0;
 }

@@ -23,7 +23,7 @@ int _main()
     RegressionTestLauncher launcher(std::cout);
     bool bSucceeded = launcher.Launch();
     
-    return 0;
+    return (int)(!bSucceeded);
 }
 
 int main()

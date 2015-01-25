@@ -18,15 +18,10 @@ class Tournament;
 class Tour
 {
 protected:
-    std::string m_flagshipEventName;
-    
-    virtual double MinimumRankingPointsFlagShipEvent() const = 0;
-    virtual double MinimumNormalTournament() const = 0;
+    virtual double MinimumRankingPointsNormalTournament() const = 0;
 public:
-    Tour(const std::string & flagshipEvent);
     virtual ~Tour();
-    virtual bool IsFlagShipEvent(const Tournament & tournament) const;
-    virtual double MinimumRankingPoints(const Tournament & tournament) const;
+    virtual double MinimumRankingPoints(const Tournament & tournament) const = 0;
 };
 
 typedef std::tr1::shared_ptr<Tour> Tour_ptr;

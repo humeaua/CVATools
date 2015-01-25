@@ -8,7 +8,7 @@
 
 #include "SunshineTour.h"
 
-SunshineTour::SunshineTour() : Tour("South African Open")
+SunshineTour::SunshineTour() : MainTour("South African Open")
 {}
 
 double SunshineTour::MinimumRankingPointsFlagShipEvent() const
@@ -16,7 +16,7 @@ double SunshineTour::MinimumRankingPointsFlagShipEvent() const
     return 32.0;
 }
 
-double SunshineTour::MinimumNormalTournament() const
+double SunshineTour::MinimumRankingPointsNormalTournament() const
 {
     return 14.0;
 }

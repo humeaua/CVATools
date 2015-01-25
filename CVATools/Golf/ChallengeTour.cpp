@@ -10,10 +10,10 @@
 #include "StringUtilities.h"
 #include "Tournament.h"
 
-ChallengeTour::ChallengeTour() : Tour("Grand Final")
+ChallengeTour::ChallengeTour() : MainTour("Grand Final")
 {}
 
-double ChallengeTour::MinimumNormalTournament() const
+double ChallengeTour::MinimumRankingPointsNormalTournament() const
 {
     return 12.0;
 }

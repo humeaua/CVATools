@@ -10,13 +10,13 @@
 #define __CVATools__WebComTour__
 
 #include <iostream>
-#include "Tour.h"
+#include "MainTour.h"
 
-class WebComTour : public Tour
+class WebComTour : public MainTour
 {
 protected:
     double MinimumRankingPointsFlagShipEvent() const;
-    double MinimumNormalTournament() const;
+    double MinimumRankingPointsNormalTournament() const;
 public:
     WebComTour();
 };

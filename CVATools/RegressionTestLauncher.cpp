@@ -67,6 +67,6 @@ bool RegressionTestLauncher::Launch() const
         }
         m_out << std::endl;
     }
-    m_out << "Regression Test Launcher succeeded : all test succeed" << std::endl;
+    m_out << "Regression Test Launcher succeeded : all tests succeed" << std::endl;
     return result;
 }

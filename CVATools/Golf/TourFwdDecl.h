@@ -16,5 +16,6 @@
 #include "AsianTour.h"
 #include "JapanTour.h"
 #include "SunshineTour.h"
+#include "PGATourCanada.h"
 
 #endif

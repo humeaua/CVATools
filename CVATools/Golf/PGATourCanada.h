@@ -10,9 +10,9 @@
 #define __CVATools__PGATourCanada__
 
 #include <iostream>
-#include "Tour.h"
+#include "SecondaryTour.h"
 
-class PGATourCanada : public Tour
+class PGATourCanada : public SecondaryTour
 {
 protected:
     double MinimumRankingPointsNormalTournament() const;

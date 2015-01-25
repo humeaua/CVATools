@@ -56,6 +56,10 @@ void TourAppartenance::AddTour(const TourType &tourType)
             m_tours.push_back(std::tr1::shared_ptr<Tour>(new SunshineTour));
             break;
             
+        case PGATOURCANADA:
+            m_tours.push_back(std::tr1::shared_ptr<Tour>(new PGATourCanada));
+            break;
+            
         default:
             throw EXCEPTION("Tour Type not recognized");
     }

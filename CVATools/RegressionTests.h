@@ -44,6 +44,7 @@ public:
     bool MultipleTournamentsSameWeek() const;
     bool CoSanctionedTournament() const;
     bool TieHandler() const;
+    bool Tours() const;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

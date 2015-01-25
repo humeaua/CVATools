@@ -15,6 +15,7 @@
 #include "Rankings.h"
 #include "PointsSystemStaticData.h"
 #include "RankingPointSystem.h"
+#include "TourFwdDecl.h"
 
 #include <cmath>
 #include <sstream>
@@ -395,4 +396,39 @@ bool RegressionTest::TieHandler() const
     //  Design a test when the tie handler is fully designed
     m_out << "SUCCEEDED" << std::endl;
     return true;
+}
+
+bool RegressionTest::Tours() const
+{
+    std::vector<Tour_ptr> tours;
+    tours.push_back(std::tr1::shared_ptr<Tour>(new PGATour));
+    tours.push_back(std::tr1::shared_ptr<Tour>(new EuropeanTour));
+    tours.push_back(std::tr1::shared_ptr<Tour>(new ChallengeTour));
+    tours.push_back(std::tr1::shared_ptr<Tour>(new WebComTour));
+    tours.push_back(std::tr1::shared_ptr<Tour>(new AsianTour));
+    tours.push_back(std::tr1::shared_ptr<Tour>(new JapanTour));
+    tours.push_back(std::tr1::shared_ptr<Tour>(new SunshineTour));
+    tours.push_back(std::tr1::shared_ptr<Tour>(new PGATourCanada));
+    
+    Tournament dummy("dummy", Utilities::Date::MyDate(25,01,2015), std::vector<TourType>());
+    double refValues[] = {24,24,12,14,14,14,14,6};
+    const double tolerance = 1e-14;
+    double error = 0;
+    size_t i = 0;
+    for (std::vector<Tour_ptr>::iterator tour = tours.begin() ; tour != tours.end() ; ++tour, ++i)
+    {
+        error += std::abs(refValues[i] - (*tour)->MinimumRankingPoints(dummy));
+        
+    }
+    
+    if (error > tolerance)
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
 }

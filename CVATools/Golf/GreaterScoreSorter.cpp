@@ -26,7 +26,7 @@ void GreaterScoreSorter::Rank(Tournament & tournament) const
     std::sort(players.begin(), players.end(), ScoreGreaterThan);
     
     //  Enable Tie handler when the class is fully working
-    std::vector<double> & pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
+    std::vector<double> pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
     if (m_useTieHandler)
     {
         m_tieHandler.Update(players, pointsComparedTo1st);

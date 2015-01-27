@@ -16,9 +16,13 @@
 #include "PointsSystemStaticData.h"
 #include "RankingPointSystem.h"
 #include "TourFwdDecl.h"
+#include "ValueSimulator.h"
+#include "TieHandler.h"
 
 #include <cmath>
 #include <sstream>
+#include <iomanip>
+#include <numeric>
 
 bool RegressionTest::PlayerResultTest() const
 {
@@ -394,7 +398,43 @@ bool RegressionTest::CoSanctionedTournament() const
 bool RegressionTest::TieHandler() const
 {
     //  Design a test when the tie handler is fully designed
-    m_out << "SUCCEEDED" << std::endl;
+    Tournament tournament("dummy",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,PGATOUR));
+    const size_t numPlayers = 100;
+    std::vector<Player> players(numPlayers,std::string("")); // empty string is a char*
+    for (size_t i = 0 ; i < numPlayers ; ++i)
+    {
+        std::stringstream ss;
+        ss << "Player " << i;
+        players[i] = Player(ss.str());
+        
+        tournament.AddPlayer(players[i]);
+    }
+    
+    Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
+    RankingPointSystem rankingPtSystem(rankings);
+    tournament.SetPointsTo1st(rankingPtSystem);
+    
+    tournament.Simulate(ValueSimulator(0));
+    Tournament::Players & players0 = tournament.GetPlayers();
+    std::sort(players0.begin(), players0.end(), [](const std::pair<PlayerID, PlayerResult> & lhs, const std::pair<PlayerID, PlayerResult> & rhs)
+              {
+                  return lhs.second.Score() > rhs.second.Score();
+              }
+);
+    
+    //  Enable Tie handler when the class is fully working
+    std::vector<double> pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
+    const double refValue = std::accumulate(pointsComparedTo1st.begin(), pointsComparedTo1st.end(), 0.0) / pointsComparedTo1st.size();
+    m_out << "Ref Value : " << refValue << std::endl;
+    class TieHandler tieHandler;
+    tieHandler.Update(players0, pointsComparedTo1st);
+    std::vector<double> adjustedPoints = tieHandler.GetAdjustedPoints();
+    
+    for (size_t i = 0 ; i < adjustedPoints.size() ; ++i)
+    {
+        m_out << std::setprecision(15) << i << "," << pointsComparedTo1st[i] << "," << adjustedPoints[i] << std::endl;
+    }
+    
     return true;
 }
 

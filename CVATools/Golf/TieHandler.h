@@ -18,9 +18,12 @@
 class TieHandler
 {
 protected:
-    std::map<size_t, size_t> m_positionsToNumber;
+    std::vector<double> m_adjustedPoints;
 public:
-    void Update(const Tournament::Players & players);
+    void Update(const Tournament::Players & players,
+                const std::vector<double> & pointsComparedToFirst);
+    
+    const std::vector<double> & GetAdjustedPoints() const;
 };
 
 #endif /* defined(__CVATools__TieHandler__) */

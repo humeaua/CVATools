@@ -7,8 +7,35 @@
 //
 
 #include "TieHandler.h"
+#include <numeric>
 
-void TieHandler::Update(const Tournament::Players & players)
+void TieHandler::Update(const Tournament::Players & players,
+                        const std::vector<double> & pointsComparedToFirst)
 {
+    m_adjustedPoints.resize(players.size());
     
+    for (size_t player = 0 ; player < players.size() ; ++player)
+    {
+        size_t endPoint = player;
+        for ( ; endPoint < players.size() ; ++endPoint)
+        {
+            if (players[player].second.Score() != players[endPoint].second.Score())
+            {
+                break;
+            }
+        }
+        
+        const double totalPoints = std::accumulate(pointsComparedToFirst.begin() + player, pointsComparedToFirst.begin() + endPoint, 0.0);
+        for (size_t i = player ; i <= endPoint ; ++i)
+        {
+            m_adjustedPoints[i] = totalPoints / (endPoint - player + 1);
+        }
+        
+        player += endPoint;
+    }
+}
+
+const std::vector<double> & TieHandler::GetAdjustedPoints() const
+{
+    return m_adjustedPoints;
 }

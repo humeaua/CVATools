@@ -17,26 +17,16 @@ namespace {
     }
 }
 
-GreaterScoreSorter::GreaterScoreSorter(bool useTieHandler) : m_useTieHandler(useTieHandler)
-{}
-
 void GreaterScoreSorter::Rank(Tournament & tournament) const
 {
     Tournament::Players & players = tournament.GetPlayers();
     std::sort(players.begin(), players.end(), ScoreGreaterThan);
     
-    //  Enable Tie handler when the class is fully working
-    OWGRVectorWrapper<double> pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
-    OWGRVectorWrapper<double> adjustedPoints;
-    if (m_useTieHandler)
-    {
-        m_tieHandler.Update(players, pointsComparedTo1st);
-        adjustedPoints = m_tieHandler.GetAdjustedPoints();
-    }
-    else
-    {
-        adjustedPoints = pointsComparedTo1st;
-    }
+    const OWGRVectorWrapper<double> & pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
+    
+    // Call Tie Handler
+    m_tieHandler.Update(players, pointsComparedTo1st);
+    OWGRVectorWrapper<double> adjustedPoints = m_tieHandler.GetAdjustedPoints();
     
     for (size_t i = 0 ; i < players.size() ; ++i)
     {

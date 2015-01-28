@@ -19,9 +19,7 @@ class GreaterScoreSorter
 protected:
     //  the following variable is mutable since I cannot change the template method in Tournament
     mutable TieHandler m_tieHandler;
-    bool m_useTieHandler;
 public:
-    GreaterScoreSorter(bool useTieHandler);
     void Rank(Tournament & tournament) const;
 };
 

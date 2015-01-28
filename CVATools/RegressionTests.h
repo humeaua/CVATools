@@ -45,6 +45,7 @@ public:
     bool CoSanctionedTournament() const;
     bool TieHandler() const;
     bool Tours() const;
+    bool OWGRVectorWrapperTest() const;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

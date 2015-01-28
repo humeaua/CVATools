@@ -43,6 +43,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("CoSanctionedEvent", &RegressionTest::CoSanctionedTournament));
     m_mapping.insert(std::make_pair("TieHandler", &RegressionTest::TieHandler));
     m_mapping.insert(std::make_pair("Tours", &RegressionTest::Tours));
+    m_mapping.insert(std::make_pair("OWGRVectorWrapper", &RegressionTest::OWGRVectorWrapperTest));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

@@ -18,6 +18,7 @@
 #include "TourFwdDecl.h"
 #include "ValueSimulator.h"
 #include "TieHandler.h"
+#include "OWGRVectorWrapper.h"
 
 #include <cmath>
 #include <sstream>
@@ -470,5 +471,30 @@ bool RegressionTest::Tours() const
     {
         m_out << "SUCCEEDED" << std::endl;
         return true;
+    }
+}
+
+bool RegressionTest::OWGRVectorWrapperTest() const
+{
+    OWGRVectorWrapper<double> wrapper(2,0.0);
+    wrapper.push_back(1.0);
+    
+    const double refValues[] = {0,0,1,1,1};
+    double error = 0;
+    const double tolerance = 1e-10;
+    for (size_t i = 0 ; i < 5 ; ++i)
+    {
+        error += std::abs(refValues[i]-wrapper[i]);
+    }
+    
+    if (error < tolerance)
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
+    else
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
     }
 }

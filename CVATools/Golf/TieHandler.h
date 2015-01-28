@@ -12,18 +12,19 @@
 #include <iostream>
 #include <map>
 #include "Tournament.h"
+#include "OWGRVectorWrapper.h"
 
 //  The goal of this class is to handle tie in a tournament and hence have the possibility to share the ranking points amongst several players
 
 class TieHandler
 {
 protected:
-    std::vector<double> m_adjustedPoints;
+    OWGRVectorWrapper<double> m_adjustedPoints;
 public:
     void Update(const Tournament::Players & players,
-                const std::vector<double> & pointsComparedToFirst);
+                const OWGRVectorWrapper<double> & pointsComparedToFirst);
     
-    const std::vector<double> & GetAdjustedPoints() const;
+    const OWGRVectorWrapper<double> & GetAdjustedPoints() const;
 };
 
 #endif /* defined(__CVATools__TieHandler__) */

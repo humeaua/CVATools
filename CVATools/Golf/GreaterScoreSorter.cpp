@@ -26,42 +26,31 @@ void GreaterScoreSorter::Rank(Tournament & tournament) const
     std::sort(players.begin(), players.end(), ScoreGreaterThan);
     
     //  Enable Tie handler when the class is fully working
-    std::vector<double> pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
+    OWGRVectorWrapper<double> pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
+    OWGRVectorWrapper<double> adjustedPoints;
     if (m_useTieHandler)
     {
         m_tieHandler.Update(players, pointsComparedTo1st);
-        pointsComparedTo1st = m_tieHandler.GetAdjustedPoints();
+        adjustedPoints = m_tieHandler.GetAdjustedPoints();
+    }
+    else
+    {
+        adjustedPoints = pointsComparedTo1st;
     }
     
     for (size_t i = 0 ; i < players.size() ; ++i)
     {
         players[i].second.Position() = i;
         //   Adapt the ranking point system
-        if (i < pointsComparedTo1st.size())
+        const double points = tournament.GetPointsTo1st() * adjustedPoints[i] * 0.01;
+        if (points >= 1.0)
         {
-            const double points = tournament.GetPointsTo1st() * pointsComparedTo1st[i] * 0.01;
-            if (points >= 1.0)
-            {
-                players[i].second.RankingPoints() = points;
-            }
-            else
-            {
-                // If the number of points is below 1, then it is 0
-                players[i].second.RankingPoints() = 0.0;
-            }
+            players[i].second.RankingPoints() = points;
         }
         else
         {
-            const double points = tournament.GetPointsTo1st() * pointsComparedTo1st.back() * 0.01;
-            if (points >= 1.0)
-            {
-                players[i].second.RankingPoints() = points;
-            }
-            else
-            {
-                // If the number of points is below 1, then it is 0
-                players[i].second.RankingPoints() = 0.0;
-            }
+            // If the number of points is below 1, then it is 0
+            players[i].second.RankingPoints() = 0.0;
         }
     }
 }

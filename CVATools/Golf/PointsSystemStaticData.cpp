@@ -12,7 +12,7 @@ std::auto_ptr<Utilities::Interp::Interpolator> PointsSystemStaticData::m_interpo
 std::auto_ptr<std::vector<double> > PointsSystemStaticData::m_eventRatingValues;
 std::auto_ptr<std::vector<double> > PointsSystemStaticData::m_homeRatingValues;
 std::auto_ptr<Utilities::Interp::Interpolator> PointsSystemStaticData::m_totalRatingTo1stPointInterpolator;
-std::auto_ptr<std::vector<double> > PointsSystemStaticData::m_pointComparedTo1st;
+std::auto_ptr<OWGRVectorWrapper<double> > PointsSystemStaticData::m_pointComparedTo1st;
 
 Utilities::Interp::Interpolator & PointsSystemStaticData::GetOWGRInterpolator()
 {
@@ -459,11 +459,11 @@ Utilities::Interp::Interpolator & PointsSystemStaticData::GetTotalRatingToFirstP
     return *m_totalRatingTo1stPointInterpolator;
 }
 
-std::vector<double> & PointsSystemStaticData::PointsComparedTo1st()
+OWGRVectorWrapper<double> & PointsSystemStaticData::PointsComparedTo1st()
 {
     if (m_pointComparedTo1st.get() == NULL)
     {
-        m_pointComparedTo1st.reset(new std::vector<double>());
+        m_pointComparedTo1st.reset(new OWGRVectorWrapper<double>());
         m_pointComparedTo1st->push_back(100);
         m_pointComparedTo1st->push_back(60);
         m_pointComparedTo1st->push_back(40);

@@ -10,7 +10,7 @@
 #include <numeric>
 
 void TieHandler::Update(const Tournament::Players & players,
-                        const std::vector<double> & pointsComparedToFirst)
+                        const OWGRVectorWrapper<double> & pointsComparedToFirst)
 {
     m_adjustedPoints.resize(players.size());
     
@@ -28,17 +28,21 @@ void TieHandler::Update(const Tournament::Players & players,
         // Need to be careful here -- THIS IS NOT CORRECT YET !!!!!! //
         ///////////////////////////////////////////////////////////////
         // The size of PointsComparedToFirst may be not equal to Player (smaller) and it might create random access violation
-        const double totalPoints = std::accumulate(pointsComparedToFirst.begin() + player, pointsComparedToFirst.begin() + endPoint, 0.0);
-        for (size_t i = player ; i <= endPoint ; ++i)
+        double totalPoints = 0.0;
+        for (size_t i = player ; i < endPoint ; ++i)
         {
-            m_adjustedPoints[i] = totalPoints / (endPoint - player);
+            totalPoints += pointsComparedToFirst[i];
+        }
+        for (size_t i = player ; i < endPoint ; ++i)
+        {
+            m_adjustedPoints.vector()[i] = totalPoints / (endPoint - player);
         }
         
         player += endPoint;
     }
 }
 
-const std::vector<double> & TieHandler::GetAdjustedPoints() const
+const OWGRVectorWrapper<double> & TieHandler::GetAdjustedPoints() const
 {
     return m_adjustedPoints;
 }

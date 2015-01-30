@@ -72,9 +72,20 @@ Usually, when finishing a tournament, several players are tied for a place (not 
 	If 2 players are tied for 2nd place, each player will receive the average between the points attributed to the 2nd and the 3rd
 \end{example}
 
+\emph{Input : } Score\\
+\emph{Output : } Number of points for each players\\
+
+\emph{Stages : }
+\begin{enumerate}
+	\item Sort the score
+	\item Each time, loop over the scores, when different break, when the same count the average number of points (each player having this average as number of points)
+\end{enumerate}
+
+\emph{Tools:} Wrapper around vector to avoid access violation exception
+
 \subsection{To do:}
 \begin{itemize}
-	\item Handle ties in scoring (\textbf{\color{orange} To be implemented})
+	\item Handle ties in scoring (\textbf{\color{orange} To be implemented} \textbf{Done revisions 613; 616-619} )
 \end{itemize}
 
 \clearpage

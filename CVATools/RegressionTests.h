@@ -46,6 +46,7 @@ public:
     bool TieHandler() const;
     bool Tours() const;
     bool OWGRVectorWrapperTest() const;
+    bool Major() const;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

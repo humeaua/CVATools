@@ -18,8 +18,8 @@ class Tournament;
 class TourAppartenance
 {
 protected:
-    std::vector<Tour_ptr> m_tours;
-    std::vector<TourType> m_tourTypes;
+    mutable std::vector<Tour_ptr> m_tours;
+    mutable std::vector<TourType> m_tourTypes;
     
 public:
     TourAppartenance(const std::vector<TourType> & tourtypes);

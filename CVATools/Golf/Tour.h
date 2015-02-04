@@ -35,7 +35,9 @@ enum TourType
     ASIANTOUR,
     JAPANTOUR,
     SUNSHINETOUR,
-    PGATOURCANADA
+    PGATOURCANADA,
+    
+    MAJOR
 };
 
 #endif /* defined(__CVATools__Tour__) */

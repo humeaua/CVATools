@@ -18,4 +18,6 @@
 #include "SunshineTour.h"
 #include "PGATourCanada.h"
 
+#include "Major.h"
+
 #endif

@@ -76,23 +76,9 @@ double TourAppartenance::MinimumRankingPoints(const Tournament &tournament) cons
     for (std::vector<Tour_ptr>::const_iterator tour = m_tours.begin() ; tour != m_tours.end() ; ++tour)
     {
         WorldTour * worldTour = dynamic_cast<WorldTour*>((*tour).get());
-        if (worldTour != NULL)
+        if (worldTour != NULL && CoSanctionedEvent())
         {
-            //  Special Handling for Majors and World Golf Championship : not so nice
-            Tour_ptr tourPtr = *tour;
-            m_tours.clear();
-            m_tourTypes.clear();
-            
-            m_tours.push_back(*tour);
-            if (dynamic_cast<Major*>(worldTour) != NULL)
-            {
-                m_tourTypes.push_back(MAJOR);
-                return m_tours.front()->MinimumRankingPoints(tournament);
-            }
-            else
-            {
-                throw EXCEPTION("Need to implement other world tour");
-            }
+            throw EXCEPTION("World Tour event cannot be co-sanctioned");
         }
         avg += (*tour)->MinimumRankingPoints(tournament);
     }

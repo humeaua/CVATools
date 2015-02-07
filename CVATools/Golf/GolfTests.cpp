@@ -530,24 +530,6 @@ bool RegressionTest::Major() const
     else
     {
         m_out << "SUCCEEDED" << std::endl;
-    }
-    
-    std::vector<TourType> tourTypes;
-    tourTypes.push_back(PGATOUR);
-    tourTypes.push_back(MAJOR);
-    
-    Tournament theOpen("THE OPEN", Utilities::Date::MyDate(14,4,2015), tourTypes);
-    theOpen.SetPointsTo1st(rankingPtSystem);
-    
-    const double rankingPointsOpen = theOpen.GetPointsTo1st();
-    if (std::abs(refValue - rankingPointsOpen) > tolerance)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
         return true;
     }
 }

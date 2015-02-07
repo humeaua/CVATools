@@ -13,55 +13,56 @@
 
 TourAppartenance::TourAppartenance(const std::vector<TourType> & tourtypes) : m_tourTypes(tourtypes)
 {
-    SetTours(tourtypes);
+    m_tours.resize(tourtypes.size());
+    SetTours();
 }
 
-void TourAppartenance::SetTours(const std::vector<TourType> &tourTypes)
+void TourAppartenance::SetTours()
 {
-    for (std::vector<TourType>::const_iterator it = tourTypes.begin() ; it != tourTypes.end() ; ++it)
+    for (size_t i = 0 ; i < m_tourTypes.size() ; ++i)
     {
-        AddTour(*it);
+        AddTour(i);
     }
 }
 
-void TourAppartenance::AddTour(const TourType &tourType)
+void TourAppartenance::AddTour(const size_t &i)
 {
-    switch (tourType)
+    switch (m_tourTypes[i])
     {
         case PGATOUR:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new PGATour));
+            m_tours[i].reset(new PGATour);
             break;
             
         case EUROPEANTOUR:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new EuropeanTour));
+            m_tours[i].reset(new EuropeanTour);
             break;
             
         case CHALLENGETOUR:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new ChallengeTour));
+            m_tours[i].reset(new ChallengeTour);
             break;
             
         case WEBCOMTOUR:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new WebComTour));
+            m_tours[i].reset(new WebComTour);
             break;
             
         case ASIANTOUR:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new AsianTour));
+            m_tours[i].reset(new AsianTour);
             break;
             
         case JAPANTOUR:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new JapanTour));
+            m_tours[i].reset(new JapanTour);
             break;
             
         case SUNSHINETOUR:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new SunshineTour));
+            m_tours[i].reset(new SunshineTour);
             break;
             
         case PGATOURCANADA:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new PGATourCanada));
+            m_tours[i].reset(new PGATourCanada);
             break;
             
         case MAJOR:
-            m_tours.push_back(std::tr1::shared_ptr<Tour>(new Major));
+            m_tours[i].reset(new Major);
             break;
             
         default:

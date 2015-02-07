@@ -27,8 +27,8 @@ public:
     virtual double MinimumRankingPoints(const Tournament & tournament) const;
     
 private:
-    void SetTours(const std::vector<TourType> & tourTypes);
-    void AddTour(const TourType & tourType);
+    void SetTours();
+    void AddTour(const size_t & i);
 };
 
 #endif /* defined(__CVATools__TourAppartenance__) */

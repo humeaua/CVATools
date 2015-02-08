@@ -60,12 +60,12 @@ bool RegressionTest::DummyTournament() const
 {
     Tournament tournament("dummy",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,PGATOUR));
     const size_t numPlayers = 100;
-    std::vector<Player> players(numPlayers,std::string("")); // empty string is a char*
+    std::vector<Player> players(numPlayers,Player("",PGATOUR)); // empty string is a char*
     for (size_t i = 0 ; i < numPlayers ; ++i)
     {
         std::stringstream ss;
         ss << "Player " << i;
-        players[i] = Player(ss.str());
+        players[i] = Player(ss.str(),PGATOUR);
         
         tournament.AddPlayer(players[i]);
     }
@@ -258,12 +258,12 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
 {
     Tournament pgatourTournament("dummyPGA",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,PGATOUR)), europeantourTournament("dummyEuro",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,EUROPEANTOUR));
     const size_t numPlayers = 200;
-    std::vector<Player> players(numPlayers,std::string("")); // empty string is a char*
+    std::vector<Player> players(numPlayers,Player("",PGATOUR)); // empty string is a char*
     for (size_t i = 0 ; i < numPlayers / 2 ; ++i)
     {
         std::stringstream ss;
         ss << "Player " << i;
-        players[i] = Player(ss.str());
+        players[i] = Player(ss.str(),PGATOUR);
         
         pgatourTournament.AddPlayer(players[i]);
     }
@@ -271,7 +271,7 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
     {
         std::stringstream ss;
         ss << "Player " << i;
-        players[i] = Player(ss.str());
+        players[i] = Player(ss.str(),EUROPEANTOUR);
         
         europeantourTournament.AddPlayer(players[i]);
     }
@@ -401,12 +401,12 @@ bool RegressionTest::TieHandler() const
     //  Design a test when the tie handler is fully designed
     Tournament tournament("dummy",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,PGATOUR));
     const size_t numPlayers = 100;
-    std::vector<Player> players(numPlayers,std::string("")); // empty string is a char*
+    std::vector<Player> players(numPlayers,Player("",PGATOUR)); // empty string is a char*
     for (size_t i = 0 ; i < numPlayers ; ++i)
     {
         std::stringstream ss;
         ss << "Player " << i;
-        players[i] = Player(ss.str());
+        players[i] = Player(ss.str(), PGATOUR);
         
         tournament.AddPlayer(players[i]);
     }

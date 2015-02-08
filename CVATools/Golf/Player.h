@@ -13,6 +13,8 @@
 #include <vector>
 #include "PlayerResult.h"
 #include "PlayerID.h"
+#include "Tour.h"
+#include "RattachmentTour.h"
 
 class Tournament;
 
@@ -20,10 +22,11 @@ class Player : public PlayerID
 {
 protected:
     std::vector<PlayerResult> m_results;
+    RattachementTour m_rattachementTour;
     
     virtual void AddResult(const PlayerResult & result);
 public:
-    Player(const std::string & name);
+    Player(const std::string & name, const TourType & tourType);
     
     void AddResult(const Tournament & tournament);
     

@@ -10,13 +10,13 @@
 #include "Exception.h"
 #include "TourFwdDecl.h"
 
-RattachementTour::RattachementTour(const TourType & tourType) : m_tourType(tourType)
+TourMembership::TourMembership(const TourType & tourType) : m_tourType(tourType)
 {
     Check();
     Reset();
 }
 
-void RattachementTour::Check() const
+void TourMembership::Check() const
 {
     if (m_tourType == MAJOR)
     {
@@ -24,7 +24,7 @@ void RattachementTour::Check() const
     }
 }
 
-void RattachementTour::Reset()
+void TourMembership::Reset()
 {
     switch (m_tourType)
     {

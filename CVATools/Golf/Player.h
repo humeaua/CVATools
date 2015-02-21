@@ -22,7 +22,7 @@ class Player : public PlayerID
 {
 protected:
     std::vector<PlayerResult> m_results;
-    RattachementTour m_rattachementTour;
+    TourMembership m_tourMembership;
     
     virtual void AddResult(const PlayerResult & result);
 public:

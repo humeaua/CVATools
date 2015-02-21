@@ -10,7 +10,7 @@
 #include "Tournament.h"
 #include "PairComparatorFirst.h"
 
-Player::Player(const std::string & name, const TourType & tourType) : PlayerID(name), m_rattachementTour(tourType)
+Player::Player(const std::string & name, const TourType & tourType) : PlayerID(name), m_tourMembership(tourType)
 {}
 
 void Player::AddResult(const PlayerResult &result)

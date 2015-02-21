@@ -13,7 +13,7 @@
 #include "Tour.h"
 
 //  Class that describes the tour on which the player is rattached
-class RattachementTour
+class TourMembership
 {
 private:
     void Check() const;
@@ -22,7 +22,7 @@ protected:
     TourType m_tourType;
     Tour_ptr m_tour;
 public:
-    RattachementTour(const TourType & tourType);
+    TourMembership(const TourType & tourType);
     
 };
 

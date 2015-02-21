@@ -11,17 +11,16 @@
 
 #include <iostream>
 #include <tr1/memory>
-#include "MCEngine.h"
 
 class RandomNumberGeneratorBase
 {
 protected:
-    std::tr1::shared_ptr<MCEngine> m_engine;
+    long long m_seed;
 public:
     RandomNumberGeneratorBase(long long & m_seed);
     virtual ~RandomNumberGeneratorBase();
     
-    virtual double operator()() const;
+    virtual double operator()() = 0;
 };
 
 #endif /* defined(__CVATools__RandomNumberGeneratorBase__) */

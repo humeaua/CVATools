@@ -36,6 +36,8 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("DefaultArguments", &RegressionTest::DefaultArguments));
     m_mapping.insert(std::make_pair("GaussianKernel", &RegressionTest::GaussianKernel));
     m_mapping.insert(std::make_pair("MargrabeOption", &RegressionTest::MargrabeOptionVasicek));
+    
+    //  Golf tests
     m_mapping.insert(std::make_pair("PlayerResults", &RegressionTest::PlayerResultTest));
     m_mapping.insert(std::make_pair("DummyTournament", &RegressionTest::DummyTournament));
     m_mapping.insert(std::make_pair("StaticDataRanking", &RegressionTest::StaticDataRanking));
@@ -45,6 +47,9 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Tours", &RegressionTest::Tours));
     m_mapping.insert(std::make_pair("OWGRVectorWrapper", &RegressionTest::OWGRVectorWrapperTest));
     m_mapping.insert(std::make_pair("Major", &RegressionTest::Major));
+    
+    //  Random number generators tests
+    m_mapping.insert(std::make_pair("Bernouilli", &RegressionTest::Bernouilli));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

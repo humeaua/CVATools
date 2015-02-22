@@ -47,6 +47,9 @@ public:
     bool Tours() const;
     bool OWGRVectorWrapperTest() const;
     bool Major() const;
+    
+    //  Random number generator unit testing
+    bool Bernouilli() const;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

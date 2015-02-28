@@ -50,6 +50,7 @@ public:
     
     //  Random number generator unit testing
     bool Bernouilli() const;
+    bool Normal() const;
 };
 
 #endif /* defined(__CVATools__RegressionTests__) */

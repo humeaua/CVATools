@@ -36,6 +36,9 @@ public:
     bool DefaultArguments() const;
     bool GaussianKernel() const;
     bool MargrabeOptionVasicek() const;
+
+    //  Utilities Unit testing
+    bool DoublePrecision() const;
     
     //  Golf unit testing
     bool PlayerResultTest() const;

@@ -51,6 +51,9 @@ void RegressionTestLauncher::FillMap()
     //  Random number generators tests
     m_mapping.insert(std::make_pair("Bernouilli", &RegressionTest::Bernouilli));
     m_mapping.insert(std::make_pair("Normal", &RegressionTest::Normal));
+    
+    //  Utilities tests
+    m_mapping.insert(std::make_pair("DoublePrecision", &RegressionTest::DoublePrecision));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

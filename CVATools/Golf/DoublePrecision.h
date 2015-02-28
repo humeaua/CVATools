@@ -12,14 +12,14 @@
 #include <cmath>
 // Precision class to floor a T object up to N Digits
 
-template<int N, class T>
-T Precision(const T & t)
+template<int N, class Return, class Argument>
+Return Precision(const Argument & t)
 {
     double tenth = pow(10, N);
-    T t_new = tenth * t;
+    Argument t_new = tenth * t;
     t_new = floor(t_new);
-    
-    return t_new / tenth;
+    t_new /= tenth;
+    return (Return)t_new;
 }
 
 #endif

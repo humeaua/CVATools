@@ -16,8 +16,10 @@ bool RegressionTest::DoublePrecision() const
     
     const double tolerance = 1e-15;
     const double refValue = 3.14;
-    const double pi_2 = Precision<2>(pi);
-    const double error = fabs(refValue-pi_2);
+    const int refValueint = 3;
+    const double pi_2 = Precision<2, double>(pi);
+    const int pi_0 = Precision<0, int>(pi);
+    const double error = fabs(refValue-pi_2) + std::abs(refValueint-pi_0);
     
     if (error < tolerance)
     {

@@ -8,10 +8,8 @@
 
 #include "BernouilliGenerator.h"
 
-BernouilliGenerator::BernouilliGenerator(long long & seed, const double & p) : m_dist(p), RandomNumberGeneratorBase(seed)
-{
-    m_engine.seed(seed);
-}
+BernouilliGenerator::BernouilliGenerator(long long & seed, const double & p) : m_dist(p), m_engine(seed)
+{}
 
 double BernouilliGenerator::operator()()
 {

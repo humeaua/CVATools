@@ -14,10 +14,8 @@
 
 class RandomNumberGeneratorBase
 {
-protected:
-    long long m_seed;
 public:
-    RandomNumberGeneratorBase(long long & m_seed);
+    RandomNumberGeneratorBase();
     virtual ~RandomNumberGeneratorBase();
     
     virtual double operator()() = 0;

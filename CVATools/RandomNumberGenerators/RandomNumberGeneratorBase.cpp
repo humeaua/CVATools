@@ -8,7 +8,7 @@
 
 #include "RandomNumberGeneratorBase.h"
 
-RandomNumberGeneratorBase::RandomNumberGeneratorBase(long long & seed) : m_seed(seed)
+RandomNumberGeneratorBase::RandomNumberGeneratorBase()
 {}
 
 RandomNumberGeneratorBase::~RandomNumberGeneratorBase()

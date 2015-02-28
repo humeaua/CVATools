@@ -12,12 +12,13 @@
 #include <iostream>
 #include "RandomNumberGeneratorBase.h"
 #include <tr1/random>
+#include "Engines/Engine.h"
 
 class BernouilliGenerator : public RandomNumberGeneratorBase
 {
 protected:
     std::tr1::bernoulli_distribution m_dist;
-    std::tr1::minstd_rand0 m_engine;
+    Engine<std::tr1::minstd_rand> m_engine;
     
 public:
     BernouilliGenerator(long long & seed, const double & p);

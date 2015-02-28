@@ -18,7 +18,7 @@ class NormalGenerator : public RandomNumberGeneratorBase
 {
 protected:
     std::tr1::normal_distribution<> m_dist;
-    Engine<std::tr1::mt19937> m_engine;
+    Engine<std::tr1::ranlux64_base_01> m_engine;
     
 public:
     NormalGenerator(long long & seed, const double & mean, const double & stdev);

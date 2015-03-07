@@ -28,9 +28,6 @@ public:
         m_engine.seed(seed);
     }
     
-    ~Engine()
-    {}
-    
     double operator()()
     {
         return m_engine();

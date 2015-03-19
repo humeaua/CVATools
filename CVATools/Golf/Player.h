@@ -23,6 +23,7 @@ class Player : public PlayerID
 protected:
     std::vector<PlayerResult> m_results;
     TourMembership m_tourMembership;
+    bool m_isPlayingThisWeek;
     
     virtual void AddResult(const PlayerResult & result);
 public:
@@ -31,6 +32,11 @@ public:
     void AddResult(const Tournament & tournament);
     
     const std::vector<PlayerResult> & Results() const;
+    
+    bool & IsPlayerPlayingThisWeek();
+    const bool & IsPlayerPlayingThisWeek() const;
+    
+    const TourType & TourMembership() const;
 };
 
 #endif /* defined(__CVATools__Player__) */

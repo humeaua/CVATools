@@ -65,3 +65,8 @@ void TourMembership::Reset()
     }
 
 }
+
+const TourType & TourMembership::GetTourType() const
+{
+    return m_tourType;
+}

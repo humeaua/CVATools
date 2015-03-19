@@ -45,6 +45,8 @@ public:
     const double & GetPointsTo1st() const;
     void SetPointsTo1st(const PointSystem & pointSystem);
     
+    std::vector<TourType> & GetTourTypes();
+    
 protected:
     double m_PointsTo1st;
     Players m_players;

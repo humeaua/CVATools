@@ -46,3 +46,8 @@ void Tournament::SetPointsTo1st(const PointSystem &pointSystem)
     m_PointsTo1st = interpolator(pointSystem.TotalRatingValue(*this));
     PostProcessTourPoints();
 }
+
+std::vector<TourType> & Tournament::GetTourTypes()
+{
+    return m_tourType;
+}

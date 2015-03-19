@@ -10,7 +10,7 @@
 #include "Tournament.h"
 #include "PairComparatorFirst.h"
 
-Player::Player(const std::string & name, const TourType & tourType) : PlayerID(name), m_tourMembership(tourType)
+Player::Player(const std::string & name, const TourType & tourType) : PlayerID(name), m_tourMembership(tourType), m_isPlayingThisWeek(false)
 {}
 
 void Player::AddResult(const PlayerResult &result)
@@ -34,4 +34,19 @@ void Player::AddResult(const Tournament &tournament)
 const std::vector<PlayerResult> & Player::Results() const
 {
     return m_results;
+}
+
+bool & Player::IsPlayerPlayingThisWeek()
+{
+    return m_isPlayingThisWeek;
+}
+
+const bool & Player::IsPlayerPlayingThisWeek() const
+{
+    return m_isPlayingThisWeek;
+}
+
+const TourType & Player::TourMembership() const
+{
+    return m_tourMembership.GetTourType();
 }

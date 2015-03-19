@@ -24,6 +24,8 @@ protected:
 public:
     TourMembership(const TourType & tourType);
     
+    virtual const TourType & GetTourType() const;
+    
 };
 
 #endif /* defined(__CVATools__RattachmentTour__) */

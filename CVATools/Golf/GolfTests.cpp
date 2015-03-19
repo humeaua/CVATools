@@ -19,6 +19,7 @@
 #include "ValueSimulator.h"
 #include "TieHandler.h"
 #include "OWGRVectorWrapper.h"
+#include "PlayerDispatcher.h"
 
 #include <cmath>
 #include <sstream>
@@ -523,6 +524,97 @@ bool RegressionTest::Major() const
     const double refValue = 100.0, tolerance = 1e-14;
     
     if (std::abs(refValue - rankingPoints) > tolerance)
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
+}
+
+bool RegressionTest::PlayerDispatcher() const
+{
+    Tournament pgatourTournament("dummyPGA",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,PGATOUR)), europeantourTournament("dummyEuro",Utilities::Date::MyDate(18,12,2014), std::vector<TourType>(1,EUROPEANTOUR));
+    
+    const size_t numPlayers = 200;
+    std::vector<Player> players(numPlayers,Player("",PGATOUR)); // empty string is a char*
+    for (size_t i = 0 ; i < numPlayers / 2 ; ++i)
+    {
+        std::stringstream ss;
+        ss << "Player " << i;
+        players[i] = Player(ss.str(),PGATOUR);
+    }
+    for (size_t i = numPlayers / 2 ; i < numPlayers ; ++i)
+    {
+        std::stringstream ss;
+        ss << "Player " << i;
+        players[i] = Player(ss.str(),EUROPEANTOUR);
+    }
+    
+    long long seed = 0;
+    const double in_proba = 0.4, out_proba = 0.1;
+    class PlayerDispatcher dispatcher(in_proba, out_proba, seed);
+    
+    std::vector<Tournament> tournaments;
+    tournaments.push_back(pgatourTournament);
+    tournaments.push_back(europeantourTournament);
+    
+    const std::string refValue[] = {"Player 0",
+        "Player 1",
+        "Player 6",
+        "Player 21",
+        "Player 25",
+        "Player 35",
+        "Player 40",
+        "Player 41",
+        "Player 55",
+        "Player 57",
+        "Player 60",
+        "Player 76",
+        "Player 83",
+        "Player 87",
+        "Player 100",
+        "Player 101",
+        "Player 104",
+        "Player 112",
+        "Player 138",
+        "Player 150",
+        "Player 164",
+        "Player 165",
+        "Player 179",
+        "Player 199",
+        "Player 27",
+        "Player 37",
+        "Player 52",
+        "Player 65",
+        "Player 90",
+        "Player 103",
+        "Player 133",
+        "Player 135",
+        "Player 167",
+        "Player 189"};
+    
+    dispatcher.Dispatch(players, tournaments);
+    
+    double error = 0.0;
+    size_t index = 0;
+    for (size_t i = 0 ; i < 2 ; ++i)
+    {
+        const Tournament::Players players = tournaments[i].GetPlayers();
+        for (size_t j = 0 ; j < players.size() ; ++j)
+        {
+            if (players[j].first.Name().c_str() != refValue[index])
+            {
+                error += 1.0;
+            }
+            index++;
+        }
+    }
+    
+    if (error > 0)
     {
         m_out << "FAILED" << std::endl;
         return false;

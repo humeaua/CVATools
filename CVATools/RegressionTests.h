@@ -50,6 +50,7 @@ public:
     bool Tours() const;
     bool OWGRVectorWrapperTest() const;
     bool Major() const;
+    bool PlayerDispatcher() const;
     
     //  Random number generator unit testing
     bool Bernouilli() const;

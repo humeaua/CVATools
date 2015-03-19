@@ -47,6 +47,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Tours", &RegressionTest::Tours));
     m_mapping.insert(std::make_pair("OWGRVectorWrapper", &RegressionTest::OWGRVectorWrapperTest));
     m_mapping.insert(std::make_pair("Major", &RegressionTest::Major));
+    m_mapping.insert(std::make_pair("PlayerDispatcher", &RegressionTest::PlayerDispatcher));
     
     //  Random number generators tests
     m_mapping.insert(std::make_pair("Bernouilli", &RegressionTest::Bernouilli));

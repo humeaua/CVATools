@@ -12,13 +12,16 @@
 #include <iostream>
 #include <tr1/memory>
 
+template<class T>
 class RandomNumberGeneratorBase
 {
 public:
-    RandomNumberGeneratorBase();
-    virtual ~RandomNumberGeneratorBase();
+    RandomNumberGeneratorBase()
+    {}
+    virtual ~RandomNumberGeneratorBase()
+    {}
     
-    virtual double operator()() = 0;
+    virtual T operator()() = 0;
 };
 
 #endif /* defined(__CVATools__RandomNumberGeneratorBase__) */

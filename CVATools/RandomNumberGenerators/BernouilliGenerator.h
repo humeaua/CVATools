@@ -14,7 +14,7 @@
 #include <tr1/random>
 #include "Engines/Engine.h"
 
-class BernouilliGenerator : public RandomNumberGeneratorBase
+class BernouilliGenerator : public RandomNumberGeneratorBase<double>
 {
 protected:
     std::tr1::bernoulli_distribution m_dist;

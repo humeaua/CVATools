@@ -7,9 +7,3 @@
 //
 
 #include "RandomNumberGeneratorBase.h"
-
-RandomNumberGeneratorBase::RandomNumberGeneratorBase()
-{}
-
-RandomNumberGeneratorBase::~RandomNumberGeneratorBase()
-{}

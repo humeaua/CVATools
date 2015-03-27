@@ -31,28 +31,28 @@ const T & Generate(const double & uniform, const std::vector<double> & cum_proba
     {
         throw EXCEPTION("cum_proba and x must be the same size");
     }
-    std::vector<double>::const_iterator it = std::lower_bound(cum_proba.begin(), cum_proba.end(), uniform);
-    if (it != cum_proba.end())
+    if (uniform < cum_proba.front())
     {
-        return x[std::distance(it, cum_proba.begin())];
+        return x.front();
     }
-    else
+    for (size_t i = 0 ; i < cum_proba.size()-1 ; ++i)
     {
-        return x.back();
+        if (uniform > cum_proba[i] && uniform <= cum_proba[i+1])
+        {
+            return x[i+1];
+        }
     }
+    throw EXCEPTION("Not found!");
 }
 
 template<class T>
 class DiscreteGenerator : public RandomNumberGeneratorBase<T>
 {
-    std::tr1::random_device                  m_rand_dev;
-    std::tr1::mt19937                        m_generator;
-    std::tr1::normal_distribution<double> m_unif;
     std::vector<T> m_x;
     std::vector<double> m_cumProba;
 public:
-    DiscreteGenerator(const std::vector<T> & x, const std::vector<double> & proba, long long & seed)
-    : m_generator(seed), m_unif(0.0,1.0), m_x(x)
+    DiscreteGenerator(const std::vector<T> & x, const std::vector<double> & proba, unsigned int & seed)
+    :  m_x(x), m_cumProba(proba.size())
     {
         double cum_sum = 0;
         for (size_t i = 0 ; i < proba.size() ; ++i)
@@ -60,11 +60,12 @@ public:
             cum_sum += proba[i];
             m_cumProba[i] = cum_sum;
         }
+        srand(seed);
     }
     
     T operator()()
     {
-        const double unif = m_generator(m_unif);
+        const double unif = static_cast<double>(rand()) / RAND_MAX;
         return Generate(unif, m_cumProba, m_x);
     }
 };

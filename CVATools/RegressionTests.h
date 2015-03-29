@@ -39,6 +39,8 @@ public:
 
     //  Utilities Unit testing
     bool DoublePrecision() const;
+    bool ConfigLoaderTest() const;
+    bool CSVReader() const;
     
     //  Golf unit testing
     bool PlayerResultTest() const;

@@ -9,6 +9,8 @@
 #include "RegressionTests.h"
 #include "DoublePrecision.h"
 #include <cmath>
+#include "ConfigLoader.h"
+#include "OWGRWrapperLoader.h"
 
 bool RegressionTest::DoublePrecision() const
 {
@@ -31,4 +33,17 @@ bool RegressionTest::DoublePrecision() const
         m_out << "FAILED" << std::endl;
         return false;
     }
+}
+
+bool RegressionTest::ConfigLoaderTest() const
+{
+    const std::string filename = "\\";
+    class ConfigLoader<OWGRWrapperLoader<double> > loader(filename);
+    
+    return true;
+}
+
+bool RegressionTest::CSVReader() const
+{
+    return false;
 }

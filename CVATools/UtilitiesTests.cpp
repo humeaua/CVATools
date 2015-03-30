@@ -11,6 +11,9 @@
 #include <cmath>
 #include "ConfigLoader.h"
 #include "OWGRWrapperLoader.h"
+#include "CSVReader.h"
+
+#include "StringUtilities.h"
 
 bool RegressionTest::DoublePrecision() const
 {
@@ -43,7 +46,29 @@ bool RegressionTest::ConfigLoaderTest() const
     return true;
 }
 
-bool RegressionTest::CSVReader() const
+bool RegressionTest::CSVReaderTest() const
 {
-    return false;
+    const std::string filename = "//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestCSV1.csv";
+    std::ifstream file(filename.c_str());
+    CSVReader<double> csvReader(filename);
+    
+    std::vector<double> values = *csvReader;
+    double refValues[] = {1,0};
+    const double tolerance = 1e-10;
+    double error = 0.0;
+    for (size_t i = 0 ; i < values.size() ; ++i)
+    {
+        error += std::abs( values[i] -refValues[i]);
+    }
+    
+    if (error < tolerance)
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
+    else
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
 }

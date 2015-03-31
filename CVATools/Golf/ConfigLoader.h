@@ -19,8 +19,7 @@ class ConfigLoader
 public:
     ConfigLoader(const std::string & filename)
     {
-        std::ifstream of(filename.c_str());
-        obj.Load(of);
+        obj.Load(filename);
     }
     
     const T & get() const

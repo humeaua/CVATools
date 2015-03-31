@@ -40,10 +40,28 @@ bool RegressionTest::DoublePrecision() const
 
 bool RegressionTest::ConfigLoaderTest() const
 {
-    const std::string filename = "\\";
-    class ConfigLoader<OWGRWrapperLoader<double> > loader(filename);
+    const std::string filename = "//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestConfigLoader.csv";
+    ConfigLoader<OWGRWrapperLoader<double> > loader(filename);
     
-    return true;
+    const OWGRVectorWrapper<double> & obj = loader.get().get();
+    const double refValues[] = {1, 2, 34, 4.2, 5, 6.28};
+    double error = 0.0;
+    const double tolerance = 1e-10;
+    for (size_t i = 0 ; i < obj.size() ; ++i)
+    {
+        error += std::abs(obj[i] - refValues[i]);
+    }
+    
+    if (error > tolerance)
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+    else
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
 }
 
 bool RegressionTest::CSVReaderTest() const

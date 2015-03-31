@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "OWGRVectorWrapper.h"
+#include "CSVReader.h"
 
 template <class T>
 class OWGRWrapperLoader
@@ -24,8 +25,17 @@ public:
         return obj;
     }
     
-    void Load(const std::ifstream & stream)
-    {}
+    void Load(const std::string & filename)
+    {
+        CSVReader<T> csvReader(filename);
+        
+        while (csvReader)
+        {
+            obj.push_back((*csvReader)[0]);
+            
+            ++csvReader;
+        }
+    }
 };
 
 #endif /* defined(__CVATools__OWGRWrapperLoader__) */

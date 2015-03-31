@@ -13,10 +13,12 @@
 #include <iostream>
 #include "StringUtilities.h"
 #include <sstream>
+#include <tr1/memory>
 
 template <class T>
 class CSVReader : public __gnu_cxx::iterator<std::input_iterator_tag, T>
 {
+    // need raw pointer since it has to be null
     std::istream * m_input;
     char m_delim;
     std::string m_value;
@@ -25,6 +27,12 @@ public:
     CSVReader(const std::string & filename) : m_input(new std::fstream(filename.c_str())), m_delim(',')
     {
         ++ * this;
+    }
+    
+    ~CSVReader()
+    {
+        delete m_input;
+        m_input = NULL;
     }
     
     std::vector<T> operator *() const
@@ -48,6 +56,11 @@ public:
             m_input = 0;
         }
         return *m_input;
+    }
+    
+    operator bool() const
+    {
+        return m_input != NULL;
     }
 };
 

@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 using namespace fadbad;
-
+T<double> func(const T<double>& x, const T<double>& y);
 T<double> func(const T<double>& x, const T<double>& y)
 {
 	T<double> z=sqrt(x);

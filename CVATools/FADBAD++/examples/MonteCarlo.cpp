@@ -12,6 +12,7 @@
 using namespace std;
 using namespace fadbad;
 
+double GetOneGaussianBySummation();
 double GetOneGaussianBySummation()
 {
 	double result=0;
@@ -21,6 +22,7 @@ double GetOneGaussianBySummation()
 	return result;
 }
 
+double GetOneGaussianByBoxMuller();
 double GetOneGaussianByBoxMuller()
 {
 	double result;

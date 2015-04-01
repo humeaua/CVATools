@@ -3,13 +3,16 @@
 #include <iostream>
 using namespace std;
 using namespace fadbad;
-
+B< F<double> > func2(const B< F<double> >& x, const B< F<double> >& y);
 B< F<double> > func2(const B< F<double> >& x, const B< F<double> >& y)
 {
 	B< F<double> > z=sqrt(x);
 	return y*z+sin(z);
 }
 
+F<double> dfunc2(
+                 F<double>& o_dfdx, F<double>& o_dfdy,
+                 const F<double>& i_x, const F<double>& i_y);
 F<double> dfunc2(
 	F<double>& o_dfdx, F<double>& o_dfdy,
 	const F<double>& i_x, const F<double>& i_y)
@@ -22,6 +25,11 @@ F<double> dfunc2(
 	return f.x();                   // Return function value
 }
 
+double ddfunc2(
+               double& o_dfdxdx, double& o_dfdxdy,
+               double& o_dfdydx, double& o_dfdydy,
+               double& o_dfdx, double& o_dfdy,
+               const double& i_x, const double& i_y);
 double ddfunc2(
 	double& o_dfdxdx, double& o_dfdxdy,
 	double& o_dfdydx, double& o_dfdydy,

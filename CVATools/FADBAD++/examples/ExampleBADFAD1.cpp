@@ -4,6 +4,7 @@
 using namespace std;
 using namespace fadbad;
 
+B< F<double> > func(const B< F<double> >& x, const B< F<double> >& y);
 B< F<double> > func(const B< F<double> >& x, const B< F<double> >& y)
 {
 	B< F<double> > z=sqrt(x);

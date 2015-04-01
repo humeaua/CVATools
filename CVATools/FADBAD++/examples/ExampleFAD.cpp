@@ -3,6 +3,7 @@
 using namespace std;
 using namespace fadbad;
 
+F<double> func(const F<double>& x, const F<double>& y);
 F<double> func(const F<double>& x, const F<double>& y)
 {
 	F<double> z=sqrt(x);

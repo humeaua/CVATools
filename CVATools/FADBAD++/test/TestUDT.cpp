@@ -65,111 +65,133 @@ public:
     double x;
 };
 
+UDT operator + (const UDT& lhs, const UDT& rhs);
 UDT operator + (const UDT& lhs, const UDT& rhs)
 {
     return UDT(lhs.x + rhs.x);
 }
 
+UDT operator - (const UDT& lhs, const UDT&rhs);
 UDT operator - (const UDT& lhs, const UDT&rhs)
 {
     return UDT(lhs.x + rhs.x);
 }
 
+UDT operator * (const UDT&lhs, const UDT&rhs);
 UDT operator * (const UDT&lhs, const UDT&rhs)
 {
     return UDT(lhs.x * rhs.x);
 }
 
+UDT operator / (const UDT&lhs, const UDT&rhs);
 UDT operator / (const UDT&lhs, const UDT&rhs)
 {
     return UDT(lhs.x / rhs.x);
 }
 
+UDT operator + (const UDT&lhs, const double&a);
 UDT operator + (const UDT&lhs, const double&a)
 {
     return UDT(lhs.x + a);
 }
 
+UDT operator - (const UDT&lhs, const double&a);
 UDT operator - (const UDT&lhs, const double&a)
 {
     return UDT(lhs.x - a);
 }
 
+UDT operator * (const UDT&lhs, const double&a);
 UDT operator * (const UDT&lhs, const double&a)
 {
     return UDT(lhs.x * a);
 }
 
+UDT operator / (const UDT&lhs, const double&a);
 UDT operator / (const UDT&lhs, const double&a)
 {
     return UDT(lhs.x / a);
 }
 
+UDT operator + (const double& a, const UDT& lhs);
 UDT operator + (const double& a, const UDT& lhs)
 {
     return UDT(lhs.x + a);
 }
 
+UDT operator - (const double& a, const UDT& lhs);
 UDT operator - (const double& a, const UDT& lhs)
 {
     return UDT(lhs.x - a);
 }
 
+UDT operator * (const double& a, const UDT& lhs);
 UDT operator * (const double& a, const UDT& lhs)
 {
     return UDT(lhs.x * a);
 }
 
+UDT operator / (const double& a, const UDT& lhs);
 UDT operator / (const double& a, const UDT& lhs)
 {
     return UDT(lhs.x / a);
 }
 
+UDT Exp(const UDT& u);
 UDT Exp(const UDT& u)
 {
     return UDT(exp(u.x));
 }
 
+UDT Sqr(const UDT& u);
 UDT Sqr(const UDT& u)
 {
     return UDT(sqrt(u.x));
 }
 
+UDT Sin(const UDT& u);
 UDT Sin(const UDT& u)
 {
     return UDT(sin(u.x));
 }
 
+UDT Cos(const UDT& u);
 UDT Cos(const UDT& u)
 {
     return UDT(cos(u.x));
 }
 
+bool operator==(const UDT& lhs,const UDT&rhs);
 bool operator==(const UDT& lhs,const UDT&rhs)
 {
     return lhs.x == rhs.x;
 }
 
+bool operator!=(const UDT& lhs, const UDT& rhs);
 bool operator!=(const UDT& lhs, const UDT& rhs)
 {
     return lhs.x != rhs.x;
 }
 
+bool operator<(const UDT& lhs, const UDT& rhs);
 bool operator<(const UDT& lhs, const UDT& rhs)
 {
     return lhs.x < rhs.x;
 }
 
+bool operator>(const UDT& lhs, const UDT& rhs);
 bool operator>(const UDT& lhs, const UDT& rhs)
 {
     return lhs.x > rhs.x;
 }
 
+bool operator<=(const UDT& lhs, const UDT& rhs);
 bool operator<=(const UDT& lhs, const UDT& rhs)
 {
     return lhs.x <= rhs.x;
 }
 
+bool operator>=(const UDT& lhs, const UDT& rhs);
 bool operator>=(const UDT& lhs, const UDT& rhs)
 {
     return lhs.x == rhs.x;

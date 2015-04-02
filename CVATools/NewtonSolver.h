@@ -70,10 +70,6 @@ namespace Utilities
                 {
                     throw EXCEPTION("Newton algorithm has not converged");
                 }
-                else
-                {
-                    std::cout << "Newton Algorithm has converged in " << iIter << " iterations." << std::endl;
-                }
                 
                 return res;
             }

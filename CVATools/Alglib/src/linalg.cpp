@@ -12615,11 +12615,8 @@ namespace alglib_impl
     {
         ae_int_t i;
         ae_int_t k;
-        ae_int_t minmn;
         double tmp;
         
-        
-        minmn = ae_minint(m, n, _state);
         k = ae_minint(m, n, _state);
         for(i=0; i<=k-1; i++)
         {
@@ -12711,7 +12708,6 @@ namespace alglib_impl
         ae_frame _frame_block;
         ae_vector work;
         ae_vector t;
-        ae_int_t minmn;
         ae_int_t maxmn;
         ae_int_t i;
         double ltau;
@@ -12731,7 +12727,6 @@ namespace alglib_impl
             ae_frame_leave(_state);
             return;
         }
-        minmn = ae_minint(m, n, _state);
         maxmn = ae_maxint(m, n, _state);
         ae_vector_set_length(&work, maxmn+1, _state);
         ae_vector_set_length(&t, maxmn+1, _state);
@@ -14781,7 +14776,6 @@ namespace alglib_impl
         double smax;
         double smin;
         double sminl;
-        double sminlo;
         double sminoa;
         double sn;
         double thresh;
@@ -14799,7 +14793,6 @@ namespace alglib_impl
         ae_vector vttemp;
         ae_vector ctemp;
         ae_vector etemp;
-        ae_bool rightside;
         ae_bool fwddir;
         double tmp;
         ae_int_t mm1;
@@ -14863,7 +14856,6 @@ namespace alglib_impl
         ae_vector_set_length(&vttemp, vend+1, _state);
         ae_vector_set_length(&ctemp, cend+1, _state);
         maxitr = 12;
-        rightside = ae_true;
         fwddir = ae_true;
         
         /*
@@ -15177,7 +15169,6 @@ namespace alglib_impl
                             iterflag = ae_true;
                             break;
                         }
-                        sminlo = sminl;
                         mu = ae_fabs(d->ptr.p_double[lll+1], _state)*(mu/(mu+ae_fabs(e->ptr.p_double[lll], _state)));
                         sminl = ae_minreal(sminl, mu, _state);
                     }
@@ -15217,7 +15208,6 @@ namespace alglib_impl
                             iterflag = ae_true;
                             break;
                         }
-                        sminlo = sminl;
                         mu = ae_fabs(d->ptr.p_double[lll], _state)*(mu/(mu+ae_fabs(e->ptr.p_double[lll], _state)));
                         sminl = ae_minreal(sminl, mu, _state);
                     }
@@ -17783,7 +17773,6 @@ namespace alglib_impl
         ae_int_t lm1;
         ae_int_t lsv;
         ae_int_t m;
-        ae_int_t mm;
         ae_int_t mm1;
         ae_int_t nm1;
         ae_int_t nmaxit;
@@ -18319,7 +18308,6 @@ namespace alglib_impl
                          */
                         if( zneeded>0 )
                         {
-                            mm = l-m+1;
                             for(i=m; i<=l-1; i++)
                             {
                                 workc.ptr.p_double[i-m+1] = work1.ptr.p_double[i];
@@ -19232,14 +19220,6 @@ namespace alglib_impl
             {
                 tnorm = ae_maxreal(tnorm, ae_fabs(d->ptr.p_double[j], _state)+ae_fabs(e->ptr.p_double[j-1], _state)+ae_fabs(e->ptr.p_double[j], _state), _state);
             }
-            if( ae_fp_less_eq(abstol,0) )
-            {
-                atoli = ulp*tnorm;
-            }
-            else
-            {
-                atoli = abstol;
-            }
             if( irange==2 )
             {
                 wl = vl;
@@ -19656,7 +19636,6 @@ namespace alglib_impl
         ae_bool tmpcriterion;
         ae_int_t ti;
         ae_int_t i1;
-        ae_int_t i2;
         double v;
         
         ae_frame_make(_state, &_frame_block);
@@ -19917,7 +19896,6 @@ namespace alglib_impl
                                 for(i=gpind; i<=j-1; i++)
                                 {
                                     i1 = b1;
-                                    i2 = b1+blksiz-1;
                                     ztr = ae_v_dotproduct(&work1.ptr.p_double[1], 1, &z->ptr.pp_double[i1][i], z->stride, ae_v_len(1,blksiz));
                                     ae_v_subd(&work1.ptr.p_double[1], 1, &z->ptr.pp_double[i1][i], z->stride, ae_v_len(1,blksiz), ztr);
                                 }
@@ -20572,7 +20550,6 @@ namespace alglib_impl
         double beta;
         double bignum;
         double emax;
-        double ovfl;
         double rec;
         double remax;
         double scl;
@@ -20746,7 +20723,6 @@ namespace alglib_impl
          * Set the constants to control overflow.
          */
         unfl = ae_minrealnumber;
-        ovfl = 1/unfl;
         ulp = ae_machineepsilon;
         smlnum = unfl*(n/ulp);
         bignum = (1-ulp)/smlnum;
@@ -20904,7 +20880,6 @@ namespace alglib_impl
                                  */
                                 k1 = 1+n;
                                 k2 = j-1+n;
-                                k3 = j-1;
                                 vt = -x.ptr.pp_double[1][1];
                                 ae_v_addd(&work.ptr.p_double[k1], 1, &t->ptr.pp_double[1][j], t->stride, ae_v_len(k1,k2), vt);
                             }
@@ -20954,7 +20929,6 @@ namespace alglib_impl
                                  */
                                 k1 = 1+n;
                                 k2 = j-2+n;
-                                k3 = j-2;
                                 k4 = j-1;
                                 vt = -x.ptr.pp_double[1][1];
                                 ae_v_addd(&work.ptr.p_double[k1], 1, &t->ptr.pp_double[1][k4], t->stride, ae_v_len(k1,k2), vt);
@@ -20969,7 +20943,6 @@ namespace alglib_impl
                         if( !over )
                         {
                             k1 = 1+n;
-                            k2 = ki+n;
                             ae_v_move(&vr->ptr.pp_double[1][iis], vr->stride, &work.ptr.p_double[k1], 1, ae_v_len(1,ki));
                             ii = columnidxabsmax(vr, 1, ki, iis, _state);
                             remax = 1/ae_fabs(vr->ptr.pp_double[ii][iis], _state);
@@ -21092,13 +21065,11 @@ namespace alglib_impl
                                 k1 = 1+n;
                                 k2 = j-1+n;
                                 k3 = 1;
-                                k4 = j-1;
                                 vt = -x.ptr.pp_double[1][1];
                                 ae_v_addd(&work.ptr.p_double[k1], 1, &t->ptr.pp_double[k3][j], t->stride, ae_v_len(k1,k2), vt);
                                 k1 = 1+n2;
                                 k2 = j-1+n2;
                                 k3 = 1;
-                                k4 = j-1;
                                 vt = -x.ptr.pp_double[1][2];
                                 ae_v_addd(&work.ptr.p_double[k1], 1, &t->ptr.pp_double[k3][j], t->stride, ae_v_len(k1,k2), vt);
                             }
@@ -21327,7 +21298,6 @@ namespace alglib_impl
                                     rec = 1/vmax;
                                     ae_v_muld(&work.ptr.p_double[ki+n], 1, ae_v_len(ki+n,n+n), rec);
                                     vmax = 1;
-                                    vcrit = bignum;
                                 }
                                 vt = ae_v_dotproduct(&t->ptr.pp_double[ki+1][j], t->stride, &work.ptr.p_double[ki+1+n], 1, ae_v_len(ki+1,j-1));
                                 work.ptr.p_double[j+n] = work.ptr.p_double[j+n]-vt;
@@ -21365,7 +21335,6 @@ namespace alglib_impl
                                     rec = 1/vmax;
                                     ae_v_muld(&work.ptr.p_double[ki+n], 1, ae_v_len(ki+n,n+n), rec);
                                     vmax = 1;
-                                    vcrit = bignum;
                                 }
                                 vt = ae_v_dotproduct(&t->ptr.pp_double[ki+1][j], t->stride, &work.ptr.p_double[ki+1+n], 1, ae_v_len(ki+1,j-1));
                                 work.ptr.p_double[j+n] = work.ptr.p_double[j+n]-vt;
@@ -21497,7 +21466,6 @@ namespace alglib_impl
                                     ae_v_muld(&work.ptr.p_double[ki+n], 1, ae_v_len(ki+n,n+n), rec);
                                     ae_v_muld(&work.ptr.p_double[ki+n2], 1, ae_v_len(ki+n2,n+n2), rec);
                                     vmax = 1;
-                                    vcrit = bignum;
                                 }
                                 vt = ae_v_dotproduct(&t->ptr.pp_double[ki+2][j], t->stride, &work.ptr.p_double[ki+2+n], 1, ae_v_len(ki+2,j-1));
                                 work.ptr.p_double[j+n] = work.ptr.p_double[j+n]-vt;
@@ -21541,7 +21509,6 @@ namespace alglib_impl
                                     ae_v_muld(&work.ptr.p_double[ki+n], 1, ae_v_len(ki+n,n+n), rec);
                                     ae_v_muld(&work.ptr.p_double[ki+n2], 1, ae_v_len(ki+n2,n+n2), rec);
                                     vmax = 1;
-                                    vcrit = bignum;
                                 }
                                 vt = ae_v_dotproduct(&t->ptr.pp_double[ki+2][j], t->stride, &work.ptr.p_double[ki+2+n], 1, ae_v_len(ki+2,j-1));
                                 work.ptr.p_double[j+n] = work.ptr.p_double[j+n]-vt;
@@ -24031,7 +23998,6 @@ namespace alglib_impl
         /*
          * general case: split task in cache-oblivious manner
          */
-        result = ae_true;
         ablassplitlength(a, n, &n1, &n2, _state);
         result = spdmatrixcholeskyrec(a, offs, n1, isupper, tmp, _state);
         if( !result )
@@ -24781,7 +24747,6 @@ namespace alglib_impl
         /*
          * general case: split task in cache-oblivious manner
          */
-        result = ae_true;
         ablascomplexsplitlength(a, n, &n1, &n2, _state);
         result = trfac_hpdmatrixcholeskyrec(a, offs, n1, isupper, tmp, _state);
         if( !result )
@@ -26064,9 +26029,6 @@ namespace alglib_impl
         double ainvnm;
         double maxgrowth;
         double s;
-        ae_bool mupper;
-        ae_bool mtrans;
-        ae_bool munit;
         
         ae_frame_make(_state, &_frame_block);
         *rc = 0;
@@ -26092,9 +26054,6 @@ namespace alglib_impl
         {
             kase1 = 2;
         }
-        mupper = ae_true;
-        mtrans = ae_true;
-        munit = ae_true;
         ae_vector_set_length(&iwork, n+1, _state);
         ae_vector_set_length(&tmp, n, _state);
         
@@ -26945,7 +26904,6 @@ namespace alglib_impl
         double su;
         double sl;
         ae_bool mupper;
-        ae_bool mtrans;
         ae_bool munit;
         
         ae_frame_make(_state, &_frame_block);
@@ -26973,7 +26931,6 @@ namespace alglib_impl
             kase1 = 2;
         }
         mupper = ae_true;
-        mtrans = ae_true;
         munit = ae_true;
         ae_vector_set_length(&iwork, n+1, _state);
         ae_vector_set_length(&tmp, n, _state);

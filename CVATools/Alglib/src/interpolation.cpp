@@ -10388,7 +10388,6 @@ namespace alglib_impl
                    /* Real    */ ae_vector* x,
                    ae_state *_state)
     {
-        ae_int_t nx;
         ae_int_t i;
         ae_int_t k;
         double r;
@@ -10417,7 +10416,6 @@ namespace alglib_impl
             /*
              * NQ/NW-based model
              */
-            nx = z->nx;
             k = kdtreequeryknn(&z->tree, x, z->nw, ae_true, _state);
             kdtreequeryresultsdistances(&z->tree, &z->rbuf, _state);
             kdtreequeryresultstags(&z->tree, &z->tbuf, _state);
@@ -10428,7 +10426,6 @@ namespace alglib_impl
             /*
              * R-based model
              */
-            nx = z->nx;
             k = kdtreequeryrnn(&z->tree, x, z->r, ae_true, _state);
             kdtreequeryresultsdistances(&z->tree, &z->rbuf, _state);
             kdtreequeryresultstags(&z->tree, &z->tbuf, _state);
@@ -11759,7 +11756,6 @@ namespace alglib_impl
         xk = b->x.ptr.p_double[k];
         xk = xk*xscale1+xoffs1;
         xk = xk*xscale2+xoffs2;
-        v = t-xk;
         n0 = 0;
         n1 = 0;
         d0 = 0;
@@ -11903,7 +11899,6 @@ namespace alglib_impl
          * pivot point found, calculate dNumerator and dDenominator
          */
         xk = b->x.ptr.p_double[k];
-        v = t-xk;
         n0 = 0;
         n1 = 0;
         n2 = 0;
@@ -14212,8 +14207,6 @@ namespace alglib_impl
         double delta;
         double delta2;
         double delta3;
-        double s0;
-        double s1;
         double s2;
         double s3;
         
@@ -14295,8 +14288,6 @@ namespace alglib_impl
             delta = x->ptr.p_double[i+1]-x->ptr.p_double[i];
             delta2 = ae_sqr(delta, _state);
             delta3 = delta*delta2;
-            s0 = y->ptr.p_double[i];
-            s1 = d1->ptr.p_double[i];
             s2 = (3*(y->ptr.p_double[i+1]-y->ptr.p_double[i])-2*d1->ptr.p_double[i]*delta-d1->ptr.p_double[i+1]*delta)/delta2;
             s3 = (2*(y->ptr.p_double[i]-y->ptr.p_double[i+1])+d1->ptr.p_double[i]*delta+d1->ptr.p_double[i+1]*delta)/delta3;
             d2->ptr.p_double[i] = 2*s2;
@@ -17050,7 +17041,6 @@ namespace alglib_impl
                         if( ae_fp_neq(*x0,tempdata->ptr.p_double[i-1]) )
                         {
                             tempdata->ptr.p_double[i] = *x0;
-                            i = i+1;
                         }
                         else
                         {
@@ -17060,7 +17050,6 @@ namespace alglib_impl
                     else
                     {
                         tempdata->ptr.p_double[i] = *x0;
-                        i = i+1;
                     }
                 }
                 if( *nr>0 )
@@ -17113,7 +17102,6 @@ namespace alglib_impl
                     if( ae_fp_neq(*x0,tempdata->ptr.p_double[i-1]) )
                     {
                         tempdata->ptr.p_double[i] = *x0;
-                        i = i+1;
                     }
                     else
                     {
@@ -17150,7 +17138,6 @@ namespace alglib_impl
                         if( ae_fp_neq(*x0,tempdata->ptr.p_double[i-1]) )
                         {
                             tempdata->ptr.p_double[i] = *x0;
-                            i = i+1;
                         }
                         else
                         {
@@ -17160,7 +17147,6 @@ namespace alglib_impl
                     else
                     {
                         tempdata->ptr.p_double[i] = *x0;
-                        i = i+1;
                     }
                 }
                 if( *nr>0 )
@@ -17221,7 +17207,6 @@ namespace alglib_impl
                         if( ae_fp_neq(*x0,tempdata->ptr.p_double[i-1]) )
                         {
                             tempdata->ptr.p_double[i] = *x0;
-                            i = i+1;
                         }
                         else
                         {
@@ -17231,7 +17216,6 @@ namespace alglib_impl
                     else
                     {
                         tempdata->ptr.p_double[i] = *x0;
-                        i = i+1;
                     }
                 }
                 
@@ -17487,7 +17471,6 @@ namespace alglib_impl
          * Init sign of the function for first segment
          */
         i = 0;
-        ca = 0;
         do
         {
             ca = ey.ptr.p_double[i+1]-ey.ptr.p_double[i];
@@ -25133,7 +25116,14 @@ namespace alglib_impl
         /*
          * Model is built
          */
-        s->nc = nc/layerscnt;
+        if (layerscnt != 0)
+        {
+            s->nc = nc/layerscnt;
+        }
+        else
+        {
+            ae_assert(ae_false, "RBFBuildModel: division by 0", _state);
+        }
         s->rmax = rmax;
         s->nl = layerscnt;
         ae_matrix_set_length(&s->xc, s->nc, rbf_mxnx, _state);
@@ -27385,7 +27375,7 @@ namespace alglib_impl
                       spline2dinterpolant* cc,
                       ae_state *_state)
     {
-        ae_int_t tblsize;
+        ae_int_t tblsize = 0;
         
         _spline2dinterpolant_clear(cc);
         

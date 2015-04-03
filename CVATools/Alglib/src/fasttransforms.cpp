@@ -2487,12 +2487,10 @@ namespace alglib_impl
                     i1 = 0;
                     i2 = i-1;
                     j1 = m-i;
-                    j2 = m-1;
                     ae_v_caddc(&r->ptr.p_complex[i1], 1, &a->ptr.p_complex[j1], 1, "N", ae_v_len(i1,i2), v);
                     i1 = i;
                     i2 = m-1;
                     j1 = 0;
-                    j2 = m-i-1;
                     ae_v_caddc(&r->ptr.p_complex[i1], 1, &a->ptr.p_complex[j1], 1, "N", ae_v_len(i1,i2), v);
                 }
             }
@@ -2971,12 +2969,10 @@ namespace alglib_impl
                     i1 = 0;
                     i2 = i-1;
                     j1 = m-i;
-                    j2 = m-1;
                     ae_v_addd(&r->ptr.p_double[i1], 1, &a->ptr.p_double[j1], 1, ae_v_len(i1,i2), v);
                     i1 = i;
                     i2 = m-1;
                     j1 = 0;
-                    j2 = m-i-1;
                     ae_v_addd(&r->ptr.p_double[i1], 1, &a->ptr.p_double[j1], 1, ae_v_len(i1,i2), v);
                 }
             }

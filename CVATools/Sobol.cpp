@@ -13752,7 +13752,6 @@ void i4_sobol ( int dim_num, int *seed, float quasi[ ] )
     else if ( *seed <= seed_save )
     {
         seed_save = 0;
-        l = 1;
         for ( i = 0; i < dim_num; i++ )
         {
             lastq[i] = 0;
@@ -27715,8 +27714,7 @@ void i8_sobol ( int dim_num, long long int *seed, double quasi[ ] )
     } 
     else if ( *seed <= seed_save ) 
     { 
-        seed_save = 0; 
-        l = 1; 
+        seed_save = 0;
         for ( i = 0; i < dim_num; i++ ) 
         { 
             lastq[i] = 0; 
@@ -28442,13 +28440,12 @@ void timestamp ( )
     
     static char time_buffer[TIME_SIZE]; 
     const struct tm *tm; 
-    size_t len; 
     time_t now; 
     
     now = time ( NULL ); 
     tm = localtime ( &now ); 
     
-    len = strftime ( time_buffer, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm ); 
+    strftime ( time_buffer, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm );
     
     std::cout << time_buffer << "  n"; 
     

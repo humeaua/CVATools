@@ -4205,7 +4205,6 @@ namespace alglib_impl
         }
         if( ae_fp_less(x,-2.09) )
         {
-            domflg = 15;
             t = ae_sqrt(-x, _state);
             zeta = -2.0*x*t/3.0;
             t = ae_sqrt(t, _state);

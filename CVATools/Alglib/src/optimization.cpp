@@ -7110,7 +7110,6 @@ namespace alglib_impl
         ae_int_t itswithintolerance;
         ae_int_t maxitswithintolerance;
         ae_int_t gparuns;
-        ae_int_t maxgparuns;
         ae_int_t maxarmijoruns;
         ae_bool result;
         
@@ -7138,7 +7137,6 @@ namespace alglib_impl
         ae_matrix_init(&vt, 0, 0, DT_REAL, _state, ae_true);
         
         maxitswithintolerance = 3;
-        maxgparuns = 3;
         maxarmijoruns = 5;
         *qpits = 0;
         *gpaits = 0;
@@ -11747,14 +11745,12 @@ namespace alglib_impl
         ae_int_t i;
         ae_int_t nmain;
         ae_int_t nslack;
-        ae_bool hasconstraints;
         
         *gnorm = 0;
         *mpgnorm = 0;
         
         nmain = state->nmain;
         nslack = state->nslack;
-        hasconstraints = ae_false;
         
         /*
          * GNorm
@@ -12010,7 +12006,6 @@ namespace alglib_impl
         
         nmain = state->nmain;
         nslack = state->nslack;
-        result = ae_true;
         
         /*
          * Step 1
@@ -12735,7 +12730,6 @@ namespace alglib_impl
         state->n = n;
         state->m = m;
         allocatemem = flags%2==0;
-        flags = flags/2;
         if( allocatemem )
         {
             ae_vector_set_length(&state->rho, m, _state);
@@ -14297,7 +14291,6 @@ namespace alglib_impl
         *r = 0.0;
         *noise = 0.0;
         eps = 2*ae_machineepsilon;
-        mxq = 0.0;
         
         /*
          * Main quadratic term.

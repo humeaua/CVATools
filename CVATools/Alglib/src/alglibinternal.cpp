@@ -1112,7 +1112,6 @@ namespace alglib_impl
              * Y>=1, we can safely divide by Y
              */
             r = x/y;
-            result = v;
             if( ae_fp_greater(v,r) )
             {
                 result = r;
@@ -2644,21 +2643,15 @@ namespace alglib_impl
         v2 = a->ptr.p_double[i2];
         if( v0>v1 )
         {
-            tmpr = v1;
-            v1 = v0;
-            v0 = tmpr;
+            std::swap(v0, v1);
         }
         if( v1>v2 )
         {
-            tmpr = v2;
-            v2 = v1;
-            v1 = tmpr;
+            std::swap(v1, v2);
         }
         if( v0>v1 )
         {
-            tmpr = v1;
-            v1 = v0;
-            v0 = tmpr;
+            std::swap(v0, v1);
         }
         vp = v1;
         
@@ -2828,21 +2821,15 @@ namespace alglib_impl
         v2 = a->ptr.p_double[i2];
         if( v0>v1 )
         {
-            tmpr = v1;
-            v1 = v0;
-            v0 = tmpr;
+            std::swap(v0, v1);
         }
         if( v1>v2 )
         {
-            tmpr = v2;
-            v2 = v1;
-            v1 = tmpr;
+            std::swap(v1, v2);
         }
         if( v0>v1 )
         {
-            tmpr = v1;
-            v1 = v0;
-            v0 = tmpr;
+            std::swap(v0, v1);
         }
         vp = v1;
         
@@ -3006,21 +2993,15 @@ namespace alglib_impl
         v2 = a->ptr.p_double[i2];
         if( v0>v1 )
         {
-            tmpr = v1;
-            v1 = v0;
-            v0 = tmpr;
+            std::swap(v0, v1);
         }
         if( v1>v2 )
         {
-            tmpr = v2;
-            v2 = v1;
-            v1 = tmpr;
+            std::swap(v1, v2);
         }
         if( v0>v1 )
         {
-            tmpr = v1;
-            v1 = v0;
-            v0 = tmpr;
+            std::swap(v0, v1);
         }
         vp = v1;
         
@@ -3643,7 +3624,6 @@ namespace alglib_impl
     {
         ae_int_t i;
         ae_int_t ba1;
-        ae_int_t ba2;
         ae_int_t by1;
         ae_int_t by2;
         ae_int_t bx1;
@@ -3688,7 +3668,6 @@ namespace alglib_impl
                 by1 = i-i1+2;
                 by2 = n;
                 ba1 = i+1;
-                ba2 = i2;
                 ae_v_caddc(&y->ptr.p_complex[by1], 1, &a->ptr.pp_complex[i][ba1], 1, "Conj", ae_v_len(by1,by2), v);
                 
                 /*
@@ -3697,7 +3676,6 @@ namespace alglib_impl
                 bx1 = i-i1+2;
                 bx2 = n;
                 ba1 = i+1;
-                ba2 = i2;
                 v = ae_v_cdotproduct(&x->ptr.p_complex[bx1], 1, "N", &a->ptr.pp_complex[i][ba1], 1, "N", ae_v_len(bx1,bx2));
                 y->ptr.p_complex[i-i1+1] = ae_c_add(y->ptr.p_complex[i-i1+1],v);
             }
@@ -3713,7 +3691,6 @@ namespace alglib_impl
                 bx1 = 1;
                 bx2 = i-i1;
                 ba1 = i1;
-                ba2 = i-1;
                 v = ae_v_cdotproduct(&x->ptr.p_complex[bx1], 1, "N", &a->ptr.pp_complex[i][ba1], 1, "N", ae_v_len(bx1,bx2));
                 y->ptr.p_complex[i-i1+1] = ae_c_add(y->ptr.p_complex[i-i1+1],v);
                 
@@ -3724,7 +3701,6 @@ namespace alglib_impl
                 by1 = 1;
                 by2 = i-i1;
                 ba1 = i1;
-                ba2 = i-1;
                 ae_v_caddc(&y->ptr.p_complex[by1], 1, &a->ptr.pp_complex[i][ba1], 1, "Conj", ae_v_len(by1,by2), v);
             }
         }
@@ -3954,8 +3930,6 @@ namespace alglib_impl
     {
         double t;
         ae_int_t i;
-        ae_int_t vm;
-        
         
         if( (ae_fp_eq(tau,0)||n1>n2)||m1>m2 )
         {
@@ -3965,7 +3939,6 @@ namespace alglib_impl
         /*
          * w := C' * v
          */
-        vm = m2-m1+1;
         for(i=n1; i<=n2; i++)
         {
             work->ptr.p_double[i] = 0;
@@ -4027,14 +4000,11 @@ namespace alglib_impl
     {
         double t;
         ae_int_t i;
-        ae_int_t vm;
-        
         
         if( (ae_fp_eq(tau,0)||n1>n2)||m1>m2 )
         {
             return;
         }
-        vm = n2-n1+1;
         for(i=m1; i<=m2; i++)
         {
             t = ae_v_dotproduct(&c->ptr.pp_double[i][n1], 1, &v->ptr.p_double[1], 1, ae_v_len(n1,n2));
@@ -4227,8 +4197,6 @@ namespace alglib_impl
     {
         ae_complex t;
         ae_int_t i;
-        ae_int_t vm;
-        
         
         if( (ae_c_eq_d(tau,0)||n1>n2)||m1>m2 )
         {
@@ -4238,7 +4206,6 @@ namespace alglib_impl
         /*
          * w := C^T * conj(v)
          */
-        vm = m2-m1+1;
         for(i=n1; i<=n2; i++)
         {
             work->ptr.p_complex[i] = ae_complex_from_d(0);
@@ -4344,7 +4311,6 @@ namespace alglib_impl
     {
         ae_int_t i;
         ae_int_t ba1;
-        ae_int_t ba2;
         ae_int_t by1;
         ae_int_t by2;
         ae_int_t bx1;
@@ -4389,7 +4355,6 @@ namespace alglib_impl
                 by1 = i-i1+2;
                 by2 = n;
                 ba1 = i+1;
-                ba2 = i2;
                 ae_v_addd(&y->ptr.p_double[by1], 1, &a->ptr.pp_double[i][ba1], 1, ae_v_len(by1,by2), v);
                 
                 /*
@@ -4398,7 +4363,6 @@ namespace alglib_impl
                 bx1 = i-i1+2;
                 bx2 = n;
                 ba1 = i+1;
-                ba2 = i2;
                 v = ae_v_dotproduct(&x->ptr.p_double[bx1], 1, &a->ptr.pp_double[i][ba1], 1, ae_v_len(bx1,bx2));
                 y->ptr.p_double[i-i1+1] = y->ptr.p_double[i-i1+1]+v;
             }
@@ -4414,7 +4378,6 @@ namespace alglib_impl
                 bx1 = 1;
                 bx2 = i-i1;
                 ba1 = i1;
-                ba2 = i-1;
                 v = ae_v_dotproduct(&x->ptr.p_double[bx1], 1, &a->ptr.pp_double[i][ba1], 1, ae_v_len(bx1,bx2));
                 y->ptr.p_double[i-i1+1] = y->ptr.p_double[i-i1+1]+v;
                 
@@ -4425,7 +4388,6 @@ namespace alglib_impl
                 by1 = 1;
                 by2 = i-i1;
                 ba1 = i1;
-                ba2 = i-1;
                 ae_v_addd(&y->ptr.p_double[by1], 1, &a->ptr.pp_double[i][ba1], 1, ae_v_len(by1,by2), v);
             }
         }
@@ -4535,12 +4497,9 @@ namespace alglib_impl
                              ae_state *_state)
     {
         ae_int_t i;
-        double a;
         ae_int_t result;
         
-        
         result = i1;
-        a = ae_fabs(x->ptr.p_double[result], _state);
         for(i=i1+1; i<=i2; i++)
         {
             if( ae_fp_greater(ae_fabs(x->ptr.p_double[i], _state),ae_fabs(x->ptr.p_double[result], _state)) )
@@ -4559,12 +4518,9 @@ namespace alglib_impl
                              ae_state *_state)
     {
         ae_int_t i;
-        double a;
         ae_int_t result;
         
-        
         result = i1;
-        a = ae_fabs(x->ptr.pp_double[result][j], _state);
         for(i=i1+1; i<=i2; i++)
         {
             if( ae_fp_greater(ae_fabs(x->ptr.pp_double[i][j], _state),ae_fabs(x->ptr.pp_double[result][j], _state)) )
@@ -4583,12 +4539,9 @@ namespace alglib_impl
                           ae_state *_state)
     {
         ae_int_t j;
-        double a;
         ae_int_t result;
         
-        
         result = j1;
-        a = ae_fabs(x->ptr.pp_double[i][result], _state);
         for(j=j1+1; j<=j2; j++)
         {
             if( ae_fp_greater(ae_fabs(x->ptr.pp_double[i][j], _state),ae_fabs(x->ptr.pp_double[i][result], _state)) )
@@ -4876,7 +4829,6 @@ namespace alglib_impl
         ae_int_t brows;
         ae_int_t bcols;
         ae_int_t crows;
-        ae_int_t ccols;
         ae_int_t i;
         ae_int_t j;
         ae_int_t k;
@@ -4915,7 +4867,6 @@ namespace alglib_impl
             return;
         }
         crows = arows;
-        ccols = bcols;
         
         /*
          * Test WORK
@@ -5484,7 +5435,6 @@ namespace alglib_impl
         ae_int_t ns;
         ae_int_t nv;
         double absw;
-        double ovfl;
         double smlnum;
         double tau;
         double temp;
@@ -5505,7 +5455,6 @@ namespace alglib_impl
         double cnst;
         ae_bool failflag;
         ae_int_t p1;
-        ae_int_t p2;
         double vt;
         
         ae_frame_make(_state, &_frame_block);
@@ -5651,7 +5600,6 @@ namespace alglib_impl
             return;
         }
         unfl = ae_minrealnumber;
-        ovfl = 1/unfl;
         ulp = 2*ae_machineepsilon;
         smlnum = unfl*(n/ulp);
         
@@ -5897,7 +5845,6 @@ namespace alglib_impl
                     if( k>l )
                     {
                         p1 = k-1;
-                        p2 = k+nr-1;
                         ae_v_move(&v.ptr.p_double[1], 1, &h->ptr.pp_double[k][p1], h->stride, ae_v_len(1,nr));
                     }
                     generatereflection(&v, nr, &tau, _state);
@@ -6009,7 +5956,6 @@ namespace alglib_impl
         double h43h34;
         double h44;
         double h44s;
-        double ovfl;
         double s;
         double smlnum;
         double sn;
@@ -6064,7 +6010,6 @@ namespace alglib_impl
          * If norm(H) <= sqrt(OVFL), overflow should not occur.
          */
         unfl = ae_minrealnumber;
-        ovfl = 1/unfl;
         smlnum = unfl*(nh/ulp);
         
         /*
@@ -6165,7 +6110,6 @@ namespace alglib_impl
                     h44 = h->ptr.pp_double[i][i];
                     h33 = h->ptr.pp_double[i-1][i-1];
                     h43h34 = h->ptr.pp_double[i][i-1]*h->ptr.pp_double[i-1][i];
-                    s = h->ptr.pp_double[i-1][i-2]*h->ptr.pp_double[i-1][i-2];
                     disc = (h33-h44)*0.5;
                     disc = disc*disc+h43h34;
                     if( ae_fp_greater(disc,0) )
@@ -8573,7 +8517,6 @@ namespace alglib_impl
                 ks = ks+k;
             }
             *r = *r+s*ks;
-            v = ae_fabs(*r, _state);
             if( allzeros||ae_fp_eq(s*n+mx,mx) )
             {
                 break;
@@ -10118,7 +10061,6 @@ namespace alglib_impl
              */
             n1 = plan->plan.ptr.p_int[entryoffset+1];
             n2 = plan->plan.ptr.p_int[entryoffset+2];
-            n = n1*n2;
             ftbase_internalreallintranspose(a, n1, n2, aoffset, &plan->tmpbuf, _state);
             for(i=0; i<=n2-1; i++)
             {
@@ -10804,7 +10746,6 @@ namespace alglib_impl
                     stackptr = stackptr+2*2*m;
                     *stackmemsize = ae_maxint(*stackmemsize, stackptr, _state);
                     ftbase_ftbasegenerateplanrec(m, ftbase_ftbasecffttask, plan, plansize, precomputedsize, planarraysize, tmpmemsize, stackmemsize, stackptr, _state);
-                    stackptr = stackptr-2*2*m;
                     plan->plan.ptr.p_int[entryoffset+6] = -1;
                     plan->plan.ptr.p_int[entryoffset+7] = *precomputedsize;
                     *precomputedsize = *precomputedsize+2*m+2*n;

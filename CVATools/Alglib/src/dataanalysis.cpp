@@ -7958,7 +7958,7 @@ namespace alglib_impl
         ae_int_t j;
         ae_int_t s;
         ae_int_t jl;
-        ae_int_t jr;
+        //ae_int_t jr;
         double v2;
         ae_vector ties;
         ae_int_t tiecount;
@@ -8171,11 +8171,11 @@ namespace alglib_impl
             *ni = koptimal+1;
             *cve = cv.ptr.pp_double[koptimal][tiecount-1];
             jl = splits.ptr.pp_int[koptimal][tiecount-1];
-            jr = tiecount-1;
+            //jr = tiecount-1;
             for(k=koptimal; k>=1; k--)
             {
                 thresholds->ptr.p_double[k-1] = 0.5*(a->ptr.p_double[ties.ptr.p_int[jl-1]]+a->ptr.p_double[ties.ptr.p_int[jl]]);
-                jr = jl-1;
+                //jr = jl-1;
                 jl = splits.ptr.pp_int[k-1][jl-1];
             }
         }
@@ -9959,7 +9959,7 @@ namespace alglib_impl
                     }
                 }
                 *info = 1;
-                cure = 0;
+                //cure = 0;
                 for(i=0; i<=2*nc-1; i++)
                 {
                     cntbuf->ptr.p_int[i] = 0;
@@ -13472,7 +13472,7 @@ namespace alglib_impl
     {
         ae_int_t i;
         ae_int_t ssize;
-        ae_int_t ntotal;
+        //ae_int_t ntotal;
         ae_int_t nin;
         ae_int_t nout;
         ae_int_t wcount;
@@ -13489,7 +13489,7 @@ namespace alglib_impl
         ssize = network->structinfo.ptr.p_int[0];
         nin = network->structinfo.ptr.p_int[1];
         nout = network->structinfo.ptr.p_int[2];
-        ntotal = network->structinfo.ptr.p_int[3];
+        //ntotal = network->structinfo.ptr.p_int[3];
         wcount = network->structinfo.ptr.p_int[4];
         if( mlpissoftmax(network, _state) )
         {
@@ -13527,7 +13527,7 @@ namespace alglib_impl
         ae_v_move(&ra->ptr.p_double[offs], 1, &network->columnmeans.ptr.p_double[0], 1, ae_v_len(offs,offs+sigmalen-1));
         offs = offs+sigmalen;
         ae_v_move(&ra->ptr.p_double[offs], 1, &network->columnsigmas.ptr.p_double[0], 1, ae_v_len(offs,offs+sigmalen-1));
-        offs = offs+sigmalen;
+        //offs = offs+sigmalen;
     }
     
     
@@ -13575,7 +13575,7 @@ namespace alglib_impl
         /*
          * Unload info from StructInfo
          */
-        ssize = network->structinfo.ptr.p_int[0];
+        //ssize = network->structinfo.ptr.p_int[0];
         nin = network->structinfo.ptr.p_int[1];
         nout = network->structinfo.ptr.p_int[2];
         ntotal = network->structinfo.ptr.p_int[3];
@@ -13611,7 +13611,7 @@ namespace alglib_impl
         ae_v_move(&network->columnmeans.ptr.p_double[0], 1, &ra->ptr.p_double[offs], 1, ae_v_len(0,sigmalen-1));
         offs = offs+sigmalen;
         ae_v_move(&network->columnsigmas.ptr.p_double[0], 1, &ra->ptr.p_double[offs], 1, ae_v_len(0,sigmalen-1));
-        offs = offs+sigmalen;
+        //offs = offs+sigmalen;
     }
     
     
@@ -15332,7 +15332,7 @@ namespace alglib_impl
     {
         ae_int_t i;
         ae_int_t n1;
-        ae_int_t n2;
+        //ae_int_t n2;
         ae_int_t w1;
         ae_int_t w2;
         ae_int_t ntotal;
@@ -15396,7 +15396,7 @@ namespace alglib_impl
                  * Adaptive summator
                  */
                 n1 = structinfo->ptr.p_int[offs+2];
-                n2 = n1+structinfo->ptr.p_int[offs+1]-1;
+                //n2 = n1+structinfo->ptr.p_int[offs+1]-1;
                 w1 = structinfo->ptr.p_int[offs+3];
                 w2 = w1+structinfo->ptr.p_int[offs+1]-1;
                 net = ae_v_dotproduct(&weights->ptr.p_double[w1], 1, &neurons->ptr.p_double[n1], 1, ae_v_len(w1,w2));
@@ -16531,7 +16531,7 @@ namespace alglib_impl
                     n1 = network->structinfo.ptr.p_int[offs+2];
                     n2 = n1+network->structinfo.ptr.p_int[offs+1]-1;
                     w1 = network->structinfo.ptr.p_int[offs+3];
-                    w2 = w1+network->structinfo.ptr.p_int[offs+1]-1;
+                    //w2 = w1+network->structinfo.ptr.p_int[offs+1]-1;
                     for(j=n1; j<=n2; j++)
                     {
                         v = network->weights.ptr.p_double[w1+j-n1];
@@ -16779,7 +16779,7 @@ namespace alglib_impl
                      * Adaptive summator
                      */
                     n1 = network->structinfo.ptr.p_int[offs+2];
-                    n2 = n1+network->structinfo.ptr.p_int[offs+1]-1;
+                    //n2 = n1+network->structinfo.ptr.p_int[offs+1]-1;
                     w1 = network->structinfo.ptr.p_int[offs+3];
                     w2 = w1+network->structinfo.ptr.p_int[offs+1]-1;
                     
@@ -16998,7 +16998,7 @@ namespace alglib_impl
         ae_int_t w1;
         ae_int_t w2;
         ae_int_t c1;
-        ae_int_t c2;
+        //ae_int_t c2;
         ae_int_t ntotal;
         ae_int_t nin;
         ae_int_t nout;
@@ -17011,11 +17011,11 @@ namespace alglib_impl
         double fown;
         double deown;
         double net;
-        double lnnet;
+        //double lnnet;
         double mx;
         ae_bool bflag;
         ae_int_t istart;
-        ae_int_t ineurons;
+        //ae_int_t ineurons;
         ae_int_t idfdnet;
         ae_int_t iderror;
         ae_int_t izeros;
@@ -17030,8 +17030,8 @@ namespace alglib_impl
         ntotal = network->structinfo.ptr.p_int[3];
         istart = network->structinfo.ptr.p_int[5];
         c1 = cstart;
-        c2 = cstart+csize-1;
-        ineurons = 0;
+        //c2 = cstart+csize-1;
+        //ineurons = 0;
         idfdnet = ntotal;
         iderror = 2*ntotal;
         izeros = 3*ntotal;
@@ -17089,7 +17089,7 @@ namespace alglib_impl
                 n1 = network->structinfo.ptr.p_int[offs+2];
                 n2 = n1+network->structinfo.ptr.p_int[offs+1]-1;
                 w1 = network->structinfo.ptr.p_int[offs+3];
-                w2 = w1+network->structinfo.ptr.p_int[offs+1]-1;
+                //w2 = w1+network->structinfo.ptr.p_int[offs+1]-1;
                 ae_v_move(&network->chunks.ptr.pp_double[i][0], 1, &network->chunks.ptr.pp_double[izeros][0], 1, ae_v_len(0,csize-1));
                 for(j=n1; j<=n2; j++)
                 {
@@ -17186,7 +17186,7 @@ namespace alglib_impl
                      *
                      */
                     s = 1;
-                    lnnet = ae_log(net, _state);
+                    //lnnet = ae_log(net, _state);
                     kl = ae_round(xy->ptr.pp_double[cstart+k][nin], _state);
                     for(i=0; i<=nout-1; i++)
                     {
@@ -17514,11 +17514,7 @@ namespace alglib_impl
         ae_int_t ssize;
         ae_bool allsame;
         ae_int_t offs;
-        double threshold;
-        double wminstep;
         double decay;
-        ae_int_t wdim;
-        ae_int_t expoffs;
         double v;
         double s;
         multilayerperceptron network;
@@ -17557,8 +17553,8 @@ namespace alglib_impl
         _logitmcstate_init(&mcstate, _state, ae_true);
         _densesolverreport_init(&solverrep, _state, ae_true);
         
-        threshold = 1000*ae_machineepsilon;
-        wminstep = 0.001;
+        //threshold = 1000*ae_machineepsilon;
+        //wminstep = 0.001;
         decay = 0.001;
         
         /*
@@ -17590,9 +17586,7 @@ namespace alglib_impl
         /*
          * Allocate array
          */
-        wdim = (nvars+1)*(nclasses-1);
         offs = 5;
-        expoffs = offs+wdim;
         ssize = 5+(nvars+1)*(nclasses-1)+nclasses;
         ae_vector_set_length(&lm->w, ssize-1+1, _state);
         lm->w.ptr.p_double[0] = ssize;
@@ -17722,7 +17716,7 @@ namespace alglib_impl
              * NOTE: it is important to use lower-triangle Cholesky
              * factorization since it is much faster than higher-triangle version.
              */
-            spd = spdmatrixcholesky(&h, wcount, ae_false, _state);
+           // spd = spdmatrixcholesky(&h, wcount, ae_false, _state);
             spdmatrixcholeskysolve(&h, wcount, ae_false, &g, &solverinfo, &solverrep, &wdir, _state);
             spd = solverinfo>0;
             if( spd )
@@ -17941,12 +17935,12 @@ namespace alglib_impl
     {
         ae_int_t offs;
         ae_int_t i;
-        ae_int_t wdim;
+        //ae_int_t wdim;
         ae_int_t ssize;
         
         _logitmodel_clear(lm);
         
-        wdim = (nvars+1)*(nclasses-1);
+        //wdim = (nvars+1)*(nclasses-1);
         offs = 5;
         ssize = 5+(nvars+1)*(nclasses-1)+nclasses;
         ae_vector_set_length(&lm->w, ssize-1+1, _state);
@@ -20495,7 +20489,7 @@ namespace alglib_impl
         ae_int_t nin;
         ae_int_t nout;
         ae_int_t wcount;
-        double lmftol;
+        //double lmftol;
         double lmsteptol;
         ae_int_t i;
         ae_int_t k;
@@ -20553,7 +20547,7 @@ namespace alglib_impl
         mlpproperties(network, &nin, &nout, &wcount, _state);
         lambdaup = 10;
         lambdadown = 0.3;
-        lmftol = 0.001;
+        //lmftol = 0.001;
         lmsteptol = 0.001;
         
         /*

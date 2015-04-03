@@ -189,9 +189,8 @@ namespace Utilities
             }
             else
             {
-                tree *temp1;
                 parent=temp;
-                temp1=temp->Right;
+                tree * temp1=temp->Right;
                 while(temp1->Left!=NULL)
                 {
                     parent=temp1;
@@ -203,7 +202,6 @@ namespace Utilities
                     temp1->Right=parent->Right;
                 }
                 temp1->Left=parent->Left;
-                parent=temp1;
             }
         }
         delete marker;

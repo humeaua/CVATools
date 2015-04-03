@@ -82,7 +82,7 @@ namespace Maths
             // case i = 0
             dRes += pow(m_epsilon,k-1.0);
             double dx = m_epsilon;
-            for ( dx = m_epsilon ; dx < x ; dx += m_nbStepInt)
+            for ( ; dx < x ; dx += m_nbStepInt)
             {
                 dRes += pow(dx, k) / (exp(dx)-1.0) * m_nbStepInt;
             }
@@ -95,7 +95,7 @@ namespace Maths
             // case i = 0
             dRes -= pow(m_epsilon,k-1.0);
             double dx = m_epsilon;
-            for ( dx = m_epsilon ; dx < x ; dx -= m_nbStepInt)
+            for ( ; dx < x ; dx -= m_nbStepInt)
             {
                 dRes -= pow(dx, k) / (exp(dx)-1.0) * m_nbStepInt;
             }

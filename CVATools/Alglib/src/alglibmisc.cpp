@@ -2793,10 +2793,10 @@ namespace alglib_impl
         {
             ileft = ileft+1;
         }
-        else
-        {
-            iright = iright-1;
-        }
+        //else
+        //{
+        //    iright = iright-1;
+        //}
         *i3 = ileft;
     }
     
@@ -2825,7 +2825,7 @@ namespace alglib_impl
     {
         ae_int_t n;
         ae_int_t nx;
-        ae_int_t ny;
+        //ae_int_t ny;
         ae_int_t i;
         ae_int_t j;
         ae_int_t oldoffs;
@@ -2860,7 +2860,7 @@ namespace alglib_impl
          * Load values for easier access
          */
         nx = kdt->nx;
-        ny = kdt->ny;
+        //ny = kdt->ny;
         
         /*
          * select dimension to split:

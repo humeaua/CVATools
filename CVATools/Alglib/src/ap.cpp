@@ -896,7 +896,12 @@ namespace alglib_impl
         else
             dst->last_action = ACT_SAME_LOCATION;
         if( src->cnt )
-            memcpy(dst->ptr, src->ptr.p_ptr, (size_t)(src->cnt*ae_sizeof(src->datatype)));
+        {
+            if (dst->ptr && src->ptr.p_ptr)
+            {
+                memcpy(dst->ptr, src->ptr.p_ptr, (size_t)(src->cnt*ae_sizeof(src->datatype)));
+            }
+        }
     }
     
     /************************************************************************
@@ -937,7 +942,12 @@ namespace alglib_impl
             p_dst_row = (char*)dst->ptr;
             row_size = ae_sizeof(src->datatype)*src->cols;
             for(i=0; i<src->rows; i++, p_src_row+=src->stride*ae_sizeof(src->datatype), p_dst_row+=dst->stride*ae_sizeof(src->datatype))
-                memcpy(p_dst_row, p_src_row, (size_t)(row_size));
+            {
+                if (p_dst_row && p_src_row)
+                {
+                    memcpy(p_dst_row, p_src_row, (size_t)(row_size));
+                }
+            }
         }
     }
     

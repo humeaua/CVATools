@@ -544,7 +544,6 @@ namespace alglib_impl
             n = state->rstate.ia.ptr.p_int[0];
             m = state->rstate.ia.ptr.p_int[1];
             i = state->rstate.ia.ptr.p_int[2];
-            j = state->rstate.ia.ptr.p_int[3];
             k = state->rstate.ia.ptr.p_int[4];
             klimit = state->rstate.ia.ptr.p_int[5];
             gridpoint = state->rstate.ba.ptr.p_bool[0];
@@ -560,7 +559,6 @@ namespace alglib_impl
             n = -983;
             m = -989;
             i = -834;
-            j = 900;
             k = -287;
             klimit = 364;
             gridpoint = ae_false;

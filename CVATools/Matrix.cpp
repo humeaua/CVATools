@@ -78,15 +78,11 @@ namespace Utilities
     {
         REQUIREEXCEPTION(a.getcols() == a.getrows(), "a is not a square matrix");
         REQUIREEXCEPTION(a.getrows() == b.getrows(), "b must the same number of rows as a");
-        int i,icol,irow,j,k,l,ll;
+        int i,icol=0,irow=0,j,k,l,ll;
         int n = static_cast<int>(a.getcols()), m = static_cast<int>(b.getcols());
         double big,dum,pivinv,temp;
         //The integer arrays ipiv, indxr, and indxc are used for book-keeping on the pivoting
         std::vector<int> indxc(n,0), indxr(n,0), ipiv(n,0);
-        for (j=0;j<n;j++)
-        {
-            ipiv.at(j)=0;
-        }
         for (i=0;i<n;i++)
         {
             //This is the main loop over the columns to be reduced
@@ -110,7 +106,7 @@ namespace Utilities
                     }
                 }
             }
-            ++(ipiv.at(icol));
+            ++(ipiv[icol]);
             //We now have the pivot element, so we interchange rows, if needed, to put the pivot
             //    element on the diagonal. The columns are not physically interchanged, only relabeled:
             //    indxc[i], the column of the ith pivot element, is the ith column that is reduced, while
@@ -182,7 +178,7 @@ namespace Utilities
     
     void matrixLU(Matrix<double>& L, Matrix<double>& U, const Matrix<double>& mat)
     {
-        double J[mat.getrows()][2*mat.getrows()];
+        Matrix<double> J(mat.getrows(), 2*mat.getrows());
         
         for (int i=0;i<mat.getrows();i++)
         {
@@ -207,7 +203,7 @@ namespace Utilities
             }
         }
         
-        double LL[mat.getrows()][mat.getrows()];
+        Matrix<double> LL(mat.getrows(),mat.getrows());
         
         for(int i=0;i<mat.getrows();i++)
         {

@@ -399,9 +399,25 @@ namespace mu
       {
         switch (m_iCode)
         {
-          case cmVAL:  return m_fVal;
-          case cmVAR:  return *((TBase*)m_pTok);
-          default:     throw ParserError(ecVAL_EXPECTED);
+          case cmVAL:
+            {
+                return m_fVal;
+            }
+          case cmVAR:
+            {
+                if (m_pTok)
+                {
+                    return *((TBase*)m_pTok);
+                }
+                else
+                {
+                    throw ParserError("m_pTok is NULL");
+                }
+            }
+          default:
+            {
+                throw ParserError(ecVAL_EXPECTED);
+            }
         }
       }
 

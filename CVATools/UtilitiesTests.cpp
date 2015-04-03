@@ -74,7 +74,12 @@ bool RegressionTest::CSVReaderTest() const
     double refValues[] = {1,0};
     const double tolerance = 1e-10;
     double error = 0.0;
-    for (size_t i = 0 ; i < values.size() ; ++i)
+    const size_t size = values.size();
+    if (size != 2)
+    {
+        throw EXCEPTION("values should be of size 2");
+    }
+    for (size_t i = 0 ; i < size ; ++i)
     {
         error += std::abs( values[i] -refValues[i]);
     }

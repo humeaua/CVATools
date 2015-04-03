@@ -4981,7 +4981,6 @@ namespace alglib_impl
         *s = 0;
         
         mean = 0;
-        variance = 0;
         skewness = 0;
         kurtosis = 0;
         stddev = 0;
@@ -11838,7 +11837,6 @@ namespace alglib_impl
         /*
          * Variance (using corrected two-pass algorithm)
          */
-        xvariance = 0;
         xstddev = 0;
         if( n!=1 )
         {

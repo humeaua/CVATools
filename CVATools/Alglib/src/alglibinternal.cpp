@@ -5908,7 +5908,6 @@ namespace alglib_impl
             itn = itn-its;
             i = l-1;
         }
-        ae_frame_leave(_state);
     }
     
     

@@ -10286,13 +10286,7 @@ namespace alglib_impl
     static double rbf_rbfnearradius = 2.1;
     static double rbf_rbfmlradius = 3;
     static ae_int_t rbf_rbffirstversion = 0;
-    static void rbf_rbfgridregular(rbfmodel* s, double h, ae_state *_state);
     static void rbf_rbfgridpoints(rbfmodel* s, ae_state *_state);
-    static void rbf_rbfgridspecial(rbfmodel* s,
-                                   /* Real    */ ae_matrix* cxy,
-                                   ae_int_t nc,
-                                   ae_state *_state);
-    static void rbf_rbfradfixed(rbfmodel* s, double r, ae_state *_state);
     static void rbf_rbfradnn(rbfmodel* s,
                              double q,
                              double z,
@@ -25792,38 +25786,6 @@ namespace alglib_impl
     
     /*************************************************************************
      This function changes centers allocation algorithm to one which  allocates
-     centers on a regular grid with step equal to H  in  all  dimensions.  This
-     function won't have effect until next call to RBFBuildModel().
-     
-     Central  point  of  the  grid  is  located  exactly  in  the middle of the
-     bounding rectangle for our dataset. Grid countinues from the center to the
-     bounds of the bounding rectangle, and makes one step beyond  bounds  (i.e.
-     leftmost/rightmost/topmost/... lines of the grid are located just  outside
-     of the bounding rectangle).
-     
-     INPUT PARAMETERS:
-     S       -   RBF model, initialized by RBFCreate() call.
-     H       -   grid step, H>0
-     
-     NOTE: this   function  has   some   serialization-related  subtleties.  We
-     recommend you to study serialization examples from ALGLIB  Reference
-     Manual if you want to perform serialization of your models.
-     
-     -- ALGLIB --
-     Copyright 13.12.2011 by Bochkanov Sergey
-     *************************************************************************/
-    static void rbf_rbfgridregular(rbfmodel* s, double h, ae_state *_state)
-    {
-        
-        
-        ae_assert(ae_isfinite(h, _state)&&ae_fp_greater(h,0), "RBFGridRegular: H<0, INF or NAN", _state);
-        s->h = h;
-        s->gridtype = 1;
-    }
-    
-    
-    /*************************************************************************
-     This function changes centers allocation algorithm to one which  allocates
      centers exactly at the dataset points (one input point = one center). This
      function won't have effect until next call to RBFBuildModel().
      
@@ -25839,87 +25801,7 @@ namespace alglib_impl
      *************************************************************************/
     static void rbf_rbfgridpoints(rbfmodel* s, ae_state *_state)
     {
-        
-        
         s->gridtype = 2;
-    }
-    
-    
-    /*************************************************************************
-     This function sets centers, defined by user.
-     
-     This function overrides results of the previous calls, i.e. multiple calls
-     of this function will result in only the last set being added.
-     
-     INPUT PARAMETERS:
-     S      -   RBF model, initialized by RBFCreate() call.
-     CXY      -   centers, array[N,NX]. Centers must be distinct,
-     non-distinct centers are not supported.
-     NC      -   number of centers
-     
-     NOTE: this   function  has   some   serialization-related  subtleties.  We
-     recommend you to study serialization examples from ALGLIB  Reference
-     Manual if you want to perform serialization of your models.
-     
-     -- ALGLIB --
-     Copyright 13.12.2011 by Bochkanov Sergey
-     *************************************************************************/
-    static void rbf_rbfgridspecial(rbfmodel* s,
-                                   /* Real    */ ae_matrix* cxy,
-                                   ae_int_t nc,
-                                   ae_state *_state)
-    {
-        ae_int_t i;
-        ae_int_t j;
-        
-        
-        ae_assert(nc>0, "RBFGridSpecial: N<0", _state);
-        ae_assert(nc<=cxy->rows, "RBFGridSpecial: Length(CXY)<NC", _state);
-        s->gridtype = 3;
-        s->nc = nc;
-        ae_matrix_set_length(&s->xc, s->nc, rbf_mxnx, _state);
-        for(i=0; i<=s->nc-1; i++)
-        {
-            for(j=0; j<=rbf_mxnx-1; j++)
-            {
-                s->xc.ptr.pp_double[i][j] = 0;
-            }
-            for(j=0; j<=s->nx-1; j++)
-            {
-                s->xc.ptr.pp_double[i][j] = cxy->ptr.pp_double[i][j];
-            }
-        }
-    }
-    
-    
-    /*************************************************************************
-     This function changes radii calculation algorithm to one which  makes  all
-     radii equal to the same fixed value R. This  function  won't  have  effect
-     until next call to RBFBuildModel().
-     
-     IMPORTANT: you should use this function with caution because too  large  R
-     will make model fitting algorithm unstable, while too small  R  will  make
-     perfect, but useless fit (it will be non-smooth, with sharp  peaks  around
-     dataset points).
-     
-     INPUT PARAMETERS:
-     S       -   RBF model, initialized by RBFCreate() call
-     R       -   radius, R>0
-     
-     NOTE: this   function  has   some   serialization-related  subtleties.  We
-     recommend you to study serialization examples from ALGLIB  Reference
-     Manual if you want to perform serialization of your models.
-     
-     -- ALGLIB --
-     Copyright 13.12.2011 by Bochkanov Sergey
-     *************************************************************************/
-    static void rbf_rbfradfixed(rbfmodel* s, double r, ae_state *_state)
-    {
-        
-        
-        ae_assert(ae_isfinite(r, _state)&&ae_fp_greater(r,0), "RBFRadFixed: R<=0, infinite or NAN", _state);
-        s->fixrad = ae_true;
-        s->radvalue = r;
     }
     
     

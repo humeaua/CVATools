@@ -85,7 +85,7 @@ bool RegressionTest::DummyTournament() const
     size_t error = 0;
     for (size_t player = 0 ; player < tournamentPlayers.size() ; ++player)
     {
-        error += fabs(tournamentPlayers[player].second.Score() - refValues[player]);
+        error += std::abs((long)tournamentPlayers[player].second.Score() - (long)refValues[player]);
 #ifdef _DEBUG
         m_out << players[player].first.Name() << ":" << players[player].second.Score() << std::endl;
 #endif
@@ -114,7 +114,7 @@ bool RegressionTest::DummyTournament() const
 #ifdef _DEBUG
         m_out << players[player].Results()[0].Position() << ",";
 #endif
-        error2 += fabs(rank[player] - players[player].Results()[0].Position());
+        error2 += std::abs((long)rank[player] - (long)players[player].Results()[0].Position());
     }
     
     if (error2 < 1)
@@ -295,14 +295,14 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
     size_t error = 0;
     for (size_t player = 0 ; player < tournamentPlayersPGA.size() ; ++player)
     {
-        error += fabs(tournamentPlayersPGA[player].second.Score() - refValues[player]);
+        error += std::abs((long)tournamentPlayersPGA[player].second.Score() - (long)refValues[player]);
 #ifdef _DEBUG
         m_out << tournamentPlayersPGA[player].first.Name() << ":" << tournamentPlayersPGA[player].second.Score() << std::endl;
 #endif
     }
     for (size_t player = 0 ; player < tournamentPlayersEuro.size() ; ++player)
     {
-        error += fabs(tournamentPlayersEuro[player].second.Score() - refValues[player]);
+        error += std::abs((long)tournamentPlayersEuro[player].second.Score() - (long)refValues[player]);
 #ifdef _DEBUG
         m_out << tournamentPlayersEuro[player].first.Name() << ":" << tournamentPlayersEuro[player].second.Score() << std::endl;
 #endif
@@ -332,7 +332,7 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
 #ifdef _DEBUG
         m_out << players[player].Results()[0].Position() << ",";
 #endif
-        error2 += fabs(rank[player] - players[player].Results()[0].Position());
+        error2 += std::abs((long)rank[player] - (long)players[player].Results()[0].Position());
     }
     
     if (error2 < 1)

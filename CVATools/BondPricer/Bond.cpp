@@ -38,33 +38,6 @@ namespace
                 vCoupons.push_back(Finance::Base::Coupon(dCoupons[iDate], bIsFixedRate, vSchedule[iDate].GetStartDate(), vSchedule[iDate].GetEndDate(), vSchedule[iDate].GetBasis()));
             }
         }
-        
-        void CreateBond(//  Inputs
-                        const std::vector<double> & dCoupons,
-                        const Utilities::Date::MyDate & sStart,
-                        const Utilities::Date::MyDate & sEnd,
-                        Finance::Base::MyBasis eBasis,
-                        Finance::Base::MyFrequency eFrequency,
-                        const std::vector<bool> & bIsFixedRate,
-                        //  Output
-                        std::vector<Finance::Base::Coupon> & vCoupons)
-        {
-            Finance::Base::Schedule sSchedule(sStart,
-                                              sEnd,
-                                              eBasis,
-                                              eFrequency,
-                                              std::tr1::shared_ptr<Finance::Base::IDateShifter>(new Finance::Base::DateShifterDummy),
-                                              std::tr1::shared_ptr<Finance::Base::IDateShifter>(new Finance::Base::DateShifterDummy));
-            
-            std::vector<Finance::Base::EventOfSchedule> vSchedule = sSchedule.GetSchedule();
-            REQUIREEXCEPTION(vSchedule.size() == dCoupons.size(), "Coupon and Schedule do not have the same size. Cannot create Bond");
-            REQUIREEXCEPTION(vSchedule.size() != bIsFixedRate.size(), "Coupon and Fixed Rate boolean do not the same size. Cannot create Bond");
-            
-            for (std::size_t iDate = 0 ; iDate < vSchedule.size() ; ++iDate)
-            {
-                vCoupons.push_back(Finance::Base::Coupon(dCoupons[iDate], bIsFixedRate[iDate], vSchedule[iDate].GetStartDate(), vSchedule[iDate].GetEndDate(), vSchedule[iDate].GetBasis()));
-            }
-        }
 }
 namespace Finance
 {

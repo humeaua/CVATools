@@ -326,38 +326,38 @@ class RecTestTypes<0,U>
 
 				//e==f; // AD==AD
 				//e!=f; // AD!=AD
-				e<f; // AD<AD
-				e<=f; // AD<=AD
-				e>f; // AD>AD
-				e>=f; // AD>=AD
+				//e<f; // AD<AD
+				//e<=f; // AD<=AD
+				//e>f; // AD>AD
+				//e>=f; // AD>=AD
 
 				//e==a; // AD==double
 				//e!=a; // AD!=double
-				e<a; // AD<double
-				e<=a; // AD<=double
-				e>a; // AD>double
-				e>=a; // AD>=double
+				//e<a; // AD<double
+				//e<=a; // AD<=double
+				//e>a; // AD>double
+				//e>=a; // AD>=double
 
 				//a==f; // double==AD
 				//a!=f; // double!=AD
-				a<f; // double<AD
-				a<=f; // double<=AD
-				a>f; // double>AD
-				a>=f; // double>=AD
+				//a<f; // double<AD
+				//a<=f; // double<=AD
+				//a>f; // double>AD
+				//a>=f; // double>=AD
 
 				//e==d; // AD==base
 				//e!=d; // AD!=base
-				e<d; // AD<base
-				e<=d; // AD<=base
-				e>d; // AD>base
-				e>=d; // AD>=base
+				//e<d; // AD<base
+				//e<=d; // AD<=base
+				//e>d; // AD>base
+				//e>=d; // AD>=base
 
 				//d==f; // base==AD
 				//d!=f; // base!=AD
-				d<f; // base<AD
-				d<=f; // base<=AD
-				d>f; // base>AD
-				d>=f; // base>=AD
+				//d<f; // base<AD
+				//d<=f; // base<=AD
+				//d>f; // base>AD
+				//d>=f; // base>=AD
 			}
 		}
 	};

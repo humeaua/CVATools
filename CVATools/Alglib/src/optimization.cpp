@@ -7824,7 +7824,6 @@ namespace alglib_impl
             }
             itscount = itscount+1;
         }
-        ae_frame_leave(_state);
         return result;
     }
     
@@ -19263,7 +19262,6 @@ namespace alglib_impl
     lbl_45:
         result = ae_false;
         return result;
-        goto lbl_44;
     lbl_43:
         
         /*
@@ -19432,7 +19430,6 @@ namespace alglib_impl
     lbl_53:
         result = ae_false;
         return result;
-        goto lbl_52;
     lbl_51:
         
         /*
@@ -19499,7 +19496,7 @@ namespace alglib_impl
          */
         iflag = 0;
         goto lbl_48;
-        goto lbl_47;
+        //goto lbl_47;
     lbl_48:
         state->nu = 1;
         ae_assert(iflag>=-3&&iflag<=0, "MinLM: internal integrity check failed!", _state);

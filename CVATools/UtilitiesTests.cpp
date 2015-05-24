@@ -68,9 +68,10 @@ bool RegressionTest::CSVReaderTest() const
 {
     const std::string filename = "//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestCSV1.csv";
     std::ifstream file(filename.c_str());
-    CSVReader<double> csvReader(filename);
+    CSVReader csvReader(filename);
     
-    std::vector<double> values = *csvReader;
+    std::vector<double> values;
+    csvReader >> values;
     double refValues[] = {1,0};
     const double tolerance = 1e-10;
     double error = 0.0;

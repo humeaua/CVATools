@@ -13,10 +13,8 @@
 #include <iostream>
 #include "StringUtilities.h"
 #include <sstream>
-#include <tr1/memory>
 
-template <class T>
-class CSVReader : public __gnu_cxx::iterator<std::input_iterator_tag, T>
+class CSVReader
 {
     // need raw pointer since it has to be null
     std::istream * m_input;
@@ -35,7 +33,8 @@ public:
         m_input = NULL;
     }
     
-    std::vector<T> operator *() const
+    /*template<class T>
+    std::vector<T> operator >>(const CSVReader &) const
     {
         std::istringstream ss(m_value);
         std::vector<std::string> stringValues = Utilities::Split(m_value, m_delim);
@@ -47,7 +46,7 @@ public:
             ss >> vectType[i];
         }
         return vectType;
-    }
+    }*/
     
     std::istream & operator ++()
     {
@@ -62,7 +61,33 @@ public:
     {
         return m_input != NULL;
     }
+    
+    const std::string & getValue() const
+    {
+        return m_value;
+    }
+    
+    const char & getDelim() const
+    {
+        return m_delim;
+    }
 };
+
+template <class T>
+CSVReader & operator >> (CSVReader & reader, std::vector<T> & vectType)
+{
+    std::istringstream ss(reader.getValue());
+    std::vector<std::string> stringValues = Utilities::Split(reader.getValue(), reader.getDelim());
+    vectType.resize(stringValues.size());
+    for (size_t i = 0 ; i < stringValues.size() ; ++i)
+    {
+        std::stringstream ss ;
+        ss << stringValues[i];
+        ss >> vectType[i];
+    }
+    return reader;
+}
+
 
 
 #endif

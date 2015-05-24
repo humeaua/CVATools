@@ -27,11 +27,13 @@ public:
     
     void Load(const std::string & filename)
     {
-        CSVReader<T> csvReader(filename);
+        CSVReader csvReader(filename);
         
         while (csvReader)
         {
-            obj.push_back((*csvReader)[0]);
+            std::vector<T> value;
+            csvReader >> value;
+            obj.push_back(value[0]);
             
             ++csvReader;
         }

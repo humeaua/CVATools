@@ -31,9 +31,9 @@ public:
         
         while (csvReader)
         {
-            std::vector<T> value;
+            T value;
             csvReader >> value;
-            obj.push_back(value[0]);
+            obj.push_back(value);
             
             ++csvReader;
         }

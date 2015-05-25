@@ -76,7 +76,6 @@ public:
 template <class T>
 CSVReader & operator >> (CSVReader & reader, std::vector<T> & vectType)
 {
-    std::istringstream ss(reader.getValue());
     std::vector<std::string> stringValues = Utilities::Split(reader.getValue(), reader.getDelim());
     vectType.resize(stringValues.size());
     for (size_t i = 0 ; i < stringValues.size() ; ++i)
@@ -88,6 +87,18 @@ CSVReader & operator >> (CSVReader & reader, std::vector<T> & vectType)
     return reader;
 }
 
-
+template <class T>
+CSVReader & operator >> (CSVReader & reader, T & value)
+{
+    std::vector<std::string> stringValues = Utilities::Split(reader.getValue(), reader.getDelim());
+    if (stringValues.size() != 1)
+    {
+        throw EXCEPTION("Vector is of size stricly above one, you must use the vector version of the operator >>");
+    }
+    std::stringstream ss ;
+    ss << stringValues[0];
+    ss >> value;
+    return reader;
+}
 
 #endif

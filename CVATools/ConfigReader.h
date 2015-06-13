@@ -10,10 +10,23 @@
 #define __CVATools__ConfigReader__
 
 #include <stdio.h>
+#include "CSVReader.h"
+#include "Variant.h"
+#include <map>
+#include "Exception.h"
 
 class ConfigReader
 {
+    CSVReader base;
+    std::map<std::string, Utilities::Variant> m_internalMap;
+public:
+    ConfigReader(const std::string & filename);
     
+    template<class T>
+    void Fill(T & obj, const std::string & name) const
+    {
+        throw EXCEPTION("Not implemented, need to implement for special class");
+    }
 };
 
 #endif /* defined(__CVATools__ConfigReader__) */

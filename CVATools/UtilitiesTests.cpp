@@ -14,6 +14,8 @@
 #include "CSVReader.h"
 
 #include "StringUtilities.h"
+#include "ConfigReader.h"
+#include "PlayerID.h"
 
 bool RegressionTest::DoublePrecision() const
 {
@@ -86,6 +88,29 @@ bool RegressionTest::CSVReaderTest() const
     }
     
     if (error < tolerance)
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
+    else
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+}
+
+bool RegressionTest::ConfigReaderTest() const
+{
+    // to be written
+    const std::string filename ="//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestConfigReader.txt";
+    
+    ConfigReader configReader(filename);
+    PlayerID playerId("");
+    
+    const std::string refValue = "Alexandre";
+    configReader.Fill(playerId, "PlayerID");
+    
+    if (playerId.Name() == refValue)
     {
         m_out << "SUCCEEDED" << std::endl;
         return true;

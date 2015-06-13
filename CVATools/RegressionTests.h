@@ -41,6 +41,7 @@ public:
     bool DoublePrecision() const;
     bool ConfigLoaderTest() const;
     bool CSVReaderTest() const;
+    bool ConfigReaderTest() const;
     
     //  Golf unit testing
     bool PlayerResultTest() const;

@@ -13,6 +13,7 @@
 #include <iostream>
 #include "StringUtilities.h"
 #include <sstream>
+#include "Exception.h"
 
 class CSVReader
 {
@@ -22,7 +23,8 @@ class CSVReader
     std::string m_value;
 public:
     
-    CSVReader(const std::string & filename) : m_input(new std::fstream(filename.c_str())), m_delim(',')
+    CSVReader(const std::string & filename,
+              const char delim = ',') : m_input(new std::fstream(filename.c_str())), m_delim(delim)
     {
         ++ * this;
     }

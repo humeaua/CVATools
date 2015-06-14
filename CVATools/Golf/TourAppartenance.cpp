@@ -75,6 +75,8 @@ double TourAppartenance::MinimumRankingPoints(const Tournament &tournament) cons
     double avg = 0;
     for (std::vector<Tour_ptr>::const_iterator tour = m_tours.begin() ; tour != m_tours.end() ; ++tour)
     {
+        // check if one of the tours is a major or wgc (World Tour class)
+        //  A major or WGC cannot be co-sanctioned between several tour since there number of ranking points is already allocated to some maximum value
         WorldTour * worldTour = dynamic_cast<WorldTour*>((*tour).get());
         if (worldTour != NULL && CoSanctionedEvent())
         {

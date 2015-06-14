@@ -50,13 +50,13 @@ public:
         return vectType;
     }*/
     
-    std::istream & operator ++()
+    void operator ++()
     {
         if (!getline(*m_input, m_value, '\r'))
         {
             m_input = 0;
         }
-        return *m_input;
+        //return *m_input; // this is pretty bad since we dereference the NULL pointer
     }
     
     operator bool() const

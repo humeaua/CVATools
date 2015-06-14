@@ -10,33 +10,45 @@
 #define __CVATools__Variant__
 
 #include <iostream>
+#include "Exception.h"
 
 namespace Utilities
 {
     class Variant
     {
     protected:
-        double d;
-        int i;
-        long l;
-        std::string c;
+        double m_d;
+        int m_i;
+        long m_l;
+        std::string m_c;
+        
+        enum TYPE
+        {
+            DOUBLE, INT, LONG, STRING, MULTI, ERROR
+        };
+        
+        TYPE m_type;
+        
+        void SetType(TYPE newType);
     public:
+        //  need default constructor since used in map
         Variant();
+        Variant(double d);
+        Variant(int i);
+        Variant(long l);
+        Variant(const std::string & m_c);
         
         // Setters
-        virtual void SetDouble(double d0);
-        virtual void SetInt(int i0);
-        virtual void SetLong(long l0);
-        virtual void SetString(const std::string & c0);
+        void SetDouble(double d0);
+        void SetInt(int i0);
+        void SetLong(long l0);
+        void SetString(const std::string & c0);
         
         // Getters
-        virtual double GetDouble() const;
-        virtual int GetInt() const;
-        virtual long GetLong() const;
-        virtual std::string GetString() const;
-        
-        // Operators
-        virtual bool operator==(const Variant & sRight);
+        double GetDouble() const;
+        int GetInt() const;
+        long GetLong() const;
+        const std::string & GetString() const;
     };
 }
 

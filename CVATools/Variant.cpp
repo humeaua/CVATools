@@ -11,53 +11,75 @@
 
 namespace Utilities
 {
-    Variant::Variant() : d(0.0), i(0), l(0)
+    //  need default constructor since used in map
+    Variant::Variant() : m_type(ERROR), m_i(0), m_l(0L), m_d(0.0)
     {}
+    
+    Variant::Variant(int i) : m_d(0.0), m_i(i), m_l(0L), m_type(INT)
+    {}
+    
+    Variant::Variant(double d) : m_d(d), m_l(0L), m_i(0), m_type(DOUBLE)
+    {}
+    
+    Variant::Variant(long l) : m_d(0), m_l(l), m_i(0), m_type(LONG)
+    {}
+    
+    Variant::Variant(const std::string & s) : m_c(s), m_d(0.0), m_i(0), m_l(0L), m_type(STRING)
+    {}
+    
+    void Variant::SetType(Utilities::Variant::TYPE newType)
+    {
+        if (m_type == newType)
+        {
+            //  do not do anything since we have the same type
+        }
+        else
+        {
+            //  change type to multi
+            m_type = Utilities::Variant::MULTI;
+        }
+    }
     
     void Variant::SetDouble(double d0)
     {
-        d = d0;
+        m_d = d0;
+        SetType(DOUBLE);
     }
     
     void Variant::SetInt(int i0)
     {
-        i = i0;
+        m_i = i0;
+        SetType(INT);
     }
     void Variant::SetLong(long l0)
     {
-        l = l0;
+        m_l = l0;
+        SetType(LONG);
     }
     
     void Variant::SetString(const std::string & c0)
     {
-        c = c0;
+        m_c = c0;
+        SetType(STRING);
     }
     
     double Variant::GetDouble() const
     {
-        return d;
+        return m_d;
     }
     
     int Variant::GetInt() const
     {
-        return i;
+        return m_i;
     }
     
     long Variant::GetLong() const
     {
-        return l;
+        return m_l;
     }
     
-    std::string Variant::GetString() const
+    const std::string & Variant::GetString() const
     {
-        return c;
-    }
-    
-    bool Variant::operator==(const Variant & sRight)
-    {
-        return (std::abs(sRight.GetDouble() - d) < std::numeric_limits<double>::epsilon()
-                && sRight.GetInt() == i
-                && sRight.GetLong() == l
-                && sRight.GetString() == c);
+        return m_c;
     }
 }

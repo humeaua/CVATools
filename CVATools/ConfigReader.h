@@ -19,8 +19,11 @@ class ConfigReader
 {
     CSVReader base;
     std::map<std::string, Utilities::Variant> m_internalMap;
+    char m_delim;
+    
+    void Read();
 public:
-    ConfigReader(const std::string & filename);
+    ConfigReader(const std::string & filename, const char delim = '.');
     
     template<class T>
     void Fill(T & obj, const std::string & name) const

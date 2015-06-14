@@ -58,6 +58,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("DoublePrecision", &RegressionTest::DoublePrecision));
     m_mapping.insert(std::make_pair("ConfigLoader", &RegressionTest::ConfigLoaderTest));
     m_mapping.insert(std::make_pair("CSVReader", &RegressionTest::CSVReaderTest));
+    m_mapping.insert(std::make_pair("ConfigReader", &RegressionTest::ConfigReaderTest));
 }
 
 RegressionTestLauncher::RegressionTestLauncher(std::ostream & out) : RegressionTest(out)

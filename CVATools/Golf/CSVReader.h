@@ -52,7 +52,7 @@ public:
     
     void operator ++()
     {
-        if (!getline(*m_input, m_value, '\r'))
+        if (!getline(*m_input, m_value))
         {
             m_input = 0;
         }

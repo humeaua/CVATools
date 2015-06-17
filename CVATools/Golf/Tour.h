@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <tr1/memory>
+#include "EnumTranslator.h"
 
 //  Base class for the tours
 class Tournament;
@@ -38,6 +39,12 @@ enum TourType
     PGATOURCANADA,
     
     MAJOR
+};
+
+class TourTypeTranslator : public Utilities::EnumTranslator<TourType>
+{
+public:
+    TourTypeTranslator();
 };
 
 #endif /* defined(__CVATools__Tour__) */

@@ -1,0 +1,92 @@
+Regression Test Major
+SUCCEEDED
+
+Regression Test ConfigReader
+SUCCEEDED
+
+Regression Test Date
+Today is 3/2/2014
+SUCCEEDED
+SUCCEEDED
+
+Regression Test MargrabeOption
+SUCCEEDED
+
+Regression Test muParser
+SUCCEEDED
+
+Regression Test Bond pricing
+Test Bond Price : SUCCEEDED
+Test Bond Yield : SUCCEEDED
+Test Bond I-Spread : SUCCEEDED
+Test Bond Z-Spread : SUCCEEDED
+
+Regression Test TieHandler
+SUCCEEDED
+
+Regression Test GaussianKernel
+SUCCEEDED
+
+Regression Test Payoff linearization
+Payoff linearization : SUCCEDEED
+
+Regression Test Interpolation
+Linear interpolation : SUCCEEDED
+Log-lin DF interpolation : SUCCEEDED
+Left continuous interpolation : SUCCEEDED
+Right continuous interpolation : SUCCEEDED
+Hermite spline cubic interpolation  : SUCCEEDED
+Hermite degree 5 interpolation  : SUCCEEDED
+
+Regression Test Analytic
+SUCCEEDED
+
+Regression Test Normal
+Average : -0.0249871
+Stdev : 1.03297
+SUCCEEDED
+
+Regression Test PayoffParser
+SUCCEEDED
+
+Regression Test PlayerDispatcher
+SUCCEEDED
+
+Regression Test Statistic
+SUCCEEDED
+
+Regression Test CoSanctionedEvent
+CoSanctioned ? SUCCEEDED
+Ranking points : SUCCEEDED
+
+Regression Test Ticker
+SUCCEEDED
+
+Regression Test CSVReader
+SUCCEEDED
+
+Regression Test DefaultArguments
+SUCCEEDED
+
+Regression Test Debye Function
+SUCCEEDED
+
+Regression Test Time Statistics
+
+Mean old time elapsed  0.0113106 seconds
+Mean time elapsed  0.0122185 seconds
+Time ratio : 1.08027
+Computation mean : SUCCEEDED
+Variance old time elapsed  0.0138911 seconds
+Variance time elapsed  0.0305586 seconds
+Time ratio : 2.19987
+Computation variance : SUCCEEDED
+
+Regression Test DummyTournament
+Score : SUCCEEDED
+Rank : SUCCEEDED
+
+Regression Test Exception
+SUCCEEDED
+
+Regression Test ConfigReaderPlayer

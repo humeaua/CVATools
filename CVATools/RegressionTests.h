@@ -42,6 +42,7 @@ public:
     bool ConfigLoaderTest() const;
     bool CSVReaderTest() const;
     bool ConfigReaderTest() const;
+    bool ConfigReaderPlayerTest() const;
     
     //  Golf unit testing
     bool PlayerResultTest() const;

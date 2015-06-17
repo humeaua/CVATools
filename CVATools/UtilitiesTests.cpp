@@ -15,7 +15,7 @@
 
 #include "StringUtilities.h"
 #include "ConfigReader.h"
-#include "PlayerID.h"
+#include "Player.h"
 
 bool RegressionTest::DoublePrecision() const
 {
@@ -68,7 +68,7 @@ bool RegressionTest::ConfigLoaderTest() const
 
 bool RegressionTest::CSVReaderTest() const
 {
-    const std::string filename = "//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestCSV1.csv";
+    const std::string filename = "//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestCSV1.txt";
     std::ifstream file(filename.c_str());
     CSVReader csvReader(filename);
     
@@ -111,6 +111,27 @@ bool RegressionTest::ConfigReaderTest() const
     configReader.Fill(playerId, "PlayerID");
     
     if (playerId.Name() == refValue)
+    {
+        m_out << "SUCCEEDED" << std::endl;
+        return true;
+    }
+    else
+    {
+        m_out << "FAILED" << std::endl;
+        return false;
+    }
+}
+
+bool RegressionTest::ConfigReaderPlayerTest() const
+{
+    const std::string filename ="//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestConfigReaderPlayer.txt";
+    
+    ConfigReader configReader(filename);
+    Player player("",TourType(1));
+    
+    const std::string refValue = "Alexandre";
+    configReader.Fill(player, "Player");
+    if (player.Name() == refValue)
     {
         m_out << "SUCCEEDED" << std::endl;
         return true;

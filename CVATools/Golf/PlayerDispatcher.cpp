@@ -17,7 +17,7 @@ void PlayerDispatcher::Dispatch(std::vector<Player> &players, std::vector<Tourna
 {
     for (std::vector<Player>::iterator player = players.begin() ; player != players.end() ; ++player)
     {
-        const TourType & tourMemberShip = player->TourMembership();
+        const TourType & tourMemberShip = player->GetTourMembership();
         if (!player->IsPlayerPlayingThisWeek())
         {
             for (std::vector<Tournament>::iterator tournament = tournaments.begin() ; tournament != tournaments.end() ; ++tournament)

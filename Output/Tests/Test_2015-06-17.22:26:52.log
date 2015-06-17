@@ -1,0 +1,161 @@
+Regression Test Major
+SUCCEEDED
+
+Regression Test ConfigReader
+SUCCEEDED
+
+Regression Test Date
+Today is 3/2/2014
+SUCCEEDED
+SUCCEEDED
+
+Regression Test MargrabeOption
+SUCCEEDED
+
+Regression Test muParser
+SUCCEEDED
+
+Regression Test Bond pricing
+Test Bond Price : SUCCEEDED
+Test Bond Yield : SUCCEEDED
+Test Bond I-Spread : SUCCEEDED
+Test Bond Z-Spread : SUCCEEDED
+
+Regression Test TieHandler
+SUCCEEDED
+
+Regression Test GaussianKernel
+SUCCEEDED
+
+Regression Test Payoff linearization
+Payoff linearization : SUCCEDEED
+
+Regression Test Interpolation
+Linear interpolation : SUCCEEDED
+Log-lin DF interpolation : SUCCEEDED
+Left continuous interpolation : SUCCEEDED
+Right continuous interpolation : SUCCEEDED
+Hermite spline cubic interpolation  : SUCCEEDED
+Hermite degree 5 interpolation  : SUCCEEDED
+
+Regression Test Analytic
+SUCCEEDED
+
+Regression Test Normal
+Average : -0.0249871
+Stdev : 1.03297
+SUCCEEDED
+
+Regression Test PayoffParser
+SUCCEEDED
+
+Regression Test PlayerDispatcher
+SUCCEEDED
+
+Regression Test Statistic
+SUCCEEDED
+
+Regression Test CoSanctionedEvent
+CoSanctioned ? SUCCEEDED
+Ranking points : SUCCEEDED
+
+Regression Test Ticker
+SUCCEEDED
+
+Regression Test CSVReader
+SUCCEEDED
+
+Regression Test DefaultArguments
+SUCCEEDED
+
+Regression Test Debye Function
+SUCCEEDED
+
+Regression Test Time Statistics
+
+Mean old time elapsed  0.0123124 seconds
+Mean time elapsed  0.011389 seconds
+Time ratio : 0.925002
+Computation mean : SUCCEEDED
+Variance old time elapsed  0.0134175 seconds
+Variance time elapsed  0.0284867 seconds
+Time ratio : 2.1231
+Computation variance : SUCCEEDED
+
+Regression Test DummyTournament
+Score : SUCCEEDED
+Rank : SUCCEEDED
+
+Regression Test Exception
+SUCCEEDED
+
+Regression Test ConfigReaderPlayer
+SUCCEEDED
+
+Regression Test ConfigLoader
+SUCCEEDED
+
+Regression Test Sobol
+SUCCEEDED
+
+Regression Test VolatilitySurface
+Non-Arbitrageability of smile : 1
+SVI Parametrisation arbitrable ? 0
+Hermite Interpolation of smile : SUCCEEDED
+SVI Parametrisation of smile : SUCCEEDED
+Smile skew : SUCCEEDED
+Convexity of smile : SUCCEEDED
+
+Regression Test Tours
+SUCCEEDED
+
+Regression Test StaticDataRanking
+Interpolator : SUCCEEDED
+Home Rating Value : SUCCEEDED
+World Event Rating Value : SUCCEEDED
+Total Rating to 1st point : SUCCEEDED
+Points compared to 1st : SUCCEEDED
+
+Regression Test DoublePrecision
+SUCCEEDED
+
+Regression Test OWGRVectorWrapper
+SUCCEEDED
+
+Regression Test PlayerResults
+SUCCEEDED
+
+Regression Test Discrete Distribution
+Average : 3.022
+Stdev : 1.00152
+SUCCEEDED
+
+Regression Test MultipleTournaments
+Score : SUCCEEDED
+Rank : SUCCEEDED
+
+Regression Test Newton Solver
+SUCCEEDED
+
+Regression Test Bernouilli
+Average : 0.494
+Stdev : 0.249964
+SUCCEEDED
+
+Regression Test Process Path Simulation
+Square Root process Simulation : SUCCEEDED
+Ornstein Ulhenbeck process Simulation : SUCCEEDED
+Black Scholes process Simulation : SUCCEEDED
+Stochastic correlation process Simulation : SUCCEEDED
+CEV process Simulation : SUCCEEDED
+
+Regression Test Matrix inversion
+10	-4	0.5	
+-15	7	-1	
+6	-3	0.5	
+10	-4	0.5	
+-15	7	-1	
+6	-3	0.5	
+SUCCEEDED
+
+Regression Test Launcher succeeded : all tests succeed

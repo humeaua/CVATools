@@ -46,7 +46,12 @@ const bool & Player::IsPlayerPlayingThisWeek() const
     return m_isPlayingThisWeek;
 }
 
-const TourType & Player::TourMembership() const
+const TourType & Player::GetTourMembership() const
 {
     return m_tourMembership.GetTourType();
+}
+
+void Player::SetTourMembership(const TourType &eType)
+{
+    m_tourMembership = TourMembership(eType);
 }

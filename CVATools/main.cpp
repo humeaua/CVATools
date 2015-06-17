@@ -59,16 +59,13 @@ int main()
     catch (const Utilities::MyException & excep)
     {
         std::cout << "MyException caught : " << excep.what() << std::endl;
-        throw;
     }
     catch (const std::exception & excep)
     {
         std::cout << "std::exception caught : " << excep.what() << std::endl;
-        throw;
     }
     catch (...)
     {
         std::cout << "Unknown exception caught !" << std::endl;
-        throw;
     }
 }

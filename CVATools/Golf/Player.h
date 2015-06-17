@@ -36,7 +36,8 @@ public:
     bool & IsPlayerPlayingThisWeek();
     const bool & IsPlayerPlayingThisWeek() const;
     
-    const TourType & TourMembership() const;
+    const TourType & GetTourMembership() const;
+    void SetTourMembership(const TourType & eType);
 };
 
 #endif /* defined(__CVATools__Player__) */

@@ -7,7 +7,7 @@
 //
 
 #include "ConfigReader.h"
-#include "PlayerID.h"
+#include "Player.h"
 
 ConfigReader::ConfigReader(const std::string & filename, const char delim) : base(filename), m_delim(delim)
 {
@@ -35,11 +35,30 @@ void ConfigReader::Read()
 template<>
 void ConfigReader::Fill(PlayerID & playerId, const std::string & name) const
 {
-    std::string lookupValue = name + m_delim + "NAME";
+    const std::string lookupValue = name + m_delim + "NAME";
     std::map<std::string, Utilities::Variant>::const_iterator it = m_internalMap.find(lookupValue);
     
     if (it != m_internalMap.end())
     {
         playerId = PlayerID(it->second.GetString());
+    }
+}
+
+template<>
+void ConfigReader::Fill(Player & player, const std::string & name) const
+{
+    const std::string prefix = name + m_delim;
+    const std::string lookupPlayerID = prefix + "PlayerID";
+    
+    Fill((PlayerID&)player, lookupPlayerID);
+    
+    const std::string lookupTour = prefix + "Tour";
+    std::map<std::string, Utilities::Variant>::const_iterator it = m_internalMap.find(lookupTour);
+    
+    if (it != m_internalMap.end())
+    {
+        const std::string tourStr = it->second.GetString();
+        TourTypeTranslator translator;
+        player.SetTourMembership(translator.Translate(tourStr));
     }
 }

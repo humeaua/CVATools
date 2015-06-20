@@ -30,31 +30,12 @@ bool RegressionTest::PlayerResultTest() const
 {
     PlayerResult result1("Tournament1", Utilities::Date::MyDate(30,9,2014), 30, 288, 1.5);
     
-    if (result1.MissedCut())
-    {
-        m_out << "Missed Cut is true" << std::endl;
-        return false;
-    }
+    REGRESSIONTESTRETURNONFAILURE(!result1.MissedCut())
+    REGRESSIONTESTRETURNONFAILURE(result1.Position() == 30)
+    REGRESSIONTESTRETURNONFAILURE(result1.Score() == 288)
+    REGRESSIONTESTRETURNONFAILURE(result1.RankingPoints() == 1.5)
     
-    if (result1.Position() != 30)
-    {
-        m_out << "Position is not 30" << std::endl;
-        return false;
-    }
-    
-    if (result1.Score() != 288)
-    {
-        m_out << "Score is not 288" << std::endl;
-        return false;
-    }
-    
-    if (result1.RankingPoints() != 1.5)
-    {
-        m_out << "Ranking points is not 1.5" << std::endl;
-        return false;
-    }
-    m_out << "SUCCEEDED" << std::endl;
-    return true;
+    REGRESSIONTESTRETURNSUCCESS
 }
 
 bool RegressionTest::DummyTournament() const
@@ -91,15 +72,7 @@ bool RegressionTest::DummyTournament() const
 #endif
     }
     
-    if (error < 1)
-    {
-        m_out << "Score : SUCCEEDED" << std::endl;
-    }
-    else
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
+    REGRESSIONTESTRETURNONFAILURE(error<1)
     
     size_t error2 = 0;
     for (size_t player = 0 ; player < players.size() ; ++player)
@@ -117,15 +90,7 @@ bool RegressionTest::DummyTournament() const
         error2 += std::abs((long)rank[player] - (long)players[player].Results()[0].Position());
     }
     
-    if (error2 < 1)
-    {
-        m_out << "Rank : SUCCEEDED" << std::endl;
-    }
-    else
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
+    REGRESSIONTESTRETURNONFAILURE(error2 < 1)
     
     Utilities::Date::MyDate tomorrow(19,12,2014);
     rankings.Compute(std::vector<Tournament>(1, tournament), tomorrow);
@@ -134,7 +99,7 @@ bool RegressionTest::DummyTournament() const
     m_out << rankings << std::endl;
 #endif
     
-    return true;
+    REGRESSIONTESTRETURNSUCCESS
 }
 
 bool RegressionTest::StaticDataRanking() const
@@ -155,15 +120,7 @@ bool RegressionTest::StaticDataRanking() const
 #endif
     }
     const double tolerance = 1e-10;
-    if (errorInterpolator > tolerance)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-    }
+    REGRESSIONTESTRETURNONFAILURE(errorInterpolator<tolerance)
     
     m_out << "Home Rating Value : ";
     std::vector<double> & homeRatingValue = PointsSystemStaticData::GetHomeRatingValues();
@@ -176,15 +133,8 @@ bool RegressionTest::StaticDataRanking() const
         m_out << homeRatingValue[i] << "," ;
 #endif
     }
-    if (errorHomeRating > tolerance || homeRatingValue.size() != 30)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-    }
+    
+    REGRESSIONTESTRETURNONFAILURE(errorHomeRating < tolerance && homeRatingValue.size() == 30)
     
     m_out << "World Event Rating Value : ";
     std::vector<double> & worldEventRatingValue = PointsSystemStaticData::GetEventRatingValues();
@@ -197,15 +147,7 @@ bool RegressionTest::StaticDataRanking() const
         m_out << worldEventRatingValue[i] << "," ;
 #endif
     }
-    if (errorHomeRating > tolerance || worldEventRatingValue.size() != 200)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-    }
+    REGRESSIONTESTRETURNONFAILURE(errorHomeRating < tolerance && worldEventRatingValue.size() == 200)
     
     m_out << "Total Rating to 1st point : ";
     Utilities::Interp::Interpolator & totalRatingTo1stPoint = PointsSystemStaticData::GetTotalRatingToFirstPointInterpolator();
@@ -220,15 +162,7 @@ bool RegressionTest::StaticDataRanking() const
         errorTotalRatingTo1stPoint += std::abs(refValuestotalRatingTo1stPoints[i] - totalRatingTo1stPoint(d));
     }
     
-    if (errorTotalRatingTo1stPoint > tolerance || totalRatingTo1stPoint.size() != 93)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-    }
+    REGRESSIONTESTRETURNONFAILURE(errorTotalRatingTo1stPoint < tolerance && totalRatingTo1stPoint.size() == 93)
     
     m_out << "Points compared to 1st : ";
     const OWGRVectorWrapper<double> & pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
@@ -242,17 +176,7 @@ bool RegressionTest::StaticDataRanking() const
 #endif
     }
     
-    if (errorPointsComparedTo1st > tolerance)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-    }
-    
-    return true;
+    REGRESSIONTESTRETURN(errorPointsComparedTo1st < tolerance)
 }
 
 bool RegressionTest::MultipleTournamentsSameWeek() const
@@ -308,15 +232,7 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
 #endif
     }
     
-    if (error < 1)
-    {
-        m_out << "Score : SUCCEEDED" << std::endl;
-    }
-    else
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
+    REGRESSIONTESTRETURNONFAILURE(error < 1)
     
     size_t error2 = 0;
     for (size_t player = 0 ; player < players.size() ; ++player)
@@ -335,15 +251,7 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
         error2 += std::abs((long)rank[player] - (long)players[player].Results()[0].Position());
     }
     
-    if (error2 < 1)
-    {
-        m_out << "Rank : SUCCEEDED" << std::endl;
-    }
-    else
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
+    REGRESSIONTESTRETURNONFAILURE(error2 < 1)
     
     Utilities::Date::MyDate tomorrow(19,12,2014);
     std::vector<Tournament> thisWeekTournaments;
@@ -356,7 +264,7 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
     m_out << rankings << std::endl;
 #endif
     
-    return true;
+    REGRESSIONTESTRETURNSUCCESS
 }
 
 bool RegressionTest::CoSanctionedTournament() const
@@ -368,15 +276,8 @@ bool RegressionTest::CoSanctionedTournament() const
     Tournament tournament("dummyEuro",Utilities::Date::MyDate(14,01,2015), tourTypes);
     m_out << "CoSanctioned ? ";
     const bool isCoSanctioned = tournament.CoSanctionedEvent();
-    if (!isCoSanctioned)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-    }
+    
+    REGRESSIONTESTRETURNONFAILURE(isCoSanctioned)
     
     m_out << "Ranking points : ";
     Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
@@ -384,17 +285,8 @@ bool RegressionTest::CoSanctionedTournament() const
     tournament.SetPointsTo1st(rankingPtSystem);
     const double rankingPoints = tournament.GetPointsTo1st();
     const double refValue = 18.0, tolerance = 1e-15;
-    if (std::abs(rankingPoints-refValue) < tolerance)
-    {
-        m_out << "SUCCEEDED" << std::endl;
-    }
-    else
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
     
-    return true;
+    REGRESSIONTESTRETURN(std::abs(rankingPoints-refValue) < tolerance)
 }
 
 bool RegressionTest::TieHandler() const
@@ -441,16 +333,7 @@ bool RegressionTest::TieHandler() const
     }
     
     const double tolerance = 1e-10;
-    if (std::abs(sum - refValue) < tolerance)
-    {
-        m_out << "SUCCEEDED" << std::endl;
-        return true;
-    }
-    else
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
+    REGRESSIONTESTRETURN(std::abs(sum - refValue) < tolerance)
 }
 
 bool RegressionTest::Tours() const
@@ -476,16 +359,7 @@ bool RegressionTest::Tours() const
         
     }
     
-    if (error > tolerance)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-        return true;
-    }
+    REGRESSIONTESTRETURN(error < tolerance)
 }
 
 bool RegressionTest::OWGRVectorWrapperTest() const
@@ -501,16 +375,7 @@ bool RegressionTest::OWGRVectorWrapperTest() const
         error += std::abs(refValues[i]-wrapper[i]);
     }
     
-    if (error < tolerance)
-    {
-        m_out << "SUCCEEDED" << std::endl;
-        return true;
-    }
-    else
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
+    REGRESSIONTESTRETURN(error < tolerance)
 }
 
 bool RegressionTest::Major() const
@@ -523,16 +388,7 @@ bool RegressionTest::Major() const
     
     const double refValue = 100.0, tolerance = 1e-14;
     
-    if (std::abs(refValue - rankingPoints) > tolerance)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-        return true;
-    }
+    REGRESSIONTESTRETURN(std::abs(refValue - rankingPoints) < tolerance)
 }
 
 bool RegressionTest::PlayerDispatcher() const
@@ -614,14 +470,5 @@ bool RegressionTest::PlayerDispatcher() const
         }
     }
     
-    if (error > 0)
-    {
-        m_out << "FAILED" << std::endl;
-        return false;
-    }
-    else
-    {
-        m_out << "SUCCEEDED" << std::endl;
-        return true;
-    }
+    REGRESSIONTESTRETURN(error == 0)
 }

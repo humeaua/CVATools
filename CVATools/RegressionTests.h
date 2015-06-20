@@ -10,6 +10,47 @@
 #define __CVATools__RegressionTests__
 
 #include <iostream>
+#include <typeinfo>
+
+// Print the name of the function in the logging : temporary solution use typeid(*this) but it does not work entirely properly since it return some kind of number before the actual class name (should fix it at some point but not main concern currently)
+
+#ifndef NAME_OF_FUNCTION
+#define NAME_OF_FUNCTION typeid(*this).name() << "::" << __FUNCTION__
+#endif
+
+#ifndef REGRESSIONTESTRETURNSUCCESS
+#define REGRESSIONTESTRETURNSUCCESS \
+m_out << "Test succeeded " << __FUNCTION__ << " (" << NAME_OF_FUNCTION<< ")" << std::endl;\
+return true;
+#endif
+
+#ifndef REGRESSIONTESTRETURN
+#define REGRESSIONTESTRETURN(condition) \
+if ((condition))\
+{\
+    m_out << "Test Succeeded : " << #condition << " (" << NAME_OF_FUNCTION << ")" << std::endl;\
+    REGRESSIONTESTRETURNSUCCESS\
+}\
+else\
+{\
+    m_out << "Test Failed : "<< #condition << " on line " << __LINE__ << " (" << NAME_OF_FUNCTION << ")" << std::endl;\
+    return false;\
+}
+
+#endif
+
+#ifndef REGRESSIONTESTRETURNONFAILURE
+#define REGRESSIONTESTRETURNONFAILURE(condition) \
+if (!(condition))\
+{\
+    m_out << "Test Failed : " << #condition << " on line " << __LINE__ << " (" << NAME_OF_FUNCTION << ")" << std::endl;\
+    return false;\
+}\
+else\
+{\
+    m_out << "Test Succeeded : " << #condition << " (" << NAME_OF_FUNCTION << ")" << std::endl;\
+}
+#endif
 
 class RegressionTest {
 protected:

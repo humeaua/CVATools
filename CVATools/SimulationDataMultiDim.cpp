@@ -8,6 +8,7 @@
 
 #include "SimulationDataMultiDim.h"
 #include "Exception.h"
+#include <iomanip>
 
 namespace Utilities
 {
@@ -105,23 +106,25 @@ namespace Utilities
             throw EXCEPTION("Could not find Date");
         }
     }
-}
-
-std::ostream& operator<<(std::ostream & os, const Utilities::SimulationDataMultiDim & obj)
-{
-    const std::map<double, std::map<size_t, std::vector<double> > > & data = obj.GetData();
-    for (std::map<double, std::map<size_t, std::vector<double> > >::const_iterator itDate = data.begin() ; itDate != data.end() ; ++itDate)
+    
+    std::string SimulationDataMultiDim::ToString(const int precision) const
     {
-        os << "Date " << itDate->first << std::endl;
-        for (std::map<size_t, std::vector<double> >::const_iterator itPath = itDate->second.begin() ; itPath != itDate->second.end() ; ++itPath)
+        const std::map<double, std::map<size_t, std::vector<double> > > & data = GetData();
+        std::stringstream os;
+        os << std::setprecision(precision);
+        for (std::map<double, std::map<size_t, std::vector<double> > >::const_iterator itDate = data.begin() ; itDate != data.end() ; ++itDate)
         {
-            os << "Path " << itPath->first << std::endl;
-            for (size_t i = 0 ; i < itPath->second.size() ; ++i)
+            os << "Date " << itDate->first << std::endl;
+            for (std::map<size_t, std::vector<double> >::const_iterator itPath = itDate->second.begin() ; itPath != itDate->second.end() ; ++itPath)
             {
-                os << i << " : " << itPath->second[i] << std::endl;
+                os << "Path " << itPath->first << std::endl;
+                for (size_t i = 0 ; i < itPath->second.size() ; ++i)
+                {
+                    os << i << " : " << itPath->second[i] << std::endl;
+                }
             }
         }
+        
+        return os.str();
     }
-    
-    return os;
 }

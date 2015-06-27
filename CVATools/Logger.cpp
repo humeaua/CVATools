@@ -22,6 +22,6 @@ namespace Utilities
     
     void Logger::AddOneLine()
     {
-        m_os << std::endl;
+        m_os << getCurrentTime() << " > " << std::endl;
     }
 }

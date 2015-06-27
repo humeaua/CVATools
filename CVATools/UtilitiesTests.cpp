@@ -30,12 +30,12 @@ bool RegressionTest::DoublePrecision() const
     
     if (error < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }
@@ -56,12 +56,12 @@ bool RegressionTest::ConfigLoaderTest() const
     
     if (error > tolerance)
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     else
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
 }
@@ -89,12 +89,12 @@ bool RegressionTest::CSVReaderTest() const
     
     if (error < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }
@@ -112,12 +112,12 @@ bool RegressionTest::ConfigReaderTest() const
     
     if (playerId.Name() == refValue)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }
@@ -133,12 +133,12 @@ bool RegressionTest::ConfigReaderPlayerTest() const
     configReader.Fill(player, "Player");
     if (player.Name() == refValue)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }

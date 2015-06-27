@@ -43,7 +43,7 @@
 
 //  Declaration of all the regression tests
 
-RegressionTest::RegressionTest(std::ostream & os) : m_out(os)
+RegressionTest::RegressionTest(std::ostream & os) : m_logger(os)
 {}
 
 bool RegressionTest::BondPricing() const
@@ -88,72 +88,72 @@ bool RegressionTest::BondPricing() const
         const double dRefBondPrice = 0.717563489599423;
         const double dTolerance = 1.0e-10;
         
-        m_out << "Test Bond Price : ";
+        m_logger.PutLine("Test Bond Price : ");
 
         if (fabs(dBondPrice - dRefBondPrice) < dTolerance)
         {
-            m_out << "SUCCEEDED" << std::endl;
+            m_logger.PutLine("SUCCEEDED");
         }
         else
         {
-            m_out << "FAILED" << std::endl;
+            m_logger.PutLine("FAILED");
             return false;
         }
         
-        m_out << "Test Bond Yield : ";
+        m_logger.PutLine("Test Bond Yield : ");
         const double dPriceToYield = sBondPricer.PriceToYield(dBondPrice);
         const double dRefYield = 0.0272162086597243;
         if (fabs(dPriceToYield - dRefYield) < dTolerance)
         {
-            m_out << "SUCCEEDED" << std::endl;
+            m_logger.PutLine("SUCCEEDED");
         }
         else
         {
-            m_out << "FAILED" << std::endl;
+            m_logger.PutLine("FAILED");
             return false;
         }
         
-        m_out << "Test Bond I-Spread : ";
+        m_logger.PutLine("Test Bond I-Spread : ");
         const double dISpread = sBondPricer.I_Spread(dBondPrice);
         const double dRefISpread =-0.000364158958578442;
         if (fabs(dISpread - dRefISpread) < dTolerance)
         {
-            m_out << "SUCCEEDED" << std::endl;
+            m_logger.PutLine("SUCCEEDED");
         }
         else
         {
-            m_out << "FAILED" << std::endl;
+            m_logger.PutLine("FAILED");
             return false;
         }
         
-        m_out << "Test Bond Z-Spread : ";
+        m_logger.PutLine("Test Bond Z-Spread : ");
         const double dZSpread = sBondPricer.Z_Spread(dBondPrice);	
         const double dRefZSpread = 0.000384933028693842;
         if (fabs(dZSpread - dRefZSpread) < dTolerance)
         {
-            m_out << "SUCCEEDED" << std::endl;
+            m_logger.PutLine("SUCCEEDED");
         }
         else
         {
-            m_out << "FAILED" << std::endl;
+            m_logger.PutLine("FAILED");
             return false;
         }
     }
     catch(const Utilities::MyException & e)
     {
-        m_out << "MyException caught : " << std::endl;
-        m_out << e.what() << std::endl;
+        m_logger.PutLine("MyException caught : ");
+        m_logger.PutLine(e.what());
         return false;
     }
     catch(const std::exception & e)
     {
-        m_out << "Exception caught : " << std::endl;
-        m_out << e.what() << std::endl;
+        m_logger.PutLine("std::exception caught : ");
+        m_logger.PutLine(e.what());
         return false;
     }
     catch(...)
     {
-        m_out << "Unknown exception caught" << std::endl;
+        m_logger.PutLine("Unknown exception caught");
         return false;
     }
     return true;
@@ -165,7 +165,7 @@ bool RegressionTest::TimeStatistics() const
     {
         // Regression Test Statistics Time
         std::size_t iNTimes = 10;
-        m_out << std::endl;
+        m_logger.AddOneLine();
         std::vector<double> dData(1000000, 1.0);
         double dTimeOld = 0.0, dTimeNew = 0.0;
         for (size_t iTimes = 0; iTimes < iNTimes ; ++iTimes)
@@ -186,18 +186,15 @@ bool RegressionTest::TimeStatistics() const
             }
             dTimeNew += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
         }
-        m_out << "Mean old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
-        m_out << "Mean time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
         
-        m_out << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
-        m_out << "Computation mean : ";
+        m_logger.PutLine("Computation mean : ");
         if (dTimeNew < 1.25 * dTimeOld)
         {
-            m_out << "SUCCEEDED" << std::endl;
+            m_logger.PutLine("SUCCEEDED");
         }
         else
         {
-            m_out << "FAILED" << std::endl;
+            m_logger.PutLine("FAILED");
             return false;
         }
         
@@ -221,35 +218,32 @@ bool RegressionTest::TimeStatistics() const
             }
             dTimeNew += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
         }
-        m_out << "Variance old time elapsed  " << dTimeOld / iNTimes << " seconds" << std::endl;
-        m_out << "Variance time elapsed  " << dTimeNew / iNTimes << " seconds" << std::endl;
         
-        m_out << "Time ratio : " << dTimeNew / dTimeOld << std::endl;
-        m_out << "Computation variance : ";
+        m_logger.PutLine("Computation variance : ");
         //  New algorithm seems to be around 3 times slower
         if (3.0 * dTimeNew > dTimeOld)
         {
-            m_out << "SUCCEEDED" << std::endl;
+            m_logger.PutLine("SUCCEEDED");
         }
         else
         {
-            m_out << "FAILED" << std::endl;
+            m_logger.PutLine("FAILED");
             return false;
         }
     }
     catch (const Utilities::MyException & excep)
     {
-        m_out << "MyException caught : " << excep.what() << std::endl;
+        m_logger.PutLine("MyException caught : " + std::string(excep.what()));
         return false;
     }
     catch (const std::exception & excep)
     {
-        m_out << "std::exception caught : " << excep.what() << std::endl;
+        m_logger.PutLine("std::exception caught : " + std::string(excep.what()));
         return false;
     }
     catch (...)
     {
-        m_out << "Unknown exception caught" << std::endl;
+        m_logger.PutLine("Unknown exception caught");
         return false;
     }
     return true;
@@ -276,14 +270,14 @@ bool RegressionTest::PayoffLinearization() const
     const double dRefConstant = -0.467719463611643, dRefCoefStock = 0.628602529249528;
     const std::pair<double, double> dRegCoefs = sPayoffLinearization.Linearise(sBlackScholes, sPayoff, dSimulationsDates);
     const double dEpsilon = 1e-6;
-    m_out << "Payoff linearization : " ;
+    m_logger.PutLine("Payoff linearization : ");
     if (fabs(dRegCoefs.first - dRefCoefStock) < dEpsilon && fabs(dRegCoefs.second - dRefConstant) < dEpsilon)
     {
-        m_out << "SUCCEDEED" << std::endl;
+        m_logger.PutLine("SUCCEDEED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     
@@ -320,64 +314,64 @@ bool RegressionTest::Interpolation() const
     }
     
     const double dTolerance = 1e-5;
-    m_out << "Linear interpolation : ";
+    m_logger.PutLine("Linear interpolation : ");
     if (dErrorlin < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Log-lin DF interpolation : ";
+    m_logger.PutLine("Log-lin DF interpolation : ");
     if (dErrorloglindf < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Left continuous interpolation : ";
+    m_logger.PutLine("Left continuous interpolation : ");
     if (dErrorleftcontinuous < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Right continuous interpolation : ";
+    m_logger.PutLine("Right continuous interpolation : ");
     if (dErrorrightcontinuous < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Hermite spline cubic interpolation  : ";
+    m_logger.PutLine("Hermite spline cubic interpolation  : ");
     if (dErrorhermite < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Hermite degree 5 interpolation  : ";
+    m_logger.PutLine("Hermite degree 5 interpolation  : ");
     if (dErrorhermite5 < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     return true;
@@ -397,22 +391,24 @@ bool RegressionTest::VolatilitySurfaceInterpolation() const
     }
     catch (const Utilities::MyException & excep)
     {
-        m_out << excep.what() << std::endl;
+        m_logger.PutLine(excep.what());
         return false;
     }
     catch (const std::exception & excep)
     {
-        m_out << excep.what() << std::endl;
+        m_logger.PutLine(excep.what());
         return false;
     }
     catch (...)
     {
-        m_out << "Unknown exception caught" << std::endl;
+        m_logger.PutLine("Unknown exception caught");
         return false;
     }
     
-    m_out << "Non-Arbitrageability of smile : " << volSmile.IsArbitrageFree() << std::endl;
-    m_out << "SVI Parametrisation arbitrable ? " << sviParameterSolver.IsArbitrable(T) << std::endl;
+    m_logger.PutLine("Non-Arbitrageability of smile : ");
+    m_logger.PutLine(volSmile.IsArbitrageFree());
+    m_logger.PutLine("SVI Parametrisation arbitrable ? ");
+    m_logger.PutLine(sviParameterSolver.IsArbitrable(T));
 
     
     double dVolHermiteInterp[] = {0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.199955909,0.199689734,0.199081336,0.198094904,0.196754089,0.19512155,0.193282206,0.191329615,0.189354987,0.187438405,0.185641902,0.184004098,0.182536136,0.181218712,0.18,0.177819828,0.175742583,0.173828076,0.172080715,0.170466648,0.168928276,0.167396491,0.165800937,0.164078559,0.162180664,0.160078705,0.15776894,0.155276176,0.152656598,0.15,0.14717476,0.14340999,0.138521685,0.132949327,0.127473701,0.122974304,0.120221805,0.119701462,0.121463895,0.125,0.129374691,0.134125924,0.138991353,0.143745486,0.148209001,0.152256557,0.15582327,0.158909988,0.161587532,0.164,0.166327361,0.168636065,0.170945902,0.173265008,0.175592626,0.177921568,0.180240405,0.1825354,0.18479223,0.186997494,0.189140045,0.191212151,0.193210507,0.195137106,0.197,0.198859901,0.200861613,0.203076471,0.205502719,0.208085317,0.210733763,0.21333809,0.215783199,0.217961653,0.21978509,0.221194336,0.222168368,0.222732195,0.22296377,0.223,0.223,0.223,0.223,0.223,0.223,0.223,0.223,0.223,0.223};
@@ -429,44 +425,46 @@ bool RegressionTest::VolatilitySurfaceInterpolation() const
         dErrorSmileSkew += std::abs(volSmile.skew(dStrike) - dSmileSkew[i]);
     }
     const double dTolerance = 1e-06;
-    m_out << "Hermite Interpolation of smile : ";
+    m_logger.PutLine("Hermite Interpolation of smile : ");
     if (dErrorInterpHermite < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "SVI Parametrisation of smile : " ;
+    m_logger.PutLine("SVI Parametrisation of smile : ");
     if (dErrorSVIParabola < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED. Error = " << dErrorSVIParabola << std::endl;
+        std::stringstream ss;
+        ss << dErrorSVIParabola;
+        m_logger.PutLine("FAILED. Error = " + ss.str());
         return false;
     }
-    m_out << "Smile skew : " ;
+    m_logger.PutLine("Smile skew : ");
     if (dErrorSmileSkew < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Convexity of smile : " ;
+    m_logger.PutLine("Convexity of smile : ");
     if (dErrorSmileConvexity < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     return true;
@@ -508,54 +506,54 @@ bool RegressionTest::ProcessPathSimulation() const
         dDiffCEV += std::abs(dRefValuesCEV[iDate] - ResultsCEV[iDate]);
     }
     
-    m_out << "Square Root process Simulation : ";
+    m_logger.PutLine("Square Root process Simulation : ");
     if (dDiffSquareRoot < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Ornstein Ulhenbeck process Simulation : ";
+    m_logger.PutLine("Ornstein Ulhenbeck process Simulation : ");
     if (dDiffOU < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Black Scholes process Simulation : ";
+    m_logger.PutLine("Black Scholes process Simulation : ");
     if (dDiffBS < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "Stochastic correlation process Simulation : ";
+    m_logger.PutLine("Stochastic correlation process Simulation : ");
     if (dDiffSC < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
-    m_out << "CEV process Simulation : ";
+    m_logger.PutLine("CEV process Simulation : ");
     if (dDiffCEV < dTolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     return true;
@@ -566,7 +564,7 @@ bool RegressionTest::Date() const
 {
     Utilities::Date::MyDate sToday(3,2,2014);
     
-    m_out << "Today is " << sToday << std::endl;
+    m_logger.PutLine("Today is " + sToday.ToString());
     sToday = sToday.Add(1, Utilities::Date::DAY);
     sToday = sToday.Add(1, Utilities::Date::WEEK);
     sToday = sToday.Add(1, Utilities::Date::MONTH);
@@ -575,11 +573,11 @@ bool RegressionTest::Date() const
     Utilities::Date::MyDate finalDate(12, 3, 2015);
     if (sToday == finalDate)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     Utilities::Date::MyTenor tenor(2,Utilities::Date::DAY);
@@ -587,11 +585,11 @@ bool RegressionTest::Date() const
     Utilities::Date::MyDate date(14,3,2015);
     if (sToday == date)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     return true;
@@ -658,11 +656,11 @@ bool RegressionTest::AnalyticFormulae() const
    
     if (error < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     return true;
@@ -692,8 +690,8 @@ bool RegressionTest::MatrixInversion() const
     Utilities::matrixinverse(inverse, matrix);
     
 #ifdef DEBUG
-    m_out << inverse;
-    m_out << refinvmatrix;
+    m_logger.PutLine(inverse.ToString(15));
+    m_logger.PutLine(refinvmatrix.ToString(15));
 #endif
     
     const double tolerance = 1e-8;
@@ -708,11 +706,11 @@ bool RegressionTest::MatrixInversion() const
     
     if (error < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
     return true;
@@ -746,11 +744,11 @@ bool RegressionTest::NewtonSolver() const
     const double calc = solver.Solve();
     if (std::abs(calc - ref) < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
     }
     else
     {
-        m_out << "FAILED";
+        m_logger.PutLine("FAILED");
         return false;
     }
     return true;
@@ -766,12 +764,12 @@ bool RegressionTest::Ticker() const
     const double tolerance = 1e-10;
     if (name == "tickdouble.1" && std::abs(res - 10.0) < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }
@@ -792,12 +790,12 @@ bool RegressionTest::Sobol() const
     const double tolerance = 1e-10;
     if (error < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }
@@ -817,12 +815,12 @@ bool RegressionTest::DebyeFunction() const
     const double tolerance = 1e-10;
     if (error < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }
@@ -848,14 +846,12 @@ bool RegressionTest::Statistic() const
         
         if (std::abs(vect[i]->GetResultsSoFar()-refvalues[i]) > tolerance)
         {
-            m_out << std::setprecision(15) << "Results : " << vect[i]->GetResultsSoFar() << std::endl;
-            m_out << std::setprecision(15) << "RefValues : " << refvalues[i] << std::endl;
-            m_out << "FAILED" << std::endl;
+            m_logger.PutLine("FAILED");
             return false;
         }
     }
     
-    m_out << "SUCCEEDED" << std::endl;
+    m_logger.PutLine("SUCCEEDED");
     return true;
 }
 
@@ -891,16 +887,18 @@ bool RegressionTest::muParser() const
         
         if (error > tolerance)
         {
-            m_out << "muParser error " << error << " is above tolerance " << tolerance << std::endl;
+            std::stringstream ss;
+            ss << "muParser error " << error << " is above tolerance " << tolerance;
+            m_logger.PutLine(ss.str());
             return false;
         }
     }
     catch (const std::exception &e)
     {
-        m_out << "muParser failed with error : " << e.what() << std::endl;
+        m_logger.PutLine("muParser failed with error : " + std::string(e.what()));
         return false;
     }
-    m_out << "SUCCEEDED" << std::endl;
+    m_logger.PutLine("SUCCEEDED");
     return true;
 }
 
@@ -919,14 +917,14 @@ bool RegressionTest::MyException() const
         const std::string message = ss.str();
         if (strcmp(e.what(), message.c_str())!=0)
         {
-            m_out << "My Exception failed : messages are not the same" << std::endl;
-            m_out << "Message : " << message.c_str() << std::endl;
-            m_out << "Exception message : " << e.what() << std::endl;
+            m_logger.PutLine("My Exception failed : messages are not the same" );
+            m_logger.PutLine("Message : " + message);
+            m_logger.PutLine("Exception message : " + std::string(e.what()));
             return false;
         }
         else
         {
-            m_out << "SUCCEEDED" << std::endl;
+            m_logger.PutLine("SUCCEEDED");
             return true;
         }
     }
@@ -951,10 +949,10 @@ bool RegressionTest::PayoffParser() const
     }
     catch (const std::exception & e)
     {
-        m_out << "std::exception caught : " << e.what() << std::endl;
+        m_logger.PutLine("std::exception caught : " + std::string(e.what()));
         return false;
     }
-    m_out << "SUCCEEDED" << std::endl;
+    m_logger.PutLine("SUCCEEDED");
     return true;
 }
 
@@ -985,12 +983,12 @@ bool RegressionTest::DefaultArguments() const
 
     if (std::abs(result - 1) < 1)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }
@@ -1023,16 +1021,16 @@ bool RegressionTest::GaussianKernel() const
         const double tolerance = 1e-08;
         if (error > tolerance)
         {
-            m_out << "FAILED" << std::endl;
+            m_logger.PutLine("FAILED");
             return false;
         }
     }
     catch (const std::exception & e)
     {
-        m_out << "Error : " << e.what() << std::endl;
+        m_logger.PutLine("Error : " + std::string(e.what()));
         return false;
     }
-    m_out << "SUCCEEDED" << std::endl;
+    m_logger.PutLine("SUCCEEDED");
     return true;
 }
 
@@ -1077,8 +1075,8 @@ bool RegressionTest::MargrabeOptionVasicek() const
     
     Utilities::SimulationDataMultiDim sData = sOption.simulate(dDates, iNPaths);
 #ifdef _DEBUG
-    m_out << "Printing of the simulated data " << std::endl;
-    m_out << std::setprecision(15) << sData << std::endl;
+    m_logger.PutLine("Printing of the simulated data ");
+    m_logger.PutLine(sData.ToString());
 #endif
     
     const double refValues[] = {4.60644557974016,
@@ -1101,12 +1099,12 @@ bool RegressionTest::MargrabeOptionVasicek() const
     const double tolerance = 1e-08;
     if (error < tolerance)
     {
-        m_out << "SUCCEEDED" << std::endl;
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_out << "FAILED" << std::endl;
+        m_logger.PutLine("FAILED");
         return false;
     }
 }

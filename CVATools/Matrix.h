@@ -12,11 +12,13 @@
 #include <iostream>
 #include "Vector.h"
 #include "Exception.h"
+#include "StringConverter.h"
+#include <iomanip>
 
 namespace Utilities
 {
     template<class T>
-    class Matrix
+    class Matrix : public StringConverter
     {
     public:
         Matrix();
@@ -39,6 +41,8 @@ namespace Utilities
         row & operator[](size_t index);
         
         virtual const std::vector<T> & data() const;
+        
+        std::string ToString(const int precision) const;
         
     private:
         size_t m_rowsize;
@@ -330,20 +334,22 @@ namespace Utilities
             }
         }
     }
-}
-
-template<typename T>
-std::ostream & operator<<(std::ostream & os, const Utilities::Matrix<T> & matrix)
-{
-    for (int i=0; i<matrix.getrows(); i++)
+    
+    template<typename T>
+    std::string Utilities::Matrix<T>::ToString(const int precision) const
     {
-        for (int j=0; j<matrix.getcols(); j++)
+        std::stringstream os;
+        os << std::setprecision(precision);
+        for (int i=0; i<getrows(); i++)
         {
-            os << matrix(i,j) << '\t';
+            for (int j=0; j<getcols(); j++)
+            {
+                os << (*this)(i,j) << '\t';
+            }
+            os << std::endl;
         }
-        os << std::endl;
+        return os.str();
     }
-    return os;
 }
             
 #endif

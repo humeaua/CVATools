@@ -11,16 +11,25 @@
 
 #include <iostream>
 #include <typeinfo>
+#include "Logger.h"
 
 // Print the name of the function in the logging : temporary solution use typeid(*this) but it does not work entirely properly since it return some kind of number before the actual class name (should fix it at some point but not main concern currently)
 
 #ifndef NAME_OF_FUNCTION
-#define NAME_OF_FUNCTION typeid(*this).name() << "::" << __FUNCTION__
+#define NAME_OF_FUNCTION typeid(*this).name() + std::string("::") + __FUNCTION__
 #endif
+
+#ifndef TEST
+#define TEST(status) \
+std::stringstream line; line << __LINE__; \
+std::string("Test " + STATUS + " )" + __FUNCTION__ + std::string(" (") + NAME_OF_FUNCTION + std::string(") on line " + line.str()
+#endif
+
 
 #ifndef REGRESSIONTESTRETURNSUCCESS
 #define REGRESSIONTESTRETURNSUCCESS \
-m_out << "Test succeeded " << __FUNCTION__ << " (" << NAME_OF_FUNCTION<< ")" << std::endl;\
+const std::string msg1 = TEST("succeeded");\
+m_logger.PutLine(msg1);\
 return true;
 #endif
 
@@ -28,12 +37,14 @@ return true;
 #define REGRESSIONTESTRETURN(condition) \
 if ((condition))\
 {\
-    m_out << "Test Succeeded : " << #condition << " (" << NAME_OF_FUNCTION << ")" << std::endl;\
+    const std::string msg = TEST("succeeded");\
+    m_logger.PutLine(msg);\
     REGRESSIONTESTRETURNSUCCESS\
 }\
 else\
 {\
-    m_out << "Test Failed : "<< #condition << " on line " << __LINE__ << " (" << NAME_OF_FUNCTION << ")" << std::endl;\
+    const std::string msg = TEST("failed");\
+    m_logger.PutLine(msg);\
     return false;\
 }
 
@@ -43,18 +54,20 @@ else\
 #define REGRESSIONTESTRETURNONFAILURE(condition) \
 if (!(condition))\
 {\
-    m_out << "Test Failed : " << #condition << " on line " << __LINE__ << " (" << NAME_OF_FUNCTION << ")" << std::endl;\
+    const std::string msg = TEST("failed");\
+    m_logger.PutLine(msg);\
     return false;\
 }\
 else\
 {\
-    m_out << "Test Succeeded : " << #condition << " (" << NAME_OF_FUNCTION << ")" << std::endl;\
+    const std::string msg = TEST("succeeded");\
+    m_logger.PutLine(msg);\
 }
 #endif
 
 class RegressionTest {
 protected:
-    std::ostream & m_out;
+    mutable Utilities::Logger m_logger;
 public:
     RegressionTest(std::ostream & os);
     bool BondPricing() const;

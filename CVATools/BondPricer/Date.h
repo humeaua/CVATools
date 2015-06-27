@@ -10,9 +10,11 @@
 #define Seminaire_Date_h
 
 #include <iostream>
+#include "StringConverter.h"
 
 namespace Utilities
-{    
+{
+    class Logger;
     namespace Date
     {
         enum TimeUnits
@@ -33,7 +35,7 @@ namespace Utilities
         
         class MyTenor;
         
-        class MyDate
+        class MyDate : public StringConverter
         {
         protected:
             unsigned int iYear_;
@@ -75,6 +77,8 @@ namespace Utilities
             
             virtual std::tm Totm() const;
             virtual long GetDays1900() const;
+            
+            std::string ToString(const int precision = 0) const; // no need of precision to print ints
         };
         
         bool operator == (const MyDate&, const MyDate&); // comparison operators
@@ -107,5 +111,5 @@ namespace Utilities
     }
 }
 
-std::ostream & operator<<(std::ostream & os, const Utilities::Date::MyDate & date);
+Utilities::Logger & operator<<(Utilities::Logger & os, const Utilities::Date::MyDate & date);
 #endif

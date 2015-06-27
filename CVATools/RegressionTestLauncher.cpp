@@ -23,7 +23,7 @@ void RegressionTestLauncher::FillMap()
     m_mapping.insert(std::make_pair("Payoff linearization", &RegressionTest::PayoffLinearization));
     m_mapping.insert(std::make_pair("Interpolation", &RegressionTest::Interpolation));
     m_mapping.insert(std::make_pair("Time Statistics", &RegressionTest::TimeStatistics));
-    m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
+    //m_mapping.insert(std::make_pair("Bond pricing", &RegressionTest::BondPricing));
     m_mapping.insert(std::make_pair("Matrix inversion", &RegressionTest::MatrixInversion));
     m_mapping.insert(std::make_pair("Newton Solver", &RegressionTest::NewtonSolver));
     m_mapping.insert(std::make_pair("Ticker", &RegressionTest::Ticker));
@@ -75,15 +75,16 @@ bool RegressionTestLauncher::Launch() const
     auto it = m_mapping.begin();
     for ( ; it != m_mapping.end() ; ++it)
     {
-        m_out << "Regression Test " << it->first << std::endl;
+        const std::string name = "Regression Test " + it->first;
+        m_logger.PutLine(name);
         result = ((*this).*(it->second))();
         if (!result)
         {
-            m_out << "Regression Test Launcher failed : " << it->first << " test failed!!" << std::endl;
+            m_logger.PutLine("Regression Test Launcher failed : " + it->first + " test failed!!");
             return result;
         }
-        m_out << std::endl;
+        m_logger.AddOneLine();
     }
-    m_out << "Regression Test Launcher succeeded : all tests succeed" << std::endl;
+    m_logger.PutLine("Regression Test Launcher succeeded : all tests succeed");
     return result;
 }

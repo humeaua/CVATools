@@ -10,6 +10,7 @@
 #include "VectorUtilities.h"
 #include <sstream>
 #include "Exception.h"
+#include "Logger.h"
 
 namespace Utilities
 {    
@@ -257,13 +258,19 @@ namespace Utilities
             return ndat;
         }
         
+        std::string MyDate::ToString(const int ) const
+        {
+            std::stringstream ss;
+            ss << GetDay() << "/" << GetMonth() << "/" << GetYear();
+            return ss.str();
+        }
+        
         MyDate previous_date(const MyDate& d)
         {
             if (!d.IsValid())
             {
-                std::stringstream ss;
-                ss << "Date " << d << " is not valid";
-                throw EXCEPTION(ss.str());
+                const std::string ss = "Date " + d.ToString() + " is not valid";
+                throw EXCEPTION(ss);
             }
             // return the default date
             MyDate pdat = MyDate((d.GetDay() - 1),d.GetMonth(),d.GetYear());
@@ -566,8 +573,14 @@ namespace Utilities
     }
 }
 
-std::ostream & operator<<(std::ostream & os, const Utilities::Date::MyDate & date)
+template<>
+void Utilities::Logger::PutLine(const Utilities::Date::MyDate & date)
 {
-    os << date.GetDay() << "/" << date.GetMonth() << "/" << date.GetYear();
+    m_os << date.GetDay() << "/" << date.GetMonth() << "/" << date.GetYear() << std::endl;
+}
+
+Utilities::Logger & operator<<(Utilities::Logger & os, const Utilities::Date::MyDate & date)
+{
+    os.PutLine(date);
     return os;
 }

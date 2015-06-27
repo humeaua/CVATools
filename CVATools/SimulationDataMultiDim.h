@@ -12,10 +12,12 @@
 #include <vector>
 #include <map>
 #include "Vector.h"
+#include "StringConverter.h"
 
 namespace Utilities
 {
-    class SimulationDataMultiDim {
+    class SimulationDataMultiDim  : public StringConverter
+    {
     protected:
         //        Date,             Path
         std::map<double, std::map<std::size_t, std::vector<double> > > dData_;
@@ -37,6 +39,8 @@ namespace Utilities
         // Getter
         virtual const std::map<double, std::map<std::size_t, std::vector<double> > > & GetData() const;
         virtual Utilities::MyVector<double> GetData(double dDate, std::size_t iPath) const;
+        
+        std::string ToString(const int precision) const;
         
         template<typename Functor>
         void Apply(Functor func)

@@ -14,7 +14,7 @@
 
 namespace Utilities
 {
-    std::string currentDateTime(const std::string & format);
+    std::string currentDateTime(const std::string & format = "%Y-%m-%d.%H-%M-%S");
 }
 
 #endif /* defined(__CVATools__DateTime__) */

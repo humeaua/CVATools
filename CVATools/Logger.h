@@ -23,13 +23,7 @@ namespace Utilities
         std::string getCurrentTime() const;
     public:
         Logger(std::ostream & os);
-        
-        /*template <class T>
-        Logger& operator<<(const T& obj)
-        {
-            m_os << getCurrentTime() << " > " << obj << std::endl;
-            return *this;
-        }*/
+        ~Logger();
         
         void AddOneLine();
         template<class T>
@@ -39,12 +33,6 @@ namespace Utilities
             AddOneLine();
         }
     };
-    
-    /*template<class T>
-    Logger & operator << (Logger & logger, const T & t)
-    {
-        logger.m_os << getCurrentDateTime() << " > " << t << std::endl;
-    }*/
 }
 
 #endif /* defined(__CVATools__Logger__) */

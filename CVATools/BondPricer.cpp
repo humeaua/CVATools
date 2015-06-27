@@ -213,7 +213,9 @@ namespace Finance
         double BondPricer::I_Spread(double dPrice) const
         {
             const Utilities::Date::MyDate & sToday = sYieldCurve_.Today();
-            return PriceToYield(dPrice) - sYieldCurve_(vCoupons_.back().GetEndDate().Diff(sToday));
+            const Utilities::Date::MyDate & endDate = vCoupons_.back().GetEndDate();
+            const double diff = endDate.Diff(sToday);
+            return PriceToYield(dPrice) - sYieldCurve_(diff);
         }
         
         double BondPricer::Z_Spread(double dPrice) const

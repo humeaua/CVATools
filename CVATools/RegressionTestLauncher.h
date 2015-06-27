@@ -12,6 +12,7 @@
 #include <iostream>
 #include "RegressionTests.h"
 #include "HashTable.h"
+#include "Timer.h"
 
 typedef bool (RegressionTest::* RegressionTestFunction)() const;
 
@@ -24,6 +25,7 @@ public:
 private:
     void FillMap();
     Utilities::HashTable<std::string, RegressionTestFunction> m_mapping;
+    mutable Utilities::Timer m_timer;
 };
 
 #endif /* defined(__CVATools__RegressionTestLauncher__) */

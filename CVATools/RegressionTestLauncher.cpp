@@ -71,6 +71,8 @@ bool RegressionTestLauncher::Launch() const
 {
     bool result = true;
     
+    //  set the timer
+    m_timer = Utilities::Timer();
     //  Iterate along the map
     auto it = m_mapping.begin();
     for ( ; it != m_mapping.end() ; ++it)
@@ -86,5 +88,6 @@ bool RegressionTestLauncher::Launch() const
         m_logger.AddOneLine();
     }
     m_logger.PutLine("Regression Test Launcher succeeded : all tests succeed");
+    m_logger.PutLine(m_timer.TimeElapsed());
     return result;
 }

@@ -186,7 +186,7 @@ bool RegressionTest::TimeStatistics() const
             }
             dTimeNew += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
         }
-        
+#ifndef _DEBUG
         m_logger.PutLine("Computation mean : ");
         if (dTimeNew < 1.25 * dTimeOld)
         {
@@ -197,6 +197,7 @@ bool RegressionTest::TimeStatistics() const
             m_logger.PutLine("FAILED");
             return false;
         }
+#endif
         
         std::cout << std::endl;
         dTimeNew = dTimeOld = 0.0;
@@ -219,6 +220,7 @@ bool RegressionTest::TimeStatistics() const
             dTimeNew += static_cast<double>(clock() - tic)/CLOCKS_PER_SEC;
         }
         
+#ifndef _DEBUG
         m_logger.PutLine("Computation variance : ");
         //  New algorithm seems to be around 3 times slower
         if (3.0 * dTimeNew > dTimeOld)
@@ -230,6 +232,7 @@ bool RegressionTest::TimeStatistics() const
             m_logger.PutLine("FAILED");
             return false;
         }
+#endif
     }
     catch (const Utilities::MyException & excep)
     {

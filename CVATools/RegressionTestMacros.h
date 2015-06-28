@@ -22,9 +22,17 @@
 #ifndef TEST
 #define TEST(status) \
 std::stringstream line; line << __LINE__; \
-const std::string msg = std::string("Test ") + status + std::string(" )") + __FUNCTION__ + std::string(" (") + NAME_OF_FUNCTION + std::string(") on line ") + line.str();
+const std::string msg = std::string("Test ") + status + std::string(" (") + NAME_OF_FUNCTION + std::string(") on line ") + line.str();
 #endif
 
+#ifndef TOSTRING
+#define TOSTRING(x) #x
+#endif
+
+#ifndef CONDITION_TOSTRING
+#define CONDITION_TOSTRING(condition)\
+const std::string conditionStr = std::string(" : ") + TOSTRING(condition);
+#endif
 
 #ifndef REGRESSIONTESTRETURNSUCCESS
 #define REGRESSIONTESTRETURNSUCCESS \
@@ -38,7 +46,8 @@ return true;
 if ((condition))\
 {\
 TEST("succeeded")\
-m_logger.PutLine(msg);\
+CONDITION_TOSTRING(condition);\
+m_logger.PutLine(msg + conditionStr);\
 {\
 REGRESSIONTESTRETURNSUCCESS\
 }\
@@ -46,7 +55,8 @@ REGRESSIONTESTRETURNSUCCESS\
 else\
 {\
 TEST("failed")\
-m_logger.PutLine(msg);\
+CONDITION_TOSTRING(condition);\
+m_logger.PutLine(msg + conditionStr);\
 return false;\
 }
 
@@ -57,13 +67,15 @@ return false;\
 if (!(condition))\
 {\
 TEST("failed")\
-m_logger.PutLine(msg);\
+CONDITION_TOSTRING(condition);\
+m_logger.PutLine(msg + conditionStr);\
 return false;\
 }\
 else\
 {\
 TEST("succeeded")\
-m_logger.PutLine(msg);\
+CONDITION_TOSTRING(condition);\
+m_logger.PutLine(msg + conditionStr);\
 }
 #endif
 

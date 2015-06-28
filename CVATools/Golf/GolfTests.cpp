@@ -67,9 +67,6 @@ bool RegressionTest::DummyTournament() const
     for (size_t player = 0 ; player < tournamentPlayers.size() ; ++player)
     {
         error += std::abs((long)tournamentPlayers[player].second.Score() - (long)refValues[player]);
-#ifdef _DEBUG
-        m_out << players[player].first.Name() << ":" << players[player].second.Score() << std::endl;
-#endif
     }
     
     REGRESSIONTESTRETURNONFAILURE(error<1)
@@ -84,9 +81,6 @@ bool RegressionTest::DummyTournament() const
     
     for (size_t player = 0 ; player < players.size() ; ++player)
     {
-#ifdef _DEBUG
-        m_out << players[player].Results()[0].Position() << ",";
-#endif
         error2 += std::abs((long)rank[player] - (long)players[player].Results()[0].Position());
     }
     
@@ -96,7 +90,7 @@ bool RegressionTest::DummyTournament() const
     rankings.Compute(std::vector<Tournament>(1, tournament), tomorrow);
     
 #ifdef _DEBUG
-    m_out << rankings << std::endl;
+    m_logger.PutLine(rankings.ToString());
 #endif
     
     REGRESSIONTESTRETURNSUCCESS
@@ -106,7 +100,7 @@ bool RegressionTest::StaticDataRanking() const
 {
     //  Test of static data used in the ranking
     
-    m_logger << "Interpolator : " ;
+    m_logger.PutLine("Interpolator : ");
     Utilities::Interp::Interpolator & linear = PointsSystemStaticData::GetOWGRInterpolator();
     
     const double refValuesInterpolator[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0.971428571428571,0.914285714285714,0.857142857142857,0.8,0.742857142857142,0.685714285714285,0.628571428571428,0.571428571428571,0.514285714285714,0.457142857142857,0.399999999999999,0.342857142857142,0.285714285714285,0.228571428571428,0.171428571428571,0.114285714285714,0.0571428571428563,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -115,65 +109,50 @@ bool RegressionTest::StaticDataRanking() const
     for (double x = -2 ; x < 4.0 ; x += 0.1, i++)
     {
         errorInterpolator += std::abs(refValuesInterpolator[i] - linear(x));
-#ifdef _DEBUG
-        m_out << std::setprecision(15) << linear(x) << "," ;
-#endif
     }
     const double tolerance = 1e-10;
     REGRESSIONTESTRETURNONFAILURE(errorInterpolator<tolerance)
     
-    m_logger << "Home Rating Value : ";
+    m_logger.PutLine("Home Rating Value : ");
     std::vector<double> & homeRatingValue = PointsSystemStaticData::GetHomeRatingValues();
     const double refValuesHomeRating[] = {8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
     double errorHomeRating = 0.0;
     for (size_t i = 0 ; i < homeRatingValue.size() ; ++i)
     {
         errorHomeRating += std::abs(refValuesHomeRating[i]-homeRatingValue[i]);
-#ifdef _DEBUG
-        m_out << homeRatingValue[i] << "," ;
-#endif
     }
     
     REGRESSIONTESTRETURNONFAILURE(errorHomeRating < tolerance && homeRatingValue.size() == 30)
     
-    m_logger << "World Event Rating Value : ";
+    m_logger.PutLine("World Event Rating Value : ");
     std::vector<double> & worldEventRatingValue = PointsSystemStaticData::GetEventRatingValues();
     const double refValueEventRating[] = {45,37,32,27,24,21,20,19,18,17,16,15,14,13,12,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,9,9,9,9,8,8,8,8,8,7,7,7,7,7,7,7,6,6,6,6,6,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
     double errorEventRating = 0.0;
     for (size_t i = 0 ; i < worldEventRatingValue.size() ; ++i)
     {
         errorEventRating += std::abs(refValueEventRating[i]-worldEventRatingValue[i]);
-#ifdef _DEBUG
-        m_out << worldEventRatingValue[i] << "," ;
-#endif
     }
     REGRESSIONTESTRETURNONFAILURE(errorHomeRating < tolerance && worldEventRatingValue.size() == 200)
     
-    m_logger << "Total Rating to 1st point : ";
+    m_logger.PutLine("Total Rating to 1st point : ");
     Utilities::Interp::Interpolator & totalRatingTo1stPoint = PointsSystemStaticData::GetTotalRatingToFirstPointInterpolator();
     const double refValuestotalRatingTo1stPoints [] = {6,7,7,7,7,7,8,8,8,8,8,9,9,9,9,9,10,10,10,10,10,11,11,11,11,11,12,12,12,12,12,13,13,13,13,13,14,14,14,14,14,15,15,15,15,15,16,16,16,16,16,17,17,17,17,17,18,18,18,18,18,19,19,19,19,19,20,20,20,20,20,21,21,21,21,21,22,22,22,22,22,22,22,22,22,22,23,23,23,23,23,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,64,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,72,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,76,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80};
     double errorTotalRatingTo1stPoint = 0.0;
     i = 0;
     for (double d = 0 ; d < 1000 ; ++d, ++i)
     {
-#ifdef _DEBUG
-        m_out << totalRatingTo1stPoint(d) << "," ;
-#endif
         errorTotalRatingTo1stPoint += std::abs(refValuestotalRatingTo1stPoints[i] - totalRatingTo1stPoint(d));
     }
     
     REGRESSIONTESTRETURNONFAILURE(errorTotalRatingTo1stPoint < tolerance && totalRatingTo1stPoint.size() == 93)
     
-    m_logger << "Points compared to 1st : ";
+    m_logger.PutLine("Points compared to 1st : ");
     const OWGRVectorWrapper<double> & pointsComparedTo1st = PointsSystemStaticData::PointsComparedTo1st();
     const double refValuesPointsComparedTo1st[] = {100,60,40,30,24,20,18,16,15,14,13,12,11,10,9.5,9,8.5,8,7.5,7,6.5,6,5.8,5.6,5.4,5.2,5,4.8,4.6,4.5,4.4,4.3,4.2,4.1,4,3.9,3.8,3.7,3.6,3.5,3.4,3.3,3.2,3.1,3,2.9,2.8,2.7,2.6,2.5,2.4,2.3,2.2,2.1,2,1.9,1.8,1.7,1.6,1.5,1.5,1.5,1.5,1.5,1.5};
     double errorPointsComparedTo1st = 0.0;
     for (size_t i = 0 ; i < pointsComparedTo1st.size() ; ++i)
     {
         errorPointsComparedTo1st += std::abs(pointsComparedTo1st[i] - refValuesPointsComparedTo1st[i]);
-#ifdef _DEBUG
-        m_out << pointsComparedTo1st[i] << "," ;
-#endif
     }
     
     REGRESSIONTESTRETURN(errorPointsComparedTo1st < tolerance)
@@ -220,16 +199,10 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
     for (size_t player = 0 ; player < tournamentPlayersPGA.size() ; ++player)
     {
         error += std::abs((long)tournamentPlayersPGA[player].second.Score() - (long)refValues[player]);
-#ifdef _DEBUG
-        m_out << tournamentPlayersPGA[player].first.Name() << ":" << tournamentPlayersPGA[player].second.Score() << std::endl;
-#endif
     }
     for (size_t player = 0 ; player < tournamentPlayersEuro.size() ; ++player)
     {
         error += std::abs((long)tournamentPlayersEuro[player].second.Score() - (long)refValues[player]);
-#ifdef _DEBUG
-        m_out << tournamentPlayersEuro[player].first.Name() << ":" << tournamentPlayersEuro[player].second.Score() << std::endl;
-#endif
     }
     
     REGRESSIONTESTRETURNONFAILURE(error < 1)
@@ -245,9 +218,6 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
     
     for (size_t player = 0 ; player < players.size() ; ++player)
     {
-#ifdef _DEBUG
-        m_out << players[player].Results()[0].Position() << ",";
-#endif
         error2 += std::abs((long)rank[player] - (long)players[player].Results()[0].Position());
     }
     
@@ -261,7 +231,7 @@ bool RegressionTest::MultipleTournamentsSameWeek() const
     rankings.Compute(thisWeekTournaments, tomorrow);
     
 #ifdef _DEBUG
-    m_out << rankings << std::endl;
+    m_logger.PutLine(rankings.ToString());
 #endif
     
     REGRESSIONTESTRETURNSUCCESS
@@ -274,12 +244,12 @@ bool RegressionTest::CoSanctionedTournament() const
     tourTypes[1] = CHALLENGETOUR;
     
     Tournament tournament("dummyEuro",Utilities::Date::MyDate(14,01,2015), tourTypes);
-    m_logger << "CoSanctioned ? ";
+    m_logger.PutLine("CoSanctioned ? ");
     const bool isCoSanctioned = tournament.CoSanctionedEvent();
     
     REGRESSIONTESTRETURNONFAILURE(isCoSanctioned)
     
-    m_logger << "Ranking points : ";
+    m_logger.PutLine("Ranking points : ");
     Rankings rankings(PointsSystemStaticData::GetOWGRInterpolator());
     RankingPointSystem rankingPtSystem(rankings);
     tournament.SetPointsTo1st(rankingPtSystem);

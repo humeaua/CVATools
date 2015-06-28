@@ -12,6 +12,7 @@
 #include <iostream>
 #include <typeinfo>
 #include "Logger.h"
+#include <sstream>
 
 // Print the name of the function in the logging : temporary solution use typeid(*this) but it does not work entirely properly since it return some kind of number before the actual class name (should fix it at some point but not main concern currently)
 
@@ -22,14 +23,14 @@
 #ifndef TEST
 #define TEST(status) \
 std::stringstream line; line << __LINE__; \
-std::string("Test " + STATUS + " )" + __FUNCTION__ + std::string(" (") + NAME_OF_FUNCTION + std::string(") on line " + line.str()
+const std::string msg = std::string("Test ") + status + std::string(" )") + __FUNCTION__ + std::string(" (") + NAME_OF_FUNCTION + std::string(") on line ") + line.str();
 #endif
 
 
 #ifndef REGRESSIONTESTRETURNSUCCESS
 #define REGRESSIONTESTRETURNSUCCESS \
-const std::string msg1 = TEST("succeeded");\
-m_logger.PutLine(msg1);\
+TEST("succeeded")\
+m_logger.PutLine(msg);\
 return true;
 #endif
 
@@ -37,13 +38,15 @@ return true;
 #define REGRESSIONTESTRETURN(condition) \
 if ((condition))\
 {\
-    const std::string msg = TEST("succeeded");\
+    TEST("succeeded")\
     m_logger.PutLine(msg);\
+{\
     REGRESSIONTESTRETURNSUCCESS\
+}\
 }\
 else\
 {\
-    const std::string msg = TEST("failed");\
+    TEST("failed")\
     m_logger.PutLine(msg);\
     return false;\
 }
@@ -54,13 +57,13 @@ else\
 #define REGRESSIONTESTRETURNONFAILURE(condition) \
 if (!(condition))\
 {\
-    const std::string msg = TEST("failed");\
+    TEST("failed")\
     m_logger.PutLine(msg);\
     return false;\
 }\
 else\
 {\
-    const std::string msg = TEST("succeeded");\
+    TEST("succeeded")\
     m_logger.PutLine(msg);\
 }
 #endif

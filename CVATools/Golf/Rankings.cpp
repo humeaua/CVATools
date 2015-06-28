@@ -122,12 +122,13 @@ Rankings * Rankings::clone() const
     return new Rankings(*this);
 }
 
-std::ostream & operator<<(std::ostream & os, const Rankings & rankings)
+std::string Rankings::ToString() const
 {
-    const Rankings::RealRanking & realRanking = rankings.GetSortedRanking();
+    const Rankings::RealRanking & realRanking = GetSortedRanking();
+    std::stringstream os;
     for (size_t i = 0 ; i < realRanking.size() ; ++i)
     {
         os << realRanking[i].first << " : " << realRanking[i].second << std::endl;
     }
-    return os;
+    return os.str();
 }

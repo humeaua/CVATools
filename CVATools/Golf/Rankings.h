@@ -14,6 +14,7 @@
 #include <vector>
 #include "PlayerRanking.h"
 #include "InterExtrapolation.h"
+#include "StringConverter.h"
 
 class Tournament;
 
@@ -37,6 +38,8 @@ public:
                  const Utilities::Date::MyDate & computedDate);
     
     Rankings * clone() const;
+    
+    std::string ToString() const;
     
 protected:
     Utilities::Interp::Interpolator & m_interpolator;

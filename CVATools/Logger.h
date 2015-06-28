@@ -29,7 +29,7 @@ namespace Utilities
         template<class T>
         void PutLine(const T & t)
         {
-            m_os << currentDateTime() << " > " << t << std::endl;
+            m_os << getCurrentTime() << " > " << t << std::endl;
             AddOneLine();
         }
     };

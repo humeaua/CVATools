@@ -27,7 +27,7 @@ namespace Utilities
     std::string Logger::getCurrentTime() const
     {
         // take default argument for now
-        return currentDateTime();
+        return currentDateTime("%Y-%m-%d %H:%M:%S");
     }
     
     void Logger::AddOneLine()

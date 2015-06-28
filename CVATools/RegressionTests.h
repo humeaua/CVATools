@@ -10,63 +10,7 @@
 #define __CVATools__RegressionTests__
 
 #include <iostream>
-#include <typeinfo>
 #include "Logger.h"
-#include <sstream>
-
-// Print the name of the function in the logging : temporary solution use typeid(*this) but it does not work entirely properly since it return some kind of number before the actual class name (should fix it at some point but not main concern currently)
-
-#ifndef NAME_OF_FUNCTION
-#define NAME_OF_FUNCTION typeid(*this).name() + std::string("::") + __FUNCTION__
-#endif
-
-#ifndef TEST
-#define TEST(status) \
-std::stringstream line; line << __LINE__; \
-const std::string msg = std::string("Test ") + status + std::string(" )") + __FUNCTION__ + std::string(" (") + NAME_OF_FUNCTION + std::string(") on line ") + line.str();
-#endif
-
-
-#ifndef REGRESSIONTESTRETURNSUCCESS
-#define REGRESSIONTESTRETURNSUCCESS \
-TEST("succeeded")\
-m_logger.PutLine(msg);\
-return true;
-#endif
-
-#ifndef REGRESSIONTESTRETURN
-#define REGRESSIONTESTRETURN(condition) \
-if ((condition))\
-{\
-    TEST("succeeded")\
-    m_logger.PutLine(msg);\
-{\
-    REGRESSIONTESTRETURNSUCCESS\
-}\
-}\
-else\
-{\
-    TEST("failed")\
-    m_logger.PutLine(msg);\
-    return false;\
-}
-
-#endif
-
-#ifndef REGRESSIONTESTRETURNONFAILURE
-#define REGRESSIONTESTRETURNONFAILURE(condition) \
-if (!(condition))\
-{\
-    TEST("failed")\
-    m_logger.PutLine(msg);\
-    return false;\
-}\
-else\
-{\
-    TEST("succeeded")\
-    m_logger.PutLine(msg);\
-}
-#endif
 
 class RegressionTest {
 protected:

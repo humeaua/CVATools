@@ -26,9 +26,12 @@
 #include <iomanip>
 #include <numeric>
 
+#include "RegressionTestMacros.h"
+
 bool RegressionTest::PlayerResultTest() const
 {
     PlayerResult result1("Tournament1", Utilities::Date::MyDate(30,9,2014), 30, 288, 1.5);
+    
     
     REGRESSIONTESTRETURNONFAILURE(!result1.MissedCut())
     REGRESSIONTESTRETURNONFAILURE(result1.Position() == 30)

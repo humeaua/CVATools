@@ -56,11 +56,11 @@ namespace Utilities
     class Matrix<T>::row
     {
     public:
-        row(double * data, size_t colsize);
+        row(T * data, size_t colsize);
         T & operator[](size_t column_index);
         const T& operator[](size_t column_index) const;
     private:
-        double * m_data;
+        T * m_data;
         size_t m_colsize;
     };
     
@@ -200,7 +200,7 @@ namespace Utilities
     }
     
     template<typename T>
-    Matrix<T>::row::row(double * data, size_t colsize) : m_data(data), m_colsize(colsize)
+    Matrix<T>::row::row(T * data, size_t colsize) : m_data(data), m_colsize(colsize)
     {}
     
     template<typename T>

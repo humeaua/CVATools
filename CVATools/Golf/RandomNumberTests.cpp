@@ -41,13 +41,13 @@ bool RegressionTest::Bernouilli() const
     
     if (error < tolerance)
     {
-        m_logger << "SUCCEEDED";
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_logger << "FAILED";
-        m_logger << errorReporting.str();
+        m_logger.PutLine("FAILED");
+        m_logger.PutLine(errorReporting.str());
         return false;
     }
 }
@@ -76,12 +76,12 @@ bool RegressionTest::Normal() const
     
     if (error < tolerance)
     {
-        m_logger << "SUCCEEDED";
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_logger << "FAILED";
+        m_logger.PutLine("FAILED");
         return false;
     }
 }
@@ -128,12 +128,12 @@ bool RegressionTest::DiscreteDistribution() const
     
     if (error < tolerance)
     {
-        m_logger << "SUCCEEDED";
+        m_logger.PutLine("SUCCEEDED");
         return true;
     }
     else
     {
-        m_logger << "FAILED";
+        m_logger.PutLine("FAILED");
         return false;
     }
     

@@ -105,12 +105,12 @@ bool RegressionTest::ConfigReaderTest() const
     const std::string filename ="//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestConfigReader.txt";
     
     ConfigReader configReader(filename);
-    PlayerID playerId("");
+    PlayerID playerId("", Utilities::Date::MyDate());
     
     const std::string refValue = "Alexandre";
     configReader.Fill(playerId, "PlayerID");
     
-    if (playerId.Name() == refValue)
+    if (playerId.Name() == refValue /*&& playerId.BirthDate() == Utilities::Date::MyDate(25,4,1989)*/)
     {
         m_logger.PutLine("SUCCEEDED");
         return true;
@@ -127,11 +127,11 @@ bool RegressionTest::ConfigReaderPlayerTest() const
     const std::string filename ="//Users//alexhum49//Documents//Workspace//CVA//CVATools//Input//OWGR//Tests//TestConfigReaderPlayer.txt";
     
     ConfigReader configReader(filename);
-    Player player("",TourType(1));
+    Player player("",TourType(1), Utilities::Date::MyDate());
     
     const std::string refValue = "Alexandre";
     configReader.Fill(player, "Player");
-    if (player.Name() == refValue)
+    if (player.Name() == refValue /*&& player.BirthDate() == Utilities::Date::MyDate(25,4,1989)*/)
     {
         m_logger.PutLine("SUCCEEDED");
         return true;

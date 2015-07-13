@@ -27,7 +27,7 @@ protected:
     
     virtual void AddResult(const PlayerResult & result);
 public:
-    Player(const std::string & name, const TourType & tourType);
+    Player(const std::string & name, const TourType & tourType, const Utilities::Date::MyDate & birthDate);
     
     void AddResult(const Tournament & tournament);
     

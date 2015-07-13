@@ -24,18 +24,24 @@ namespace Utilities
             return ((iYear_ % 400 == 0) || ((iYear_ % 4 == 0) && (iYear_ % 100 != 0)));
         }
         
-        MyDate::MyDate( int day, int month, int year) : iDay_(day), iMonth_(month), iYear_(year)
+        MyDate::MyDate() : iDay_(0), iMonth_(0), iYear_(0), m_state(INVALID)
+        {}
+        
+        MyDate::MyDate( int day, int month, int year) : iDay_(day), iMonth_(month), iYear_(year), m_state(VALID)
         {
             //  Remove require from constructor as it is throwing an exception
             //Utilities::requireException(IsValid(), "Date is not valid", "MyDate::MyDate");
         }
         
-        MyDate::MyDate(const std::tm & sDate)
+        MyDate::MyDate(const std::tm & sDate) : m_state(VALID)
         {
             iDay_ = sDate.tm_mday;
             iMonth_ = sDate.tm_mon;
             iYear_ = sDate.tm_year;
         }
+        
+        MyDate::MyDate(const Utilities::Date::MyDate & date) : iDay_(date.GetDay()), iMonth_(date.GetMonth()), iYear_(date.GetYear()), m_state(date.getState())
+        {}
         
         int MyDate::GetDay() const
         {
@@ -52,18 +58,34 @@ namespace Utilities
             return iYear_;
         }
         
+        MyDate::DateState MyDate::getState() const
+        {
+            return m_state;
+        }
+        
+        void MyDate::ChangeState()
+        {
+            if (m_state == MyDate::INVALID)
+            {
+                m_state = VALID;
+            }
+        }
+        
         void MyDate::SetDay(const int& iDay)
         {
+            ChangeState();
             iDay_ = iDay;
         }
         
         void MyDate::SetMonth(const int& iMonth)
         {
+            ChangeState();
             iMonth_ = iMonth;
         }
         
         void MyDate::SetYear(const int& iYear)
         {
+            ChangeState();
             iYear_ = iYear;
         }
         

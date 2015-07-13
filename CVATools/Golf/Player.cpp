@@ -10,7 +10,7 @@
 #include "Tournament.h"
 #include "PairComparatorFirst.h"
 
-Player::Player(const std::string & name, const TourType & tourType) : PlayerID(name), m_tourMembership(tourType), m_isPlayingThisWeek(false)
+Player::Player(const std::string & name, const TourType & tourType, const Utilities::Date::MyDate & birthDate) : PlayerID(name, birthDate), m_tourMembership(tourType), m_isPlayingThisWeek(false)
 {}
 
 void Player::AddResult(const PlayerResult &result)
@@ -23,7 +23,7 @@ void Player::AddResult(const Tournament &tournament)
     const Tournament::Players & playersInTournament = tournament.GetPlayers();
     
     Tournament::Players::const_iterator iter;
-    PairComparatorFirst<PlayerID, PlayerResult> comp(m_name);
+    PairComparatorFirst<PlayerID, PlayerResult> comp(PlayerID(m_name, m_birthDate));
     iter = std::find_if(playersInTournament.begin(), playersInTournament.end(), comp);
     if (iter != playersInTournament.end())
     {

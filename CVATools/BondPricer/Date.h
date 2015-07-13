@@ -37,14 +37,29 @@ namespace Utilities
         
         class MyDate : public StringConverter
         {
+        public:
+            enum DateState
+            {
+                VALID, INVALID
+            };
+            
         protected:
+            DateState m_state;
+            
             unsigned int iYear_;
             unsigned int iMonth_;
             unsigned int iDay_;
+            
+            void ChangeState();
         public:
+            MyDate();
             MyDate(int day, int month, int year);
             MyDate(const std::tm& sDate);
+            MyDate(const MyDate & date);
+            
             virtual ~MyDate();
+            
+            DateState getState() const;
             
             virtual bool IsValid() const;
             virtual bool IsBusinessDay() const;

@@ -33,14 +33,44 @@ void ConfigReader::Read()
 }
 
 template<>
+void ConfigReader::Fill(Utilities::Date::MyDate & date, const std::string &name) const
+{
+    //  not so nice implementation
+    const std::string day_ = name + m_delim + "DAY";
+    std::map<std::string, Utilities::Variant>::const_iterator itDay = m_internalMap.find(day_);
+    if (itDay != m_internalMap.end())
+    {
+        date.SetDay(itDay->second.GetInt());
+    }
+    
+    const std::string month_ = name + m_delim + "MONTH";
+    std::map<std::string, Utilities::Variant>::const_iterator itMonth = m_internalMap.find(month_);
+    if (itMonth != m_internalMap.end())
+    {
+        date.SetMonth(itMonth->second.GetInt());
+    }
+    
+    const std::string year_ = name + m_delim + "YEAR";
+    std::map<std::string, Utilities::Variant>::const_iterator itYear = m_internalMap.find(year_);
+    if (itYear != m_internalMap.end())
+    {
+        date.SetYear(itYear->second.GetInt());
+    }
+}
+
+template<>
 void ConfigReader::Fill(PlayerID & playerId, const std::string & name) const
 {
     const std::string lookupValue = name + m_delim + "NAME";
     std::map<std::string, Utilities::Variant>::const_iterator it = m_internalMap.find(lookupValue);
     
-    if (it != m_internalMap.end())
+    const std::string lookupValueBirthDate = name + m_delim + "BIRTHDATE";
+    Utilities::Date::MyDate birthDate; // not filled yet
+    Fill(birthDate, lookupValueBirthDate);
+    
+    if (it != m_internalMap.end() && birthDate.getState() != Utilities::Date::MyDate::INVALID)
     {
-        playerId = PlayerID(it->second.GetString());
+        playerId = PlayerID(it->second.GetString(), birthDate);
     }
 }
 

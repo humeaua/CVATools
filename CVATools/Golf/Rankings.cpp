@@ -97,7 +97,7 @@ void Rankings::Compute(const std::vector<Tournament> &tournamentsThisWeek, const
         for (Tournament::Players::const_iterator it = players.begin() ; it != players.end() ; ++it)
         {
             Ranking::iterator iter;
-            PairComparatorFirst<PlayerID, PlayerRanking> comp(PlayerID((it->first.Name())));
+            PairComparatorFirst<PlayerID, PlayerRanking> comp(PlayerID(it->first.Name(), it->first.BirthDate()));
             iter = std::find_if(m_ranking.begin(), m_ranking.end(), comp);
             if (iter != m_ranking.end())
             {
@@ -108,7 +108,7 @@ void Rankings::Compute(const std::vector<Tournament> &tournamentsThisWeek, const
                 //  first tournament of the player : add it in the rankings
                 PlayerRanking playerRanking;
                 playerRanking.AddResult(tournament->TournamentDate(), it->second.RankingPoints());
-                m_ranking.push_back(std::make_pair(PlayerID(it->first.Name()), playerRanking));
+                m_ranking.push_back(std::make_pair(PlayerID(it->first.Name(), it->first.BirthDate()), playerRanking));
             }
         }
     }

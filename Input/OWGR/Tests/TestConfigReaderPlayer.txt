@@ -1,2 +1,5 @@
 Player.PlayerID.NAME,Alexandre
 Player.Tour,PGATOUR
+Player.PlayerID.BIRTHDATE.DAY,25
+Player.PlayerID.BIRTHDATE.MONTH,4
+Player.PlayerID.BIRTHDATE.YEAR,1989

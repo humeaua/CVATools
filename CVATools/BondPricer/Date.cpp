@@ -172,6 +172,11 @@ namespace Utilities
                 return false;
             }
             
+            if (m_state == INVALID)
+            {
+                return false;
+            }
+            
             return true;
         }
         

@@ -25,7 +25,15 @@ namespace Utilities
     {}
     
     Variant::Variant(const std::string & s) : m_c(s), m_d(0.0), m_i(0), m_l(0L), m_type(STRING)
-    {}
+    {
+        // conversion of string to number
+        std::stringstream ss;
+        ss << m_c;
+        ss >> m_d;
+        m_i = static_cast<int>(m_d);
+        m_l = static_cast<long>(m_d);
+        SetType(Variant::MULTI);
+    }
     
     void Variant::SetType(Utilities::Variant::TYPE newType)
     {

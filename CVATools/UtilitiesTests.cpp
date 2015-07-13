@@ -110,7 +110,7 @@ bool RegressionTest::ConfigReaderTest() const
     const std::string refValue = "Alexandre";
     configReader.Fill(playerId, "PlayerID");
     
-    if (playerId.Name() == refValue /*&& playerId.BirthDate() == Utilities::Date::MyDate(25,4,1989)*/)
+    if (playerId.Name() == refValue && playerId.BirthDate() == Utilities::Date::MyDate(25,4,1989))
     {
         m_logger.PutLine("SUCCEEDED");
         return true;
@@ -131,7 +131,7 @@ bool RegressionTest::ConfigReaderPlayerTest() const
     
     const std::string refValue = "Alexandre";
     configReader.Fill(player, "Player");
-    if (player.Name() == refValue /*&& player.BirthDate() == Utilities::Date::MyDate(25,4,1989)*/)
+    if (player.Name() == refValue && player.BirthDate() == Utilities::Date::MyDate(25,4,1989))
     {
         m_logger.PutLine("SUCCEEDED");
         return true;

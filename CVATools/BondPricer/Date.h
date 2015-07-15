@@ -15,6 +15,7 @@
 namespace Utilities
 {
     class Logger;
+    struct IHolidays;
     namespace Date
     {
         enum TimeUnits
@@ -62,11 +63,11 @@ namespace Utilities
             DateState getState() const;
             
             virtual bool IsValid() const;
-            virtual bool IsBusinessDay() const;
+            virtual bool IsBusinessDay(const IHolidays & holidayCalendar) const;
             virtual bool IsLeapYear() const;
             
-            virtual MyDate NextBusinessDay() const;
-            virtual MyDate PreviousBusinessDay() const;
+            virtual MyDate NextBusinessDay(const IHolidays & holidayCalendar) const;
+            virtual MyDate PreviousBusinessDay(const IHolidays & holidayCalendar) const;
             
             virtual bool IsWeekendDay() const;
             
@@ -84,8 +85,8 @@ namespace Utilities
             virtual MyDate operator --(int); // postfix
             
             //Add must be const, should not alter the original date
-            virtual MyDate Add(long iUnit, const TimeUnits& eTimeUnit) const;
-            virtual MyDate Add(const MyTenor & tenor) const;
+            virtual MyDate Add(long iUnit, const TimeUnits& eTimeUnit, const IHolidays & holidays) const;
+            virtual MyDate Add(const MyTenor & tenor, const IHolidays & holidays) const;
             
             virtual double Diff(const MyDate & sDate) const;
             virtual void SetLocalDate();

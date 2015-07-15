@@ -12,17 +12,17 @@ namespace Finance
 {
     namespace Base
     {
-        DateShifterSimple::DateShifterSimple(const int & lag, const Utilities::Date::TimeUnits & timeUnit) : m_lag(lag), m_timeUnit(timeUnit)
+        DateShifterSimple::DateShifterSimple(const int & lag, const Utilities::Date::TimeUnits & timeUnit, Utilities::HolidaysPtr holidays) : m_lag(lag), m_timeUnit(timeUnit), m_holidays(holidays)
         {}
         
         Utilities::Date::MyDate DateShifterSimple::GetFixingDate(const Utilities::Date::MyDate &input) const
         {
-            return Utilities::Date::MyDate(Utilities::Date::Add(input.Totm(), -m_lag, m_timeUnit));
+            return input.Add(-m_lag, m_timeUnit, *m_holidays);
         }
         
         Utilities::Date::MyDate DateShifterSimple::GetSpotDate(const Utilities::Date::MyDate &date) const
         {
-            return Utilities::Date::MyDate(Utilities::Date::Add(date.Totm(), m_lag, m_timeUnit));
+            return date.Add(m_lag, m_timeUnit, *m_holidays);
         }
         
         Utilities::Date::MyDate DateShifterSimple::GetPaymentDate(const Utilities::Date::MyDate &date) const
@@ -32,27 +32,12 @@ namespace Finance
         
         Utilities::Date::MyDate DateShifterSimple::TenorDate(const Utilities::Date::MyDate &date, const Utilities::Date::MyTenor &tenor) const
         {
-            return date.Add(tenor);
+            return date.Add(tenor, *m_holidays);
         }
         
-        Utilities::Date::MyDate DateShifterDummy::GetFixingDate(const Utilities::Date::MyDate &date) const
+        const Utilities::IHolidays & DateShifterSimple::getHolidays() const
         {
-            return date;
-        }
-        
-        Utilities::Date::MyDate DateShifterDummy::GetSpotDate(const Utilities::Date::MyDate &date) const
-        {
-            return date;
-        }
-        
-        Utilities::Date::MyDate DateShifterDummy::GetPaymentDate(const Utilities::Date::MyDate &date) const
-        {
-            return date;
-        }
-        
-        Utilities::Date::MyDate DateShifterDummy::TenorDate(const Utilities::Date::MyDate &date, const Utilities::Date::MyTenor &tenor) const
-        {
-            return date.Add(tenor);
+            return *m_holidays;
         }
     }
 }

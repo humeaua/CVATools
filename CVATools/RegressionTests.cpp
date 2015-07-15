@@ -40,6 +40,7 @@
 
 #include "Printcpp.h"
 #include "MargrabeOptionVasicek.h"
+#include "Holidays.h"
 
 //  Declaration of all the regression tests
 
@@ -82,8 +83,10 @@ bool RegressionTest::BondPricing() const
         
         const std::vector<double> dCoupons(20, 0.01);
         const bool bIsFixedRate = true;
+        
+        Utilities::HolidaysPtr holidays(new Utilities::Holidays);
          
-        const Finance::Pricers::BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate);
+        const Finance::Pricers::BondPricer sBondPricer(sStart, sEnd, sYieldCurve, eBasis, eFrequency, dCoupons, dNotional, bIsFixedRate, holidays);
         const double dBondPrice = sBondPricer.Price();
         const double dRefBondPrice = 0.717563489599423;
         const double dTolerance = 1.0e-10;
@@ -566,13 +569,14 @@ bool RegressionTest::ProcessPathSimulation() const
 bool RegressionTest::Date() const
 {
     Utilities::Date::MyDate sToday(3,2,2014);
+    Utilities::HolidaysPtr holidays(new Utilities::Holidays);
     
     m_logger.PutLine("Today is " + sToday.ToString());
-    sToday = sToday.Add(1, Utilities::Date::DAY);
-    sToday = sToday.Add(1, Utilities::Date::WEEK);
-    sToday = sToday.Add(1, Utilities::Date::MONTH);
-    sToday = sToday.Add(1, Utilities::Date::YEAR);
-    sToday = sToday.Add(1, Utilities::Date::BUSINESSDAY);
+    sToday = sToday.Add(1, Utilities::Date::DAY, *holidays);
+    sToday = sToday.Add(1, Utilities::Date::WEEK, *holidays);
+    sToday = sToday.Add(1, Utilities::Date::MONTH, *holidays);
+    sToday = sToday.Add(1, Utilities::Date::YEAR, *holidays);
+    sToday = sToday.Add(1, Utilities::Date::BUSINESSDAY, *holidays);
     Utilities::Date::MyDate finalDate(12, 3, 2015);
     if (sToday == finalDate)
     {
@@ -584,7 +588,7 @@ bool RegressionTest::Date() const
         return false;
     }
     Utilities::Date::MyTenor tenor(2,Utilities::Date::DAY);
-    sToday = sToday.Add(tenor);
+    sToday = sToday.Add(tenor, *holidays);
     Utilities::Date::MyDate date(14,3,2015);
     if (sToday == date)
     {

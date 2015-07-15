@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Coupon.h"
 #include "Frequency.h"
+#include "IHolidays.h"
 
 namespace Finance
 {
@@ -23,6 +24,7 @@ namespace Finance
             std::vector<Base::Coupon> vCoupons_;
             bool bIsNotionalRepaidBack_;
             double dNotional_;
+            Utilities::HolidaysPtr m_holidays;
             void Create(//  Inputs
                         const std::vector<double> & dCoupons,
                         const Utilities::Date::MyDate & sStart,
@@ -30,6 +32,7 @@ namespace Finance
                         Finance::Base::MyBasis eBasis,
                         Finance::Base::MyFrequency eFrequency,
                         bool bIsFixedRate,
+                        Utilities::HolidaysPtr holidays,
                         //  Output
                         std::vector<Base::Coupon> & vCoupons);
         public:

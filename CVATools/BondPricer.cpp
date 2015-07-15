@@ -27,11 +27,11 @@ namespace Finance
             double dPrice = 0.0;
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
-                dPrice += vCoupons_.at(iDate).GetCoupon() * pow(1. + r, - GetCoverage(sToday_, vCoupons_.at(iDate).GetEndDate(), vCoupons_[iDate].GetBasis()));
+                dPrice += vCoupons_.at(iDate).GetCoupon() * pow(1. + r, - GetCoverage(sToday_, vCoupons_.at(iDate).GetEndDate(), vCoupons_[iDate].GetBasis(), *m_holidays));
             }
             if (bIsNotionalRepaidBack_)
             {
-                dPrice += pow(1. + r, - GetCoverage(sToday_, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis()));
+                dPrice += pow(1. + r, - GetCoverage(sToday_, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis(), *m_holidays));
             }
             return dPrice - dPrice_;
         }
@@ -41,12 +41,12 @@ namespace Finance
             double dDeriv = 0.0;
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
-                double dCoverage = GetCoverage(sToday_, vCoupons_.at(iDate).GetEndDate(), vCoupons_.at(iDate).GetBasis());
+                double dCoverage = GetCoverage(sToday_, vCoupons_.at(iDate).GetEndDate(), vCoupons_.at(iDate).GetBasis(), *m_holidays);
                 dDeriv -= dCoverage * vCoupons_.at(iDate).GetCoupon() * pow(1. + r, - dCoverage - 1);
             }
             if (bIsNotionalRepaidBack_)
             {
-                double dCoverage = GetCoverage(sToday_, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis());
+                double dCoverage = GetCoverage(sToday_, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis(), *m_holidays);
                 dDeriv -= dCoverage * pow(1. + r, - dCoverage - 1);
             }
             return dDeriv;
@@ -65,13 +65,13 @@ namespace Finance
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
                 Utilities::Date::MyDate sEndDate = vCoupons_.at(iDate).GetEndDate();
-                double dCoverage = Finance::Base::GetCoverage(sToday, sEndDate, vCoupons_.at(iDate).GetBasis());
+                double dCoverage = Finance::Base::GetCoverage(sToday, sEndDate, vCoupons_.at(iDate).GetBasis(), *m_holidays);
                 dRes += vCoupons_.at(iDate).GetCoupon() * pow(1. + sYieldCurve_(sEndDate.Diff(sToday)) + r, -dCoverage);
             }
             if (bIsNotionalRepaidBack_)
             {
                 Utilities::Date::MyDate sEndDate = vCoupons_.back().GetEndDate();
-                double dCoverage = Finance::Base::GetCoverage(sToday, sEndDate, vCoupons_.back().GetBasis());
+                double dCoverage = Finance::Base::GetCoverage(sToday, sEndDate, vCoupons_.back().GetBasis(), *m_holidays);
                 dRes += dNotional_ * pow(1. + sYieldCurve_(sEndDate.Diff(sToday)) + r, -dCoverage);
             }
             return dRes - dPrice_;
@@ -83,20 +83,20 @@ namespace Finance
             const Utilities::Date::MyDate&  sToday = sYieldCurve_.Today();
             for (std::size_t iDate = 0 ; iDate < vCoupons_.size() ; ++iDate)
             {
-                double dCoverage = GetCoverage(sToday, vCoupons_.at(iDate).GetEndDate(), vCoupons_.at(iDate).GetBasis());
+                double dCoverage = GetCoverage(sToday, vCoupons_.at(iDate).GetEndDate(), vCoupons_.at(iDate).GetBasis(), *m_holidays);
                 dDeriv -= dCoverage * vCoupons_.at(iDate).GetCoupon() * pow(1. + r, - dCoverage - 1);
             }
             if (bIsNotionalRepaidBack_)
             {
-                double dCoverage = GetCoverage(sToday, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis());
+                double dCoverage = GetCoverage(sToday, vCoupons_.back().GetEndDate(), vCoupons_.back().GetBasis(), *m_holidays);
                 dDeriv -= dCoverage * pow(1. + r, - dCoverage - 1);
             }
             return dDeriv;
         }
         
-        BondPricer::BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const std::vector<double> & dCoupons, double dNotional, bool bIsFixedRate, double dTolerance, std::size_t iNIterMax) : sYieldCurve_(sYieldCurve), dToleranceNewton_(dTolerance), iNIterMaxNewton_(iNIterMax), Bond(dNotional, true)
+        BondPricer::BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const std::vector<double> & dCoupons, double dNotional, bool bIsFixedRate, const Utilities::HolidaysPtr & holidays, double dTolerance, std::size_t iNIterMax) : sYieldCurve_(sYieldCurve), dToleranceNewton_(dTolerance), iNIterMaxNewton_(iNIterMax), Bond(dNotional, true)
         {
-            Create(dCoupons, sStart, sEnd, eBasis, eFrequency, bIsFixedRate, vCoupons_);
+            Create(dCoupons, sStart, sEnd, eBasis, eFrequency, bIsFixedRate, holidays, vCoupons_);
         }
         
         double BondPricer::Price() const
@@ -238,7 +238,7 @@ namespace Finance
                 int iFind = Utilities::FindInVector(sStartDates, sTodayDate);
                 
                 REQUIREEXCEPTION(iFind!=-1,"Today not found in start dates");
-                return vCoupons_[iFind].GetPayingDateDF(sYieldCurve_) * Finance::Base::GetCoverage(sTodayDate, vCoupons_[iFind].GetEndDate(), vCoupons_[iFind].GetBasis()) * vCoupons_[iFind].GetCoupon();
+                return vCoupons_[iFind].GetPayingDateDF(sYieldCurve_) * Finance::Base::GetCoverage(sTodayDate, vCoupons_[iFind].GetEndDate(), vCoupons_[iFind].GetBasis(), *m_holidays) * vCoupons_[iFind].GetCoupon();
             }
             else
             {

@@ -11,6 +11,7 @@
 #include "Coverage.h"
 #include "DiscountFactor.h"
 #include "DateShifter.h"
+#include "Holidays.h"
 
 namespace Finance
 {
@@ -25,7 +26,11 @@ namespace Finance
         sFix_(sFix),
         sPay_(sPay)
         
-        {}
+        {
+            m_holidays = Utilities::HolidaysPtr(new Utilities::Holidays());
+            size_t i = 0;
+            i;
+        }
         
         EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis,
                                         const DateShifter_Ptr & fixDS, const DateShifter_Ptr & payDS) :
@@ -33,12 +38,13 @@ namespace Finance
         sEnd_(sEnd),
         eBasis_(eBasis),
         sFix_(fixDS->GetFixingDate(sStart)),
-        sPay_(payDS->GetPaymentDate(sEnd))
+        sPay_(payDS->GetPaymentDate(sEnd)),
+        m_holidays(fixDS->getHolidays().clone()) // clone the holidays, should be fine
         {}
         
         double EventOfSchedule::GetCoverage() const
         {
-            class Coverage sCoverage(eBasis_,  sStart_, sEnd_);
+            class Coverage sCoverage(eBasis_,  sStart_, sEnd_, m_holidays);
             return sCoverage.ComputeCoverage();
         }
         

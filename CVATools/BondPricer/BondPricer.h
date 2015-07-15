@@ -12,6 +12,7 @@
 #include "Schedule.h"
 #include "Bond.h"
 #include "NewtonRaphson.h"
+#include "IHolidays.h"
 
 namespace Finance
 {
@@ -67,7 +68,7 @@ namespace Finance
             virtual double AccruedInterest() const;
             
         public:
-            BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const std::vector<double>  & dCoupons, double dNotional, bool bIsFixedRate, double dToleranceNewton = 1e-06, std::size_t iNIterMaxNewton = 100);
+            BondPricer(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, const Finance::Base::YieldCurve & sYieldCurve, Finance::Base::MyBasis eBasis, Finance::Base::MyFrequency eFrequency, const std::vector<double>  & dCoupons, double dNotional, bool bIsFixedRate, const Utilities::HolidaysPtr & holidays, const double dToleranceNewton = 1e-06, std::size_t iNIterMaxNewton = 100);
             
             virtual double Price() const;
             

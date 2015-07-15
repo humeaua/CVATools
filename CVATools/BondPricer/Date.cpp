@@ -11,13 +11,13 @@
 #include <sstream>
 #include "Exception.h"
 #include "Logger.h"
+#include "Holidays.h"
 
 namespace Utilities
 {    
     namespace Date
     {
         int DaysAtBeginningOfEachMonth[] = {/*Jan*/0, /*Feb*/31, /*Mar*/59, /*Apr*/90, /*May*/120, /*Jun*/151, /*Jul*/181, /*Aug*/212, /*Sep*/243, /*Oct*/273, /*Nov*/304, /*Dec*/334};
-        std::vector<long> Holidays;
         
         bool MyDate::IsLeapYear() const
         {
@@ -95,29 +95,27 @@ namespace Utilities
             return (stm.tm_wday == 0 || stm.tm_wday == 6);
         }
         
-        bool MyDate::IsBusinessDay() const
+        bool MyDate::IsBusinessDay(const IHolidays & holidayCalendar) const
         {
-            int iWhere = 0;
-            long lDate = GetDate(*this);
-            return !IsWeekendDay() || Utilities::IsFound(Holidays, lDate, iWhere);
+            return !IsWeekendDay() || holidayCalendar.isBusinessDay(*this);
         }
         
-        MyDate MyDate::NextBusinessDay() const
+        MyDate MyDate::NextBusinessDay(const IHolidays & holidayCalendar) const
         {
             MyDate sCopy = *this;
             sCopy++;
-            while (!sCopy.IsBusinessDay())
+            while (!sCopy.IsBusinessDay(holidayCalendar))
             {
                 sCopy++;
             }
             return sCopy;
         }
         
-        MyDate MyDate::PreviousBusinessDay() const
+        MyDate MyDate::PreviousBusinessDay(const IHolidays & holidayCalendar) const
         {
             MyDate sCopy = *this;
             sCopy--;
-            while (!sCopy.IsBusinessDay())
+            while (!sCopy.IsBusinessDay(holidayCalendar))
             {
                 sCopy--;
             }
@@ -371,7 +369,7 @@ namespace Utilities
             return static_cast<double>(lToday - lFuture) / 365.0;
         }
         
-        MyDate MyDate::Add(long iUnit, const TimeUnits& eTimeUnit) const
+        MyDate MyDate::Add(long iUnit, const TimeUnits& eTimeUnit, const IHolidays & holidays) const
         {
             int iDay;
             MyDate copy = *this;
@@ -429,14 +427,14 @@ namespace Utilities
                     {
                         for (std::size_t i = 0 ; i < iUnit ; ++i)
                         {
-                            copy = copy.NextBusinessDay();
+                            copy = copy.NextBusinessDay(holidays);
                         }
                     }
                     else if (iUnit < 0)
                     {
                         for (std::size_t i = 0 ; i > iUnit ; --i)
                         {
-                            copy = copy.PreviousBusinessDay();
+                            copy = copy.PreviousBusinessDay(holidays);
                         }
                     }
                     break;
@@ -447,9 +445,9 @@ namespace Utilities
             return copy;
         }
         
-        MyDate MyDate::Add(const Utilities::Date::MyTenor &tenor) const
+        MyDate MyDate::Add(const Utilities::Date::MyTenor &tenor, const IHolidays & holidays) const
         {
-            MyDate copy = Add(tenor.GetLag(), tenor.GetTimeUnit());
+            MyDate copy = Add(tenor.GetLag(), tenor.GetTimeUnit(), holidays);
             return copy;
         }
         
@@ -556,14 +554,14 @@ namespace Utilities
             return sDateToBeReturned;
         }
         
-        std::tm Add(const std::tm& sDate, long lUnit, TimeUnits eTimeUnit)
+        /*std::tm Add(const std::tm& sDate, long lUnit, TimeUnits eTimeUnit)
         {
             MyDate sMyDate(sDate);
             
             sMyDate.Add(lUnit, eTimeUnit);
             
             return sMyDate.Totm();
-        }
+        }*/
         
         MyTenor::MyTenor(const std::string & tenor)
         {

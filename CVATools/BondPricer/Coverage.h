@@ -11,6 +11,13 @@
 
 #include "Basis.h"
 #include "Date.h"
+#include <tr1/memory>
+
+namespace Utilities {
+    struct IHolidays;
+    
+    typedef std::tr1::shared_ptr<Utilities::IHolidays> HolidaysPtr;
+}
 
 namespace Finance
 {
@@ -19,7 +26,7 @@ namespace Finance
         class Coverage
         {
         public:
-            Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd);
+            Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, Utilities::HolidaysPtr holidays);
             virtual ~Coverage();
             
             virtual MyBasis GetBasis() const;
@@ -31,10 +38,10 @@ namespace Finance
             MyBasis eBasis_;
             
             Utilities::Date::MyDate sStart_, sEnd_;
-            
+            Utilities::HolidaysPtr m_holidays;
         };
         
-        double GetCoverage(const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, ::Finance::Base::MyBasis eBasis);
+        double GetCoverage(const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, ::Finance::Base::MyBasis eBasis, const Utilities::IHolidays & holidays);
     }
 }
 

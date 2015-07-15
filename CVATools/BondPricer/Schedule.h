@@ -14,6 +14,7 @@
 #include "Frequency.h"
 #include "EventOfSchedule.h"
 #include <tr1/memory>
+#include "IHolidays.h"
 
 namespace Finance
 {
@@ -30,7 +31,7 @@ namespace Finance
             std::vector<double> dCoverage_;
             
         public:
-            Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency, const DateShifter_Ptr& fixDS, const DateShifter_Ptr & payDS);
+            Schedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, ::Finance::Base::MyBasis eBasis, ::Finance::Base::MyFrequency eFrequency, const DateShifter_Ptr& fixDS, const DateShifter_Ptr & payDS, const Utilities::HolidaysPtr & holidays);
             
             virtual const std::vector<EventOfSchedule> & GetSchedule() const;
             virtual const std::vector<double> & GetCoverage() const;

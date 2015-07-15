@@ -12,6 +12,7 @@
 #include <iostream>
 #include <tr1/memory>
 #include "Date.h"
+#include "IHolidays.h"
 
 namespace Finance
 {
@@ -24,18 +25,10 @@ namespace Finance
             virtual Utilities::Date::MyDate TenorDate(const Utilities::Date::MyDate & date, const Utilities::Date::MyTenor & tenor) const = 0;
             virtual Utilities::Date::MyDate GetFixingDate(const Utilities::Date::MyDate & date) const = 0;
             virtual Utilities::Date::MyDate GetPaymentDate(const Utilities::Date::MyDate & date) const = 0;
+            virtual const Utilities::IHolidays & getHolidays() const = 0;
         };
         
         typedef std::tr1::shared_ptr<IDateShifter> DateShifter_Ptr;
-        
-        class DateShifterDummy : public IDateShifter
-        {
-        public:
-            Utilities::Date::MyDate GetSpotDate(const Utilities::Date::MyDate & date) const;
-            Utilities::Date::MyDate TenorDate(const Utilities::Date::MyDate & date, const Utilities::Date::MyTenor & tenor) const;
-            Utilities::Date::MyDate GetFixingDate(const Utilities::Date::MyDate & date) const;
-            Utilities::Date::MyDate GetPaymentDate(const Utilities::Date::MyDate & date) const;
-        };
         
         class DateShifterSimple : public IDateShifter
         {
@@ -43,12 +36,15 @@ namespace Finance
         protected:
             int m_lag;
             Utilities::Date::TimeUnits m_timeUnit;
+            Utilities::HolidaysPtr m_holidays;
         public:
-            DateShifterSimple(const int & lag, const Utilities::Date::TimeUnits & m_timeUnit);
+            DateShifterSimple(const int & lag, const Utilities::Date::TimeUnits & m_timeUnit, Utilities::HolidaysPtr holidays);
             Utilities::Date::MyDate GetSpotDate(const Utilities::Date::MyDate & date) const;
             Utilities::Date::MyDate TenorDate(const Utilities::Date::MyDate & date, const Utilities::Date::MyTenor & tenor) const;
             Utilities::Date::MyDate GetFixingDate(const Utilities::Date::MyDate & date) const;
             Utilities::Date::MyDate GetPaymentDate(const Utilities::Date::MyDate & date) const;
+            
+            const Utilities::IHolidays & getHolidays() const;
         };
     }
 }

@@ -13,6 +13,7 @@
 #include "Basis.h"
 #include "YieldCurve.h"
 #include <tr1/memory>
+#include "IHolidays.h"
 
 namespace Finance
 {
@@ -27,7 +28,7 @@ namespace Finance
             Utilities::Date::MyDate sFix_, sStart_, sEnd_, sPay_;
             
             Finance::Base::MyBasis eBasis_;
-            
+            Utilities::HolidaysPtr m_holidays;
         public:
             
             EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis,

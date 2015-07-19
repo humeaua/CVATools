@@ -8,6 +8,8 @@
 
 #include "ConfigReader.h"
 #include "Player.h"
+#include "Holidays.h"
+#include "StringUtilities.h"
 
 ConfigReader::ConfigReader(const std::string & filename, const char delim) : base(filename), m_delim(delim)
 {
@@ -30,6 +32,33 @@ void ConfigReader::Read()
         ++base;
     }
     while (base);
+}
+
+template <>
+void ConfigReader::Fill(Utilities::Holidays & holidays, const std::string &name) const
+{
+    // Fill the implementation of the holidays structure
+    const std::string holidays_ = "HOLIDAYS";
+    std::map<std::string, Utilities::Variant>::const_iterator itHolidays = m_internalMap.find(holidays_);
+    
+    if (itHolidays != m_internalMap.end())
+    {
+        const std::string holidayStr = itHolidays->second.GetString();
+        const char delimHolidays = ';';
+        
+        std::vector<std::string> vecStr = Utilities::Split(holidayStr, delimHolidays);
+        std::set<long> holidaySet;
+        for (size_t i = 0 ; i < vecStr.size() ; ++i)
+        {
+            std::stringstream ss;
+            ss << vecStr[i];
+            long l;
+            ss >> l;
+            holidaySet.insert(l);
+        }
+        
+        holidays = Utilities::Holidays(holidaySet);
+    }
 }
 
 template<>

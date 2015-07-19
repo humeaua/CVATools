@@ -24,6 +24,8 @@ namespace Utilities
         bool isBusinessDay(const Date::MyDate & date) const;
         
         Holidays * clone() const;
+        
+        Holidays(const std::set<long> & holidays);
     };
 }
 

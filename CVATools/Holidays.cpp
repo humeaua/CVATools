@@ -11,6 +11,9 @@
 
 namespace Utilities
 {
+    Holidays::Holidays(const std::set<long> & holidays) : m_holidays(holidays)
+    {}
+    
     bool Holidays::isBusinessDay(const Utilities::Date::MyDate &date) const
     {
         const long date1900 = date.GetDays1900();

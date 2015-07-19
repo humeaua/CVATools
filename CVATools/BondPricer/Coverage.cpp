@@ -14,7 +14,7 @@ namespace Finance
 {
     namespace Base
     {
-        Coverage::Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, Utilities::HolidaysPtr holidays) : eBasis_(eBasis), sStart_(lStart), sEnd_(lEnd), m_holidays(holidays)
+        Coverage::Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, const Utilities::IHolidays & holidays) : eBasis_(eBasis), sStart_(lStart), sEnd_(lEnd), m_holidays(holidays)
         {}
         
         Coverage::~Coverage()
@@ -37,7 +37,7 @@ namespace Finance
         
         double Coverage::ComputeCoverage()
         {
-            return GetCoverage(sStart_, sEnd_, eBasis_, *m_holidays);
+            return GetCoverage(sStart_, sEnd_, eBasis_, m_holidays);
         }
         
         double GetCoverage(const Utilities::Date::MyDate & sStart0, const Utilities::Date::MyDate & sEnd0, ::Finance::Base::MyBasis eBasis, const Utilities::IHolidays & holidays)

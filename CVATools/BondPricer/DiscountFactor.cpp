@@ -30,7 +30,7 @@ namespace Finance
         
         double DF::operator()(const Utilities::Date::MyDate &sDate) const
         {
-            double dT = sDate.Diff(Today());
+            const double dT = sDate.Diff(Today());
             
             REQUIREEXCEPTION(dT > 0, "DF::DiscountFactor : Date is before today");
             return (*this)(dT);

@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "EventOfSchedule.h"
+#include "IHolidays.h"
 
 namespace Finance
 {
@@ -23,7 +24,7 @@ namespace Finance
             bool bIsFixedRate_;
             
         public:
-            Coupon(double dCoupon, bool bIsFixedRate, const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis);
+            Coupon(double dCoupon, bool bIsFixedRate, const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis, const Utilities::HolidaysPtr & holidays);
             
             double GetCoupon() const;
             bool IsFixedRateCoupon() const;

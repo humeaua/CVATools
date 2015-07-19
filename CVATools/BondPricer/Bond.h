@@ -21,7 +21,7 @@ namespace Finance
         class Bond
         {
         protected:
-            std::vector<Base::Coupon> vCoupons_;
+            std::vector<std::tr1::shared_ptr<Base::Coupon> > vCoupons_;
             bool bIsNotionalRepaidBack_;
             double dNotional_;
             Utilities::HolidaysPtr m_holidays;
@@ -32,12 +32,12 @@ namespace Finance
                         Finance::Base::MyBasis eBasis,
                         Finance::Base::MyFrequency eFrequency,
                         bool bIsFixedRate,
-                        Utilities::HolidaysPtr holidays,
+                        const Utilities::HolidaysPtr & holidays,
                         //  Output
-                        std::vector<Base::Coupon> & vCoupons);
+                        std::vector<std::tr1::shared_ptr<Base::Coupon> > & vCoupons);
         public:
             Bond(double dNotional, bool bIsNotionalRepaidBack);
-            Bond(double dNotional, bool bIsNotionalRepaidBack, const std::vector<Base::Coupon> & vCoupons);
+            Bond(double dNotional, bool bIsNotionalRepaidBack, const std::vector<std::tr1::shared_ptr<Base::Coupon> > & vCoupons);
         };
     }
 }

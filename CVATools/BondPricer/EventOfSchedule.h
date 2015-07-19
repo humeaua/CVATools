@@ -32,10 +32,9 @@ namespace Finance
         public:
             
             EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis,
-                            const Utilities::Date::MyDate & sFix, const Utilities::Date::MyDate & sPay);
+                            const DateShifter_Ptr & fixDS);
             
-            EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, Finance::Base::MyBasis eBasis,
-                            const DateShifter_Ptr & fixDS, const DateShifter_Ptr & payDS);
+            EventOfSchedule(); // need default constructor for std::vector::resize
             
             virtual double GetCoverage() const;
             virtual double GetPayingDateDF(const Finance::Base::YieldCurve & sYieldCurve) const;

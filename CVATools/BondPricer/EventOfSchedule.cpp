@@ -13,38 +13,30 @@
 #include "DateShifter.h"
 #include "Holidays.h"
 
+#include <utility>
+
 namespace Finance
 {
     namespace Base
     {
         EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis,
-                                         const Utilities::Date::MyDate & sFix, const Utilities::Date::MyDate & sPay) :
-        
+                                        const DateShifter_Ptr & dateShifter) :
         sStart_(sStart),
         sEnd_(sEnd),
         eBasis_(eBasis),
-        sFix_(sFix),
-        sPay_(sPay)
-        
-        {
-            m_holidays = Utilities::HolidaysPtr(new Utilities::Holidays());
-            size_t i = 0;
-            i;
-        }
-        
-        EventOfSchedule::EventOfSchedule(const Utilities::Date::MyDate & sStart, const Utilities::Date::MyDate & sEnd, MyBasis eBasis,
-                                        const DateShifter_Ptr & fixDS, const DateShifter_Ptr & payDS) :
-        sStart_(sStart),
-        sEnd_(sEnd),
-        eBasis_(eBasis),
-        sFix_(fixDS->GetFixingDate(sStart)),
-        sPay_(payDS->GetPaymentDate(sEnd)),
-        m_holidays(fixDS->getHolidays().clone()) // clone the holidays, should be fine
+        sFix_(dateShifter->GetFixingDate(sStart)),
+        sPay_(dateShifter->GetPaymentDate(sEnd)),
+        m_holidays(dateShifter->getHolidays())
         {}
+        
+        EventOfSchedule::EventOfSchedule()
+        {
+            eBasis_ = NONE;
+        }
         
         double EventOfSchedule::GetCoverage() const
         {
-            class Coverage sCoverage(eBasis_,  sStart_, sEnd_, m_holidays);
+            class Coverage sCoverage(eBasis_,  sStart_, sEnd_, *m_holidays);
             return sCoverage.ComputeCoverage();
         }
         

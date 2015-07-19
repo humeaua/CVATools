@@ -26,7 +26,7 @@ namespace Finance
         class Coverage
         {
         public:
-            Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, Utilities::HolidaysPtr holidays);
+            Coverage(MyBasis eBasis, const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, const Utilities::IHolidays & holidays);
             virtual ~Coverage();
             
             virtual MyBasis GetBasis() const;
@@ -38,7 +38,7 @@ namespace Finance
             MyBasis eBasis_;
             
             Utilities::Date::MyDate sStart_, sEnd_;
-            Utilities::HolidaysPtr m_holidays;
+            const Utilities::IHolidays & m_holidays;
         };
         
         double GetCoverage(const Utilities::Date::MyDate & lStart, const Utilities::Date::MyDate & lEnd, ::Finance::Base::MyBasis eBasis, const Utilities::IHolidays & holidays);

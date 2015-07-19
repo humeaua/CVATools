@@ -7,6 +7,7 @@
 //
 
 #include "Coupon.h"
+#include "DateShifter.h"
 
 namespace Finance
 {
@@ -16,10 +17,11 @@ namespace Finance
                        bool bIsFixedRate,
                        const Utilities::Date::MyDate & sStart,
                        const Utilities::Date::MyDate & sEnd,
-                       Finance::Base::MyBasis eBasis) :
+                       Finance::Base::MyBasis eBasis,
+                       const Utilities::HolidaysPtr & holidays) :
         dCoupon_(dCoupon),
         bIsFixedRate_(bIsFixedRate),
-        Finance::Base::EventOfSchedule(sStart, sEnd, eBasis, sStart, sEnd)
+        Finance::Base::EventOfSchedule(sStart, sEnd, eBasis, DateShifter_Ptr(new DateShifterSimple(0, Utilities::Date::DAY, holidays)))
         
         {}
         

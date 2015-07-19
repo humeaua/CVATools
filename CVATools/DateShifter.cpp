@@ -12,7 +12,7 @@ namespace Finance
 {
     namespace Base
     {
-        DateShifterSimple::DateShifterSimple(const int & lag, const Utilities::Date::TimeUnits & timeUnit, Utilities::HolidaysPtr holidays) : m_lag(lag), m_timeUnit(timeUnit), m_holidays(holidays)
+        DateShifterSimple::DateShifterSimple(const int lag, const Utilities::Date::TimeUnits timeUnit, const Utilities::HolidaysPtr& holidays) : m_lag(lag), m_timeUnit(timeUnit), m_holidays(holidays)
         {}
         
         Utilities::Date::MyDate DateShifterSimple::GetFixingDate(const Utilities::Date::MyDate &input) const
@@ -35,9 +35,9 @@ namespace Finance
             return date.Add(tenor, *m_holidays);
         }
         
-        const Utilities::IHolidays & DateShifterSimple::getHolidays() const
+        const Utilities::HolidaysPtr & DateShifterSimple::getHolidays() const
         {
-            return *m_holidays;
+            return m_holidays;
         }
     }
 }

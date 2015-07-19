@@ -18,30 +18,39 @@ namespace Finance
                            const Utilities::Date::MyDate & sEnd,
                            ::Finance::Base::MyBasis eBasis,
                            ::Finance::Base::MyFrequency eFrequency,
-                           const DateShifter_Ptr & fixDS,
-                           const DateShifter_Ptr & payDS,
+                           const DateShifter_Ptr & dateShifter,
                            const Utilities::HolidaysPtr & holidays) : eFrequency_(eFrequency)
         {
             Utilities::Date::MyDate sCurrentStart = sStart;
             std::pair<std::size_t, Utilities::Date::TimeUnits> NumberAndUnitToAdd = ::Finance::Base::Frequency::ParseFrequency(eFrequency_);
             Utilities::Date::MyDate sCurrentEnd = sStart.Add( NumberAndUnitToAdd.first, NumberAndUnitToAdd.second, *holidays);
             
-            //  Computation of vector of coverage from today date            
+            //  Computation of vector of coverage from today date
+            size_t newSize = 0;
             while (sCurrentEnd <= sEnd)
             {
-                EventOfSchedule event(sCurrentStart, sCurrentEnd, eBasis, fixDS, payDS);
-                sSchedule_.push_back(event);
+                newSize++;
+                sCurrentEnd = sCurrentEnd.Add(NumberAndUnitToAdd.first, NumberAndUnitToAdd.second, *holidays);
+            }
+            sSchedule_.resize(newSize);
+            size_t index = 0;
+            //  reset the current end
+            sCurrentEnd = sStart.Add( NumberAndUnitToAdd.first, NumberAndUnitToAdd.second, *holidays);
+            while (sCurrentEnd <= sEnd)
+            {
+                sSchedule_[index] = std::tr1::shared_ptr<EventOfSchedule>(new EventOfSchedule(sCurrentStart, sCurrentEnd, eBasis, dateShifter));
                 
                 // Vect of coverage from today
-                dCoverage_.push_back(Coverage(eBasis, sCurrentStart, sCurrentEnd, holidays).ComputeCoverage());
+                dCoverage_.push_back(Coverage(eBasis, sCurrentStart, sCurrentEnd, *holidays).ComputeCoverage());
                 
                 //  Update current
                 sCurrentStart = sCurrentEnd;
                 sCurrentEnd = sCurrentEnd.Add(NumberAndUnitToAdd.first, NumberAndUnitToAdd.second, *holidays);
+                index++;
             }
         }
         
-        const std::vector<EventOfSchedule> & Schedule::GetSchedule() const
+        const std::vector<std::tr1::shared_ptr<EventOfSchedule> > & Schedule::GetSchedule() const
         {
             return sSchedule_;
         }
